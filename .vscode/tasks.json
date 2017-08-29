@@ -6,7 +6,7 @@
         {
             "taskName": "Sass Compile",
             "type": "shell",
-            "command": "node-sass style.scss style.css",
+            "command": "node-sass styles/style.scss styles/style.css",
             "group": "build",
             "problemMatcher": []
         }
