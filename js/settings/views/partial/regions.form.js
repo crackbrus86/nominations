@@ -3,6 +3,7 @@ import * as validation from "../../../components/validation/validation";
 
 const RegionForm = (props) => {
     var required = ["name", "login", "token", "email"];
+    var email = (props.region.email)? props.region.email : "";
     return (<div>
         <form>
             <div>
@@ -18,8 +19,8 @@ const RegionForm = (props) => {
                 <input value={props.region.token} type="text" maxLength="20" onChange={e => props.onChange("token", e.target.value)} />
             </div>
             <div>
-                <label>Email {validation.isEmailValid(props.region.email)}</label>
-                <input value={props.region.email} type="email" maxLength="30" onChange={e => props.onChange("email", e.target.value)} />
+                <label>Email {validation.isEmailValid(email)}</label>
+                <input value={email} type="email" maxLength="30" onChange={e => props.onChange("email", e.target.value)} />
             </div>  
             <div>
                 <button type="button" disabled={validation.isFormValid(props.region, required)}>Зберегти</button>    

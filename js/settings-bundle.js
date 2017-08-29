@@ -33249,6 +33249,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var RegionForm = function RegionForm(props) {
     var required = ["name", "login", "token", "email"];
+    var email = props.region.email ? props.region.email : "";
     return _react2.default.createElement(
         "div",
         null,
@@ -33301,9 +33302,9 @@ var RegionForm = function RegionForm(props) {
                     "label",
                     null,
                     "Email ",
-                    validation.isEmailValid(props.region.email)
+                    validation.isEmailValid(email)
                 ),
-                _react2.default.createElement("input", { value: props.region.email, type: "email", maxLength: "30", onChange: function onChange(e) {
+                _react2.default.createElement("input", { value: email, type: "email", maxLength: "30", onChange: function onChange(e) {
                         return props.onChange("email", e.target.value);
                     } })
             ),
