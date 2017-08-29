@@ -15,11 +15,12 @@ class Nominations{
     }
 
     function nomEditor(){
-        wp_register_script( 'nom-settings', plugins_url( './js/bundle.js', __FILE__ ) );
+        wp_register_script( 'nom-settings', plugins_url( './js/settings-bundle.js', __FILE__ ) );
         wp_enqueue_script(  'nom-settings');        
         ?>
         <div class="container-fluid">
             <h2>Налаштування</h2>
+            <div id="settings"></div>
         </div>        
         <?php
     }

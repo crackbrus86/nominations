@@ -24,6 +24,8 @@
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.5",
     "node-sass": "^4.5.3",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
     "sass": "^1.0.0-beta.2",
     "style-loader": "^0.18.2"
   }
