@@ -1,5 +1,5 @@
 import React from "react";
 import {render} from "react-dom";
+import SettingsApp from "./views/layout";
 
-
-render(<h1>Hello React</h1>, document.getElementById("settings"));
+render(<SettingsApp />, document.getElementById("settings"));

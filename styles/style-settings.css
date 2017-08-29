@@ -1,0 +1,62 @@
+.blackout {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 10000; }
+  .blackout .spinner-wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%; }
+    .blackout .spinner-wrap .fa-spin {
+      color: #6c6fff; }
+
+.grid {
+  border-spacing: 0px;
+  border-collapse: collapse; }
+  .grid thead tr {
+    background-color: #FF9800;
+    color: #fff;
+    text-shadow: 1px 1px 5px #000; }
+    .grid thead tr th {
+      text-align: left;
+      padding: 0 5px; }
+  .grid tbody tr:nth-child(odd) {
+    background-color: #d8e8f5; }
+  .grid tbody tr:nth-child(even) {
+    background-color: #d4d4d4; }
+  .grid tbody tr:hover {
+    background-color: #91caf7;
+    cursor: pointer; }
+  .grid tbody tr td {
+    padding: 3px; }
+    .grid tbody tr td .edit {
+      color: #6b3e1d; }
+    .grid tbody tr td .delete {
+      color: #cc3227; }
+
+.custom-modal {
+  background-color: #ffffff;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  min-width: 500px;
+  min-height: 200px;
+  border-radius: 5px;
+  padding: 4px 10px;
+  margin-left: -250px; }
+  .custom-modal .custom-modal-header {
+    text-align: right;
+    padding-right: 5px; }
+    .custom-modal .custom-modal-header .fa-times {
+      color: #9a9aaf;
+      cursor: pointer; }
+      .custom-modal .custom-modal-header .fa-times:hover {
+        color: #68686f; }
+  .custom-modal h6, .custom-modal h4 {
+    margin: 5px 0 10px 0px; }
+
+.invalid {
+  color: red; }
