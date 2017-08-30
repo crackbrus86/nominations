@@ -15,3 +15,27 @@ export const getRegionById = (contract) => {
         data: contract
     })
 }
+
+export const insertRegion = (contract) => {
+    return $.ajax({
+        url: path + "InsertRegion.php",
+        type: "POST",
+        data: contract
+    })
+}
+
+export const updateRegion = (contract) => {
+    return $.ajax({
+        url: path + "UpdateRegion.php",
+        type: "POST",
+        data: contract
+    })
+}
+
+export const deleteRegion = (contract) => {
+    return $.ajax({
+        url: path + "DeleteRegion.php",
+        type: "POST",
+        data: contract
+    })
+}

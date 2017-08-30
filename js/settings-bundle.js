@@ -789,7 +789,7 @@ module.exports = ExecutionEnvironment;
 
 var _prodInvariant = __webpack_require__(18);
 
-var ReactCurrentOwner = __webpack_require__(10);
+var ReactCurrentOwner = __webpack_require__(11);
 
 var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
@@ -1233,6 +1233,16 @@ module.exports = emptyFunction;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+module.exports = __webpack_require__(17);
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -1263,7 +1273,7 @@ var ReactCurrentOwner = {
 module.exports = ReactCurrentOwner;
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1518,16 +1528,6 @@ var ReactUpdates = {
 
 module.exports = ReactUpdates;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = __webpack_require__(17);
-
 
 /***/ }),
 /* 13 */
@@ -2035,7 +2035,7 @@ module.exports = DOMProperty;
 
 var _assign = __webpack_require__(4);
 
-var ReactCurrentOwner = __webpack_require__(10);
+var ReactCurrentOwner = __webpack_require__(11);
 
 var warning = __webpack_require__(2);
 var canDefineProperty = __webpack_require__(25);
@@ -5909,10 +5909,10 @@ module.exports = KeyEscapeUtils;
 
 var _prodInvariant = __webpack_require__(3);
 
-var ReactCurrentOwner = __webpack_require__(10);
+var ReactCurrentOwner = __webpack_require__(11);
 var ReactInstanceMap = __webpack_require__(24);
 var ReactInstrumentation = __webpack_require__(8);
-var ReactUpdates = __webpack_require__(11);
+var ReactUpdates = __webpack_require__(12);
 
 var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
@@ -6907,7 +6907,7 @@ module.exports = getIteratorFn;
 
 
 
-var ReactCurrentOwner = __webpack_require__(10);
+var ReactCurrentOwner = __webpack_require__(11);
 var ReactComponentTreeHook = __webpack_require__(7);
 var ReactElement = __webpack_require__(15);
 
@@ -8252,7 +8252,7 @@ var _assign = __webpack_require__(4);
 
 var LinkedValueUtils = __webpack_require__(42);
 var ReactDOMComponentTree = __webpack_require__(5);
-var ReactUpdates = __webpack_require__(11);
+var ReactUpdates = __webpack_require__(12);
 
 var warning = __webpack_require__(2);
 
@@ -8746,7 +8746,7 @@ module.exports = ReactHostComponent;
 
 var _prodInvariant = __webpack_require__(3);
 
-var ReactCurrentOwner = __webpack_require__(10);
+var ReactCurrentOwner = __webpack_require__(11);
 var REACT_ELEMENT_TYPE = __webpack_require__(144);
 
 var getIteratorFn = __webpack_require__(145);
@@ -9187,7 +9187,7 @@ var DOMLazyTree = __webpack_require__(20);
 var DOMProperty = __webpack_require__(14);
 var React = __webpack_require__(17);
 var ReactBrowserEventEmitter = __webpack_require__(32);
-var ReactCurrentOwner = __webpack_require__(10);
+var ReactCurrentOwner = __webpack_require__(11);
 var ReactDOMComponentTree = __webpack_require__(5);
 var ReactDOMContainerInfo = __webpack_require__(174);
 var ReactDOMFeatureFlags = __webpack_require__(175);
@@ -9197,7 +9197,7 @@ var ReactInstrumentation = __webpack_require__(8);
 var ReactMarkupChecksum = __webpack_require__(176);
 var ReactReconciler = __webpack_require__(19);
 var ReactUpdateQueue = __webpack_require__(47);
-var ReactUpdates = __webpack_require__(11);
+var ReactUpdates = __webpack_require__(12);
 
 var emptyObject = __webpack_require__(26);
 var instantiateReactComponent = __webpack_require__(72);
@@ -9750,7 +9750,7 @@ module.exports = getHostComponentFromComposite;
 "use strict";
 
 
-var _react = __webpack_require__(12);
+var _react = __webpack_require__(10);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -10097,7 +10097,7 @@ module.exports = PooledClass;
 
 var _prodInvariant = __webpack_require__(18);
 
-var ReactCurrentOwner = __webpack_require__(10);
+var ReactCurrentOwner = __webpack_require__(11);
 var REACT_ELEMENT_TYPE = __webpack_require__(52);
 
 var getIteratorFn = __webpack_require__(53);
@@ -12262,7 +12262,7 @@ var ReactDOMComponentTree = __webpack_require__(5);
 var ReactDefaultInjection = __webpack_require__(100);
 var ReactMount = __webpack_require__(80);
 var ReactReconciler = __webpack_require__(19);
-var ReactUpdates = __webpack_require__(11);
+var ReactUpdates = __webpack_require__(12);
 var ReactVersion = __webpack_require__(178);
 
 var findDOMNode = __webpack_require__(179);
@@ -13119,7 +13119,7 @@ var EventPluginHub = __webpack_require__(22);
 var EventPropagators = __webpack_require__(21);
 var ExecutionEnvironment = __webpack_require__(6);
 var ReactDOMComponentTree = __webpack_require__(5);
-var ReactUpdates = __webpack_require__(11);
+var ReactUpdates = __webpack_require__(12);
 var SyntheticEvent = __webpack_require__(13);
 
 var inputValueTracking = __webpack_require__(63);
@@ -16693,7 +16693,7 @@ var _prodInvariant = __webpack_require__(3),
 var DOMPropertyOperations = __webpack_require__(69);
 var LinkedValueUtils = __webpack_require__(42);
 var ReactDOMComponentTree = __webpack_require__(5);
-var ReactUpdates = __webpack_require__(11);
+var ReactUpdates = __webpack_require__(12);
 
 var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
@@ -17113,7 +17113,7 @@ var _prodInvariant = __webpack_require__(3),
 
 var LinkedValueUtils = __webpack_require__(42);
 var ReactDOMComponentTree = __webpack_require__(5);
-var ReactUpdates = __webpack_require__(11);
+var ReactUpdates = __webpack_require__(12);
 
 var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
@@ -17280,7 +17280,7 @@ var ReactComponentEnvironment = __webpack_require__(43);
 var ReactInstanceMap = __webpack_require__(24);
 var ReactInstrumentation = __webpack_require__(8);
 
-var ReactCurrentOwner = __webpack_require__(10);
+var ReactCurrentOwner = __webpack_require__(11);
 var ReactReconciler = __webpack_require__(19);
 var ReactChildReconciler = __webpack_require__(139);
 
@@ -17890,7 +17890,7 @@ var _prodInvariant = __webpack_require__(3),
 
 var React = __webpack_require__(17);
 var ReactComponentEnvironment = __webpack_require__(43);
-var ReactCurrentOwner = __webpack_require__(10);
+var ReactCurrentOwner = __webpack_require__(11);
 var ReactErrorUtils = __webpack_require__(35);
 var ReactInstanceMap = __webpack_require__(24);
 var ReactInstrumentation = __webpack_require__(8);
@@ -19712,7 +19712,7 @@ module.exports = ReactDOMTextComponent;
 
 var _assign = __webpack_require__(4);
 
-var ReactUpdates = __webpack_require__(11);
+var ReactUpdates = __webpack_require__(12);
 var Transaction = __webpack_require__(28);
 
 var emptyFunction = __webpack_require__(9);
@@ -19789,7 +19789,7 @@ var EventListener = __webpack_require__(77);
 var ExecutionEnvironment = __webpack_require__(6);
 var PooledClass = __webpack_require__(16);
 var ReactDOMComponentTree = __webpack_require__(5);
-var ReactUpdates = __webpack_require__(11);
+var ReactUpdates = __webpack_require__(12);
 
 var getEventTarget = __webpack_require__(36);
 var getUnboundedScrollPosition = __webpack_require__(154);
@@ -19994,7 +19994,7 @@ var ReactComponentEnvironment = __webpack_require__(43);
 var ReactEmptyComponent = __webpack_require__(74);
 var ReactBrowserEventEmitter = __webpack_require__(32);
 var ReactHostComponent = __webpack_require__(75);
-var ReactUpdates = __webpack_require__(11);
+var ReactUpdates = __webpack_require__(12);
 
 var ReactInjection = {
   Component: ReactComponentEnvironment.injection,
@@ -22056,7 +22056,7 @@ module.exports = '15.6.1';
 
 var _prodInvariant = __webpack_require__(3);
 
-var ReactCurrentOwner = __webpack_require__(10);
+var ReactCurrentOwner = __webpack_require__(11);
 var ReactDOMComponentTree = __webpack_require__(5);
 var ReactInstanceMap = __webpack_require__(24);
 
@@ -22401,7 +22401,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _react = __webpack_require__(12);
+var _react = __webpack_require__(10);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -22420,7 +22420,15 @@ var SettingsApp = function SettingsApp(props) {
             { className: "col-flex" },
             _react2.default.createElement(_regions2.default, null)
         ),
-        _react2.default.createElement("div", { className: "col-flex" })
+        _react2.default.createElement(
+            "div",
+            { className: "col-flex" },
+            _react2.default.createElement(
+                "p",
+                null,
+                "test"
+            )
+        )
     );
 };
 
@@ -22439,7 +22447,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(12);
+var _react = __webpack_require__(10);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -22463,6 +22471,10 @@ var _regions3 = __webpack_require__(193);
 
 var _regions4 = _interopRequireDefault(_regions3);
 
+var _dialog = __webpack_require__(195);
+
+var _dialog2 = _interopRequireDefault(_dialog);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -22484,11 +22496,17 @@ var Regions = function (_React$Component) {
         _this.state = {
             regions: [],
             isLoading: false,
-            region: null
+            region: null,
+            dialog: null
         };
         _this.onEdit = _this.chooseRegion.bind(_this);
+        _this.onDelete = _this.confirmDeleting.bind(_this);
         _this.onClose = _this.closeRegion.bind(_this);
         _this.onChange = _this.changeRegion.bind(_this);
+        _this.onAdd = _this.createEmptyRegion.bind(_this);
+        _this.onSave = _this.saveRegion.bind(_this);
+        _this.onCancel = _this.cancelDeleting.bind(_this);
+        _this.onConfirm = _this.deleting.bind(_this);
         return _this;
     }
 
@@ -22516,14 +22534,68 @@ var Regions = function (_React$Component) {
             this.setState({ region: temp });
         }
     }, {
+        key: "createEmptyRegion",
+        value: function createEmptyRegion() {
+            var region = {
+                name: "",
+                login: "",
+                token: "",
+                email: ""
+            };
+            this.setState({ region: region });
+        }
+    }, {
+        key: "saveRegion",
+        value: function saveRegion() {
+            var _this3 = this;
+
+            var region = this.state.region;
+            this.setState({ isLoading: true });
+            if (region.id) {
+                services.updateRegion(region).then(function () {
+                    _this3.closeRegion();
+                    _this3.fetchRegions();
+                });
+            } else {
+                services.insertRegion(region).then(function () {
+                    _this3.closeRegion();
+                    _this3.fetchRegions();
+                });
+            }
+        }
+    }, {
+        key: "confirmDeleting",
+        value: function confirmDeleting(id) {
+            this.setState({ dialog: {
+                    id: id,
+                    text: "Ви впевнені що хочете видалити цю область?"
+                } });
+        }
+    }, {
+        key: "cancelDeleting",
+        value: function cancelDeleting() {
+            this.setState({ dialog: null });
+        }
+    }, {
+        key: "deleting",
+        value: function deleting() {
+            var _this4 = this;
+
+            this.setState({ isLoading: true });
+            services.deleteRegion({ id: this.state.dialog.id }).then(function () {
+                _this4.cancelDeleting();
+                _this4.fetchRegions();
+            });
+        }
+    }, {
         key: "fetchRegions",
         value: function fetchRegions() {
-            var _this3 = this;
+            var _this5 = this;
 
             this.setState({ isLoading: true });
             services.getAllRegions().then(function (data) {
-                _this3.setState({ regions: JSON.parse(data) });
-                _this3.setState({ isLoading: false });
+                _this5.setState({ regions: JSON.parse(data) });
+                _this5.setState({ isLoading: false });
             });
         }
     }, {
@@ -22542,12 +22614,22 @@ var Regions = function (_React$Component) {
                     null,
                     "\u041E\u0431\u043B\u0430\u0441\u0442\u0456"
                 ),
-                _react2.default.createElement(_regions2.default, { data: this.state.regions, onEdit: this.onEdit }),
+                _react2.default.createElement(_regions2.default, { data: this.state.regions, onEdit: this.onEdit, onDelete: this.onDelete }),
+                _react2.default.createElement(
+                    "div",
+                    { className: "control-panel" },
+                    _react2.default.createElement(
+                        "button",
+                        { type: "button", onClick: this.onAdd },
+                        "\u0414\u043E\u0434\u0430\u0442\u0438"
+                    )
+                ),
                 _react2.default.createElement(
                     _modal2.default,
                     { target: this.state.region, onClose: this.onClose },
-                    _react2.default.createElement(_regions4.default, { region: this.state.region, onChange: this.onChange })
+                    _react2.default.createElement(_regions4.default, { region: this.state.region, onChange: this.onChange, onSave: this.onSave })
                 ),
+                _react2.default.createElement(_dialog2.default, { dialog: this.state.dialog, onClose: this.onCancel, onConfirm: this.onConfirm }),
                 _react2.default.createElement(_preloader2.default, { loading: this.state.isLoading })
             );
         }
@@ -22568,7 +22650,7 @@ exports.default = Regions;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getRegionById = exports.getAllRegions = undefined;
+exports.deleteRegion = exports.updateRegion = exports.insertRegion = exports.getRegionById = exports.getAllRegions = undefined;
 
 var _jquery = __webpack_require__(187);
 
@@ -22588,6 +22670,30 @@ var getAllRegions = exports.getAllRegions = function getAllRegions() {
 var getRegionById = exports.getRegionById = function getRegionById(contract) {
     return $.ajax({
         url: path + "GetRegionById.php",
+        type: "POST",
+        data: contract
+    });
+};
+
+var insertRegion = exports.insertRegion = function insertRegion(contract) {
+    return $.ajax({
+        url: path + "InsertRegion.php",
+        type: "POST",
+        data: contract
+    });
+};
+
+var updateRegion = exports.updateRegion = function updateRegion(contract) {
+    return $.ajax({
+        url: path + "UpdateRegion.php",
+        type: "POST",
+        data: contract
+    });
+};
+
+var deleteRegion = exports.deleteRegion = function deleteRegion(contract) {
+    return $.ajax({
+        url: path + "DeleteRegion.php",
         type: "POST",
         data: contract
     });
@@ -32866,7 +32972,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(12);
+var _react = __webpack_require__(10);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -32919,7 +33025,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _react = __webpack_require__(12);
+var _react = __webpack_require__(10);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -32944,7 +33050,7 @@ var RegionsGrid = function RegionsGrid(props) {
         button: "delete",
         width: "*",
         action: function action(e) {
-            return null;
+            props.onDelete(e.target.dataset["rel"]);
         }
     }, {
         title: "Область",
@@ -32990,7 +33096,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(12);
+var _react = __webpack_require__(10);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -33168,7 +33274,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(12);
+var _react = __webpack_require__(10);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -33235,7 +33341,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _react = __webpack_require__(12);
+var _react = __webpack_require__(10);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -33248,11 +33354,17 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var RegionForm = function RegionForm(props) {
-    var required = ["name", "login", "token", "email"];
+    var required = ["name", "login", "token"];
     var email = props.region.email ? props.region.email : "";
+    var word = props.region.id ? "Редагувати" : "Створити";
     return _react2.default.createElement(
         "div",
         null,
+        _react2.default.createElement(
+            "h4",
+            null,
+            word + " регіон"
+        ),
         _react2.default.createElement(
             "form",
             null,
@@ -33313,7 +33425,9 @@ var RegionForm = function RegionForm(props) {
                 null,
                 _react2.default.createElement(
                     "button",
-                    { type: "button", disabled: validation.isFormValid(props.region, required) },
+                    { type: "button", disabled: validation.isFormValid(props.region, required), onClick: function onClick() {
+                            return props.onSave();
+                        } },
                     "\u0417\u0431\u0435\u0440\u0435\u0433\u0442\u0438"
                 )
             )
@@ -33334,7 +33448,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.isEmailValid = exports.isFieldValid = exports.isFormValid = undefined;
 
-var _react = __webpack_require__(12);
+var _react = __webpack_require__(10);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -33364,7 +33478,9 @@ var isFieldValid = exports.isFieldValid = function isFieldValid(field) {
 };
 
 var isEmailValid = exports.isEmailValid = function isEmailValid(field) {
-    if (!field) return _react2.default.createElement(
+    var required = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+    if (!field && required) return _react2.default.createElement(
         "i",
         { className: "invalid" },
         "*",
@@ -33375,7 +33491,7 @@ var isEmailValid = exports.isEmailValid = function isEmailValid(field) {
         )
     );
     var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
-    if (!pattern.test(field)) return _react2.default.createElement(
+    if (!pattern.test(field) && field !== "") return _react2.default.createElement(
         "i",
         { className: "invalid" },
         "*",
@@ -33386,6 +33502,93 @@ var isEmailValid = exports.isEmailValid = function isEmailValid(field) {
         )
     );
 };
+
+/***/ }),
+/* 195 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(10);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Dialog = function (_React$Component) {
+    _inherits(Dialog, _React$Component);
+
+    function Dialog() {
+        _classCallCheck(this, Dialog);
+
+        return _possibleConstructorReturn(this, (Dialog.__proto__ || Object.getPrototypeOf(Dialog)).apply(this, arguments));
+    }
+
+    _createClass(Dialog, [{
+        key: "render",
+        value: function render() {
+            if (!this.props.dialog) return null;
+            return _react2.default.createElement(
+                "div",
+                { className: "blackout" },
+                _react2.default.createElement(
+                    "div",
+                    { className: "dialog" },
+                    _react2.default.createElement(
+                        "div",
+                        { className: "dialog-header" },
+                        _react2.default.createElement(
+                            "div",
+                            { className: "icons" },
+                            _react2.default.createElement("i", { className: "fa fa-lg fa-times", onClick: this.props.onClose })
+                        ),
+                        _react2.default.createElement(
+                            "h4",
+                            null,
+                            "\u041F\u0456\u0434\u0442\u0432\u0435\u0440\u0434\u0456\u0442\u044C \u0432\u0430\u0448\u0456 \u0434\u0456\u0457"
+                        )
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "dialog-body" },
+                        this.props.dialog.text
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "dialog-footer form-inline" },
+                        _react2.default.createElement(
+                            "button",
+                            { type: "button", className: "btn btn-success", onClick: this.props.onConfirm },
+                            "\u0422\u0430\u043A"
+                        ),
+                        _react2.default.createElement(
+                            "button",
+                            { type: "button", className: "btn btn-danger", onClick: this.props.onClose },
+                            "\u041D\u0456"
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Dialog;
+}(_react2.default.Component);
+
+exports.default = Dialog;
 
 /***/ })
 /******/ ]);

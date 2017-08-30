@@ -6,7 +6,9 @@ const SettingsApp = (props) => {
         <div className="col-flex">
             <Regions />
         </div>
-        <div className="col-flex"></div>
+        <div className="col-flex">
+            <p>test</p>
+        </div>
     </div>)
 }
 

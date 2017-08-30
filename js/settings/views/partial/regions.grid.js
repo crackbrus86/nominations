@@ -18,7 +18,7 @@ const RegionsGrid = (props) => {
             button: "delete",
             width: "*",
             action: (e) => {
-                    return null
+                    props.onDelete(e.target.dataset["rel"]);
             }
         },
         {
