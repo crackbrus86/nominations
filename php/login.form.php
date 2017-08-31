@@ -6,9 +6,6 @@
         $token = esc_sql($_POST["token"]);
         $sql = $wpdb->prepare("SELECT * FROM $tb_regions WHERE login = %s AND token = %s", $login, $token);
         $result = $wpdb->get_row($sql);
-        echo "<pre>";
-        print_r($result);
-        echo "</pre>";
         if($result) $_SESSION["regionObj"] = $result;
     }
     if(isset($_GET["logout"])){
