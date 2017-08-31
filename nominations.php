@@ -12,6 +12,20 @@ add_action("admin_menu", array("Nominations", "initSettings"));
 wp_register_style('font-awesome', plugins_url( '/styles/font-awesome.min.css', __FILE__ ));
 wp_enqueue_style( 'font-awesome');
 
+function logInReg(){
+    if(file_exists(RM__PLUGIN_DIR."/php/login.button.php")){
+        require_once(RM__PLUGIN_DIR."/php/login.button.php");
+    }
+}
+add_shortcode('LogRegIn', 'logInReg');
+
+function logInForm(){
+    if(file_exists(RM__PLUGIN_DIR."/php/login.form.php")){
+        require_once(RM__PLUGIN_DIR."/php/login.form.php");
+    }
+}
+add_shortcode('LogRegFr', 'logInForm');
+
 class Nominations{
     function initSettings(){
         add_menu_page("Nominations", "Номінації", "manage_options", "nominations", array("Nominations", "nomEditor"));

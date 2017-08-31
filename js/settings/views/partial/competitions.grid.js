@@ -19,7 +19,7 @@ const CompGrid = (props) => {
             button: "delete",
             width: "*",
             action: (e) => {
-                    // props.onDelete(e.target.dataset["rel"]);
+                props.onDelete(e.target.dataset["rel"]);
             }
         },
         {

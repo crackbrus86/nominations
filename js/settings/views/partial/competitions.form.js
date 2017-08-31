@@ -5,6 +5,7 @@ import Datetime from "react-datetime";
 import * as validation from "../../../components/validation/validation";
 
 const CompForm = (props) => {
+    var required = ["name"];
     var types = [{id: 1, title: "пауерліфтинг"}, {id: 2, title: "жим лежачи"}];
     var typesList = types.map(type => <option key={type.id} value={type.id}>{type.title}</option>);
     var genders = [{type: "male", title: "чоловіки"}, {type: "female", title: "жінки"}];
@@ -17,19 +18,19 @@ const CompForm = (props) => {
         <form>
             <div>
                 <label>Назва {validation.isFieldValid(props.competition.name, "Назва обов'язкова")}</label>
-                <input value={props.competition.name} type="text" maxLength="30" onChange={e => props.onChange("name", e.target.value)} />
+                <input value={props.competition.name} type="text" maxLength="250" onChange={e => props.onChange("name", e.target.value)} />
             </div> 
             <div>
                 <label>Тип змагань</label>
-                <select value={props.competition.typeId} onChange={(e) => this.props.onChange("typeId", e.target.value)}>{typesList}</select>                
+                <select value={props.competition.typeId} onChange={(e) => props.onChange("typeId", e.target.value)}>{typesList}</select>                
             </div>     
             <div>
                 <label>Стать</label>
-                <select value={props.competition.gender} onChange={(e) => this.props.onChange("gender", e.target.value)}>{gendersList}</select>                
+                <select value={props.competition.gender} onChange={(e) => props.onChange("gender", e.target.value)}>{gendersList}</select>                
             </div> 
             <div>
                 <label>Місце проведення</label>
-                <input value={props.competition.location} type="text" maxLength="30" onChange={e => props.onChange("location", e.target.value)} />
+                <input value={props.competition.location} type="text" maxLength="50" onChange={e => props.onChange("location", e.target.value)} />
             </div>  
             <div>
                 <label>Дата початку</label>
@@ -38,7 +39,10 @@ const CompForm = (props) => {
             <div>
                 <label>Дата закінчення</label>
                 <Datetime value={endDate} dateFormat="DD-MM-YYYY" timeFormat={false} onChange={(v) => props.onChange("endDate", v.format("YYYY-MM-DD"))} closeOnSelect={true} />
-            </div>                                         
+            </div>  
+            <div>
+                <button type="button" disabled={validation.isFormValid(props.competition, required)} onClick={() => props.onSave()}>Зберегти</button>    
+            </div>                                                       
         </form>
     </div>)
 }

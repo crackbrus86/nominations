@@ -57,3 +57,27 @@ export const getCompetitionById = (contract) => {
         data: contract
     })
 }
+
+export const insertCompetition = (contract) => {
+    return $.ajax({
+        url: compPath + "InsertCompetition.php",
+        type: "POST",
+        data: contract
+    })
+}
+
+export const updateCompetition = (contract) => {
+    return $.ajax({
+        url: compPath + "UpdateCompetition.php",
+        type: "POST",
+        data: contract
+    })
+}
+
+export const deleteCompetition = (contract) => {
+    return $.ajax({
+        url: compPath + "DeleteCompetition.php",
+        type: "POST",
+        data: contract
+    })
+}
