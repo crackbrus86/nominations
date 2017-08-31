@@ -1,5 +1,6 @@
 import React from "react";
 import Regions from "../views/regions";
+import Competitions from "../views/competitions";
 
 const SettingsApp = (props) => {
     return(<div className="row-wrap">
@@ -7,7 +8,7 @@ const SettingsApp = (props) => {
             <Regions />
         </div>
         <div className="col-flex">
-            <p>test</p>
+            <Competitions />
         </div>
     </div>)
 }

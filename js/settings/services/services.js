@@ -1,5 +1,6 @@
 import * as $ from "jquery";
 var path = "../wp-content/plugins/nominations/api/regions/";
+var compPath = "../wp-content/plugins/nominations/api/competitions/";
 
 export const getAllRegions = () => {
     return $.ajax({
@@ -35,6 +36,23 @@ export const updateRegion = (contract) => {
 export const deleteRegion = (contract) => {
     return $.ajax({
         url: path + "DeleteRegion.php",
+        type: "POST",
+        data: contract
+    })
+}
+
+//Competitions
+
+export const getAllCompetitions = () => {
+    return $.ajax({
+        url: compPath + "GetAllCompetitions.php",
+        type: "POST"
+    })
+}
+
+export const getCompetitionById = (contract) => {
+    return $.ajax({
+        url: compPath + "GetCompetitionById.php",
         type: "POST",
         data: contract
     })
