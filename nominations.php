@@ -12,6 +12,12 @@ add_action("admin_menu", array("Nominations", "initSettings"));
 wp_register_style('font-awesome', plugins_url( '/styles/font-awesome.min.css', __FILE__ ));
 wp_enqueue_style( 'font-awesome');
 
+add_action( 'init', 'do_session_start' ); 
+
+function do_session_start() { 
+    if ( !session_id() ) session_start(); 
+}
+
 function logInReg(){
     if(file_exists(RM__PLUGIN_DIR."/php/login.button.php")){
         require_once(RM__PLUGIN_DIR."/php/login.button.php");
