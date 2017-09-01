@@ -11,6 +11,8 @@ add_action("admin_menu", array("Nominations", "initSettings"));
 
 wp_register_style('font-awesome', plugins_url( '/styles/font-awesome.min.css', __FILE__ ));
 wp_enqueue_style( 'font-awesome');
+wp_register_style('style-auth', plugins_url( '/styles/style-auth.css', __FILE__ ));
+wp_enqueue_style( 'style-auth');
 
 add_action( 'init', 'do_session_start' ); 
 

@@ -1,0 +1,63 @@
+a#nom-auth-button {
+  border: 1px solid #ccc;
+  display: block;
+  height: 30px;
+  line-height: 30px;
+  overflow: auto;
+  padding: 0 8px;
+  float: right;
+  margin: 3px;
+  background-color: #840000;
+  color: #fff;
+  font-family: Verdana; }
+  a#nom-auth-button:hover {
+    background-color: #A70606; }
+
+div#nom-auth-form {
+  text-align: center; }
+  div#nom-auth-form p {
+    font-size: 0.8em;
+    font-family: Verdana; }
+  div#nom-auth-form form {
+    border: 1px dashed #ccc;
+    margin: auto;
+    width: 240px;
+    padding: 10px 0;
+    background-color: #ffe3ba; }
+    div#nom-auth-form form label {
+      color: #424242;
+      font-size: 0.9em; }
+    div#nom-auth-form form input[type=text],
+    div#nom-auth-form form input[type=password] {
+      border-radius: 4px; }
+    div#nom-auth-form form button {
+      background-color: #ccc;
+      border: 1px solid #b1afaf;
+      font-size: 0.9em;
+      font-family: Verdana;
+      color: #4c210f;
+      cursor: pointer; }
+      div#nom-auth-form form button:hover {
+        background-color: #d8d6d6; }
+
+a#nom-out {
+  border: 1px solid #ccc;
+  display: block;
+  height: 30px;
+  line-height: 30px;
+  overflow: auto;
+  padding: 0 8px;
+  float: right;
+  margin: 3px;
+  background-color: #07136d;
+  color: #fff;
+  font-family: Verdana; }
+  a#nom-out:hover {
+    background-color: #1124b1; }
+
+span#nom-name {
+  color: #fff;
+  display: block;
+  float: right;
+  font-family: Verdana;
+  line-height: 38px; }
