@@ -61,3 +61,17 @@ span#nom-name {
   float: right;
   font-family: Verdana;
   line-height: 38px; }
+
+div#nom-mng {
+  clear: both; }
+  div#nom-mng a {
+    display: block;
+    float: left;
+    background-color: #7d0303;
+    color: #fff;
+    text-decoration: none;
+    font-family: Verdana;
+    padding: 2px 5px;
+    margin: 2px 0; }
+    div#nom-mng a:hover {
+      background-color: #c31717; }

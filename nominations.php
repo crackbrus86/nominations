@@ -34,6 +34,26 @@ function logInForm(){
 }
 add_shortcode('LogRegFr', 'logInForm');
 
+function nomMngButton(){
+    if(file_exists(RM__PLUGIN_DIR."/php/nom.mng.button.php")){
+        require_once(RM__PLUGIN_DIR."/php/nom.mng.button.php");
+    }
+}
+add_shortcode('NomMngBtn', 'nomMngButton');
+
+function nominationsMgm(){
+    if(isset($_SESSION["regionObj"])){        
+        wp_register_script( 'nominations-mgr-bundle', plugins_url( './js/nominations-mgr-bundle.js', __FILE__ ) );
+        wp_enqueue_script(  'nominations-mgr-bundle');          
+    ?>
+    <div id="nm-app" data-rel="<?php echo $_SESSION['regionObj']->id ?>"></div>
+    <?php
+    }else{
+        echo "<script>window.location.replace('".get_home_url()."')</script>";
+    }
+}
+add_shortcode('NomMgm', 'nominationsMgm');
+
 class Nominations{
     function initSettings(){
         add_menu_page("Nominations", "Номінації", "manage_options", "nominations", array("Nominations", "nomEditor"));

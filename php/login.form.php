@@ -1,12 +1,15 @@
 <?php
-    if(isset($_POST["login"]) && isset($_POST["token"])){
+    if(isset($_POST["login"]) && isset($_POST["token"]) && !isset($_SESSION["regionObj"])){
         global $wpdb;
         $tb_regions = $wpdb->get_blog_prefix()."regions";
         $login = esc_sql($_POST["login"]);
         $token = esc_sql($_POST["token"]);
         $sql = $wpdb->prepare("SELECT * FROM $tb_regions WHERE login = %s AND token = %s", $login, $token);
         $result = $wpdb->get_row($sql);
-        if($result) $_SESSION["regionObj"] = $result;
+        if($result) {
+            $_SESSION["regionObj"] = $result;
+            echo "<script>window.location.reload();</script>";           
+        }
     }
     if(isset($_GET["logout"])){
         if($_SESSION["regionObj"]->id === $_GET["logout"]){
