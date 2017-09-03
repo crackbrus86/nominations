@@ -8,9 +8,9 @@ const CompGrid = (props) => {
             title: "Змагання",
             field: "name",
             width: "500px",
-            // rel: "id",
+            rel: "id",
             action: (e) => {
-                // props.onEdit(e.target.dataset["rel"]);
+                props.onEdit(e.target.dataset["rel"]);
             }
         }, 
         {
@@ -41,16 +41,15 @@ const CompGrid = (props) => {
                     
     ];   
     var rows = props.data.map(item => {
-        var sd = new Date(item.startDate);
-        var p = (new Date(item.startDate)).setDate((new Date(item.startDate)).getDate() - 90);
-        var f = (new Date(item.startDate)).setDate((new Date(item.startDate)).getDate() - 22);
+        var p = (new Date(item.startDate)).setDate((new Date(item.startDate)).getDate() - 22);
+        var f = (new Date(item.startDate)).setDate((new Date(item.startDate)).getDate() - 11);
         var status = "";
         if((+new Date()) <= p){
             status = "Попередня";
         }else if(p < (+new Date()) && (+new Date()) <= f){
             status = "Остаточна";
         }else{
-            status = "Тех. нарада";
+            status = "Мандатна комісія";
         }
         return{
             id: item.id,

@@ -21,7 +21,8 @@ class Grid extends React.Component{
                     <i className={classNames("fa", icon, column.button)}  data-rel={row[column.field]} onClick={(v) => column.action(v)}></i>
                 </td>)
             }else{
-                cells.push(<td key={counter} width={column.width}>{row[column.field]}</td>)
+                var content = (column.rel)? <span className="grid-rel" data-rel={row[column.rel]} onClick={v => column.action(v)}>{row[column.field]}</span> : row[column.field];
+                cells.push(<td key={counter} width={column.width}>{content}</td>)
             }            
         })
         return cells

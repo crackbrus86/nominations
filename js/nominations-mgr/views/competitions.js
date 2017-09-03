@@ -24,8 +24,9 @@ class Competitions extends React.Component{
         this.fetchCompetitions();
     }
     render(){
+        if(this.props.competition) return null;
         return <div>
-            <CompGrid data={this.state.competitions} />
+            <CompGrid data={this.state.competitions} onEdit={this.props.setComp} />
             <Preloader loading={this.state.isLoading} />
         </div>
     }
