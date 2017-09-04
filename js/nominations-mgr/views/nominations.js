@@ -44,8 +44,22 @@ class Nominations extends React.Component{
             benchpress: 0.00,
             deadlift: 0.00,
             total: 0.00,
-            reserve: false
-        } : null;
+            reserve: false,
+            competition: this.state.compInfo.id,
+            status: false
+        } : {
+            type: type,
+            surname: "",
+            firstName: "",
+            team: this.state.region,
+            isOfficial: false,
+            duty: "unknown",
+            isReferee: false,
+            refCategory: "category1",
+            refRemark: "",
+            competition: this.state.compInfo.id,
+            status: false            
+        };
 
         this.setState({nomination: nom})
     }
@@ -104,7 +118,7 @@ class Nominations extends React.Component{
             <CompInfo compInfo={this.state.compInfo} />
             <Modal target={this.state.nomination} onClose={this.closeNom}>
                 <LifterForm nomination={this.state.nomination} compInfo={this.state.compInfo} onChange={this.onChange} regions={this.state.regions} wc={this.state.wc} />
-                <OfficialForm nomination={this.state.nomination} compInfo={this.state.compInfo} />
+                <OfficialForm nomination={this.state.nomination} compInfo={this.state.compInfo} onChange={this.onChange} regions={this.state.regions} />
             </Modal>
             <Preloader loading={this.state.isLoading} />
         </div>

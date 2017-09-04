@@ -35,7 +35,7 @@ const LifterForm = (props) => {
                     </tr>
                     <tr>
                         <td><label>Ім'я</label></td>
-                        <td><input value={nom.firstName} type="text" maxLength="150" onChange={e => props.onChange("firstName", e.target.value)} /></td>
+                        <td><input value={nom.firstName} type="text" maxLength="50" onChange={e => props.onChange("firstName", e.target.value)} /></td>
                     </tr>
                     <tr>
                         <td><label>Дата народження</label></td>
@@ -79,6 +79,14 @@ const LifterForm = (props) => {
                     </tr>
                     </tbody>
                 </table>
+            </div>
+            <div className="formFooter">
+                <div className="form-footer-tab left">
+                    <button type="button" className="footer-button success">Зберегти</button>
+                </div>
+                <div className="form-footer-tab right">
+                <button type="button" className="footer-button danger">Скасувати</button>
+                </div>
             </div>
         </form>
     </div>);

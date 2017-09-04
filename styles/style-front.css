@@ -198,25 +198,47 @@
     .custom-modal .formBody table {
       border: none !important;
       margin-bottom: 0px !important; }
+      .custom-modal .formBody table tr.another-position {
+        background-color: #EAE7D7; }
       .custom-modal .formBody table tr td {
         border: none !important;
-        padding: 0 !important; }
+        padding: 0 !important;
+        vertical-align: top; }
+  .custom-modal .formFooter {
+    display: flex;
+    flex-direction: row; }
+    .custom-modal .formFooter .form-footer-tab {
+      flex-grow: 1; }
+      .custom-modal .formFooter .form-footer-tab.left {
+        text-align: right;
+        padding-right: 10px; }
+      .custom-modal .formFooter .form-footer-tab.right {
+        text-align: left;
+        padding-left: 10px; }
+      .custom-modal .formFooter .form-footer-tab .footer-button.success {
+        background-color: #24881e; }
+        .custom-modal .formFooter .form-footer-tab .footer-button.success:hover {
+          background-color: #2da926; }
+      .custom-modal .formFooter .form-footer-tab .footer-button.danger {
+        background-color: #ad2121; }
+        .custom-modal .formFooter .form-footer-tab .footer-button.danger:hover {
+          background-color: #e23333; }
   .custom-modal form label {
     display: block;
     font-weight: 600;
     text-align: right;
     margin-right: 10px;
     color: #000; }
-  .custom-modal form input {
+  .custom-modal form input, .custom-modal form textarea {
     font-family: Verdana, Geneva;
     width: 100%;
     margin-bottom: 10px;
     font-size: 11px !important;
     line-height: 16px !important; }
-    .custom-modal form input:read-only, .custom-modal form input:disabled {
+    .custom-modal form input:read-only, .custom-modal form input:disabled, .custom-modal form textarea:read-only, .custom-modal form textarea:disabled {
       opacity: 0.6;
       cursor: not-allowed; }
-    .custom-modal form input[type="checkbox"] {
+    .custom-modal form input[type="checkbox"], .custom-modal form textarea[type="checkbox"] {
       display: block;
       float: left;
       margin: 0;

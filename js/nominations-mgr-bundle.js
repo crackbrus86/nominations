@@ -49969,8 +49969,22 @@ var Nominations = function (_React$Component) {
                 benchpress: 0.00,
                 deadlift: 0.00,
                 total: 0.00,
-                reserve: false
-            } : null;
+                reserve: false,
+                competition: this.state.compInfo.id,
+                status: false
+            } : {
+                type: type,
+                surname: "",
+                firstName: "",
+                team: this.state.region,
+                isOfficial: false,
+                duty: "unknown",
+                isReferee: false,
+                refCategory: "category1",
+                refRemark: "",
+                competition: this.state.compInfo.id,
+                status: false
+            };
 
             this.setState({ nomination: nom });
         }
@@ -50069,7 +50083,7 @@ var Nominations = function (_React$Component) {
                     _modal2.default,
                     { target: this.state.nomination, onClose: this.closeNom },
                     _react2.default.createElement(_lifter2.default, { nomination: this.state.nomination, compInfo: this.state.compInfo, onChange: this.onChange, regions: this.state.regions, wc: this.state.wc }),
-                    _react2.default.createElement(_official2.default, { nomination: this.state.nomination, compInfo: this.state.compInfo })
+                    _react2.default.createElement(_official2.default, { nomination: this.state.nomination, compInfo: this.state.compInfo, onChange: this.onChange, regions: this.state.regions })
                 ),
                 _react2.default.createElement(_preloader2.default, { loading: this.state.isLoading })
             );
@@ -50398,7 +50412,7 @@ var LifterForm = function LifterForm(props) {
                             _react2.default.createElement(
                                 "td",
                                 null,
-                                _react2.default.createElement("input", { value: nom.firstName, type: "text", maxLength: "150", onChange: function onChange(e) {
+                                _react2.default.createElement("input", { value: nom.firstName, type: "text", maxLength: "50", onChange: function onChange(e) {
                                         return props.onChange("firstName", e.target.value);
                                     } })
                             )
@@ -50613,6 +50627,28 @@ var LifterForm = function LifterForm(props) {
                                     } })
                             )
                         )
+                    )
+                )
+            ),
+            _react2.default.createElement(
+                "div",
+                { className: "formFooter" },
+                _react2.default.createElement(
+                    "div",
+                    { className: "form-footer-tab left" },
+                    _react2.default.createElement(
+                        "button",
+                        { type: "button", className: "footer-button success" },
+                        "\u0417\u0431\u0435\u0440\u0435\u0433\u0442\u0438"
+                    )
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { className: "form-footer-tab right" },
+                    _react2.default.createElement(
+                        "button",
+                        { type: "button", className: "footer-button danger" },
+                        "\u0421\u043A\u0430\u0441\u0443\u0432\u0430\u0442\u0438"
                     )
                 )
             )
@@ -51976,14 +52012,253 @@ var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _moment = __webpack_require__(0);
+
+var _moment2 = _interopRequireDefault(_moment);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var OfficialForm = function OfficialForm(props) {
     if (props.nomination.type !== "official") return null;
+    var info = props.compInfo;
+    var date = (0, _moment2.default)(info.startDate).locale("uk").format("DD MMM") + "-" + (0, _moment2.default)(info.endDate).locale("uk").format("DD MMM") + ", " + (0, _moment2.default)(info.endDate).format("YYYY");
+    var nom = props.nomination;
+    var regionsList = props.regions.map(function (region) {
+        return _react2.default.createElement(
+            "option",
+            { key: region.id, value: region.id },
+            region.name
+        );
+    });
+    var duties = [{ value: "assistantCoach", text: "Асистент тренера" }, { value: "coach", text: "Тренер" }, { value: "doctor", text: "Лікар" }, { value: "headCoach", text: "Головний тренер" }, { value: "official", text: "Офіційна особа" }, { value: "physiotherapist", text: "Фізіотерапевт" }, { value: "unknown", text: "Невідомо" }];
+    var dutiesList = duties.map(function (duty) {
+        return _react2.default.createElement(
+            "option",
+            { key: duty.value, value: duty.value },
+            duty.text
+        );
+    });
+    var refCategories = [{ value: "category1", text: "Категорія І" }, { value: "category2", text: "Категорія ІІ" }, { value: "national", text: "Національна" }];
+    var refCatList = refCategories.map(function (cat) {
+        return _react2.default.createElement(
+            "option",
+            { key: cat.value, value: cat.value },
+            cat.text
+        );
+    });
     return _react2.default.createElement(
         "div",
         null,
-        "Official"
+        _react2.default.createElement(
+            "div",
+            { className: "form-header" },
+            _react2.default.createElement(
+                "h3",
+                null,
+                "\u0414\u043E\u0434\u0430\u0442\u0438 \u043E\u0444\u0456\u0446\u0456\u0439\u043D\u0443 \u043E\u0441\u043E\u0431\u0443 \u0434\u043E \u043D\u043E\u043C\u0456\u043D\u0430\u0446\u0456\u0457"
+            ),
+            _react2.default.createElement(
+                "p",
+                { className: "comp-name" },
+                info.name
+            ),
+            _react2.default.createElement(
+                "p",
+                { className: "comp-location" },
+                info.location
+            ),
+            _react2.default.createElement(
+                "p",
+                { className: "comp-date" },
+                date
+            )
+        ),
+        _react2.default.createElement(
+            "form",
+            null,
+            _react2.default.createElement(
+                "div",
+                { className: "formBody" },
+                _react2.default.createElement(
+                    "table",
+                    null,
+                    _react2.default.createElement(
+                        "tbody",
+                        null,
+                        _react2.default.createElement(
+                            "tr",
+                            null,
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement(
+                                    "label",
+                                    null,
+                                    "\u041F\u0440\u0456\u0437\u0432\u0438\u0449\u0435"
+                                )
+                            ),
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement("input", { value: nom.surname, type: "text", maxLength: "150", onChange: function onChange(e) {
+                                        return props.onChange("surname", e.target.value);
+                                    } })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "tr",
+                            null,
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement(
+                                    "label",
+                                    null,
+                                    "\u0406\u043C'\u044F"
+                                )
+                            ),
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement("input", { value: nom.firstName, type: "text", maxLength: "50", onChange: function onChange(e) {
+                                        return props.onChange("firstName", e.target.value);
+                                    } })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "tr",
+                            null,
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement(
+                                    "label",
+                                    null,
+                                    "\u041E\u0431\u043B\u0430\u0441\u0442\u044C"
+                                )
+                            ),
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement(
+                                    "select",
+                                    { value: nom.team, disabled: true },
+                                    regionsList
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "tr",
+                            { className: "another-position" },
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement(
+                                    "label",
+                                    null,
+                                    "\u0404 \u043E\u0444\u0456\u0446\u0456\u0439\u043D\u043E\u044E \u043E\u0441\u043E\u0431\u043E\u044E"
+                                )
+                            ),
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement("input", { checked: nom.isOfficial, type: "checkbox", onChange: function onChange(e) {
+                                        return props.onChange("isOfficial", e.target.checked);
+                                    } })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "tr",
+                            { className: "another-position" },
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement(
+                                    "label",
+                                    null,
+                                    "\u043D\u0430 \u043F\u043E\u0441\u0430\u0434\u0456"
+                                )
+                            ),
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement(
+                                    "select",
+                                    { value: nom.duty, onChange: function onChange(e) {
+                                            return props.onChange("duty", e.target.value);
+                                        } },
+                                    dutiesList
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "tr",
+                            null,
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement(
+                                    "label",
+                                    null,
+                                    "\u0404 \u0441\u0443\u0434\u0434\u0435\u044E"
+                                )
+                            ),
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement("input", { checked: nom.isReferee, type: "checkbox", onChange: function onChange(e) {
+                                        return props.onChange("isReferee", e.target.checked);
+                                    } })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "tr",
+                            null,
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement(
+                                    "label",
+                                    null,
+                                    "\u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0456\u0457"
+                                )
+                            ),
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement(
+                                    "select",
+                                    { value: nom.refCategory, onChange: function onChange(e) {
+                                            return props.onChange("refCategory", e.target.value);
+                                        } },
+                                    refCatList
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "tr",
+                            null,
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement(
+                                    "label",
+                                    null,
+                                    "\u041F\u0440\u0438\u043C\u0456\u0442\u043A\u0438 \u0441\u0443\u0434\u0434\u0456"
+                                )
+                            ),
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement("textarea", { value: nom.refRemark, onChange: function onChange(e) {
+                                        return props.onChange("refRemark", e.target.value);
+                                    }, maxLength: "300" })
+                            )
+                        )
+                    )
+                )
+            )
+        )
     );
 };
 exports.default = OfficialForm;
@@ -52028,7 +52303,7 @@ exports = module.exports = __webpack_require__(207)(undefined);
 
 
 // module
-exports.push([module.i, "#content {\n  width: 100% !important; }\n\n#nm-front .grid {\n  border-spacing: 0px;\n  border-collapse: collapse; }\n  #nm-front .grid thead tr {\n    background-color: #ECE9DF; }\n    #nm-front .grid thead tr th {\n      font-family: Verdana, Geneva;\n      font-weight: normal;\n      font-size: 0.6em;\n      text-align: center;\n      padding: 2pt;\n      letter-spacing: 1pt;\n      background-color: #ECE9DF;\n      color: #000;\n      border: 1px solid #ccc;\n      text-shadow: 0 1px 2px #999; }\n  #nm-front .grid tbody tr td {\n    font-family: Verdana, Geneva;\n    font-weight: normal;\n    font-size: 0.7em;\n    padding: 3px;\n    border: 1px solid #ccc; }\n    #nm-front .grid tbody tr td span.grid-rel {\n      color: #0062A4;\n      cursor: pointer; }\n      #nm-front .grid tbody tr td span.grid-rel:hover {\n        color: #f50000;\n        background-color: #ffffc5;\n        border-bottom: 1px dotted #f50000 !important; }\n\n.blackout {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  background-color: rgba(0, 0, 0, 0.8);\n  z-index: 10000; }\n  .blackout .spinner-wrap {\n    position: absolute;\n    top: 50%;\n    left: 50%; }\n    .blackout .spinner-wrap .fa-spin {\n      color: #6c6fff; }\n\n.nom-header {\n  display: flex;\n  flex-direction: row; }\n  .nom-header .nom-header-cell {\n    flex-grow: 1; }\n    .nom-header .nom-header-cell .back-to-nom-list {\n      color: white;\n      background-color: #4d90fe;\n      border: none;\n      padding: 5px 6px;\n      border-radius: 4px;\n      text-shadow: 0 0 1px #000;\n      cursor: pointer; }\n      .nom-header .nom-header-cell .back-to-nom-list:hover {\n        background-color: #6FA5FC; }\n      .nom-header .nom-header-cell .back-to-nom-list i.fa-chevron-left {\n        color: #290B0B;\n        margin-right: 5px; }\n    .nom-header .nom-header-cell .add-panel {\n      width: auto;\n      float: right;\n      margin: 10px 25px 10px 0;\n      z-index: 100;\n      vertical-align: middle;\n      text-align: right;\n      background-color: #f1efe3;\n      border: solid 1px #E8E4D9;\n      padding: 0.8em 1em 0.5em 1em; }\n      .nom-header .nom-header-cell .add-panel span {\n        width: 38px;\n        height: 36px;\n        float: left;\n        text-align: center;\n        padding: 3px 0 3px 0;\n        margin: 0 1em 0 0;\n        display: block;\n        border: 1px solid #E0DED7;\n        background-color: #EAE6DC;\n        border-radius: 3px; }\n        .nom-header .nom-header-cell .add-panel span:nth-child(2) {\n          margin: 0; }\n        .nom-header .nom-header-cell .add-panel span:hover {\n          background-color: #e2ddcf;\n          border: solid 1px #D1C9B2;\n          cursor: pointer; }\n\n.comp-info-header p {\n  font-family: Verdana, Geneva;\n  font-weight: 600;\n  text-align: center;\n  margin-top: 0px;\n  margin-bottom: 0px !important; }\n  .comp-info-header p.info-title {\n    font-size: 0.8em;\n    margin-top: 10px; }\n  .comp-info-header p.info-location {\n    font-size: 0.8em;\n    color: #676767; }\n  .comp-info-header p.info-date {\n    font-size: 0.7em;\n    color: #676767; }\n\n.comp-info-status {\n  display: block;\n  float: right;\n  width: auto;\n  margin: 0 1.5em 1em 1em;\n  padding: 0.3em 1em 0.3em 1em;\n  border: 1px solid #ECD5A2;\n  background-color: #FFFFC6;\n  text-align: left;\n  font-weight: normal;\n  font-family: Tahoma, Geneva;\n  font-size: 13px;\n  border-radius: 8px; }\n  .comp-info-status p {\n    margin-bottom: 5px !important;\n    line-height: 18px; }\n    .comp-info-status p.status {\n      border-bottom: 1px dotted #777;\n      margin-bottom: 15px !important; }\n      .comp-info-status p.status span {\n        font-weight: bold; }\n\n.custom-modal {\n  background-color: #ffffff;\n  position: absolute;\n  top: 10%;\n  left: 50%;\n  min-width: 500px;\n  min-height: 200px;\n  border-radius: 5px;\n  padding: 4px 10px;\n  margin-left: -250px; }\n  .custom-modal .custom-modal-header {\n    text-align: right;\n    padding-right: 5px; }\n    .custom-modal .custom-modal-header .fa-times {\n      color: #9a9aaf;\n      cursor: pointer; }\n      .custom-modal .custom-modal-header .fa-times:hover {\n        color: #68686f; }\n  .custom-modal h6, .custom-modal h4 {\n    margin: 5px 0 10px 0px; }\n  .custom-modal h4 {\n    font-size: 1.2em;\n    color: #0849c5;\n    margin-top: 0px; }\n  .custom-modal .form-header {\n    display: block;\n    margin: 10px auto;\n    border: solid 1px #AACCAA;\n    background-color: #D5FCA1;\n    text-align: center;\n    border-radius: 5px;\n    padding: 10px; }\n    .custom-modal .form-header h3 {\n      font-weight: bold;\n      font-family: Tahoma, Verdana;\n      font-size: 1.3em;\n      margin-bottom: 10px !important; }\n    .custom-modal .form-header p {\n      font-family: Verdana, Geneva;\n      font-weight: 600;\n      text-align: center;\n      margin-top: 0px;\n      margin-bottom: 0px !important; }\n      .custom-modal .form-header p.comp-name {\n        font-size: 0.8em;\n        margin-top: 10px; }\n      .custom-modal .form-header p.comp-location {\n        font-size: 0.8em;\n        color: #676767; }\n      .custom-modal .form-header p.comp-date {\n        font-size: 0.7em;\n        color: #676767; }\n  .custom-modal .formBody {\n    width: 420px !important;\n    margin: 10px auto;\n    background-color: #f1efe3;\n    border: 1px solid #e0dbcb;\n    border-radius: 10px;\n    padding: 10px 15px; }\n    .custom-modal .formBody tr th, .custom-modal .formBody thead th {\n      color: #777;\n      font-size: 12px;\n      font-weight: bold;\n      line-height: 18px;\n      padding: 0 !important; }\n    .custom-modal .formBody table {\n      border: none !important;\n      margin-bottom: 0px !important; }\n      .custom-modal .formBody table tr td {\n        border: none !important;\n        padding: 0 !important; }\n  .custom-modal form label {\n    display: block;\n    font-weight: 600;\n    text-align: right;\n    margin-right: 10px;\n    color: #000; }\n  .custom-modal form input {\n    font-family: Verdana, Geneva;\n    width: 100%;\n    margin-bottom: 10px;\n    font-size: 11px !important;\n    line-height: 16px !important; }\n    .custom-modal form input:read-only, .custom-modal form input:disabled {\n      opacity: 0.6;\n      cursor: not-allowed; }\n    .custom-modal form input[type=\"checkbox\"] {\n      display: block;\n      float: left;\n      margin: 0;\n      width: auto; }\n  .custom-modal form select {\n    margin-bottom: 10px; }\n  .custom-modal form button {\n    color: #fff;\n    background-color: #038ece;\n    font-weight: 600;\n    border-radius: 4px;\n    border: 0px;\n    padding: 5px 5px 7px;\n    margin: 5px 0;\n    cursor: pointer; }\n    .custom-modal form button:hover {\n      background-color: #03A9F4; }\n    .custom-modal form button:disabled {\n      opacity: 0.5;\n      cursor: not-allowed; }\n      .custom-modal form button:disabled:hover {\n        background-color: #038ece; }\n", ""]);
+exports.push([module.i, "#content {\n  width: 100% !important; }\n\n#nm-front .grid {\n  border-spacing: 0px;\n  border-collapse: collapse; }\n  #nm-front .grid thead tr {\n    background-color: #ECE9DF; }\n    #nm-front .grid thead tr th {\n      font-family: Verdana, Geneva;\n      font-weight: normal;\n      font-size: 0.6em;\n      text-align: center;\n      padding: 2pt;\n      letter-spacing: 1pt;\n      background-color: #ECE9DF;\n      color: #000;\n      border: 1px solid #ccc;\n      text-shadow: 0 1px 2px #999; }\n  #nm-front .grid tbody tr td {\n    font-family: Verdana, Geneva;\n    font-weight: normal;\n    font-size: 0.7em;\n    padding: 3px;\n    border: 1px solid #ccc; }\n    #nm-front .grid tbody tr td span.grid-rel {\n      color: #0062A4;\n      cursor: pointer; }\n      #nm-front .grid tbody tr td span.grid-rel:hover {\n        color: #f50000;\n        background-color: #ffffc5;\n        border-bottom: 1px dotted #f50000 !important; }\n\n.blackout {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  background-color: rgba(0, 0, 0, 0.8);\n  z-index: 10000; }\n  .blackout .spinner-wrap {\n    position: absolute;\n    top: 50%;\n    left: 50%; }\n    .blackout .spinner-wrap .fa-spin {\n      color: #6c6fff; }\n\n.nom-header {\n  display: flex;\n  flex-direction: row; }\n  .nom-header .nom-header-cell {\n    flex-grow: 1; }\n    .nom-header .nom-header-cell .back-to-nom-list {\n      color: white;\n      background-color: #4d90fe;\n      border: none;\n      padding: 5px 6px;\n      border-radius: 4px;\n      text-shadow: 0 0 1px #000;\n      cursor: pointer; }\n      .nom-header .nom-header-cell .back-to-nom-list:hover {\n        background-color: #6FA5FC; }\n      .nom-header .nom-header-cell .back-to-nom-list i.fa-chevron-left {\n        color: #290B0B;\n        margin-right: 5px; }\n    .nom-header .nom-header-cell .add-panel {\n      width: auto;\n      float: right;\n      margin: 10px 25px 10px 0;\n      z-index: 100;\n      vertical-align: middle;\n      text-align: right;\n      background-color: #f1efe3;\n      border: solid 1px #E8E4D9;\n      padding: 0.8em 1em 0.5em 1em; }\n      .nom-header .nom-header-cell .add-panel span {\n        width: 38px;\n        height: 36px;\n        float: left;\n        text-align: center;\n        padding: 3px 0 3px 0;\n        margin: 0 1em 0 0;\n        display: block;\n        border: 1px solid #E0DED7;\n        background-color: #EAE6DC;\n        border-radius: 3px; }\n        .nom-header .nom-header-cell .add-panel span:nth-child(2) {\n          margin: 0; }\n        .nom-header .nom-header-cell .add-panel span:hover {\n          background-color: #e2ddcf;\n          border: solid 1px #D1C9B2;\n          cursor: pointer; }\n\n.comp-info-header p {\n  font-family: Verdana, Geneva;\n  font-weight: 600;\n  text-align: center;\n  margin-top: 0px;\n  margin-bottom: 0px !important; }\n  .comp-info-header p.info-title {\n    font-size: 0.8em;\n    margin-top: 10px; }\n  .comp-info-header p.info-location {\n    font-size: 0.8em;\n    color: #676767; }\n  .comp-info-header p.info-date {\n    font-size: 0.7em;\n    color: #676767; }\n\n.comp-info-status {\n  display: block;\n  float: right;\n  width: auto;\n  margin: 0 1.5em 1em 1em;\n  padding: 0.3em 1em 0.3em 1em;\n  border: 1px solid #ECD5A2;\n  background-color: #FFFFC6;\n  text-align: left;\n  font-weight: normal;\n  font-family: Tahoma, Geneva;\n  font-size: 13px;\n  border-radius: 8px; }\n  .comp-info-status p {\n    margin-bottom: 5px !important;\n    line-height: 18px; }\n    .comp-info-status p.status {\n      border-bottom: 1px dotted #777;\n      margin-bottom: 15px !important; }\n      .comp-info-status p.status span {\n        font-weight: bold; }\n\n.custom-modal {\n  background-color: #ffffff;\n  position: absolute;\n  top: 10%;\n  left: 50%;\n  min-width: 500px;\n  min-height: 200px;\n  border-radius: 5px;\n  padding: 4px 10px;\n  margin-left: -250px; }\n  .custom-modal .custom-modal-header {\n    text-align: right;\n    padding-right: 5px; }\n    .custom-modal .custom-modal-header .fa-times {\n      color: #9a9aaf;\n      cursor: pointer; }\n      .custom-modal .custom-modal-header .fa-times:hover {\n        color: #68686f; }\n  .custom-modal h6, .custom-modal h4 {\n    margin: 5px 0 10px 0px; }\n  .custom-modal h4 {\n    font-size: 1.2em;\n    color: #0849c5;\n    margin-top: 0px; }\n  .custom-modal .form-header {\n    display: block;\n    margin: 10px auto;\n    border: solid 1px #AACCAA;\n    background-color: #D5FCA1;\n    text-align: center;\n    border-radius: 5px;\n    padding: 10px; }\n    .custom-modal .form-header h3 {\n      font-weight: bold;\n      font-family: Tahoma, Verdana;\n      font-size: 1.3em;\n      margin-bottom: 10px !important; }\n    .custom-modal .form-header p {\n      font-family: Verdana, Geneva;\n      font-weight: 600;\n      text-align: center;\n      margin-top: 0px;\n      margin-bottom: 0px !important; }\n      .custom-modal .form-header p.comp-name {\n        font-size: 0.8em;\n        margin-top: 10px; }\n      .custom-modal .form-header p.comp-location {\n        font-size: 0.8em;\n        color: #676767; }\n      .custom-modal .form-header p.comp-date {\n        font-size: 0.7em;\n        color: #676767; }\n  .custom-modal .formBody {\n    width: 420px !important;\n    margin: 10px auto;\n    background-color: #f1efe3;\n    border: 1px solid #e0dbcb;\n    border-radius: 10px;\n    padding: 10px 15px; }\n    .custom-modal .formBody tr th, .custom-modal .formBody thead th {\n      color: #777;\n      font-size: 12px;\n      font-weight: bold;\n      line-height: 18px;\n      padding: 0 !important; }\n    .custom-modal .formBody table {\n      border: none !important;\n      margin-bottom: 0px !important; }\n      .custom-modal .formBody table tr.another-position {\n        background-color: #EAE7D7; }\n      .custom-modal .formBody table tr td {\n        border: none !important;\n        padding: 0 !important;\n        vertical-align: top; }\n  .custom-modal .formFooter {\n    display: flex;\n    flex-direction: row; }\n    .custom-modal .formFooter .form-footer-tab {\n      flex-grow: 1; }\n      .custom-modal .formFooter .form-footer-tab.left {\n        text-align: right;\n        padding-right: 10px; }\n      .custom-modal .formFooter .form-footer-tab.right {\n        text-align: left;\n        padding-left: 10px; }\n      .custom-modal .formFooter .form-footer-tab .footer-button.success {\n        background-color: #24881e; }\n        .custom-modal .formFooter .form-footer-tab .footer-button.success:hover {\n          background-color: #2da926; }\n      .custom-modal .formFooter .form-footer-tab .footer-button.danger {\n        background-color: #ad2121; }\n        .custom-modal .formFooter .form-footer-tab .footer-button.danger:hover {\n          background-color: #e23333; }\n  .custom-modal form label {\n    display: block;\n    font-weight: 600;\n    text-align: right;\n    margin-right: 10px;\n    color: #000; }\n  .custom-modal form input, .custom-modal form textarea {\n    font-family: Verdana, Geneva;\n    width: 100%;\n    margin-bottom: 10px;\n    font-size: 11px !important;\n    line-height: 16px !important; }\n    .custom-modal form input:read-only, .custom-modal form input:disabled, .custom-modal form textarea:read-only, .custom-modal form textarea:disabled {\n      opacity: 0.6;\n      cursor: not-allowed; }\n    .custom-modal form input[type=\"checkbox\"], .custom-modal form textarea[type=\"checkbox\"] {\n      display: block;\n      float: left;\n      margin: 0;\n      width: auto; }\n  .custom-modal form select {\n    margin-bottom: 10px; }\n  .custom-modal form button {\n    color: #fff;\n    background-color: #038ece;\n    font-weight: 600;\n    border-radius: 4px;\n    border: 0px;\n    padding: 5px 5px 7px;\n    margin: 5px 0;\n    cursor: pointer; }\n    .custom-modal form button:hover {\n      background-color: #03A9F4; }\n    .custom-modal form button:disabled {\n      opacity: 0.5;\n      cursor: not-allowed; }\n      .custom-modal form button:disabled:hover {\n        background-color: #038ece; }\n", ""]);
 
 // exports
 

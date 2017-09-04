@@ -267,10 +267,43 @@
             border: none!important;
             margin-bottom: 0px!important;
             tr{
-    
+                &.another-position{
+                    background-color: #EAE7D7;
+                }
                 td{
                     border: none!important;
                     padding: 0!important;
+                    vertical-align: top;
+                }
+            }
+        }
+    }
+    
+    .formFooter{
+        display: flex;
+        flex-direction: row;
+        .form-footer-tab{
+            flex-grow: 1;
+            &.left{
+                text-align: right;
+                padding-right: 10px;
+            }
+            &.right{
+                text-align: left;
+                padding-left: 10px;
+            }
+            .footer-button{
+                &.success{
+                    background-color: #24881e;
+                    &:hover{
+                        background-color: #2da926;
+                    }
+                }
+                &.danger{
+                    background-color: #ad2121;
+                    &:hover{
+                        background-color: #e23333;
+                    }                    
                 }
             }
         }
@@ -284,7 +317,7 @@
             margin-right: 10px;  
             color: #000;          
         }
-        input{
+        input, textarea{
             font-family: Verdana, Geneva;
             width: 100%;
             margin-bottom: 10px;
