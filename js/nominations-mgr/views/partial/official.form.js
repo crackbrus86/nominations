@@ -59,6 +59,14 @@ const OfficialForm = (props) => {
                     </tbody>
                 </table>
             </div>
+            <div className="formFooter">
+                <div className="form-footer-tab left">
+                    <button type="button" className="footer-button success" onClick={() => props.onSave()}>Зберегти</button>
+                </div>
+                <div className="form-footer-tab right">
+                <button type="button" className="footer-button danger" onClick={() => props.onClose()}>Скасувати</button>
+                </div>
+            </div>            
         </form>    
     </div>);
 }

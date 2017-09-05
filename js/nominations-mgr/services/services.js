@@ -2,6 +2,7 @@ import $ from "jquery";
 var compPath = "../wp-content/plugins/nominations/api/competitions/";
 var regPath = "../wp-content/plugins/nominations/api/regions/";
 var wcPath = "../wp-content/plugins/nominations/api/weight-categories/";
+var nomPath = "../wp-content/plugins/nominations/api/nominations/";
 
 export const getCompetitions = () => {
     return $.ajax({
@@ -28,6 +29,22 @@ export const getAllRegionsNames = () => {
 export const getWeightCategories = (contract) => {
     return $.ajax({
         url: wcPath + "GetWeightCategoriesByGender.php",
+        type: "POST",
+        data: contract
+    })
+}
+
+export const insertLifterNomination = (contract) => {
+    return $.ajax({
+        url: nomPath + "InsertLifterNomination.php",
+        type: "POST",
+        data: contract
+    })
+}
+
+export const insertOfficialNomination = (contract) => {
+    return $.ajax({
+        url: nomPath + "InsertOfficialNomination.php",
         type: "POST",
         data: contract
     })

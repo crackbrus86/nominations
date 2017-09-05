@@ -365,3 +365,32 @@
         }
     }
 }
+
+.inform{
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    min-width: 400px;
+    background-color: #fff;
+    margin-left: -200px;
+    padding: 5px 10px;
+    border-radius: 5px;    
+    .inform-header{
+        .icons{
+            text-align: right;
+            .fa-times{
+                color: #9a9aaf;
+                cursor: pointer;
+                &:hover{
+                    color: #68686f;
+                }
+            }
+        }
+    }
+    .inform-body{
+        padding: 10px 0;
+        font-family: Tahoma, Verdana;
+        font-size: 0.9em;
+        text-align: center;        
+    }
+}

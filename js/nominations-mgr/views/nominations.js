@@ -5,6 +5,7 @@ import * as services from "../services/services";
 import Modal from "../../components/modal/modal";
 import LifterForm from "./partial/lifter.form";
 import OfficialForm from "./partial/official.form";
+import Inform from "../../components/modal/inform";
 
 class Nominations extends React.Component{
     constructor(props){
@@ -15,10 +16,13 @@ class Nominations extends React.Component{
             nomination: null,
             region: this.props.region,
             regions: [],
-            wc: []
+            wc: [],
+            inform: null
         }
         this.closeNom = this.closeNomination.bind(this);
         this.onChange = this.changeNom.bind(this);
+        this.onSave = this.saveNom.bind(this);
+        this.onCloseInform = this.hideInform.bind(this);
     }
 
     getCompInfo(id){
@@ -67,9 +71,36 @@ class Nominations extends React.Component{
     changeNom(field, value){
         var temp = this.state.nomination;
         temp[field] = value;
-        temp["total"] = parseFloat(temp.squat) + parseFloat(temp.benchpress) + parseFloat(temp.deadlift);
+        if(temp["type"] === "lifter") temp["total"] = parseFloat(temp.squat) + parseFloat(temp.benchpress) + parseFloat(temp.deadlift);
         this.setState({nomination: temp});
-    }    
+    } 
+    
+    saveNom(){
+        this.setState({isLoading: true});
+        if(this.state.nomination.type === "lifter"){
+            services.insertLifterNomination(this.state.nomination).then(() => {
+                this.closeNom();
+                this.setState({isLoading: false});
+                this.showInform("Спортсмена було успішно додано до номінації");
+            })
+        }else{
+            services.insertOfficialNomination(this.state.nomination).then(() => {
+                this.closeNom();
+                this.setState({isLoading: false});
+                this.showInform("Офіційну особу було успішно додано до номінації");
+            })
+        }
+    }
+
+    showInform(txt){
+        this.setState({inform: {
+            text: txt
+        }})
+    }
+
+    hideInform(){
+        this.setState({inform: null});
+    }
 
     closeNomination(){
         this.setState({nomination: null});
@@ -117,9 +148,10 @@ class Nominations extends React.Component{
             </div>
             <CompInfo compInfo={this.state.compInfo} />
             <Modal target={this.state.nomination} onClose={this.closeNom}>
-                <LifterForm nomination={this.state.nomination} compInfo={this.state.compInfo} onChange={this.onChange} regions={this.state.regions} wc={this.state.wc} />
-                <OfficialForm nomination={this.state.nomination} compInfo={this.state.compInfo} onChange={this.onChange} regions={this.state.regions} />
+                <LifterForm nomination={this.state.nomination} compInfo={this.state.compInfo} onChange={this.onChange} regions={this.state.regions} wc={this.state.wc} onSave={this.onSave}  onClose={this.closeNom} />
+                <OfficialForm nomination={this.state.nomination} compInfo={this.state.compInfo} onChange={this.onChange} regions={this.state.regions} onSave={this.onSave} onClose={this.closeNom}  />
             </Modal>
+            <Inform inform={this.state.inform} onClose={this.onCloseInform} />
             <Preloader loading={this.state.isLoading} />
         </div>
     }

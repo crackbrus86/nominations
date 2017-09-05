@@ -261,3 +261,25 @@
       cursor: not-allowed; }
       .custom-modal form button:disabled:hover {
         background-color: #038ece; }
+
+.inform {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  min-width: 400px;
+  background-color: #fff;
+  margin-left: -200px;
+  padding: 5px 10px;
+  border-radius: 5px; }
+  .inform .inform-header .icons {
+    text-align: right; }
+    .inform .inform-header .icons .fa-times {
+      color: #9a9aaf;
+      cursor: pointer; }
+      .inform .inform-header .icons .fa-times:hover {
+        color: #68686f; }
+  .inform .inform-body {
+    padding: 10px 0;
+    font-family: Tahoma, Verdana;
+    font-size: 0.9em;
+    text-align: center; }

@@ -26246,7 +26246,7 @@ return jQuery;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getWeightCategories = exports.getAllRegionsNames = exports.getCompetitionById = exports.getCompetitions = undefined;
+exports.insertOfficialNomination = exports.insertLifterNomination = exports.getWeightCategories = exports.getAllRegionsNames = exports.getCompetitionById = exports.getCompetitions = undefined;
 
 var _jquery = __webpack_require__(88);
 
@@ -26257,6 +26257,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var compPath = "../wp-content/plugins/nominations/api/competitions/";
 var regPath = "../wp-content/plugins/nominations/api/regions/";
 var wcPath = "../wp-content/plugins/nominations/api/weight-categories/";
+var nomPath = "../wp-content/plugins/nominations/api/nominations/";
 
 var getCompetitions = exports.getCompetitions = function getCompetitions() {
     return _jquery2.default.ajax({
@@ -26283,6 +26284,22 @@ var getAllRegionsNames = exports.getAllRegionsNames = function getAllRegionsName
 var getWeightCategories = exports.getWeightCategories = function getWeightCategories(contract) {
     return _jquery2.default.ajax({
         url: wcPath + "GetWeightCategoriesByGender.php",
+        type: "POST",
+        data: contract
+    });
+};
+
+var insertLifterNomination = exports.insertLifterNomination = function insertLifterNomination(contract) {
+    return _jquery2.default.ajax({
+        url: nomPath + "InsertLifterNomination.php",
+        type: "POST",
+        data: contract
+    });
+};
+
+var insertOfficialNomination = exports.insertOfficialNomination = function insertOfficialNomination(contract) {
+    return _jquery2.default.ajax({
+        url: nomPath + "InsertOfficialNomination.php",
         type: "POST",
         data: contract
     });
@@ -49186,7 +49203,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-__webpack_require__(331);
+__webpack_require__(332);
 
 var NomMnmApp = function (_React$Component) {
     _inherits(NomMnmApp, _React$Component);
@@ -49910,6 +49927,10 @@ var _official = __webpack_require__(330);
 
 var _official2 = _interopRequireDefault(_official);
 
+var _inform = __webpack_require__(331);
+
+var _inform2 = _interopRequireDefault(_inform);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -49934,10 +49955,13 @@ var Nominations = function (_React$Component) {
             nomination: null,
             region: _this.props.region,
             regions: [],
-            wc: []
+            wc: [],
+            inform: null
         };
         _this.closeNom = _this.closeNomination.bind(_this);
         _this.onChange = _this.changeNom.bind(_this);
+        _this.onSave = _this.saveNom.bind(_this);
+        _this.onCloseInform = _this.hideInform.bind(_this);
         return _this;
     }
 
@@ -49993,8 +50017,40 @@ var Nominations = function (_React$Component) {
         value: function changeNom(field, value) {
             var temp = this.state.nomination;
             temp[field] = value;
-            temp["total"] = parseFloat(temp.squat) + parseFloat(temp.benchpress) + parseFloat(temp.deadlift);
+            if (temp["type"] === "lifter") temp["total"] = parseFloat(temp.squat) + parseFloat(temp.benchpress) + parseFloat(temp.deadlift);
             this.setState({ nomination: temp });
+        }
+    }, {
+        key: "saveNom",
+        value: function saveNom() {
+            var _this3 = this;
+
+            this.setState({ isLoading: true });
+            if (this.state.nomination.type === "lifter") {
+                services.insertLifterNomination(this.state.nomination).then(function () {
+                    _this3.closeNom();
+                    _this3.setState({ isLoading: false });
+                    _this3.showInform("Спортсмена було успішно додано до номінації");
+                });
+            } else {
+                services.insertOfficialNomination(this.state.nomination).then(function () {
+                    _this3.closeNom();
+                    _this3.setState({ isLoading: false });
+                    _this3.showInform("Офіційну особу було успішно додано до номінації");
+                });
+            }
+        }
+    }, {
+        key: "showInform",
+        value: function showInform(txt) {
+            this.setState({ inform: {
+                    text: txt
+                } });
+        }
+    }, {
+        key: "hideInform",
+        value: function hideInform() {
+            this.setState({ inform: null });
         }
     }, {
         key: "closeNomination",
@@ -50011,23 +50067,23 @@ var Nominations = function (_React$Component) {
     }, {
         key: "getAllRegions",
         value: function getAllRegions() {
-            var _this3 = this;
+            var _this4 = this;
 
             this.setState({ isLoading: true });
             services.getAllRegionsNames().then(function (data) {
-                _this3.setState({ regions: JSON.parse(data) });
-                _this3.setState({ isLoading: false });
+                _this4.setState({ regions: JSON.parse(data) });
+                _this4.setState({ isLoading: false });
             });
         }
     }, {
         key: "getWeightCategories",
         value: function getWeightCategories(gender) {
-            var _this4 = this;
+            var _this5 = this;
 
             this.setState({ isLoading: true });
             services.getWeightCategories({ gender: gender }).then(function (data) {
-                _this4.setState({ wc: JSON.parse(data) });
-                _this4.setState({ isLoading: false });
+                _this5.setState({ wc: JSON.parse(data) });
+                _this5.setState({ isLoading: false });
             });
         }
     }, {
@@ -50038,7 +50094,7 @@ var Nominations = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
-            var _this5 = this;
+            var _this6 = this;
 
             if (!this.props.competition) return null;
             return _react2.default.createElement(
@@ -50053,7 +50109,7 @@ var Nominations = function (_React$Component) {
                         _react2.default.createElement(
                             "button",
                             { type: "button", className: "back-to-nom-list", onClick: function onClick() {
-                                    return _this5.props.back();
+                                    return _this6.props.back();
                                 } },
                             _react2.default.createElement("i", { className: "fa fa-chevron-left" }),
                             "\u041D\u0430\u0437\u0430\u0434 \u0434\u043E \u0441\u043F\u0438\u0441\u043A\u0443 \u043D\u043E\u043C\u0456\u043D\u0430\u0446\u0456\u0439"
@@ -50082,9 +50138,10 @@ var Nominations = function (_React$Component) {
                 _react2.default.createElement(
                     _modal2.default,
                     { target: this.state.nomination, onClose: this.closeNom },
-                    _react2.default.createElement(_lifter2.default, { nomination: this.state.nomination, compInfo: this.state.compInfo, onChange: this.onChange, regions: this.state.regions, wc: this.state.wc }),
-                    _react2.default.createElement(_official2.default, { nomination: this.state.nomination, compInfo: this.state.compInfo, onChange: this.onChange, regions: this.state.regions })
+                    _react2.default.createElement(_lifter2.default, { nomination: this.state.nomination, compInfo: this.state.compInfo, onChange: this.onChange, regions: this.state.regions, wc: this.state.wc, onSave: this.onSave, onClose: this.closeNom }),
+                    _react2.default.createElement(_official2.default, { nomination: this.state.nomination, compInfo: this.state.compInfo, onChange: this.onChange, regions: this.state.regions, onSave: this.onSave, onClose: this.closeNom })
                 ),
+                _react2.default.createElement(_inform2.default, { inform: this.state.inform, onClose: this.onCloseInform }),
                 _react2.default.createElement(_preloader2.default, { loading: this.state.isLoading })
             );
         }
@@ -50638,7 +50695,9 @@ var LifterForm = function LifterForm(props) {
                     { className: "form-footer-tab left" },
                     _react2.default.createElement(
                         "button",
-                        { type: "button", className: "footer-button success" },
+                        { type: "button", className: "footer-button success", onClick: function onClick() {
+                                return props.onSave();
+                            } },
                         "\u0417\u0431\u0435\u0440\u0435\u0433\u0442\u0438"
                     )
                 ),
@@ -50647,7 +50706,9 @@ var LifterForm = function LifterForm(props) {
                     { className: "form-footer-tab right" },
                     _react2.default.createElement(
                         "button",
-                        { type: "button", className: "footer-button danger" },
+                        { type: "button", className: "footer-button danger", onClick: function onClick() {
+                                return props.onClose();
+                            } },
                         "\u0421\u043A\u0430\u0441\u0443\u0432\u0430\u0442\u0438"
                     )
                 )
@@ -52257,6 +52318,32 @@ var OfficialForm = function OfficialForm(props) {
                         )
                     )
                 )
+            ),
+            _react2.default.createElement(
+                "div",
+                { className: "formFooter" },
+                _react2.default.createElement(
+                    "div",
+                    { className: "form-footer-tab left" },
+                    _react2.default.createElement(
+                        "button",
+                        { type: "button", className: "footer-button success", onClick: function onClick() {
+                                return props.onSave();
+                            } },
+                        "\u0417\u0431\u0435\u0440\u0435\u0433\u0442\u0438"
+                    )
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { className: "form-footer-tab right" },
+                    _react2.default.createElement(
+                        "button",
+                        { type: "button", className: "footer-button danger", onClick: function onClick() {
+                                return props.onClose();
+                            } },
+                        "\u0421\u043A\u0430\u0441\u0443\u0432\u0430\u0442\u0438"
+                    )
+                )
             )
         )
     );
@@ -52267,10 +52354,78 @@ exports.default = OfficialForm;
 /* 331 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(7);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Inform = function (_React$Component) {
+    _inherits(Inform, _React$Component);
+
+    function Inform() {
+        _classCallCheck(this, Inform);
+
+        return _possibleConstructorReturn(this, (Inform.__proto__ || Object.getPrototypeOf(Inform)).apply(this, arguments));
+    }
+
+    _createClass(Inform, [{
+        key: "render",
+        value: function render() {
+            if (!this.props.inform) return null;
+            return _react2.default.createElement(
+                "div",
+                { className: "blackout" },
+                _react2.default.createElement(
+                    "div",
+                    { className: "inform" },
+                    _react2.default.createElement(
+                        "div",
+                        { className: "inform-header" },
+                        _react2.default.createElement(
+                            "div",
+                            { className: "icons" },
+                            _react2.default.createElement("i", { className: "fa fa-lg fa-times", onClick: this.props.onClose })
+                        )
+                    ),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "inform-body" },
+                        this.props.inform.text
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Inform;
+}(_react2.default.Component);
+
+exports.default = Inform;
+
+/***/ }),
+/* 332 */
+/***/ (function(module, exports, __webpack_require__) {
+
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(332);
+var content = __webpack_require__(333);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -52295,7 +52450,7 @@ if(false) {
 }
 
 /***/ }),
-/* 332 */
+/* 333 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(207)(undefined);
@@ -52303,7 +52458,7 @@ exports = module.exports = __webpack_require__(207)(undefined);
 
 
 // module
-exports.push([module.i, "#content {\n  width: 100% !important; }\n\n#nm-front .grid {\n  border-spacing: 0px;\n  border-collapse: collapse; }\n  #nm-front .grid thead tr {\n    background-color: #ECE9DF; }\n    #nm-front .grid thead tr th {\n      font-family: Verdana, Geneva;\n      font-weight: normal;\n      font-size: 0.6em;\n      text-align: center;\n      padding: 2pt;\n      letter-spacing: 1pt;\n      background-color: #ECE9DF;\n      color: #000;\n      border: 1px solid #ccc;\n      text-shadow: 0 1px 2px #999; }\n  #nm-front .grid tbody tr td {\n    font-family: Verdana, Geneva;\n    font-weight: normal;\n    font-size: 0.7em;\n    padding: 3px;\n    border: 1px solid #ccc; }\n    #nm-front .grid tbody tr td span.grid-rel {\n      color: #0062A4;\n      cursor: pointer; }\n      #nm-front .grid tbody tr td span.grid-rel:hover {\n        color: #f50000;\n        background-color: #ffffc5;\n        border-bottom: 1px dotted #f50000 !important; }\n\n.blackout {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  background-color: rgba(0, 0, 0, 0.8);\n  z-index: 10000; }\n  .blackout .spinner-wrap {\n    position: absolute;\n    top: 50%;\n    left: 50%; }\n    .blackout .spinner-wrap .fa-spin {\n      color: #6c6fff; }\n\n.nom-header {\n  display: flex;\n  flex-direction: row; }\n  .nom-header .nom-header-cell {\n    flex-grow: 1; }\n    .nom-header .nom-header-cell .back-to-nom-list {\n      color: white;\n      background-color: #4d90fe;\n      border: none;\n      padding: 5px 6px;\n      border-radius: 4px;\n      text-shadow: 0 0 1px #000;\n      cursor: pointer; }\n      .nom-header .nom-header-cell .back-to-nom-list:hover {\n        background-color: #6FA5FC; }\n      .nom-header .nom-header-cell .back-to-nom-list i.fa-chevron-left {\n        color: #290B0B;\n        margin-right: 5px; }\n    .nom-header .nom-header-cell .add-panel {\n      width: auto;\n      float: right;\n      margin: 10px 25px 10px 0;\n      z-index: 100;\n      vertical-align: middle;\n      text-align: right;\n      background-color: #f1efe3;\n      border: solid 1px #E8E4D9;\n      padding: 0.8em 1em 0.5em 1em; }\n      .nom-header .nom-header-cell .add-panel span {\n        width: 38px;\n        height: 36px;\n        float: left;\n        text-align: center;\n        padding: 3px 0 3px 0;\n        margin: 0 1em 0 0;\n        display: block;\n        border: 1px solid #E0DED7;\n        background-color: #EAE6DC;\n        border-radius: 3px; }\n        .nom-header .nom-header-cell .add-panel span:nth-child(2) {\n          margin: 0; }\n        .nom-header .nom-header-cell .add-panel span:hover {\n          background-color: #e2ddcf;\n          border: solid 1px #D1C9B2;\n          cursor: pointer; }\n\n.comp-info-header p {\n  font-family: Verdana, Geneva;\n  font-weight: 600;\n  text-align: center;\n  margin-top: 0px;\n  margin-bottom: 0px !important; }\n  .comp-info-header p.info-title {\n    font-size: 0.8em;\n    margin-top: 10px; }\n  .comp-info-header p.info-location {\n    font-size: 0.8em;\n    color: #676767; }\n  .comp-info-header p.info-date {\n    font-size: 0.7em;\n    color: #676767; }\n\n.comp-info-status {\n  display: block;\n  float: right;\n  width: auto;\n  margin: 0 1.5em 1em 1em;\n  padding: 0.3em 1em 0.3em 1em;\n  border: 1px solid #ECD5A2;\n  background-color: #FFFFC6;\n  text-align: left;\n  font-weight: normal;\n  font-family: Tahoma, Geneva;\n  font-size: 13px;\n  border-radius: 8px; }\n  .comp-info-status p {\n    margin-bottom: 5px !important;\n    line-height: 18px; }\n    .comp-info-status p.status {\n      border-bottom: 1px dotted #777;\n      margin-bottom: 15px !important; }\n      .comp-info-status p.status span {\n        font-weight: bold; }\n\n.custom-modal {\n  background-color: #ffffff;\n  position: absolute;\n  top: 10%;\n  left: 50%;\n  min-width: 500px;\n  min-height: 200px;\n  border-radius: 5px;\n  padding: 4px 10px;\n  margin-left: -250px; }\n  .custom-modal .custom-modal-header {\n    text-align: right;\n    padding-right: 5px; }\n    .custom-modal .custom-modal-header .fa-times {\n      color: #9a9aaf;\n      cursor: pointer; }\n      .custom-modal .custom-modal-header .fa-times:hover {\n        color: #68686f; }\n  .custom-modal h6, .custom-modal h4 {\n    margin: 5px 0 10px 0px; }\n  .custom-modal h4 {\n    font-size: 1.2em;\n    color: #0849c5;\n    margin-top: 0px; }\n  .custom-modal .form-header {\n    display: block;\n    margin: 10px auto;\n    border: solid 1px #AACCAA;\n    background-color: #D5FCA1;\n    text-align: center;\n    border-radius: 5px;\n    padding: 10px; }\n    .custom-modal .form-header h3 {\n      font-weight: bold;\n      font-family: Tahoma, Verdana;\n      font-size: 1.3em;\n      margin-bottom: 10px !important; }\n    .custom-modal .form-header p {\n      font-family: Verdana, Geneva;\n      font-weight: 600;\n      text-align: center;\n      margin-top: 0px;\n      margin-bottom: 0px !important; }\n      .custom-modal .form-header p.comp-name {\n        font-size: 0.8em;\n        margin-top: 10px; }\n      .custom-modal .form-header p.comp-location {\n        font-size: 0.8em;\n        color: #676767; }\n      .custom-modal .form-header p.comp-date {\n        font-size: 0.7em;\n        color: #676767; }\n  .custom-modal .formBody {\n    width: 420px !important;\n    margin: 10px auto;\n    background-color: #f1efe3;\n    border: 1px solid #e0dbcb;\n    border-radius: 10px;\n    padding: 10px 15px; }\n    .custom-modal .formBody tr th, .custom-modal .formBody thead th {\n      color: #777;\n      font-size: 12px;\n      font-weight: bold;\n      line-height: 18px;\n      padding: 0 !important; }\n    .custom-modal .formBody table {\n      border: none !important;\n      margin-bottom: 0px !important; }\n      .custom-modal .formBody table tr.another-position {\n        background-color: #EAE7D7; }\n      .custom-modal .formBody table tr td {\n        border: none !important;\n        padding: 0 !important;\n        vertical-align: top; }\n  .custom-modal .formFooter {\n    display: flex;\n    flex-direction: row; }\n    .custom-modal .formFooter .form-footer-tab {\n      flex-grow: 1; }\n      .custom-modal .formFooter .form-footer-tab.left {\n        text-align: right;\n        padding-right: 10px; }\n      .custom-modal .formFooter .form-footer-tab.right {\n        text-align: left;\n        padding-left: 10px; }\n      .custom-modal .formFooter .form-footer-tab .footer-button.success {\n        background-color: #24881e; }\n        .custom-modal .formFooter .form-footer-tab .footer-button.success:hover {\n          background-color: #2da926; }\n      .custom-modal .formFooter .form-footer-tab .footer-button.danger {\n        background-color: #ad2121; }\n        .custom-modal .formFooter .form-footer-tab .footer-button.danger:hover {\n          background-color: #e23333; }\n  .custom-modal form label {\n    display: block;\n    font-weight: 600;\n    text-align: right;\n    margin-right: 10px;\n    color: #000; }\n  .custom-modal form input, .custom-modal form textarea {\n    font-family: Verdana, Geneva;\n    width: 100%;\n    margin-bottom: 10px;\n    font-size: 11px !important;\n    line-height: 16px !important; }\n    .custom-modal form input:read-only, .custom-modal form input:disabled, .custom-modal form textarea:read-only, .custom-modal form textarea:disabled {\n      opacity: 0.6;\n      cursor: not-allowed; }\n    .custom-modal form input[type=\"checkbox\"], .custom-modal form textarea[type=\"checkbox\"] {\n      display: block;\n      float: left;\n      margin: 0;\n      width: auto; }\n  .custom-modal form select {\n    margin-bottom: 10px; }\n  .custom-modal form button {\n    color: #fff;\n    background-color: #038ece;\n    font-weight: 600;\n    border-radius: 4px;\n    border: 0px;\n    padding: 5px 5px 7px;\n    margin: 5px 0;\n    cursor: pointer; }\n    .custom-modal form button:hover {\n      background-color: #03A9F4; }\n    .custom-modal form button:disabled {\n      opacity: 0.5;\n      cursor: not-allowed; }\n      .custom-modal form button:disabled:hover {\n        background-color: #038ece; }\n", ""]);
+exports.push([module.i, "#content {\n  width: 100% !important; }\n\n#nm-front .grid {\n  border-spacing: 0px;\n  border-collapse: collapse; }\n  #nm-front .grid thead tr {\n    background-color: #ECE9DF; }\n    #nm-front .grid thead tr th {\n      font-family: Verdana, Geneva;\n      font-weight: normal;\n      font-size: 0.6em;\n      text-align: center;\n      padding: 2pt;\n      letter-spacing: 1pt;\n      background-color: #ECE9DF;\n      color: #000;\n      border: 1px solid #ccc;\n      text-shadow: 0 1px 2px #999; }\n  #nm-front .grid tbody tr td {\n    font-family: Verdana, Geneva;\n    font-weight: normal;\n    font-size: 0.7em;\n    padding: 3px;\n    border: 1px solid #ccc; }\n    #nm-front .grid tbody tr td span.grid-rel {\n      color: #0062A4;\n      cursor: pointer; }\n      #nm-front .grid tbody tr td span.grid-rel:hover {\n        color: #f50000;\n        background-color: #ffffc5;\n        border-bottom: 1px dotted #f50000 !important; }\n\n.blackout {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  background-color: rgba(0, 0, 0, 0.8);\n  z-index: 10000; }\n  .blackout .spinner-wrap {\n    position: absolute;\n    top: 50%;\n    left: 50%; }\n    .blackout .spinner-wrap .fa-spin {\n      color: #6c6fff; }\n\n.nom-header {\n  display: flex;\n  flex-direction: row; }\n  .nom-header .nom-header-cell {\n    flex-grow: 1; }\n    .nom-header .nom-header-cell .back-to-nom-list {\n      color: white;\n      background-color: #4d90fe;\n      border: none;\n      padding: 5px 6px;\n      border-radius: 4px;\n      text-shadow: 0 0 1px #000;\n      cursor: pointer; }\n      .nom-header .nom-header-cell .back-to-nom-list:hover {\n        background-color: #6FA5FC; }\n      .nom-header .nom-header-cell .back-to-nom-list i.fa-chevron-left {\n        color: #290B0B;\n        margin-right: 5px; }\n    .nom-header .nom-header-cell .add-panel {\n      width: auto;\n      float: right;\n      margin: 10px 25px 10px 0;\n      z-index: 100;\n      vertical-align: middle;\n      text-align: right;\n      background-color: #f1efe3;\n      border: solid 1px #E8E4D9;\n      padding: 0.8em 1em 0.5em 1em; }\n      .nom-header .nom-header-cell .add-panel span {\n        width: 38px;\n        height: 36px;\n        float: left;\n        text-align: center;\n        padding: 3px 0 3px 0;\n        margin: 0 1em 0 0;\n        display: block;\n        border: 1px solid #E0DED7;\n        background-color: #EAE6DC;\n        border-radius: 3px; }\n        .nom-header .nom-header-cell .add-panel span:nth-child(2) {\n          margin: 0; }\n        .nom-header .nom-header-cell .add-panel span:hover {\n          background-color: #e2ddcf;\n          border: solid 1px #D1C9B2;\n          cursor: pointer; }\n\n.comp-info-header p {\n  font-family: Verdana, Geneva;\n  font-weight: 600;\n  text-align: center;\n  margin-top: 0px;\n  margin-bottom: 0px !important; }\n  .comp-info-header p.info-title {\n    font-size: 0.8em;\n    margin-top: 10px; }\n  .comp-info-header p.info-location {\n    font-size: 0.8em;\n    color: #676767; }\n  .comp-info-header p.info-date {\n    font-size: 0.7em;\n    color: #676767; }\n\n.comp-info-status {\n  display: block;\n  float: right;\n  width: auto;\n  margin: 0 1.5em 1em 1em;\n  padding: 0.3em 1em 0.3em 1em;\n  border: 1px solid #ECD5A2;\n  background-color: #FFFFC6;\n  text-align: left;\n  font-weight: normal;\n  font-family: Tahoma, Geneva;\n  font-size: 13px;\n  border-radius: 8px; }\n  .comp-info-status p {\n    margin-bottom: 5px !important;\n    line-height: 18px; }\n    .comp-info-status p.status {\n      border-bottom: 1px dotted #777;\n      margin-bottom: 15px !important; }\n      .comp-info-status p.status span {\n        font-weight: bold; }\n\n.custom-modal {\n  background-color: #ffffff;\n  position: absolute;\n  top: 10%;\n  left: 50%;\n  min-width: 500px;\n  min-height: 200px;\n  border-radius: 5px;\n  padding: 4px 10px;\n  margin-left: -250px; }\n  .custom-modal .custom-modal-header {\n    text-align: right;\n    padding-right: 5px; }\n    .custom-modal .custom-modal-header .fa-times {\n      color: #9a9aaf;\n      cursor: pointer; }\n      .custom-modal .custom-modal-header .fa-times:hover {\n        color: #68686f; }\n  .custom-modal h6, .custom-modal h4 {\n    margin: 5px 0 10px 0px; }\n  .custom-modal h4 {\n    font-size: 1.2em;\n    color: #0849c5;\n    margin-top: 0px; }\n  .custom-modal .form-header {\n    display: block;\n    margin: 10px auto;\n    border: solid 1px #AACCAA;\n    background-color: #D5FCA1;\n    text-align: center;\n    border-radius: 5px;\n    padding: 10px; }\n    .custom-modal .form-header h3 {\n      font-weight: bold;\n      font-family: Tahoma, Verdana;\n      font-size: 1.3em;\n      margin-bottom: 10px !important; }\n    .custom-modal .form-header p {\n      font-family: Verdana, Geneva;\n      font-weight: 600;\n      text-align: center;\n      margin-top: 0px;\n      margin-bottom: 0px !important; }\n      .custom-modal .form-header p.comp-name {\n        font-size: 0.8em;\n        margin-top: 10px; }\n      .custom-modal .form-header p.comp-location {\n        font-size: 0.8em;\n        color: #676767; }\n      .custom-modal .form-header p.comp-date {\n        font-size: 0.7em;\n        color: #676767; }\n  .custom-modal .formBody {\n    width: 420px !important;\n    margin: 10px auto;\n    background-color: #f1efe3;\n    border: 1px solid #e0dbcb;\n    border-radius: 10px;\n    padding: 10px 15px; }\n    .custom-modal .formBody tr th, .custom-modal .formBody thead th {\n      color: #777;\n      font-size: 12px;\n      font-weight: bold;\n      line-height: 18px;\n      padding: 0 !important; }\n    .custom-modal .formBody table {\n      border: none !important;\n      margin-bottom: 0px !important; }\n      .custom-modal .formBody table tr.another-position {\n        background-color: #EAE7D7; }\n      .custom-modal .formBody table tr td {\n        border: none !important;\n        padding: 0 !important;\n        vertical-align: top; }\n  .custom-modal .formFooter {\n    display: flex;\n    flex-direction: row; }\n    .custom-modal .formFooter .form-footer-tab {\n      flex-grow: 1; }\n      .custom-modal .formFooter .form-footer-tab.left {\n        text-align: right;\n        padding-right: 10px; }\n      .custom-modal .formFooter .form-footer-tab.right {\n        text-align: left;\n        padding-left: 10px; }\n      .custom-modal .formFooter .form-footer-tab .footer-button.success {\n        background-color: #24881e; }\n        .custom-modal .formFooter .form-footer-tab .footer-button.success:hover {\n          background-color: #2da926; }\n      .custom-modal .formFooter .form-footer-tab .footer-button.danger {\n        background-color: #ad2121; }\n        .custom-modal .formFooter .form-footer-tab .footer-button.danger:hover {\n          background-color: #e23333; }\n  .custom-modal form label {\n    display: block;\n    font-weight: 600;\n    text-align: right;\n    margin-right: 10px;\n    color: #000; }\n  .custom-modal form input, .custom-modal form textarea {\n    font-family: Verdana, Geneva;\n    width: 100%;\n    margin-bottom: 10px;\n    font-size: 11px !important;\n    line-height: 16px !important; }\n    .custom-modal form input:read-only, .custom-modal form input:disabled, .custom-modal form textarea:read-only, .custom-modal form textarea:disabled {\n      opacity: 0.6;\n      cursor: not-allowed; }\n    .custom-modal form input[type=\"checkbox\"], .custom-modal form textarea[type=\"checkbox\"] {\n      display: block;\n      float: left;\n      margin: 0;\n      width: auto; }\n  .custom-modal form select {\n    margin-bottom: 10px; }\n  .custom-modal form button {\n    color: #fff;\n    background-color: #038ece;\n    font-weight: 600;\n    border-radius: 4px;\n    border: 0px;\n    padding: 5px 5px 7px;\n    margin: 5px 0;\n    cursor: pointer; }\n    .custom-modal form button:hover {\n      background-color: #03A9F4; }\n    .custom-modal form button:disabled {\n      opacity: 0.5;\n      cursor: not-allowed; }\n      .custom-modal form button:disabled:hover {\n        background-color: #038ece; }\n\n.inform {\n  position: absolute;\n  top: 30%;\n  left: 50%;\n  min-width: 400px;\n  background-color: #fff;\n  margin-left: -200px;\n  padding: 5px 10px;\n  border-radius: 5px; }\n  .inform .inform-header .icons {\n    text-align: right; }\n    .inform .inform-header .icons .fa-times {\n      color: #9a9aaf;\n      cursor: pointer; }\n      .inform .inform-header .icons .fa-times:hover {\n        color: #68686f; }\n  .inform .inform-body {\n    padding: 10px 0;\n    font-family: Tahoma, Verdana;\n    font-size: 0.9em;\n    text-align: center; }\n", ""]);
 
 // exports
 
