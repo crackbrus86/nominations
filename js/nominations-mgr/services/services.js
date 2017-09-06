@@ -49,3 +49,11 @@ export const insertOfficialNomination = (contract) => {
         data: contract
     })
 }
+
+export const getLifterNominationsByRegion = (contract) => {
+    return $.ajax({
+        url: nomPath + "GetLifterNominationsByRegion.php",
+        type: "POST",
+        data: contract
+    })
+}
