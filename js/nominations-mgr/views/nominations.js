@@ -26,6 +26,8 @@ class Nominations extends React.Component{
         this.onChange = this.changeNom.bind(this);
         this.onSave = this.saveNom.bind(this);
         this.onCloseInform = this.hideInform.bind(this);
+        this.onCheckStatus = this.changeNomStatus.bind(this);
+        this.onLifterEdit = this.getLifterNom.bind(this);
     }
 
     getCompInfo(id){
@@ -110,16 +112,35 @@ class Nominations extends React.Component{
         temp[field] = value;
         if(temp["type"] === "lifter") temp["total"] = parseFloat(temp.squat) + parseFloat(temp.benchpress) + parseFloat(temp.deadlift);
         this.setState({nomination: temp});
-    } 
+    }
+    
+    getLifterNom(id){
+        this.setState({isLoading: true});
+        services.getLifterNominationById({id: id}).then(data => {
+            var nom = JSON.parse(data)[0];
+            this.setState({isLoading: false});
+            this.setState({nomination: nom});
+        })
+    }
     
     saveNom(){
         this.setState({isLoading: true});
         if(this.state.nomination.type === "lifter"){
-            services.insertLifterNomination(this.state.nomination).then(() => {
-                this.closeNom();
-                this.setState({isLoading: false});
-                this.showInform("Спортсмена було успішно додано до номінації");
-            })
+            if(this.state.nomination.id){
+                services.updateLifterNominationById(this.state.nomination).then(() => {
+                    this.closeNom();
+                    this.setState({isLoading: false});
+                    this.showInform("Номінацію спортсмена було успішно оновлено");
+                    this.getLifterNominations();                    
+                })
+            }else{
+                services.insertLifterNomination(this.state.nomination).then(() => {
+                    this.closeNom();
+                    this.setState({isLoading: false});
+                    this.showInform("Спортсмена було успішно додано до номінації");
+                    this.getLifterNominations();
+                })
+            }
         }else{
             services.insertOfficialNomination(this.state.nomination).then(() => {
                 this.closeNom();
@@ -127,6 +148,14 @@ class Nominations extends React.Component{
                 this.showInform("Офіційну особу було успішно додано до номінації");
             })
         }
+    }
+
+    changeNomStatus(id, value){
+        this.setState({isLoading: true});
+        services.checkNominationStatusById({id: id, status: value}).then(() => {
+            this.setState({isLoading: false});
+            this.getLifterNominations();
+        })
     }
 
     showInform(txt){
@@ -184,7 +213,7 @@ class Nominations extends React.Component{
                 </div>
             </div>
             <CompInfo compInfo={this.state.compInfo} />
-            <NomGrid nominations={this.state.lNominations} game={this.state.compInfo} />
+            <NomGrid nominations={this.state.lNominations} game={this.state.compInfo} onChangeStatus={this.onCheckStatus} onLifterEdit={this.onLifterEdit} />
             <Modal target={this.state.nomination} onClose={this.closeNom}>
                 <LifterForm nomination={this.state.nomination} compInfo={this.state.compInfo} onChange={this.onChange} regions={this.state.regions} wc={this.state.wc} onSave={this.onSave}  onClose={this.closeNom} />
                 <OfficialForm nomination={this.state.nomination} compInfo={this.state.compInfo} onChange={this.onChange} regions={this.state.regions} onSave={this.onSave} onClose={this.closeNom}  />

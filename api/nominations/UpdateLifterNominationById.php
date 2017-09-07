@@ -2,9 +2,10 @@
     include_once("../connect.php");
     if(empty($_SESSION["regionObj"])){
         echo "None";
-    }else{    
+    }else{  
         $tb_nominations = $wpdb->get_blog_prefix()."nominations";
         
+        $id = esc_sql($_POST["id"]);
         $type = esc_sql($_POST["type"]);
         $surname = esc_sql($_POST["surname"]);
         $firstName = esc_sql($_POST["firstName"]);
@@ -19,10 +20,10 @@
         $total = esc_sql($_POST["total"]);
         $reserve = esc_sql($_POST["reserve"]);
         $competition = esc_sql($_POST["competition"]);
-        $status = esc_sql($_POST["status"]);  
-            
-        $sql = $wpdb->prepare("INSERT INTO $tb_nominations (type, surname, first_name, birth_date, gender, team, division, weight_class,
-            squat, benchpress, deadlift, total, reserve, competition, status) VALUES (%s, %s, %s, %s, %s, %d, %s, %d, %f, %f, %f, %f, %s, %d, %s)", $type, $surname, $firstName,
-            $birthDate, $gender, $team, $division, $weightClass, $squat, $benchpress, $deadlift, $total, $reserve, $competition, $status);
-        if($wpdb->query($sql)) print_r("Nomination was saved");
+        
+        $sql = $wpdb->prepare("UPDATE $tb_nominations SET type = %s, surname = %s, first_name = %s, birth_date = %s, gender = %s, team = %d, 
+        division = %s, weight_class = %d, squat = %f, benchpress = %f, deadlift = %f, total = %f, reserve = %s, competition = %d WHERE id=%d", 
+        $type, $surname, $firstName, $birthDate, $gender, $team, $division, $weightClass, $squat, $benchpress, $deadlift, $total, $reserve, 
+        $competition, $id);
+        if($wpdb->query($sql)) print_r("Nomination was saved");        
     }

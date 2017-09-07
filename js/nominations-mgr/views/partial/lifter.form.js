@@ -75,7 +75,7 @@ const LifterForm = (props) => {
                     </tr>
                     <tr>
                         <td><label>Резерв</label></td>
-                        <td><input checked={nom.reserve} type="checkbox" onChange={e => props.onChange("reserve", e.target.checked)} /></td>
+                        <td><input checked={JSON.parse(nom.reserve)} type="checkbox" onChange={e => props.onChange("reserve", e.target.checked)} /></td>
                     </tr>
                     </tbody>
                 </table>

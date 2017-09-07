@@ -26246,7 +26246,7 @@ return jQuery;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getLifterNominationsByRegion = exports.insertOfficialNomination = exports.insertLifterNomination = exports.getWeightCategories = exports.getAllRegionsNames = exports.getCompetitionById = exports.getCompetitions = undefined;
+exports.updateLifterNominationById = exports.getLifterNominationById = exports.checkNominationStatusById = exports.getLifterNominationsByRegion = exports.insertOfficialNomination = exports.insertLifterNomination = exports.getWeightCategories = exports.getAllRegionsNames = exports.getCompetitionById = exports.getCompetitions = undefined;
 
 var _jquery = __webpack_require__(88);
 
@@ -26308,6 +26308,30 @@ var insertOfficialNomination = exports.insertOfficialNomination = function inser
 var getLifterNominationsByRegion = exports.getLifterNominationsByRegion = function getLifterNominationsByRegion(contract) {
     return _jquery2.default.ajax({
         url: nomPath + "GetLifterNominationsByRegion.php",
+        type: "POST",
+        data: contract
+    });
+};
+
+var checkNominationStatusById = exports.checkNominationStatusById = function checkNominationStatusById(contract) {
+    return _jquery2.default.ajax({
+        url: nomPath + "CheckNominationStatusById.php",
+        type: "POST",
+        data: contract
+    });
+};
+
+var getLifterNominationById = exports.getLifterNominationById = function getLifterNominationById(contract) {
+    return _jquery2.default.ajax({
+        url: nomPath + "GetLifterNominationById.php",
+        type: "POST",
+        data: contract
+    });
+};
+
+var updateLifterNominationById = exports.updateLifterNominationById = function updateLifterNominationById(contract) {
+    return _jquery2.default.ajax({
+        url: nomPath + "UpdateLifterNominationById.php",
         type: "POST",
         data: contract
     });
@@ -49976,6 +50000,8 @@ var Nominations = function (_React$Component) {
         _this.onChange = _this.changeNom.bind(_this);
         _this.onSave = _this.saveNom.bind(_this);
         _this.onCloseInform = _this.hideInform.bind(_this);
+        _this.onCheckStatus = _this.changeNomStatus.bind(_this);
+        _this.onLifterEdit = _this.getLifterNom.bind(_this);
         return _this;
     }
 
@@ -50073,24 +50099,57 @@ var Nominations = function (_React$Component) {
             this.setState({ nomination: temp });
         }
     }, {
-        key: "saveNom",
-        value: function saveNom() {
+        key: "getLifterNom",
+        value: function getLifterNom(id) {
             var _this4 = this;
 
             this.setState({ isLoading: true });
+            services.getLifterNominationById({ id: id }).then(function (data) {
+                var nom = JSON.parse(data)[0];
+                _this4.setState({ isLoading: false });
+                _this4.setState({ nomination: nom });
+            });
+        }
+    }, {
+        key: "saveNom",
+        value: function saveNom() {
+            var _this5 = this;
+
+            this.setState({ isLoading: true });
             if (this.state.nomination.type === "lifter") {
-                services.insertLifterNomination(this.state.nomination).then(function () {
-                    _this4.closeNom();
-                    _this4.setState({ isLoading: false });
-                    _this4.showInform("Спортсмена було успішно додано до номінації");
-                });
+                if (this.state.nomination.id) {
+                    services.updateLifterNominationById(this.state.nomination).then(function () {
+                        _this5.closeNom();
+                        _this5.setState({ isLoading: false });
+                        _this5.showInform("Номінацію спортсмена було успішно оновлено");
+                        _this5.getLifterNominations();
+                    });
+                } else {
+                    services.insertLifterNomination(this.state.nomination).then(function () {
+                        _this5.closeNom();
+                        _this5.setState({ isLoading: false });
+                        _this5.showInform("Спортсмена було успішно додано до номінації");
+                        _this5.getLifterNominations();
+                    });
+                }
             } else {
                 services.insertOfficialNomination(this.state.nomination).then(function () {
-                    _this4.closeNom();
-                    _this4.setState({ isLoading: false });
-                    _this4.showInform("Офіційну особу було успішно додано до номінації");
+                    _this5.closeNom();
+                    _this5.setState({ isLoading: false });
+                    _this5.showInform("Офіційну особу було успішно додано до номінації");
                 });
             }
+        }
+    }, {
+        key: "changeNomStatus",
+        value: function changeNomStatus(id, value) {
+            var _this6 = this;
+
+            this.setState({ isLoading: true });
+            services.checkNominationStatusById({ id: id, status: value }).then(function () {
+                _this6.setState({ isLoading: false });
+                _this6.getLifterNominations();
+            });
         }
     }, {
         key: "showInform",
@@ -50119,23 +50178,23 @@ var Nominations = function (_React$Component) {
     }, {
         key: "getAllRegions",
         value: function getAllRegions() {
-            var _this5 = this;
+            var _this7 = this;
 
             this.setState({ isLoading: true });
             services.getAllRegionsNames().then(function (data) {
-                _this5.setState({ regions: JSON.parse(data) });
-                _this5.setState({ isLoading: false });
+                _this7.setState({ regions: JSON.parse(data) });
+                _this7.setState({ isLoading: false });
             });
         }
     }, {
         key: "getWeightCategories",
         value: function getWeightCategories(gender) {
-            var _this6 = this;
+            var _this8 = this;
 
             this.setState({ isLoading: true });
             services.getWeightCategories({ gender: gender }).then(function (data) {
-                _this6.setState({ wc: JSON.parse(data) });
-                _this6.setState({ isLoading: false });
+                _this8.setState({ wc: JSON.parse(data) });
+                _this8.setState({ isLoading: false });
             });
         }
     }, {
@@ -50146,7 +50205,7 @@ var Nominations = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
-            var _this7 = this;
+            var _this9 = this;
 
             if (!this.props.competition) return null;
             return _react2.default.createElement(
@@ -50161,7 +50220,7 @@ var Nominations = function (_React$Component) {
                         _react2.default.createElement(
                             "button",
                             { type: "button", className: "back-to-nom-list", onClick: function onClick() {
-                                    return _this7.props.back();
+                                    return _this9.props.back();
                                 } },
                             _react2.default.createElement("i", { className: "fa fa-chevron-left" }),
                             "\u041D\u0430\u0437\u0430\u0434 \u0434\u043E \u0441\u043F\u0438\u0441\u043A\u0443 \u043D\u043E\u043C\u0456\u043D\u0430\u0446\u0456\u0439"
@@ -50187,7 +50246,7 @@ var Nominations = function (_React$Component) {
                     )
                 ),
                 _react2.default.createElement(_nomComp2.default, { compInfo: this.state.compInfo }),
-                _react2.default.createElement(_nominations2.default, { nominations: this.state.lNominations, game: this.state.compInfo }),
+                _react2.default.createElement(_nominations2.default, { nominations: this.state.lNominations, game: this.state.compInfo, onChangeStatus: this.onCheckStatus, onLifterEdit: this.onLifterEdit }),
                 _react2.default.createElement(
                     _modal2.default,
                     { target: this.state.nomination, onClose: this.closeNom },
@@ -50732,7 +50791,7 @@ var LifterForm = function LifterForm(props) {
                             _react2.default.createElement(
                                 "td",
                                 null,
-                                _react2.default.createElement("input", { checked: nom.reserve, type: "checkbox", onChange: function onChange(e) {
+                                _react2.default.createElement("input", { checked: JSON.parse(nom.reserve), type: "checkbox", onChange: function onChange(e) {
                                         return props.onChange("reserve", e.target.checked);
                                     } })
                             )
@@ -52555,16 +52614,107 @@ var NomGrid = function NomGrid(props) {
             return nom.division === "masters4";
         })
     }];
-    var table = divisions.map(function (division) {
+    var columns = [{
+        title: "Статус",
+        field: "status",
+        width: "*"
+    }, {
+        title: "#",
+        field: "number",
+        width: "*"
+    }, {
+        title: "Ім'я",
+        field: "fullName",
+        width: "*"
+    }, {
+        title: "Рік народження",
+        field: "born",
+        width: "*"
+    }, {
+        title: "Вагова категорія",
+        field: "wClass",
+        width: "*"
+    }];
+    var results = [];
+    if (props.game.typeId === "1") {
+        results = [{
+            title: "Присідання",
+            field: "squat",
+            width: "*"
+        }, {
+            title: "Жим",
+            field: "benchpress",
+            width: "*"
+        }, {
+            title: "Тяга",
+            field: "deadlift",
+            width: "*"
+        }, {
+            title: "Сума",
+            field: "total",
+            width: "*"
+        }];
+    } else {
+        results = [{
+            title: "Жим",
+            field: "benchpress",
+            width: "*"
+        }];
+    }
+    var gridColumns = columns.concat(results);
+    var controls = [{
+        title: "",
+        field: "id",
+        button: "edit",
+        width: "*",
+        action: function action(e) {
+            props.onLifterEdit(e.target.dataset["rel"]);
+        }
+    }, {
+        title: "",
+        field: "id",
+        button: "delete",
+        width: "*",
+        action: function action(e) {
+            // props.onDelete(e.target.dataset["rel"]);
+        }
+    }];
+    gridColumns = gridColumns.concat(controls);
+    var tables = divisions.map(function (division) {
         if (division.items.length) {
             var divName = props.game.gender === "male" ? division.titleM : division.titleF;
             var counter = 1;
             var items = division.items.map(function (item) {
-                return _react2.default.createElement(
-                    "li",
-                    { key: counter },
-                    counter++ + " " + item.name + " " + item.surname
+                var rowItem = {};
+                var reserve = item.reserve && JSON.parse(item.reserve) ? _react2.default.createElement(
+                    "sup",
+                    null,
+                    "R"
+                ) : null;
+                rowItem.id = item.id;
+                rowItem.status = _react2.default.createElement("input", { type: "checkbox", checked: JSON.parse(item.status), "data-rel": item.id,
+                    onChange: function onChange(e) {
+                        props.onChangeStatus(e.target.dataset["rel"], !JSON.parse(item.status));
+                    } });
+                rowItem.number = _react2.default.createElement(
+                    "div",
+                    null,
+                    reserve,
+                    counter++
                 );
+                rowItem.fullName = item.surname + " " + item.name;
+                rowItem.born = new Date(item.born).getFullYear();
+                rowItem.wClass = item.wClass;
+                if (props.game.typeId === "1") {
+                    rowItem.squat = item.squat;
+                    rowItem.deadlift = item.deadlift;
+                    rowItem.total = item.total;
+                }
+                rowItem.benchpress = item.benchpress;
+                return rowItem;
+            });
+            items.sort(function (a, b) {
+                return parseInt(a.wClass.replace("-", "").replace("+", "")) - parseInt(b.wClass.replace("-", "").replace("+", ""));
             });
             return _react2.default.createElement(
                 "div",
@@ -52576,11 +52726,7 @@ var NomGrid = function NomGrid(props) {
                     divName,
                     "\""
                 ),
-                _react2.default.createElement(
-                    "ul",
-                    null,
-                    items
-                )
+                _react2.default.createElement(_grid2.default, { data: { columns: gridColumns, rows: items } })
             );
         }
     });
@@ -52588,7 +52734,7 @@ var NomGrid = function NomGrid(props) {
     return _react2.default.createElement(
         "div",
         null,
-        table
+        tables
     );
 };
 exports.default = NomGrid;

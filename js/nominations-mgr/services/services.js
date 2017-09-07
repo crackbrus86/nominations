@@ -57,3 +57,27 @@ export const getLifterNominationsByRegion = (contract) => {
         data: contract
     })
 }
+
+export const checkNominationStatusById = (contract) => {
+    return $.ajax({
+        url: nomPath + "CheckNominationStatusById.php",
+        type: "POST",
+        data: contract
+    })
+}
+
+export const getLifterNominationById = (contract) => {
+    return $.ajax({
+        url: nomPath + "GetLifterNominationById.php",
+        type: "POST",
+        data: contract
+    })
+}
+
+export const updateLifterNominationById = (contract) => {
+    return $.ajax({
+        url: nomPath + "UpdateLifterNominationById.php",
+        type: "POST",
+        data: contract
+    })
+}
