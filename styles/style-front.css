@@ -148,7 +148,8 @@
       cursor: pointer; }
       .custom-modal .custom-modal-header .fa-times:hover {
         color: #68686f; }
-  .custom-modal h6, .custom-modal h4 {
+  .custom-modal h6,
+  .custom-modal h4 {
     margin: 5px 0 10px 0px; }
   .custom-modal h4 {
     font-size: 1.2em;
@@ -189,7 +190,8 @@
     border: 1px solid #e0dbcb;
     border-radius: 10px;
     padding: 10px 15px; }
-    .custom-modal .formBody tr th, .custom-modal .formBody thead th {
+    .custom-modal .formBody tr th,
+    .custom-modal .formBody thead th {
       color: #777;
       font-size: 12px;
       font-weight: bold;
@@ -229,16 +231,20 @@
     text-align: right;
     margin-right: 10px;
     color: #000; }
-  .custom-modal form input, .custom-modal form textarea {
+  .custom-modal form input,
+  .custom-modal form textarea {
     font-family: Verdana, Geneva;
     width: 100%;
     margin-bottom: 10px;
     font-size: 11px !important;
     line-height: 16px !important; }
-    .custom-modal form input:read-only, .custom-modal form input:disabled, .custom-modal form textarea:read-only, .custom-modal form textarea:disabled {
+    .custom-modal form input:read-only, .custom-modal form input:disabled,
+    .custom-modal form textarea:read-only,
+    .custom-modal form textarea:disabled {
       opacity: 0.6;
       cursor: not-allowed; }
-    .custom-modal form input[type="checkbox"], .custom-modal form textarea[type="checkbox"] {
+    .custom-modal form input[type="checkbox"],
+    .custom-modal form textarea[type="checkbox"] {
       display: block;
       float: left;
       margin: 0;
@@ -283,3 +289,27 @@
     font-family: Tahoma, Verdana;
     font-size: 0.9em;
     text-align: center; }
+
+.dialog {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  min-width: 400px;
+  background-color: #fff;
+  margin-left: -200px;
+  padding: 5px 10px;
+  border-radius: 5px; }
+  .dialog .dialog-body {
+    padding: 10px 0; }
+  .dialog .dialog-header .icons {
+    text-align: right; }
+    .dialog .dialog-header .icons .fa-times {
+      color: #9a9aaf;
+      cursor: pointer; }
+      .dialog .dialog-header .icons .fa-times:hover {
+        color: #68686f; }
+  .dialog .dialog-footer {
+    text-align: right;
+    padding-bottom: 5px; }
+    .dialog .dialog-footer button {
+      margin-left: 10px; }

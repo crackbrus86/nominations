@@ -81,3 +81,35 @@ export const updateLifterNominationById = (contract) => {
         data: contract
     })
 }
+
+export const deleteNomination = (contract) => {
+    return $.ajax({
+        url: nomPath + "DeleteNomination.php",
+        type: "POST",
+        data: contract
+    })
+}
+
+export const getRefereeNominations = (contract) => {
+    return $.ajax({
+        url: nomPath + "GetRefereeNominations.php",
+        type: "POST",
+        data: contract
+    })
+}
+
+export const getOfficialNominationById = (contract) => {
+    return $.ajax({
+        url: nomPath + "GetOfficialNominationById.php",
+        type: "POST",
+        data: contract
+    })
+}
+
+export const updateOfficialNominationById = (contract) => {
+    return $.ajax({
+        url: nomPath + "UpdateOfficialNomination.php",
+        type: "POST",
+        data: contract
+    })
+}

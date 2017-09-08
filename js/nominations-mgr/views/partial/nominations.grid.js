@@ -127,7 +127,7 @@ const NomGrid = (props) => {
         button: "delete",
         width: "*",
         action: (e) => {
-            // props.onDelete(e.target.dataset["rel"]);
+            props.onDelete(e.target.dataset["rel"]);
         }
     }];
     gridColumns = gridColumns.concat(controls);
@@ -162,6 +162,8 @@ const NomGrid = (props) => {
     });
 
 
-    return (<div>{tables}</div>);
+    return (<div>
+        <h4>Список номінацій спортсменів</h4>
+        {tables}</div>);
 }
 export default NomGrid;

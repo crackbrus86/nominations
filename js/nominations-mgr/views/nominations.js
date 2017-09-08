@@ -3,10 +3,12 @@ import CompInfo from "./partial/nom.comp.info";
 import Preloader from "../../components/preloader/preloader";
 import * as services from "../services/services";
 import Modal from "../../components/modal/modal";
+import Dialog from "../../components/modal/dialog";
 import LifterForm from "./partial/lifter.form";
 import OfficialForm from "./partial/official.form";
 import Inform from "../../components/modal/inform";
 import NomGrid from "./partial/nominations.grid";
+import RefGrid from "./partial/referee.grid";
 
 class Nominations extends React.Component{
     constructor(props){
@@ -20,7 +22,9 @@ class Nominations extends React.Component{
             wc: [],
             inform: null,
             compStatus: "p",
-            lNominations: []
+            lNominations: [],
+            rNominations: [],
+            dialog: null
         }
         this.closeNom = this.closeNomination.bind(this);
         this.onChange = this.changeNom.bind(this);
@@ -28,6 +32,10 @@ class Nominations extends React.Component{
         this.onCloseInform = this.hideInform.bind(this);
         this.onCheckStatus = this.changeNomStatus.bind(this);
         this.onLifterEdit = this.getLifterNom.bind(this);
+        this.onOfficialEdit = this.getOfficialNom.bind(this);
+        this.onDelete = this.confirmDeleting.bind(this);
+        this.onCancel = this.cancelDeleting.bind(this);
+        this.onConfirm = this.deleting.bind(this);
     }
 
     getCompInfo(id){
@@ -38,6 +46,7 @@ class Nominations extends React.Component{
             this.getWeightCategories(this.state.compInfo.gender);
             this.evalCompStatus();
             this.getLifterNominations();
+            this.getRefereeNominations();
         });
     }
 
@@ -52,6 +61,18 @@ class Nominations extends React.Component{
             this.setState({lNominations: JSON.parse(data)});
             this.setState({isLoading: false});
             console.log(this.state);            
+        })
+    }
+
+    getRefereeNominations(){
+        this.setState({isLoading: true});
+        services.getRefereeNominations({
+            competition: this.state.compInfo.id,
+            team: this.state.region,
+            type: "official"
+        }).then(data => {
+            this.setState({rNominations: JSON.parse(data)});
+            this.setState({isLoading: false});
         })
     }
 
@@ -122,6 +143,15 @@ class Nominations extends React.Component{
             this.setState({nomination: nom});
         })
     }
+
+    getOfficialNom(id){
+        this.setState({isLoading: true});
+        services.getOfficialNominationById({id: id}).then(data => {
+            var nom = JSON.parse(data)[0];
+            this.setState({isLoading: false});
+            this.setState({nomination: nom});
+        })
+    }
     
     saveNom(){
         this.setState({isLoading: true});
@@ -131,22 +161,34 @@ class Nominations extends React.Component{
                     this.closeNom();
                     this.setState({isLoading: false});
                     this.showInform("Номінацію спортсмена було успішно оновлено");
-                    this.getLifterNominations();                    
+                    this.getLifterNominations();   
+                    this.getRefereeNominations();
                 })
             }else{
-                services.insertLifterNomination(this.state.nomination).then(() => {
-                    this.closeNom();
-                    this.setState({isLoading: false});
-                    this.showInform("Спортсмена було успішно додано до номінації");
-                    this.getLifterNominations();
-                })
+                    services.insertLifterNomination(this.state.nomination).then(() => {
+                        this.closeNom();
+                        this.setState({isLoading: false});
+                        this.showInform("Спортсмена було успішно додано до номінації");
+                        this.getLifterNominations();
+                        this.getRefereeNominations();
+                    })
             }
         }else{
+            if(this.state.nomination.id){
+                services.updateOfficialNominationById(this.state.nomination).then(() => {
+                    this.closeNom();
+                    this.setState({isLoading: false});
+                    this.showInform("Номінацію офіційної особи було успішно оновлено");
+                    this.getLifterNominations();   
+                    this.getRefereeNominations();                        
+                })
+            }else{            
             services.insertOfficialNomination(this.state.nomination).then(() => {
                 this.closeNom();
                 this.setState({isLoading: false});
                 this.showInform("Офіційну особу було успішно додано до номінації");
             })
+        }
         }
     }
 
@@ -155,6 +197,7 @@ class Nominations extends React.Component{
         services.checkNominationStatusById({id: id, status: value}).then(() => {
             this.setState({isLoading: false});
             this.getLifterNominations();
+            this.getRefereeNominations();
         })
     }
 
@@ -194,6 +237,26 @@ class Nominations extends React.Component{
         })
     }
 
+    confirmDeleting(id){
+        this.setState({dialog: {
+            id: id,
+            text: "Ви впевнені, що хочете видалити цей запис?"
+        }})
+    }
+
+    cancelDeleting(){
+        this.setState({dialog: null});
+    }  
+    
+    deleting(){
+        this.setState({isLoading: true});
+        services.deleteNomination({id: this.state.dialog.id}).then(() => {
+            this.cancelDeleting();
+            this.getLifterNominations();
+            this.getRefereeNominations();
+        })
+    }    
+
     componentDidMount(){
         this.getAllRegions();
     }
@@ -213,11 +276,13 @@ class Nominations extends React.Component{
                 </div>
             </div>
             <CompInfo compInfo={this.state.compInfo} />
-            <NomGrid nominations={this.state.lNominations} game={this.state.compInfo} onChangeStatus={this.onCheckStatus} onLifterEdit={this.onLifterEdit} />
+            <NomGrid nominations={this.state.lNominations} game={this.state.compInfo} onChangeStatus={this.onCheckStatus} onLifterEdit={this.onLifterEdit} onDelete={this.onDelete} />
+            <RefGrid nominations={this.state.rNominations} game={this.state.compInfo} onOfficialEdit={this.onOfficialEdit} onDelete={this.onDelete} />
             <Modal target={this.state.nomination} onClose={this.closeNom}>
                 <LifterForm nomination={this.state.nomination} compInfo={this.state.compInfo} onChange={this.onChange} regions={this.state.regions} wc={this.state.wc} onSave={this.onSave}  onClose={this.closeNom} />
                 <OfficialForm nomination={this.state.nomination} compInfo={this.state.compInfo} onChange={this.onChange} regions={this.state.regions} onSave={this.onSave} onClose={this.closeNom}  />
             </Modal>
+            <Dialog dialog={this.state.dialog} onConfirm={this.onConfirm} onClose={this.onCancel} />
             <Inform inform={this.state.inform} onClose={this.onCloseInform} />
             <Preloader loading={this.state.isLoading} />
         </div>
