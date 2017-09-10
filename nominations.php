@@ -54,6 +54,15 @@ function nominationsMgm(){
 }
 add_shortcode('NomMgm', 'nominationsMgm');
 
+function nomGrid(){
+    wp_register_script( 'nominations-bundle', plugins_url( './js/nominations-bundle.js', __FILE__ ) );
+    wp_enqueue_script(  'nominations-bundle');     
+    ?>
+    <div id="nom-app"></div>
+    <?php
+}
+add_shortcode('NomGrid', 'nomGrid');
+
 class Nominations{
     function initSettings(){
         add_menu_page("Nominations", "Номінації", "manage_options", "nominations", array("Nominations", "nomEditor"));

@@ -14,7 +14,7 @@ const CompForm = (props) => {
     var startDate = (props.competition.startDate)? new Date(props.competition.startDate) : null;
     var endDate = (props.competition.endDate)? new Date(props.competition.endDate) : null;
     return (<div>
-        <h4>{word + " регіон"}</h4>
+        <h4>{word + " змагання"}</h4>
         <form>
             <div>
                 <label>Назва {validation.isFieldValid(props.competition.name, "Назва обов'язкова")}</label>

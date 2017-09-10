@@ -16195,10 +16195,17 @@ var Grid = function (_React$Component) {
                             } })
                     ));
                 } else {
+                    var content = column.rel ? _react2.default.createElement(
+                        "span",
+                        { className: "grid-rel", "data-rel": row[column.rel], onClick: function onClick(v) {
+                                return column.action(v);
+                            } },
+                        row[column.field]
+                    ) : row[column.field];
                     cells.push(_react2.default.createElement(
                         "td",
                         { key: counter, width: column.width },
-                        row[column.field]
+                        content
                     ));
                 }
             });
@@ -50211,7 +50218,7 @@ var CompForm = function CompForm(props) {
         _react2.default.createElement(
             "h4",
             null,
-            word + " регіон"
+            word + " змагання"
         ),
         _react2.default.createElement(
             "form",

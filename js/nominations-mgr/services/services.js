@@ -113,3 +113,11 @@ export const updateOfficialNominationById = (contract) => {
         data: contract
     })
 }
+
+export const getOfficialNominations = (contract) => {
+    return $.ajax({
+        url: nomPath + "GetOfficialNominations.php",
+        type: "POST",
+        data: contract
+    })
+}

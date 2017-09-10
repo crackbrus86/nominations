@@ -9,6 +9,7 @@ import OfficialForm from "./partial/official.form";
 import Inform from "../../components/modal/inform";
 import NomGrid from "./partial/nominations.grid";
 import RefGrid from "./partial/referee.grid";
+import OfficialGrid from "./partial/official.grid";
 
 class Nominations extends React.Component{
     constructor(props){
@@ -24,6 +25,7 @@ class Nominations extends React.Component{
             compStatus: "p",
             lNominations: [],
             rNominations: [],
+            oNominations: [],
             dialog: null
         }
         this.closeNom = this.closeNomination.bind(this);
@@ -47,6 +49,7 @@ class Nominations extends React.Component{
             this.evalCompStatus();
             this.getLifterNominations();
             this.getRefereeNominations();
+            this.getOfficialNominations();
         });
     }
 
@@ -72,6 +75,18 @@ class Nominations extends React.Component{
             type: "official"
         }).then(data => {
             this.setState({rNominations: JSON.parse(data)});
+            this.setState({isLoading: false});
+        })
+    }
+
+    getOfficialNominations(){
+        this.setState({isLoading: true});
+        services.getOfficialNominations({
+            competition: this.state.compInfo.id,
+            team: this.state.region,
+            type: "official"
+        }).then(data => {
+            this.setState({oNominations: JSON.parse(data)});
             this.setState({isLoading: false});
         })
     }
@@ -163,6 +178,7 @@ class Nominations extends React.Component{
                     this.showInform("Номінацію спортсмена було успішно оновлено");
                     this.getLifterNominations();   
                     this.getRefereeNominations();
+                    this.getOfficialNominations();
                 })
             }else{
                     services.insertLifterNomination(this.state.nomination).then(() => {
@@ -171,6 +187,7 @@ class Nominations extends React.Component{
                         this.showInform("Спортсмена було успішно додано до номінації");
                         this.getLifterNominations();
                         this.getRefereeNominations();
+                        this.getOfficialNominations();
                     })
             }
         }else{
@@ -180,13 +197,17 @@ class Nominations extends React.Component{
                     this.setState({isLoading: false});
                     this.showInform("Номінацію офіційної особи було успішно оновлено");
                     this.getLifterNominations();   
-                    this.getRefereeNominations();                        
+                    this.getRefereeNominations(); 
+                    this.getOfficialNominations();                       
                 })
             }else{            
             services.insertOfficialNomination(this.state.nomination).then(() => {
                 this.closeNom();
                 this.setState({isLoading: false});
                 this.showInform("Офіційну особу було успішно додано до номінації");
+                this.getLifterNominations();   
+                this.getRefereeNominations(); 
+                this.getOfficialNominations();                 
             })
         }
         }
@@ -198,6 +219,7 @@ class Nominations extends React.Component{
             this.setState({isLoading: false});
             this.getLifterNominations();
             this.getRefereeNominations();
+            this.getOfficialNominations();
         })
     }
 
@@ -254,6 +276,7 @@ class Nominations extends React.Component{
             this.cancelDeleting();
             this.getLifterNominations();
             this.getRefereeNominations();
+            this.getOfficialNominations();
         })
     }    
 
@@ -263,6 +286,9 @@ class Nominations extends React.Component{
 
     render(){
         if(!this.props.competition) return null;
+        var addLifterButton = (this.state.compStatus === "p")? <span><img src="../wp-content/plugins/nominations/images/nom_add.png" alt="" title="Додати спортсмена" onClick={this.setNomination.bind(this, "lifter")} /></span> : "";
+        var addOfficialButton = ((this.state.compStatus === "p") || (this.state.compStatus === "f"))?
+            <span><img src="../wp-content/plugins/nominations/images/nom_add_ref.png" alt="" title="Додати офіційну особу" onClick={this.setNomination.bind(this, "official")} /></span> : "";
         return <div>
             <div className="nom-header">
                 <div className="nom-header-cell">
@@ -270,14 +296,15 @@ class Nominations extends React.Component{
                 </div>
                 <div className="nom-header-cell">
                     <div className="add-panel" hidden={((this.state.compStatus != "p") && (this.state.compStatus != "f"))}>
-                        <span><img src="../wp-content/plugins/nominations/images/nom_add.png" alt="" title="Додати спортсмена" onClick={this.setNomination.bind(this, "lifter")} /></span>
-                        <span><img src="../wp-content/plugins/nominations/images/nom_add_ref.png" alt="" title="Додати офіційну особу" onClick={this.setNomination.bind(this, "official")} /></span>  
+                        {addLifterButton}
+                        {addOfficialButton}
                     </div>          
                 </div>
             </div>
             <CompInfo compInfo={this.state.compInfo} />
             <NomGrid nominations={this.state.lNominations} game={this.state.compInfo} onChangeStatus={this.onCheckStatus} onLifterEdit={this.onLifterEdit} onDelete={this.onDelete} />
             <RefGrid nominations={this.state.rNominations} game={this.state.compInfo} onOfficialEdit={this.onOfficialEdit} onDelete={this.onDelete} />
+            <OfficialGrid nominations={this.state.oNominations} game={this.state.compInfo} onOfficialEdit={this.onOfficialEdit} onDelete={this.onDelete} />
             <Modal target={this.state.nomination} onClose={this.closeNom}>
                 <LifterForm nomination={this.state.nomination} compInfo={this.state.compInfo} onChange={this.onChange} regions={this.state.regions} wc={this.state.wc} onSave={this.onSave}  onClose={this.closeNom} />
                 <OfficialForm nomination={this.state.nomination} compInfo={this.state.compInfo} onChange={this.onChange} regions={this.state.regions} onSave={this.onSave} onClose={this.closeNom}  />

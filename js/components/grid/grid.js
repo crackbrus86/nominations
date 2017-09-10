@@ -22,7 +22,7 @@ class Grid extends React.Component{
                 </td>)
             }else{
                 var content = (column.rel)? <span className="grid-rel" data-rel={row[column.rel]} onClick={v => column.action(v)}>{row[column.field]}</span> : row[column.field];
-                cells.push(<td key={counter} width={column.width}>{content}</td>)
+                cells.push(<td key={counter} width={column.width} className={column.class}>{content}</td>)
             }            
         })
         return cells

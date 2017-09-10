@@ -2,7 +2,7 @@ import React from "react";
 import moment from "moment";
 import Grid from "../../../components/grid/grid";
 
-const NomGrid = (props) => {
+const LiftersGrid = (props) => {
     if(!props.game) return null;
     var divisions = [
         {
@@ -56,11 +56,6 @@ const NomGrid = (props) => {
     ];
     var columns = [
         {
-            title: "Статус",
-            field: "status",
-            width: "*"
-        }, 
-        {
             title: "#",
             field: "number",
             width: "28px",
@@ -77,13 +72,13 @@ const NomGrid = (props) => {
             width: "*"
         },
         {
-            title: "Вагова категорія",
-            field: "wClass",
+            title: "Область",
+            field: "team",
             width: "*"
         }                          
                     
     ];
-    var results = []
+    var results = [];
     if(props.game.typeId === "1"){
         results = [{
                 title: "Присідання",
@@ -116,77 +111,53 @@ const NomGrid = (props) => {
                 width: "*",
                 class: "al-right exercise-total"
             }];
-    }
+    } 
     var gridColumns = columns.concat(results);
-    var info = props.game;
-    var f = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 11);
-    var bm7 = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 8);    
-    var controls = [];
-    if((+new Date()) <= f){
-        controls.push({
-            title: "",
-            field: "id",
-            button: "edit",
-            width: "*",
-            action: (e) => {
-                props.onLifterEdit(e.target.dataset["rel"]);
-            }            
-        })
-    }
-    if((+new Date()) <= bm7){
-        controls.push({
-            title: "",
-            field: "id",
-            button: "delete",
-            width: "*",
-            action: (e) => {
-                props.onDelete(e.target.dataset["rel"]);
-            }            
-        })
-    }
-
-    if(controls.length){
-        gridColumns = gridColumns.concat(controls);
-    }
-    var tables = divisions.map(division => { 
-        if(division.items.length) {
-            var countOfLifters = division.items.length;
-            var countOfReserve = 0;
-            var countOfTeam = 0;
+    var lifters = divisions.map(division => {
+        if(division.items.length){
             var divName = (props.game.gender === "male")? division.titleM : division.titleF;
-            var counter = 1;
-            var items = division.items.map(item => {
-                var rowItem = {};
-                if(item.reserve && JSON.parse(item.reserve)) countOfReserve++;
-                countOfTeam = countOfLifters - countOfReserve;
-                var reserve = (item.reserve && JSON.parse(item.reserve))? <sup>R</sup> : null;
-                rowItem.id = item.id;
-                rowItem.status = (<input type="checkbox" checked={JSON.parse(item.status)} data-rel={item.id} 
-                onChange={e => {props.onChangeStatus(e.target.dataset["rel"], !JSON.parse(item.status))}} />);
-                rowItem.number = <div>{reserve}{counter++}</div>;
-                rowItem.fullName = item.surname + " " + item.name;
-                rowItem.born = new Date(item.born).getFullYear();
-                rowItem.wClass = item.wClass;
-                if(props.game.typeId === "1"){
-                    rowItem.squat = item.squat;
-                    rowItem.deadlift = item.deadlift;
-                    rowItem.total = item.total;
+            var weightClasses = props.weightClasses;
+            weightClasses.sort((a,b) => (parseInt(a.name.replace("-","").replace("+","")) - parseInt(b.name.replace("-","").replace("+",""))));
+            var wcl = weightClasses.map(w => {
+                var wItems = division.items.filter(x => x.wId === w.id);
+                if(wItems.length){
+                    var counter = 1;
+                    var items = wItems.map(i => {
+                        var rowItem = {};
+                        var reserve = (i.reserve && JSON.parse(i.reserve))? <sup>R</sup> : null;
+                        rowItem.number = <div>{reserve}{counter++}</div>;
+                        rowItem.fullName = i.surname + " " + i.name;
+                        rowItem.born = new Date(i.born).getFullYear();
+                        rowItem.team = props.regions.filter(reg => reg.id === i.team)[0].name;
+                        if(props.game.typeId === "1"){
+                            rowItem.squat = i.squat;
+                            rowItem.deadlift = i.deadlift;
+                            rowItem.total = i.total;
+                        }
+                        rowItem.benchpress = i.benchpress;
+                        return rowItem;                        
+                    });
+                    if(props.game.typeId === "1"){
+                        items.sort((a,b) => (parseInt(a.total) - parseInt(b.total)));  
+                    }else{
+                        items.sort((a,b) => (parseInt(a.benchpress) - parseInt(b.benchpress))); 
+                    }
+                       
+                    return (<div key={w.id}>
+                        <div key={w.id} className="w-class-name">{w.name}</div>
+                        <Grid data={{columns: gridColumns, rows: items}} />
+                    </div>)                                   
                 }
-                rowItem.benchpress = item.benchpress;
-                return rowItem;
-            });
-            items.sort((a,b) => (parseInt(a.wClass.replace("-","").replace("+","")) - parseInt(b.wClass.replace("-","").replace("+",""))));
-            return (<div key={division.id}>
+            }); 
+            return (<div key={division.id} className="division-wrap">
                 <div key={division.id} className="division-head">Дивізіон "{divName}"</div>
-                <Grid data={{columns: gridColumns, rows: items}} />
-                <div className="division-counters">У дивізіоні <strong>{countOfLifters}</strong> спортсменів (в команді: <strong>{countOfTeam}</strong>, в резерві: <strong>{countOfReserve}</strong>)</div>
-            </div>)
+                {wcl}
+            </div>)            
         }
-    });
-
-    if(!props.nominations.length) tables = (<div className="empty-nomination"><p>Жодної номінації спортсмена не було створено</p></div>);
+    }); 
+    
+    if(!props.nominations.length) lifters = (<div className="empty-nomination"><p>Жодної номінації спортсмена не було створено</p></div>);
     return (<div className="nom-grid-wrap">
-        <h4>Список номінацій спортсменів</h4>
-        {tables}</div>);
+        {lifters}</div>);    
 }
-export default NomGrid;
+export default LiftersGrid;

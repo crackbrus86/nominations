@@ -38,7 +38,7 @@ const OfficialForm = (props) => {
                     </tr>
                     <tr className="another-position">
                         <td><label>Є офіційною особою</label></td>
-                        <td><input checked={nom.isOfficial} type="checkbox" onChange={e => props.onChange("isOfficial", e.target.checked)} /></td>
+                        <td><input checked={JSON.parse(nom.isOfficial)} type="checkbox" onChange={e => props.onChange("isOfficial", e.target.checked)} /></td>
                     </tr>
                     <tr className="another-position">
                         <td><label>на посаді</label></td>
@@ -46,7 +46,7 @@ const OfficialForm = (props) => {
                     </tr>
                     <tr>
                         <td><label>Є суддею</label></td>
-                        <td><input checked={nom.isReferee} type="checkbox" onChange={e => props.onChange("isReferee", e.target.checked)} /></td>
+                        <td><input checked={JSON.parse(nom.isReferee)} type="checkbox" onChange={e => props.onChange("isReferee", e.target.checked)} /></td>
                     </tr>
                     <tr>
                         <td><label>категорії</label></td>

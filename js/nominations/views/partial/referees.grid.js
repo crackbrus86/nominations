@@ -10,12 +10,17 @@ const RefGrid = (props) => {
             field: "number",
             width: "28px",
             class: "al-right"
-        },
+        },      
         {
             title: "Ім'я",
             field: "fullName",
             width: "*"
         },
+        {
+            title: "Область",
+            field: "team",
+            width: "*"
+        },          
         {
             title: "Категорія",
             field: "refCategory",
@@ -27,38 +32,18 @@ const RefGrid = (props) => {
             width: "*"
         }                 
     ];
-    var controls = [        {
-        title: "",
-        field: "id",
-        button: "edit",
-        width: "*",
-        action: (e) => {
-            props.onOfficialEdit(e.target.dataset["rel"]);
-        }
-    },
-    {
-        title: "",
-        field: "id",
-        button: "delete",
-        width: "*",
-        action: (e) => {
-            props.onDelete(e.target.dataset["rel"]);
-        }
-    }];
-    var info = props.game;
-    var bm7 = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 8);   
-    if((+new Date()) <= bm7) columns = columns.concat(controls);
     var counter = 1;
     var referees = props.nominations.map(x => {
         var referee = {};
         referee.id = x.id;
         referee.number = counter++;
         referee.fullName = x.surname + " " + x.firstName;
+        referee.team = props.regions.filter(reg => reg.id === x.team)[0].name;
         referee.refCategory = refCategories.filter(r => r.value === x.refCategory)[0].text;
         referee.refRemark = x.refRemark;
         return referee;
     });
-    referees.sort();
+    referees.sort((a,b) => a.team > b.team);
     var table = <Grid data={{columns: columns, rows: referees}} />;
     if(!props.nominations.length) table = (<div className="empty-nomination"><p>Жодної номінації тренера не було створено</p></div>);
     return (<div className="nom-grid-wrap">

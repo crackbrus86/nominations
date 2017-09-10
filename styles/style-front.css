@@ -3,7 +3,8 @@
 
 #nm-front .grid {
   border-spacing: 0px;
-  border-collapse: collapse; }
+  border-collapse: collapse;
+  margin-bottom: 0; }
   #nm-front .grid thead tr {
     background-color: #ECE9DF; }
     #nm-front .grid thead tr th {
@@ -22,7 +23,12 @@
     font-weight: normal;
     font-size: 0.7em;
     padding: 3px;
-    border: 1px solid #ccc; }
+    border: 1px solid #ccc;
+    line-height: 15px; }
+    #nm-front .grid tbody tr td.al-right {
+      text-align: right; }
+    #nm-front .grid tbody tr td.exercise-total {
+      font-weight: 600; }
     #nm-front .grid tbody tr td span.grid-rel {
       color: #0062A4;
       cursor: pointer; }
@@ -30,6 +36,25 @@
         color: #f50000;
         background-color: #ffffc5;
         border-bottom: 1px dotted #f50000 !important; }
+    #nm-front .grid tbody tr td div.status-code {
+      font-weight: 600;
+      padding: 3px 0;
+      text-align: center; }
+    #nm-front .grid tbody tr td input[type=checkbox] {
+      display: block;
+      margin: 0 auto; }
+    #nm-front .grid tbody tr td i.fa {
+      display: block;
+      text-align: center;
+      font-size: 1.2em;
+      cursor: pointer; }
+      #nm-front .grid tbody tr td i.fa.edit {
+        color: #520600; }
+      #nm-front .grid tbody tr td i.fa.delete {
+        color: #E11404; }
+    #nm-front .grid tbody tr td sup {
+      color: #8d0200;
+      font-weight: 600; }
 
 .blackout {
   position: fixed;
@@ -80,13 +105,13 @@
         float: left;
         text-align: center;
         padding: 3px 0 3px 0;
-        margin: 0 1em 0 0;
+        margin: 0;
         display: block;
         border: 1px solid #E0DED7;
         background-color: #EAE6DC;
         border-radius: 3px; }
         .nom-header .nom-header-cell .add-panel span:nth-child(2) {
-          margin: 0; }
+          margin: 0 0 0 1em; }
         .nom-header .nom-header-cell .add-panel span:hover {
           background-color: #e2ddcf;
           border: solid 1px #D1C9B2;
@@ -292,6 +317,7 @@
 
 .dialog {
   position: absolute;
+  font-family: Verdana, Geneva;
   top: 30%;
   left: 50%;
   min-width: 400px;
@@ -300,7 +326,8 @@
   padding: 5px 10px;
   border-radius: 5px; }
   .dialog .dialog-body {
-    padding: 10px 0; }
+    padding: 10px 0;
+    font-size: 0.8em; }
   .dialog .dialog-header .icons {
     text-align: right; }
     .dialog .dialog-header .icons .fa-times {
@@ -312,4 +339,70 @@
     text-align: right;
     padding-bottom: 5px; }
     .dialog .dialog-footer button {
-      margin-left: 10px; }
+      color: #fff;
+      background-color: #038ece;
+      border-radius: 4px;
+      border: 0px;
+      padding: 4px 3px 4px;
+      margin: 3px 10px 0 0;
+      cursor: pointer;
+      min-width: 50px; }
+      .dialog .dialog-footer button.btn-danger {
+        background-color: #ab3434; }
+        .dialog .dialog-footer button.btn-danger:hover {
+          background-color: #e25252; }
+      .dialog .dialog-footer button.btn-success {
+        background-color: #2f693b; }
+        .dialog .dialog-footer button.btn-success:hover {
+          background-color: #459255; }
+  .dialog h4 {
+    font-size: 1em !important;
+    margin: 0 !important;
+    color: #2e3fc5 !important; }
+
+.nom-grid-wrap {
+  margin-bottom: 25px;
+  clear: both; }
+  .nom-grid-wrap .division-wrap {
+    margin-bottom: 20px; }
+    .nom-grid-wrap .division-wrap .w-class-name {
+      font-family: Verdana, Geneva;
+      font-weight: 600;
+      font-size: 0.9em;
+      background-color: #fdfaf2;
+      color: #000;
+      border: 1px solid #ccc;
+      padding-left: 4px; }
+  .nom-grid-wrap h4 {
+    font-family: Verdana, Geneva;
+    font-weight: 600;
+    text-align: center;
+    clear: both;
+    font-size: 0.9em;
+    margin-bottom: 10px !important; }
+  .nom-grid-wrap .division-head {
+    background-color: #8d0000;
+    font-family: Verdana, Geneva;
+    color: #fff;
+    font-size: 0.8em;
+    font-weight: 600;
+    text-shadow: 0 0 1px #000;
+    padding-left: 5px; }
+  .nom-grid-wrap .empty-nomination {
+    clear: both;
+    background-color: #afd0ea;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 0 auto;
+    width: 50%;
+    padding: 20px 0; }
+    .nom-grid-wrap .empty-nomination p {
+      font-family: Verdana, Geneva;
+      font-size: 12px !important;
+      text-align: center;
+      margin-bottom: 0 !important; }
+  .nom-grid-wrap .division-counters {
+    font-family: Verdana, Geneva;
+    font-size: 0.8em;
+    text-align: right;
+    margin-bottom: 20px; }
