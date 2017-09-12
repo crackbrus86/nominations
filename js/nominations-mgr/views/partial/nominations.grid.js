@@ -55,11 +55,11 @@ const NomGrid = (props) => {
         }                                                   
     ];
     var columns = [
-        {
-            title: "Статус",
-            field: "status",
-            width: "*"
-        }, 
+        // {
+        //     title: "Статус",
+        //     field: "status",
+        //     width: "*"
+        // }, 
         {
             title: "#",
             field: "number",
@@ -154,16 +154,15 @@ const NomGrid = (props) => {
             var countOfReserve = 0;
             var countOfTeam = 0;
             var divName = (props.game.gender === "male")? division.titleM : division.titleF;
-            var counter = 1;
             var items = division.items.map(item => {
                 var rowItem = {};
                 if(item.reserve && JSON.parse(item.reserve)) countOfReserve++;
                 countOfTeam = countOfLifters - countOfReserve;
-                var reserve = (item.reserve && JSON.parse(item.reserve))? <sup>R</sup> : null;
+                rowItem.reserve = (item.reserve && JSON.parse(item.reserve))? <sup>R</sup> : null;
                 rowItem.id = item.id;
-                rowItem.status = (<input type="checkbox" checked={JSON.parse(item.status)} data-rel={item.id} 
-                onChange={e => {props.onChangeStatus(e.target.dataset["rel"], !JSON.parse(item.status))}} />);
-                rowItem.number = <div>{reserve}{counter++}</div>;
+                // rowItem.status = (<input type="checkbox" checked={JSON.parse(item.status)} data-rel={item.id} 
+                // onChange={e => {props.onChangeStatus(e.target.dataset["rel"], !JSON.parse(item.status))}} />);
+                rowItem.number = "";
                 rowItem.fullName = item.surname + " " + item.name;
                 rowItem.born = new Date(item.born).getFullYear();
                 rowItem.wClass = item.wClass;
@@ -176,6 +175,15 @@ const NomGrid = (props) => {
                 return rowItem;
             });
             items.sort((a,b) => (parseInt(a.wClass.replace("-","").replace("+","")) - parseInt(b.wClass.replace("-","").replace("+",""))));
+            if(props.game.typeId === "1"){
+                items.sort((a,b) => (parseInt(a.total) - parseInt(b.total)));  
+            }else{
+                items.sort((a,b) => (parseInt(a.benchpress) - parseInt(b.benchpress))); 
+            }            
+            var counter = 1;
+            items.map(item => {
+                item.number = <div>{item.reserve}{counter++}</div>;
+            });
             return (<div key={division.id}>
                 <div key={division.id} className="division-head">Дивізіон "{divName}"</div>
                 <Grid data={{columns: gridColumns, rows: items}} />

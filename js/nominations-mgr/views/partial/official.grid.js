@@ -45,16 +45,19 @@ const OfficialGrid = (props) => {
     var info = props.game;
     var bm7 = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 8);  
     if((+new Date()) <= bm7) columns = columns.concat(controls);
-    var counter = 1;
     var officials = props.nominations.map(x => {
         var official = {};
         official.id = x.id;
-        official.number = counter++;
+        official.number = "";
         official.fullName = x.surname + " " + x.firstName;
         official.duty = duties.filter(d => d.value === x.duty)[0].text;
         return official;
     });
     officials.sort();
+    var counter = 1;
+    officials.map(official => {
+        official.number = counter++;
+    })
     var table = <Grid data={{columns: columns, rows: officials}} />;
     if(!props.nominations.length) table = (<div className="empty-nomination"><p>Жодної номінації офіційної особи не було створено</p></div>);
     return (<div className="nom-grid-wrap">

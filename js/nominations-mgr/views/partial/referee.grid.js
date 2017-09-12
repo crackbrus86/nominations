@@ -48,17 +48,20 @@ const RefGrid = (props) => {
     var info = props.game;
     var bm7 = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 8);   
     if((+new Date()) <= bm7) columns = columns.concat(controls);
-    var counter = 1;
     var referees = props.nominations.map(x => {
         var referee = {};
         referee.id = x.id;
-        referee.number = counter++;
+        referee.number = "";
         referee.fullName = x.surname + " " + x.firstName;
         referee.refCategory = refCategories.filter(r => r.value === x.refCategory)[0].text;
         referee.refRemark = x.refRemark;
         return referee;
     });
     referees.sort();
+    var counter = 1;
+    referees.map(referee => {
+        referee.number = counter++;
+    })
     var table = <Grid data={{columns: columns, rows: referees}} />;
     if(!props.nominations.length) table = (<div className="empty-nomination"><p>Жодної номінації тренера не було створено</p></div>);
     return (<div className="nom-grid-wrap">

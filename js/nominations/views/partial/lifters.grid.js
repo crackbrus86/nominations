@@ -121,11 +121,10 @@ const LiftersGrid = (props) => {
             var wcl = weightClasses.map(w => {
                 var wItems = division.items.filter(x => x.wId === w.id);
                 if(wItems.length){
-                    var counter = 1;
                     var items = wItems.map(i => {
                         var rowItem = {};
-                        var reserve = (i.reserve && JSON.parse(i.reserve))? <sup>R</sup> : null;
-                        rowItem.number = <div>{reserve}{counter++}</div>;
+                        rowItem.reserve = (i.reserve && JSON.parse(i.reserve))? <sup>R</sup> : null;
+                        rowItem.number = "";
                         rowItem.fullName = i.surname + " " + i.name;
                         rowItem.born = new Date(i.born).getFullYear();
                         rowItem.team = props.regions.filter(reg => reg.id === i.team)[0].name;
@@ -142,7 +141,10 @@ const LiftersGrid = (props) => {
                     }else{
                         items.sort((a,b) => (parseInt(a.benchpress) - parseInt(b.benchpress))); 
                     }
-                       
+                    var counter = 1;
+                    items.map(item => {
+                        item.number = <div>{item.reserve}{counter++}</div>;;
+                    });                       
                     return (<div key={w.id}>
                         <div key={w.id} className="w-class-name">{w.name}</div>
                         <Grid data={{columns: gridColumns, rows: items}} />

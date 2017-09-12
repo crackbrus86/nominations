@@ -49526,20 +49526,14 @@ var LiftersGrid = function LiftersGrid(props) {
                     return x.wId === w.id;
                 });
                 if (wItems.length) {
-                    var counter = 1;
                     var items = wItems.map(function (i) {
                         var rowItem = {};
-                        var reserve = i.reserve && JSON.parse(i.reserve) ? _react2.default.createElement(
+                        rowItem.reserve = i.reserve && JSON.parse(i.reserve) ? _react2.default.createElement(
                             "sup",
                             null,
                             "R"
                         ) : null;
-                        rowItem.number = _react2.default.createElement(
-                            "div",
-                            null,
-                            reserve,
-                            counter++
-                        );
+                        rowItem.number = "";
                         rowItem.fullName = i.surname + " " + i.name;
                         rowItem.born = new Date(i.born).getFullYear();
                         rowItem.team = props.regions.filter(function (reg) {
@@ -49562,7 +49556,15 @@ var LiftersGrid = function LiftersGrid(props) {
                             return parseInt(a.benchpress) - parseInt(b.benchpress);
                         });
                     }
-
+                    var counter = 1;
+                    items.map(function (item) {
+                        item.number = _react2.default.createElement(
+                            "div",
+                            null,
+                            item.reserve,
+                            counter++
+                        );;
+                    });
                     return _react2.default.createElement(
                         "div",
                         { key: w.id },
@@ -49653,11 +49655,10 @@ var RefGrid = function RefGrid(props) {
         field: "refRemark",
         width: "*"
     }];
-    var counter = 1;
     var referees = props.nominations.map(function (x) {
         var referee = {};
         referee.id = x.id;
-        referee.number = counter++;
+        referee.number = "";
         referee.fullName = x.surname + " " + x.firstName;
         referee.team = props.regions.filter(function (reg) {
             return reg.id === x.team;
@@ -49670,6 +49671,10 @@ var RefGrid = function RefGrid(props) {
     });
     referees.sort(function (a, b) {
         return a.team > b.team;
+    });
+    var counter = 1;
+    referees.map(function (referee) {
+        referee.number = counter++;
     });
     var table = _react2.default.createElement(_grid2.default, { data: { columns: columns, rows: referees } });
     if (!props.nominations.length) table = _react2.default.createElement(
@@ -49736,11 +49741,10 @@ var OfficialGrid = function OfficialGrid(props) {
         field: "duty",
         width: "*"
     }];
-    var counter = 1;
     var officials = props.nominations.map(function (x) {
         var official = {};
         official.id = x.id;
-        official.number = counter++;
+        official.number = "";
         official.fullName = x.surname + " " + x.firstName;
         official.team = props.regions.filter(function (r) {
             return r.id === x.team;
@@ -49752,6 +49756,10 @@ var OfficialGrid = function OfficialGrid(props) {
     });
     officials.sort(function (a, b) {
         return a.team > b.team;
+    });
+    var counter = 1;
+    officials.map(function (official) {
+        official.number = counter++;
     });
     var table = _react2.default.createElement(_grid2.default, { data: { columns: columns, rows: officials } });
     if (!props.nominations.length) table = _react2.default.createElement(

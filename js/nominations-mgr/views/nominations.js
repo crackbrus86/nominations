@@ -62,8 +62,7 @@ class Nominations extends React.Component{
             type: "lifter"
         }).then(data => {
             this.setState({lNominations: JSON.parse(data)});
-            this.setState({isLoading: false});
-            console.log(this.state);            
+            this.setState({isLoading: false});        
         })
     }
 
@@ -118,7 +117,7 @@ class Nominations extends React.Component{
             gender: this.state.compInfo.gender,
             team: this.state.region,
             division: "open",
-            weightClass: this.state.wc[0],
+            weightClass: this.state.wc[0].id,
             squat: 0.00,
             benchpress: 0.00,
             deadlift: 0.00,
