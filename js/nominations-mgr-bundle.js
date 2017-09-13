@@ -7022,7 +7022,7 @@ var createFactory = ReactElement.createFactory;
 var cloneElement = ReactElement.cloneElement;
 
 if (process.env.NODE_ENV !== 'production') {
-  var lowPriorityWarning = __webpack_require__(37);
+  var lowPriorityWarning = __webpack_require__(36);
   var canDefineProperty = __webpack_require__(27);
   var ReactElementValidator = __webpack_require__(59);
   var didWarnPropTypesDeprecated = false;
@@ -7359,10 +7359,10 @@ module.exports = ReactReconciler;
 
 
 
-var DOMNamespaces = __webpack_require__(45);
+var DOMNamespaces = __webpack_require__(44);
 var setInnerHTML = __webpack_require__(32);
 
-var createMicrosoftUnsafeLocalFunction = __webpack_require__(46);
+var createMicrosoftUnsafeLocalFunction = __webpack_require__(45);
 var setTextContent = __webpack_require__(73);
 
 var ELEMENT_NODE_TYPE = 1;
@@ -7483,7 +7483,7 @@ module.exports = DOMLazyTree;
 
 
 var EventPluginHub = __webpack_require__(24);
-var EventPluginUtils = __webpack_require__(39);
+var EventPluginUtils = __webpack_require__(38);
 
 var accumulateInto = __webpack_require__(65);
 var forEachAccumulated = __webpack_require__(66);
@@ -7625,8 +7625,8 @@ module.exports = EventPropagators;
 var _prodInvariant = __webpack_require__(4);
 
 var EventPluginRegistry = __webpack_require__(29);
-var EventPluginUtils = __webpack_require__(39);
-var ReactErrorUtils = __webpack_require__(40);
+var EventPluginUtils = __webpack_require__(38);
+var ReactErrorUtils = __webpack_require__(39);
 
 var accumulateInto = __webpack_require__(65);
 var forEachAccumulated = __webpack_require__(66);
@@ -7904,7 +7904,7 @@ module.exports = EventPluginHub;
 
 var SyntheticEvent = __webpack_require__(14);
 
-var getEventTarget = __webpack_require__(41);
+var getEventTarget = __webpack_require__(40);
 
 /**
  * @interface UIEvent
@@ -8571,7 +8571,7 @@ module.exports = TransactionImpl;
 var SyntheticUIEvent = __webpack_require__(25);
 var ViewportMetrics = __webpack_require__(72);
 
-var getEventModifierState = __webpack_require__(43);
+var getEventModifierState = __webpack_require__(42);
 
 /**
  * @interface MouseEvent
@@ -8646,12 +8646,12 @@ module.exports = SyntheticMouseEvent;
 
 
 var ExecutionEnvironment = __webpack_require__(8);
-var DOMNamespaces = __webpack_require__(45);
+var DOMNamespaces = __webpack_require__(44);
 
 var WHITESPACE_TEST = /^[ \r\n\t\f]/;
 var NONVISIBLE_TEST = /<(!--|link|noscript|meta|script|style)[ \r\n\t\f\/>]/;
 
-var createMicrosoftUnsafeLocalFunction = __webpack_require__(46);
+var createMicrosoftUnsafeLocalFunction = __webpack_require__(45);
 
 // SVG temp container for IE lacking innerHTML
 var reusableSVGContainer;
@@ -8882,7 +8882,7 @@ var ReactEventEmitterMixin = __webpack_require__(258);
 var ViewportMetrics = __webpack_require__(72);
 
 var getVendorPrefixedEventName = __webpack_require__(259);
-var isEventSupported = __webpack_require__(42);
+var isEventSupported = __webpack_require__(41);
 
 /**
  * Summary of `ReactBrowserEventEmitter` event handling:
@@ -9189,136 +9189,6 @@ module.exports = ReactBrowserEventEmitter;
 
 /***/ }),
 /* 35 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(5);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var classNames = __webpack_require__(314);
-
-var Grid = function (_React$Component) {
-    _inherits(Grid, _React$Component);
-
-    function Grid() {
-        _classCallCheck(this, Grid);
-
-        return _possibleConstructorReturn(this, (Grid.__proto__ || Object.getPrototypeOf(Grid)).apply(this, arguments));
-    }
-
-    _createClass(Grid, [{
-        key: "getCells",
-        value: function getCells(row) {
-            var cells = [];
-            this.props.data.columns.forEach(function (column) {
-                var counter = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-
-                counter++;
-                if (column.button) {
-                    var color = column.button === "edit" ? "success" : "danger";
-                    var icon;
-                    switch (column.button) {
-                        case "edit":
-                            icon = "fa-pencil-square-o";
-                            break;
-                        case "delete":
-                            icon = "fa-times";
-                            break;
-                    }
-                    cells.push(_react2.default.createElement(
-                        "td",
-                        { key: counter, width: column.width },
-                        _react2.default.createElement("i", { className: classNames("fa", icon, column.button), "data-rel": row[column.field], onClick: function onClick(v) {
-                                return column.action(v);
-                            } })
-                    ));
-                } else {
-                    var content = column.rel ? _react2.default.createElement(
-                        "span",
-                        { className: "grid-rel", "data-rel": row[column.rel], onClick: function onClick(v) {
-                                return column.action(v);
-                            } },
-                        row[column.field]
-                    ) : row[column.field];
-                    cells.push(_react2.default.createElement(
-                        "td",
-                        { key: counter, width: column.width, className: column.class },
-                        content
-                    ));
-                }
-            });
-            return cells;
-        }
-    }, {
-        key: "render",
-        value: function render() {
-            var _this2 = this;
-
-            var cols = this.props.data.columns.map(function (column) {
-                var counter = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-
-                counter++;
-                return _react2.default.createElement(
-                    "th",
-                    { key: counter, width: column.width },
-                    column.title
-                );
-            });
-            var rows = this.props.data.rows.map(function (row) {
-                var counter = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-
-                counter++;
-                return _react2.default.createElement(
-                    "tr",
-                    { key: counter },
-                    _this2.getCells(row)
-                );
-            });
-            return _react2.default.createElement(
-                "table",
-                { className: "grid" },
-                _react2.default.createElement(
-                    "thead",
-                    null,
-                    _react2.default.createElement(
-                        "tr",
-                        null,
-                        cols
-                    )
-                ),
-                _react2.default.createElement(
-                    "tbody",
-                    null,
-                    rows
-                )
-            );
-        }
-    }]);
-
-    return Grid;
-}(_react2.default.Component);
-
-exports.default = Grid;
-
-/***/ }),
-/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -9634,7 +9504,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9705,7 +9575,7 @@ module.exports = lowPriorityWarning;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 38 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9726,7 +9596,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 39 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9744,7 +9614,7 @@ module.exports = ReactPropTypesSecret;
 
 var _prodInvariant = __webpack_require__(4);
 
-var ReactErrorUtils = __webpack_require__(40);
+var ReactErrorUtils = __webpack_require__(39);
 
 var invariant = __webpack_require__(2);
 var warning = __webpack_require__(3);
@@ -9958,7 +9828,7 @@ module.exports = EventPluginUtils;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 40 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10040,7 +9910,7 @@ module.exports = ReactErrorUtils;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 41 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10080,7 +9950,7 @@ function getEventTarget(nativeEvent) {
 module.exports = getEventTarget;
 
 /***/ }),
-/* 42 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10145,7 +10015,7 @@ function isEventSupported(eventNameSuffix, capture) {
 module.exports = isEventSupported;
 
 /***/ }),
-/* 43 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10193,7 +10063,7 @@ function getEventModifierState(nativeEvent) {
 module.exports = getEventModifierState;
 
 /***/ }),
-/* 44 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10214,7 +10084,7 @@ var Danger = __webpack_require__(243);
 var ReactDOMComponentTree = __webpack_require__(7);
 var ReactInstrumentation = __webpack_require__(11);
 
-var createMicrosoftUnsafeLocalFunction = __webpack_require__(46);
+var createMicrosoftUnsafeLocalFunction = __webpack_require__(45);
 var setInnerHTML = __webpack_require__(32);
 var setTextContent = __webpack_require__(73);
 
@@ -10425,7 +10295,7 @@ module.exports = DOMChildrenOperations;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 45 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10450,7 +10320,7 @@ var DOMNamespaces = {
 module.exports = DOMNamespaces;
 
 /***/ }),
-/* 46 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10487,7 +10357,7 @@ var createMicrosoftUnsafeLocalFunction = function (func) {
 module.exports = createMicrosoftUnsafeLocalFunction;
 
 /***/ }),
-/* 47 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10631,7 +10501,7 @@ module.exports = LinkedValueUtils;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 48 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10681,7 +10551,7 @@ module.exports = ReactComponentEnvironment;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 49 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10754,7 +10624,7 @@ function shallowEqual(objA, objB) {
 module.exports = shallowEqual;
 
 /***/ }),
-/* 50 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10801,7 +10671,7 @@ function shouldUpdateReactComponent(prevElement, nextElement) {
 module.exports = shouldUpdateReactComponent;
 
 /***/ }),
-/* 51 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10865,7 +10735,7 @@ var KeyEscapeUtils = {
 module.exports = KeyEscapeUtils;
 
 /***/ }),
-/* 52 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11105,7 +10975,7 @@ module.exports = ReactUpdateQueue;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 53 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11482,7 +11352,7 @@ module.exports = validateDOMNesting;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 54 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11537,6 +11407,136 @@ function getEventCharCode(nativeEvent) {
 module.exports = getEventCharCode;
 
 /***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(5);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var classNames = __webpack_require__(314);
+
+var Grid = function (_React$Component) {
+    _inherits(Grid, _React$Component);
+
+    function Grid() {
+        _classCallCheck(this, Grid);
+
+        return _possibleConstructorReturn(this, (Grid.__proto__ || Object.getPrototypeOf(Grid)).apply(this, arguments));
+    }
+
+    _createClass(Grid, [{
+        key: "getCells",
+        value: function getCells(row) {
+            var cells = [];
+            this.props.data.columns.forEach(function (column) {
+                var counter = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+                counter++;
+                if (column.button) {
+                    var color = column.button === "edit" ? "success" : "danger";
+                    var icon;
+                    switch (column.button) {
+                        case "edit":
+                            icon = "fa-pencil-square-o";
+                            break;
+                        case "delete":
+                            icon = "fa-times";
+                            break;
+                    }
+                    cells.push(_react2.default.createElement(
+                        "td",
+                        { key: counter, width: column.width },
+                        _react2.default.createElement("i", { className: classNames("fa", icon, column.button), "data-rel": row[column.field], onClick: function onClick(v) {
+                                return column.action(v);
+                            } })
+                    ));
+                } else {
+                    var content = column.rel ? _react2.default.createElement(
+                        "span",
+                        { className: "grid-rel", "data-rel": row[column.rel], onClick: function onClick(v) {
+                                return column.action(v);
+                            } },
+                        row[column.field]
+                    ) : row[column.field];
+                    cells.push(_react2.default.createElement(
+                        "td",
+                        { key: counter, width: column.width, className: column.class },
+                        content
+                    ));
+                }
+            });
+            return cells;
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var _this2 = this;
+
+            var cols = this.props.data.columns.map(function (column) {
+                var counter = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+                counter++;
+                return _react2.default.createElement(
+                    "th",
+                    { key: counter, width: column.width },
+                    column.title
+                );
+            });
+            var rows = this.props.data.rows.map(function (row) {
+                var counter = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+                counter++;
+                return _react2.default.createElement(
+                    "tr",
+                    { key: counter },
+                    _this2.getCells(row)
+                );
+            });
+            return _react2.default.createElement(
+                "table",
+                { className: "grid" },
+                _react2.default.createElement(
+                    "thead",
+                    null,
+                    _react2.default.createElement(
+                        "tr",
+                        null,
+                        cols
+                    )
+                ),
+                _react2.default.createElement(
+                    "tbody",
+                    null,
+                    rows
+                )
+            );
+        }
+    }]);
+
+    return Grid;
+}(_react2.default.Component);
+
+exports.default = Grid;
+
+/***/ }),
 /* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11561,7 +11561,7 @@ var ReactNoopUpdateQueue = __webpack_require__(56);
 var canDefineProperty = __webpack_require__(27);
 var emptyObject = __webpack_require__(28);
 var invariant = __webpack_require__(2);
-var lowPriorityWarning = __webpack_require__(37);
+var lowPriorityWarning = __webpack_require__(36);
 
 /**
  * Base class helpers for the updating state of a component.
@@ -11890,7 +11890,7 @@ var checkReactTypeSpec = __webpack_require__(216);
 var canDefineProperty = __webpack_require__(27);
 var getIteratorFn = __webpack_require__(58);
 var warning = __webpack_require__(3);
-var lowPriorityWarning = __webpack_require__(37);
+var lowPriorityWarning = __webpack_require__(36);
 
 function getDeclarationErrorAddendum() {
   if (ReactCurrentOwner.current) {
@@ -12166,7 +12166,7 @@ var emptyFunction = __webpack_require__(10);
 var invariant = __webpack_require__(2);
 var warning = __webpack_require__(3);
 
-var ReactPropTypesSecret = __webpack_require__(38);
+var ReactPropTypesSecret = __webpack_require__(37);
 var checkPropTypes = __webpack_require__(220);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
@@ -14613,7 +14613,7 @@ module.exports = ReactPropTypesSecret;
 
 var _assign = __webpack_require__(6);
 
-var LinkedValueUtils = __webpack_require__(47);
+var LinkedValueUtils = __webpack_require__(46);
 var ReactDOMComponentTree = __webpack_require__(7);
 var ReactUpdates = __webpack_require__(13);
 
@@ -15114,7 +15114,7 @@ var REACT_ELEMENT_TYPE = __webpack_require__(269);
 
 var getIteratorFn = __webpack_require__(270);
 var invariant = __webpack_require__(2);
-var KeyEscapeUtils = __webpack_require__(51);
+var KeyEscapeUtils = __webpack_require__(50);
 var warning = __webpack_require__(3);
 
 var SEPARATOR = '.';
@@ -15559,14 +15559,14 @@ var ReactInstanceMap = __webpack_require__(26);
 var ReactInstrumentation = __webpack_require__(11);
 var ReactMarkupChecksum = __webpack_require__(301);
 var ReactReconciler = __webpack_require__(21);
-var ReactUpdateQueue = __webpack_require__(52);
+var ReactUpdateQueue = __webpack_require__(51);
 var ReactUpdates = __webpack_require__(13);
 
 var emptyObject = __webpack_require__(28);
 var instantiateReactComponent = __webpack_require__(79);
 var invariant = __webpack_require__(2);
 var setInnerHTML = __webpack_require__(32);
-var shouldUpdateReactComponent = __webpack_require__(50);
+var shouldUpdateReactComponent = __webpack_require__(49);
 var warning = __webpack_require__(3);
 
 var ATTR_NAME = DOMProperty.ID_ATTRIBUTE_NAME;
@@ -39080,7 +39080,7 @@ module.exports = factory(isValidElement);
 if (process.env.NODE_ENV !== 'production') {
   var invariant = __webpack_require__(2);
   var warning = __webpack_require__(3);
-  var ReactPropTypesSecret = __webpack_require__(38);
+  var ReactPropTypesSecret = __webpack_require__(37);
   var loggedTypeFailures = {};
 }
 
@@ -40105,8 +40105,8 @@ var ReactUpdates = __webpack_require__(13);
 var SyntheticEvent = __webpack_require__(14);
 
 var inputValueTracking = __webpack_require__(70);
-var getEventTarget = __webpack_require__(41);
-var isEventSupported = __webpack_require__(42);
+var getEventTarget = __webpack_require__(40);
+var isEventSupported = __webpack_require__(41);
 var isTextInputElement = __webpack_require__(71);
 
 var eventTypes = {
@@ -41498,7 +41498,7 @@ module.exports = HTMLDOMPropertyConfig;
 
 
 
-var DOMChildrenOperations = __webpack_require__(44);
+var DOMChildrenOperations = __webpack_require__(43);
 var ReactDOMIDOperations = __webpack_require__(247);
 
 /**
@@ -41907,7 +41907,7 @@ module.exports = getMarkupWrap;
 
 
 
-var DOMChildrenOperations = __webpack_require__(44);
+var DOMChildrenOperations = __webpack_require__(43);
 var ReactDOMComponentTree = __webpack_require__(7);
 
 /**
@@ -41953,7 +41953,7 @@ var _prodInvariant = __webpack_require__(4),
 var AutoFocusUtils = __webpack_require__(249);
 var CSSPropertyOperations = __webpack_require__(250);
 var DOMLazyTree = __webpack_require__(22);
-var DOMNamespaces = __webpack_require__(45);
+var DOMNamespaces = __webpack_require__(44);
 var DOMProperty = __webpack_require__(15);
 var DOMPropertyOperations = __webpack_require__(76);
 var EventPluginHub = __webpack_require__(24);
@@ -41972,10 +41972,10 @@ var ReactServerRenderingTransaction = __webpack_require__(272);
 var emptyFunction = __webpack_require__(10);
 var escapeTextContentForBrowser = __webpack_require__(33);
 var invariant = __webpack_require__(2);
-var isEventSupported = __webpack_require__(42);
-var shallowEqual = __webpack_require__(49);
+var isEventSupported = __webpack_require__(41);
+var shallowEqual = __webpack_require__(48);
 var inputValueTracking = __webpack_require__(70);
-var validateDOMNesting = __webpack_require__(53);
+var validateDOMNesting = __webpack_require__(52);
 var warning = __webpack_require__(3);
 
 var Flags = ReactDOMComponentFlags;
@@ -43673,7 +43673,7 @@ var _prodInvariant = __webpack_require__(4),
     _assign = __webpack_require__(6);
 
 var DOMPropertyOperations = __webpack_require__(76);
-var LinkedValueUtils = __webpack_require__(47);
+var LinkedValueUtils = __webpack_require__(46);
 var ReactDOMComponentTree = __webpack_require__(7);
 var ReactUpdates = __webpack_require__(13);
 
@@ -44093,7 +44093,7 @@ module.exports = ReactDOMOption;
 var _prodInvariant = __webpack_require__(4),
     _assign = __webpack_require__(6);
 
-var LinkedValueUtils = __webpack_require__(47);
+var LinkedValueUtils = __webpack_require__(46);
 var ReactDOMComponentTree = __webpack_require__(7);
 var ReactUpdates = __webpack_require__(13);
 
@@ -44258,7 +44258,7 @@ module.exports = ReactDOMTextarea;
 
 var _prodInvariant = __webpack_require__(4);
 
-var ReactComponentEnvironment = __webpack_require__(48);
+var ReactComponentEnvironment = __webpack_require__(47);
 var ReactInstanceMap = __webpack_require__(26);
 var ReactInstrumentation = __webpack_require__(11);
 
@@ -44711,8 +44711,8 @@ module.exports = ReactMultiChild;
 var ReactReconciler = __webpack_require__(21);
 
 var instantiateReactComponent = __webpack_require__(79);
-var KeyEscapeUtils = __webpack_require__(51);
-var shouldUpdateReactComponent = __webpack_require__(50);
+var KeyEscapeUtils = __webpack_require__(50);
+var shouldUpdateReactComponent = __webpack_require__(49);
 var traverseAllChildren = __webpack_require__(83);
 var warning = __webpack_require__(3);
 
@@ -44871,9 +44871,9 @@ var _prodInvariant = __webpack_require__(4),
     _assign = __webpack_require__(6);
 
 var React = __webpack_require__(19);
-var ReactComponentEnvironment = __webpack_require__(48);
+var ReactComponentEnvironment = __webpack_require__(47);
 var ReactCurrentOwner = __webpack_require__(12);
-var ReactErrorUtils = __webpack_require__(40);
+var ReactErrorUtils = __webpack_require__(39);
 var ReactInstanceMap = __webpack_require__(26);
 var ReactInstrumentation = __webpack_require__(11);
 var ReactNodeTypes = __webpack_require__(80);
@@ -44885,8 +44885,8 @@ if (process.env.NODE_ENV !== 'production') {
 
 var emptyObject = __webpack_require__(28);
 var invariant = __webpack_require__(2);
-var shallowEqual = __webpack_require__(49);
-var shouldUpdateReactComponent = __webpack_require__(50);
+var shallowEqual = __webpack_require__(48);
+var shouldUpdateReactComponent = __webpack_require__(49);
 var warning = __webpack_require__(3);
 
 var CompositeTypes = {
@@ -45995,7 +45995,7 @@ module.exports = getIteratorFn;
 
 
 
-var KeyEscapeUtils = __webpack_require__(51);
+var KeyEscapeUtils = __webpack_require__(50);
 var traverseAllChildren = __webpack_require__(83);
 var warning = __webpack_require__(3);
 
@@ -46175,7 +46175,7 @@ module.exports = ReactServerRenderingTransaction;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var ReactUpdateQueue = __webpack_require__(52);
+var ReactUpdateQueue = __webpack_require__(51);
 
 var warning = __webpack_require__(3);
 
@@ -46527,13 +46527,13 @@ module.exports = {
 var _prodInvariant = __webpack_require__(4),
     _assign = __webpack_require__(6);
 
-var DOMChildrenOperations = __webpack_require__(44);
+var DOMChildrenOperations = __webpack_require__(43);
 var DOMLazyTree = __webpack_require__(22);
 var ReactDOMComponentTree = __webpack_require__(7);
 
 var escapeTextContentForBrowser = __webpack_require__(33);
 var invariant = __webpack_require__(2);
-var validateDOMNesting = __webpack_require__(53);
+var validateDOMNesting = __webpack_require__(52);
 
 /**
  * Text nodes violate a couple assumptions that React makes about components:
@@ -46773,7 +46773,7 @@ var PooledClass = __webpack_require__(17);
 var ReactDOMComponentTree = __webpack_require__(7);
 var ReactUpdates = __webpack_require__(13);
 
-var getEventTarget = __webpack_require__(41);
+var getEventTarget = __webpack_require__(40);
 var getUnboundedScrollPosition = __webpack_require__(279);
 
 /**
@@ -46971,8 +46971,8 @@ module.exports = getUnboundedScrollPosition;
 
 var DOMProperty = __webpack_require__(15);
 var EventPluginHub = __webpack_require__(24);
-var EventPluginUtils = __webpack_require__(39);
-var ReactComponentEnvironment = __webpack_require__(48);
+var EventPluginUtils = __webpack_require__(38);
+var ReactComponentEnvironment = __webpack_require__(47);
 var ReactEmptyComponent = __webpack_require__(81);
 var ReactBrowserEventEmitter = __webpack_require__(34);
 var ReactHostComponent = __webpack_require__(82);
@@ -47016,7 +47016,7 @@ var ReactBrowserEventEmitter = __webpack_require__(34);
 var ReactInputSelection = __webpack_require__(85);
 var ReactInstrumentation = __webpack_require__(11);
 var Transaction = __webpack_require__(30);
-var ReactUpdateQueue = __webpack_require__(52);
+var ReactUpdateQueue = __webpack_require__(51);
 
 /**
  * Ensures that, when possible, the selection range (currently selected text
@@ -47908,7 +47908,7 @@ var SyntheticEvent = __webpack_require__(14);
 
 var getActiveElement = __webpack_require__(86);
 var isTextInputElement = __webpack_require__(71);
-var shallowEqual = __webpack_require__(49);
+var shallowEqual = __webpack_require__(48);
 
 var skipSelectionChangeEvent = ExecutionEnvironment.canUseDOM && 'documentMode' in document && document.documentMode <= 11;
 
@@ -48112,7 +48112,7 @@ var SyntheticUIEvent = __webpack_require__(25);
 var SyntheticWheelEvent = __webpack_require__(298);
 
 var emptyFunction = __webpack_require__(10);
-var getEventCharCode = __webpack_require__(54);
+var getEventCharCode = __webpack_require__(53);
 var invariant = __webpack_require__(2);
 
 /**
@@ -48455,9 +48455,9 @@ module.exports = SyntheticFocusEvent;
 
 var SyntheticUIEvent = __webpack_require__(25);
 
-var getEventCharCode = __webpack_require__(54);
+var getEventCharCode = __webpack_require__(53);
 var getEventKey = __webpack_require__(294);
-var getEventModifierState = __webpack_require__(43);
+var getEventModifierState = __webpack_require__(42);
 
 /**
  * @interface KeyboardEvent
@@ -48542,7 +48542,7 @@ module.exports = SyntheticKeyboardEvent;
 
 
 
-var getEventCharCode = __webpack_require__(54);
+var getEventCharCode = __webpack_require__(53);
 
 /**
  * Normalization of deprecated HTML5 `key` values
@@ -48702,7 +48702,7 @@ module.exports = SyntheticDragEvent;
 
 var SyntheticUIEvent = __webpack_require__(25);
 
-var getEventModifierState = __webpack_require__(43);
+var getEventModifierState = __webpack_require__(42);
 
 /**
  * @interface TouchEvent
@@ -48850,7 +48850,7 @@ module.exports = SyntheticWheelEvent;
 
 
 
-var validateDOMNesting = __webpack_require__(53);
+var validateDOMNesting = __webpack_require__(52);
 
 var DOC_NODE_TYPE = 9;
 
@@ -49405,7 +49405,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-__webpack_require__(336);
+__webpack_require__(335);
 
 var NomMnmApp = function (_React$Component) {
     _inherits(NomMnmApp, _React$Component);
@@ -49558,7 +49558,7 @@ var _moment = __webpack_require__(0);
 
 var _moment2 = _interopRequireDefault(_moment);
 
-var _grid = __webpack_require__(35);
+var _grid = __webpack_require__(54);
 
 var _grid2 = _interopRequireDefault(_grid);
 
@@ -50034,10 +50034,6 @@ var _referee = __webpack_require__(334);
 
 var _referee2 = _interopRequireDefault(_referee);
 
-var _official3 = __webpack_require__(335);
-
-var _official4 = _interopRequireDefault(_official3);
-
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -50067,7 +50063,6 @@ var Nominations = function (_React$Component) {
             compStatus: "p",
             lNominations: [],
             rNominations: [],
-            oNominations: [],
             dialog: null
         };
         _this.closeNom = _this.closeNomination.bind(_this);
@@ -50096,7 +50091,6 @@ var Nominations = function (_React$Component) {
                 _this2.evalCompStatus();
                 _this2.getLifterNominations();
                 _this2.getRefereeNominations();
-                _this2.getOfficialNominations();
             });
         }
     }, {
@@ -50131,21 +50125,6 @@ var Nominations = function (_React$Component) {
             });
         }
     }, {
-        key: "getOfficialNominations",
-        value: function getOfficialNominations() {
-            var _this5 = this;
-
-            this.setState({ isLoading: true });
-            services.getOfficialNominations({
-                competition: this.state.compInfo.id,
-                team: this.state.region,
-                type: "official"
-            }).then(function (data) {
-                _this5.setState({ oNominations: JSON.parse(data) });
-                _this5.setState({ isLoading: false });
-            });
-        }
-    }, {
         key: "evalCompStatus",
         value: function evalCompStatus() {
             var info = this.state.compInfo;
@@ -50174,23 +50153,28 @@ var Nominations = function (_React$Component) {
                 birthDate: null,
                 gender: this.state.compInfo.gender,
                 team: this.state.region,
+                city: "",
+                fst: "",
+                club: "",
+                school: "",
+                level: 1,
                 division: "open",
                 weightClass: this.state.wc[0].id,
-                squat: 0.00,
-                benchpress: 0.00,
-                deadlift: 0.00,
-                total: 0.00,
+                squat: 0,
+                benchpress: 0,
+                deadlift: 0,
+                total: 0,
                 reserve: false,
                 competition: this.state.compInfo.id,
+                coaches: "",
                 status: false
             } : {
                 type: type,
                 surname: "",
                 firstName: "",
+                middleName: "",
                 team: this.state.region,
-                isOfficial: false,
-                duty: "unknown",
-                isReferee: false,
+                isReferee: true,
                 refCategory: "category1",
                 refRemark: "",
                 competition: this.state.compInfo.id,
@@ -50210,71 +50194,67 @@ var Nominations = function (_React$Component) {
     }, {
         key: "getLifterNom",
         value: function getLifterNom(id) {
-            var _this6 = this;
+            var _this5 = this;
 
             this.setState({ isLoading: true });
             services.getLifterNominationById({ id: id }).then(function (data) {
+                var nom = JSON.parse(data)[0];
+                _this5.setState({ isLoading: false });
+                _this5.setState({ nomination: nom });
+            });
+        }
+    }, {
+        key: "getOfficialNom",
+        value: function getOfficialNom(id) {
+            var _this6 = this;
+
+            this.setState({ isLoading: true });
+            services.getOfficialNominationById({ id: id }).then(function (data) {
                 var nom = JSON.parse(data)[0];
                 _this6.setState({ isLoading: false });
                 _this6.setState({ nomination: nom });
             });
         }
     }, {
-        key: "getOfficialNom",
-        value: function getOfficialNom(id) {
-            var _this7 = this;
-
-            this.setState({ isLoading: true });
-            services.getOfficialNominationById({ id: id }).then(function (data) {
-                var nom = JSON.parse(data)[0];
-                _this7.setState({ isLoading: false });
-                _this7.setState({ nomination: nom });
-            });
-        }
-    }, {
         key: "saveNom",
         value: function saveNom() {
-            var _this8 = this;
+            var _this7 = this;
 
             this.setState({ isLoading: true });
             if (this.state.nomination.type === "lifter") {
                 if (this.state.nomination.id) {
                     services.updateLifterNominationById(this.state.nomination).then(function () {
-                        _this8.closeNom();
-                        _this8.setState({ isLoading: false });
-                        _this8.showInform("Номінацію спортсмена було успішно оновлено");
-                        _this8.getLifterNominations();
-                        _this8.getRefereeNominations();
-                        _this8.getOfficialNominations();
+                        _this7.closeNom();
+                        _this7.setState({ isLoading: false });
+                        _this7.showInform("Номінацію спортсмена було успішно оновлено");
+                        _this7.getLifterNominations();
+                        _this7.getRefereeNominations();
                     });
                 } else {
                     services.insertLifterNomination(this.state.nomination).then(function () {
-                        _this8.closeNom();
-                        _this8.setState({ isLoading: false });
-                        _this8.showInform("Спортсмена було успішно додано до номінації");
-                        _this8.getLifterNominations();
-                        _this8.getRefereeNominations();
-                        _this8.getOfficialNominations();
+                        _this7.closeNom();
+                        _this7.setState({ isLoading: false });
+                        _this7.showInform("Спортсмена було успішно додано до номінації");
+                        _this7.getLifterNominations();
+                        _this7.getRefereeNominations();
                     });
                 }
             } else {
                 if (this.state.nomination.id) {
                     services.updateOfficialNominationById(this.state.nomination).then(function () {
-                        _this8.closeNom();
-                        _this8.setState({ isLoading: false });
-                        _this8.showInform("Номінацію офіційної особи було успішно оновлено");
-                        _this8.getLifterNominations();
-                        _this8.getRefereeNominations();
-                        _this8.getOfficialNominations();
+                        _this7.closeNom();
+                        _this7.setState({ isLoading: false });
+                        _this7.showInform("Номінацію судді було успішно оновлено");
+                        _this7.getLifterNominations();
+                        _this7.getRefereeNominations();
                     });
                 } else {
                     services.insertOfficialNomination(this.state.nomination).then(function () {
-                        _this8.closeNom();
-                        _this8.setState({ isLoading: false });
-                        _this8.showInform("Офіційну особу було успішно додано до номінації");
-                        _this8.getLifterNominations();
-                        _this8.getRefereeNominations();
-                        _this8.getOfficialNominations();
+                        _this7.closeNom();
+                        _this7.setState({ isLoading: false });
+                        _this7.showInform("Суддю було успішно додано до номінації");
+                        _this7.getLifterNominations();
+                        _this7.getRefereeNominations();
                     });
                 }
             }
@@ -50282,14 +50262,13 @@ var Nominations = function (_React$Component) {
     }, {
         key: "changeNomStatus",
         value: function changeNomStatus(id, value) {
-            var _this9 = this;
+            var _this8 = this;
 
             this.setState({ isLoading: true });
             services.checkNominationStatusById({ id: id, status: value }).then(function () {
-                _this9.setState({ isLoading: false });
-                _this9.getLifterNominations();
-                _this9.getRefereeNominations();
-                _this9.getOfficialNominations();
+                _this8.setState({ isLoading: false });
+                _this8.getLifterNominations();
+                _this8.getRefereeNominations();
             });
         }
     }, {
@@ -50319,23 +50298,23 @@ var Nominations = function (_React$Component) {
     }, {
         key: "getAllRegions",
         value: function getAllRegions() {
-            var _this10 = this;
+            var _this9 = this;
 
             this.setState({ isLoading: true });
             services.getAllRegionsNames().then(function (data) {
-                _this10.setState({ regions: JSON.parse(data) });
-                _this10.setState({ isLoading: false });
+                _this9.setState({ regions: JSON.parse(data) });
+                _this9.setState({ isLoading: false });
             });
         }
     }, {
         key: "getWeightCategories",
         value: function getWeightCategories(gender) {
-            var _this11 = this;
+            var _this10 = this;
 
             this.setState({ isLoading: true });
             services.getWeightCategories({ gender: gender }).then(function (data) {
-                _this11.setState({ wc: JSON.parse(data) });
-                _this11.setState({ isLoading: false });
+                _this10.setState({ wc: JSON.parse(data) });
+                _this10.setState({ isLoading: false });
             });
         }
     }, {
@@ -50354,14 +50333,13 @@ var Nominations = function (_React$Component) {
     }, {
         key: "deleting",
         value: function deleting() {
-            var _this12 = this;
+            var _this11 = this;
 
             this.setState({ isLoading: true });
             services.deleteNomination({ id: this.state.dialog.id }).then(function () {
-                _this12.cancelDeleting();
-                _this12.getLifterNominations();
-                _this12.getRefereeNominations();
-                _this12.getOfficialNominations();
+                _this11.cancelDeleting();
+                _this11.getLifterNominations();
+                _this11.getRefereeNominations();
             });
         }
     }, {
@@ -50372,7 +50350,7 @@ var Nominations = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
-            var _this13 = this;
+            var _this12 = this;
 
             if (!this.props.competition) return null;
             var addLifterButton = this.state.compStatus === "p" ? _react2.default.createElement(
@@ -50397,7 +50375,7 @@ var Nominations = function (_React$Component) {
                         _react2.default.createElement(
                             "button",
                             { type: "button", className: "back-to-nom-list", onClick: function onClick() {
-                                    return _this13.props.back();
+                                    return _this12.props.back();
                                 } },
                             _react2.default.createElement("i", { className: "fa fa-chevron-left" }),
                             "\u041D\u0430\u0437\u0430\u0434 \u0434\u043E \u0441\u043F\u0438\u0441\u043A\u0443 \u043D\u043E\u043C\u0456\u043D\u0430\u0446\u0456\u0439"
@@ -50417,7 +50395,6 @@ var Nominations = function (_React$Component) {
                 _react2.default.createElement(_nomComp2.default, { compInfo: this.state.compInfo }),
                 _react2.default.createElement(_nominations2.default, { nominations: this.state.lNominations, game: this.state.compInfo, onChangeStatus: this.onCheckStatus, onLifterEdit: this.onLifterEdit, onDelete: this.onDelete }),
                 _react2.default.createElement(_referee2.default, { nominations: this.state.rNominations, game: this.state.compInfo, onOfficialEdit: this.onOfficialEdit, onDelete: this.onDelete }),
-                _react2.default.createElement(_official4.default, { nominations: this.state.oNominations, game: this.state.compInfo, onOfficialEdit: this.onOfficialEdit, onDelete: this.onDelete }),
                 _react2.default.createElement(
                     _modal2.default,
                     { target: this.state.nomination, onClose: this.closeNom },
@@ -50766,6 +50743,14 @@ var LifterForm = function LifterForm(props) {
     });
     var st = info.typeId === "1" ? { squat: nom.squat, isDisabled: false } : { squat: nom.squat, isDisabled: true };
     var dl = info.typeId === "1" ? { deadlift: nom.deadlift, isDisabled: false } : { deadlift: nom.deadlift, isDisabled: true };
+    var levels = [{ id: 1, name: "ІІІ юн" }, { id: 2, name: "ІІ юн" }, { id: 3, name: "І юн" }, { id: 4, name: "ІІІ" }, { id: 5, name: "ІІ" }, { id: 6, name: "І" }, { id: 7, name: "КМСУ" }, { id: 8, name: "МСУ" }, { id: 9, name: "МСУМК" }, { id: 10, name: "ЗМСУ" }];
+    var levelList = levels.map(function (level) {
+        return _react2.default.createElement(
+            "option",
+            { key: level.id, value: level.id },
+            level.name
+        );
+    });
     return _react2.default.createElement(
         "div",
         null,
@@ -50918,6 +50903,110 @@ var LifterForm = function LifterForm(props) {
                                 _react2.default.createElement(
                                     "label",
                                     null,
+                                    "\u041C\u0456\u0441\u0442\u043E"
+                                )
+                            ),
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement("input", { value: nom.city, type: "text", maxLength: "100", onChange: function onChange(e) {
+                                        return props.onChange("city", e.target.value);
+                                    } })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "tr",
+                            null,
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement(
+                                    "label",
+                                    null,
+                                    "\u0424\u0421\u0422"
+                                )
+                            ),
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement("input", { value: nom.fst, type: "text", maxLength: "100", onChange: function onChange(e) {
+                                        return props.onChange("fst", e.target.value);
+                                    } })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "tr",
+                            null,
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement(
+                                    "label",
+                                    null,
+                                    "\u041A\u043B\u0443\u0431"
+                                )
+                            ),
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement("input", { value: nom.club, type: "text", maxLength: "100", onChange: function onChange(e) {
+                                        return props.onChange("club", e.target.value);
+                                    } })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "tr",
+                            null,
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement(
+                                    "label",
+                                    null,
+                                    "\u0414\u042E\u0421\u0428"
+                                )
+                            ),
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement("input", { value: nom.school, type: "text", maxLength: "100", onChange: function onChange(e) {
+                                        return props.onChange("school", e.target.value);
+                                    } })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "tr",
+                            null,
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement(
+                                    "label",
+                                    null,
+                                    "\u0420\u043E\u0437\u0440\u044F\u0434"
+                                )
+                            ),
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement(
+                                    "select",
+                                    { value: nom.level, onChange: function onChange(e) {
+                                            return props.onChange("level", e.target.value);
+                                        } },
+                                    levelList
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "tr",
+                            null,
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement(
+                                    "label",
+                                    null,
                                     "\u0414\u0438\u0432\u0456\u0437\u0456\u043E\u043D"
                                 )
                             ),
@@ -51033,6 +51122,26 @@ var LifterForm = function LifterForm(props) {
                                 "td",
                                 null,
                                 _react2.default.createElement("input", { value: nom.total, type: "text", readOnly: true })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "tr",
+                            null,
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement(
+                                    "label",
+                                    null,
+                                    "\u0422\u0440\u0435\u043D\u0435\u0440(\u0438)"
+                                )
+                            ),
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement("textarea", { value: nom.coaches, onChange: function onChange(e) {
+                                        return props.onChange("coaches", e.target.value);
+                                    }, maxLength: "300" })
                             )
                         ),
                         _react2.default.createElement(
@@ -51598,7 +51707,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 var emptyFunction = __webpack_require__(10);
 var invariant = __webpack_require__(2);
-var ReactPropTypesSecret = __webpack_require__(38);
+var ReactPropTypesSecret = __webpack_require__(37);
 
 module.exports = function() {
   function shim(props, propName, componentName, location, propFullName, secret) {
@@ -51687,7 +51796,7 @@ module.exports = CalendarContainer;
 var React = __webpack_require__(5),
 	createClass = __webpack_require__(18),
 	moment = __webpack_require__(0),
-	onClickOutside = __webpack_require__(36)
+	onClickOutside = __webpack_require__(35)
 	;
 
 var DateTimePickerDays = onClickOutside( createClass({
@@ -51837,7 +51946,7 @@ module.exports = DateTimePickerDays;
 
 var React = __webpack_require__(5),
 	createClass = __webpack_require__(18),
-	onClickOutside = __webpack_require__(36)
+	onClickOutside = __webpack_require__(35)
 	;
 
 var DateTimePickerMonths = onClickOutside( createClass({
@@ -51951,7 +52060,7 @@ module.exports = DateTimePickerMonths;
 
 var React = __webpack_require__(5),
 	createClass = __webpack_require__(18),
-	onClickOutside = __webpack_require__(36)
+	onClickOutside = __webpack_require__(35)
 	;
 
 var DateTimePickerYears = onClickOutside( createClass({
@@ -52064,7 +52173,7 @@ module.exports = DateTimePickerYears;
 var React = __webpack_require__(5),
 	createClass = __webpack_require__(18),
 	assign = __webpack_require__(207),
-	onClickOutside = __webpack_require__(36)
+	onClickOutside = __webpack_require__(35)
 	;
 
 var DateTimePickerTime = onClickOutside( createClass({
@@ -52462,15 +52571,7 @@ var OfficialForm = function OfficialForm(props) {
             region.name
         );
     });
-    var duties = [{ value: "assistantCoach", text: "Асистент тренера" }, { value: "coach", text: "Тренер" }, { value: "doctor", text: "Лікар" }, { value: "headCoach", text: "Головний тренер" }, { value: "official", text: "Офіційна особа" }, { value: "physiotherapist", text: "Фізіотерапевт" }, { value: "unknown", text: "Невідомо" }];
-    var dutiesList = duties.map(function (duty) {
-        return _react2.default.createElement(
-            "option",
-            { key: duty.value, value: duty.value },
-            duty.text
-        );
-    });
-    var refCategories = [{ value: "category1", text: "Категорія І" }, { value: "category2", text: "Категорія ІІ" }, { value: "national", text: "Національна" }];
+    var refCategories = [{ value: "category1", text: "МК І" }, { value: "category2", text: "МК ІІ" }, { value: "national", text: "НК" }];
     var refCatList = refCategories.map(function (cat) {
         return _react2.default.createElement(
             "option",
@@ -52487,7 +52588,7 @@ var OfficialForm = function OfficialForm(props) {
             _react2.default.createElement(
                 "h3",
                 null,
-                "\u0414\u043E\u0434\u0430\u0442\u0438 \u043E\u0444\u0456\u0446\u0456\u0439\u043D\u0443 \u043E\u0441\u043E\u0431\u0443 \u0434\u043E \u043D\u043E\u043C\u0456\u043D\u0430\u0446\u0456\u0457"
+                "\u0414\u043E\u0434\u0430\u0442\u0438 \u0441\u0443\u0434\u0434\u044E \u0434\u043E \u043D\u043E\u043C\u0456\u043D\u0430\u0446\u0456\u0457"
             ),
             _react2.default.createElement(
                 "p",
@@ -52566,6 +52667,26 @@ var OfficialForm = function OfficialForm(props) {
                                 _react2.default.createElement(
                                     "label",
                                     null,
+                                    "\u041F\u043E-\u0431\u0430\u0442\u044C\u043A\u043E\u0432\u0456"
+                                )
+                            ),
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement("input", { value: nom.middleName, type: "text", maxLength: "50", onChange: function onChange(e) {
+                                        return props.onChange("middleName", e.target.value);
+                                    } })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "tr",
+                            null,
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement(
+                                    "label",
+                                    null,
                                     "\u041E\u0431\u043B\u0430\u0441\u0442\u044C"
                                 )
                             ),
@@ -52581,50 +52702,6 @@ var OfficialForm = function OfficialForm(props) {
                         ),
                         _react2.default.createElement(
                             "tr",
-                            { className: "another-position" },
-                            _react2.default.createElement(
-                                "td",
-                                null,
-                                _react2.default.createElement(
-                                    "label",
-                                    null,
-                                    "\u0404 \u043E\u0444\u0456\u0446\u0456\u0439\u043D\u043E\u044E \u043E\u0441\u043E\u0431\u043E\u044E"
-                                )
-                            ),
-                            _react2.default.createElement(
-                                "td",
-                                null,
-                                _react2.default.createElement("input", { checked: JSON.parse(nom.isOfficial), type: "checkbox", onChange: function onChange(e) {
-                                        return props.onChange("isOfficial", e.target.checked);
-                                    } })
-                            )
-                        ),
-                        _react2.default.createElement(
-                            "tr",
-                            { className: "another-position" },
-                            _react2.default.createElement(
-                                "td",
-                                null,
-                                _react2.default.createElement(
-                                    "label",
-                                    null,
-                                    "\u043D\u0430 \u043F\u043E\u0441\u0430\u0434\u0456"
-                                )
-                            ),
-                            _react2.default.createElement(
-                                "td",
-                                null,
-                                _react2.default.createElement(
-                                    "select",
-                                    { value: nom.duty, onChange: function onChange(e) {
-                                            return props.onChange("duty", e.target.value);
-                                        } },
-                                    dutiesList
-                                )
-                            )
-                        ),
-                        _react2.default.createElement(
-                            "tr",
                             null,
                             _react2.default.createElement(
                                 "td",
@@ -52632,27 +52709,7 @@ var OfficialForm = function OfficialForm(props) {
                                 _react2.default.createElement(
                                     "label",
                                     null,
-                                    "\u0404 \u0441\u0443\u0434\u0434\u0435\u044E"
-                                )
-                            ),
-                            _react2.default.createElement(
-                                "td",
-                                null,
-                                _react2.default.createElement("input", { checked: JSON.parse(nom.isReferee), type: "checkbox", onChange: function onChange(e) {
-                                        return props.onChange("isReferee", e.target.checked);
-                                    } })
-                            )
-                        ),
-                        _react2.default.createElement(
-                            "tr",
-                            null,
-                            _react2.default.createElement(
-                                "td",
-                                null,
-                                _react2.default.createElement(
-                                    "label",
-                                    null,
-                                    "\u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0456\u0457"
+                                    "\u041A\u0430\u0442\u0435\u0433\u043E\u0440\u0456\u044F"
                                 )
                             ),
                             _react2.default.createElement(
@@ -52808,7 +52865,7 @@ var _moment = __webpack_require__(0);
 
 var _moment2 = _interopRequireDefault(_moment);
 
-var _grid = __webpack_require__(35);
+var _grid = __webpack_require__(54);
 
 var _grid2 = _interopRequireDefault(_grid);
 
@@ -52896,6 +52953,26 @@ var NomGrid = function NomGrid(props) {
         title: "Вагова категорія",
         field: "wClass",
         width: "*"
+    }, {
+        title: "Розряд",
+        field: "level",
+        width: "*"
+    }, {
+        title: "Місто",
+        field: "city",
+        width: "*"
+    }, {
+        title: "ФСТ",
+        field: "fst",
+        width: "*"
+    }, {
+        title: "Клуб",
+        field: "club",
+        width: "*"
+    }, {
+        title: "ДЮСШ",
+        field: "school",
+        width: "*"
     }];
     var results = [];
     if (props.game.typeId === "1") {
@@ -52928,7 +53005,13 @@ var NomGrid = function NomGrid(props) {
             class: "al-right exercise-total"
         }];
     }
+    var coachesCol = [{
+        title: "Тренер(и)",
+        field: "coaches",
+        width: "*"
+    }];
     var gridColumns = columns.concat(results);
+    gridColumns = gridColumns.concat(coachesCol);
     var info = props.game;
     var f = new Date(info.startDate).setDate(new Date(info.startDate).getDate() - 11);
     var bm7 = new Date(info.startDate).setDate(new Date(info.startDate).getDate() - 8);
@@ -52964,6 +53047,9 @@ var NomGrid = function NomGrid(props) {
             var countOfLifters = division.items.length;
             var countOfReserve = 0;
             var countOfTeam = 0;
+            var cropZero = function cropZero(val) {
+                return val[val.length - 1] === "0" ? val.slice(0, val.length - 1) : val;
+            };
             var divName = props.game.gender === "male" ? division.titleM : division.titleF;
             var items = division.items.map(function (item) {
                 var rowItem = {};
@@ -52980,13 +53066,19 @@ var NomGrid = function NomGrid(props) {
                 rowItem.number = "";
                 rowItem.fullName = item.surname + " " + item.name;
                 rowItem.born = new Date(item.born).getFullYear();
+                rowItem.level = item.level;
+                rowItem.city = item.city;
+                rowItem.fst = item.fst;
+                rowItem.club = item.club;
+                rowItem.school = item.school;
+                rowItem.coaches = item.coaches;
                 rowItem.wClass = item.wClass;
                 if (props.game.typeId === "1") {
-                    rowItem.squat = item.squat;
-                    rowItem.deadlift = item.deadlift;
-                    rowItem.total = item.total;
+                    rowItem.squat = cropZero(item.squat);
+                    rowItem.deadlift = cropZero(item.deadlift);
+                    rowItem.total = cropZero(item.total);
                 }
-                rowItem.benchpress = item.benchpress;
+                rowItem.benchpress = cropZero(item.benchpress);
                 return rowItem;
             });
             items.sort(function (a, b) {
@@ -52994,11 +53086,11 @@ var NomGrid = function NomGrid(props) {
             });
             if (props.game.typeId === "1") {
                 items.sort(function (a, b) {
-                    return parseInt(a.total) - parseInt(b.total);
+                    return parseInt(b.total) - parseInt(a.total);
                 });
             } else {
                 items.sort(function (a, b) {
-                    return parseInt(a.benchpress) - parseInt(b.benchpress);
+                    return parseInt(b.benchpress) - parseInt(a.benchpress);
                 });
             }
             var counter = 1;
@@ -53085,7 +53177,7 @@ var _react = __webpack_require__(5);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _grid = __webpack_require__(35);
+var _grid = __webpack_require__(54);
 
 var _grid2 = _interopRequireDefault(_grid);
 
@@ -53093,7 +53185,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var RefGrid = function RefGrid(props) {
     if (!props.game) return null;
-    var refCategories = [{ value: "category1", text: "Кат. І" }, { value: "category2", text: "Кат. ІІ" }, { value: "national", text: "Нац." }];
+    var refCategories = [{ value: "category1", text: "МК І" }, { value: "category2", text: "МК ІІ" }, { value: "national", text: "НК" }];
     var columns = [{
         title: "#",
         field: "number",
@@ -53136,7 +53228,7 @@ var RefGrid = function RefGrid(props) {
         var referee = {};
         referee.id = x.id;
         referee.number = "";
-        referee.fullName = x.surname + " " + x.firstName;
+        referee.fullName = x.surname + " " + x.firstName + " " + x.middleName;
         referee.refCategory = refCategories.filter(function (r) {
             return r.value === x.refCategory;
         })[0].text;
@@ -53155,7 +53247,7 @@ var RefGrid = function RefGrid(props) {
         _react2.default.createElement(
             "p",
             null,
-            "\u0416\u043E\u0434\u043D\u043E\u0457 \u043D\u043E\u043C\u0456\u043D\u0430\u0446\u0456\u0457 \u0442\u0440\u0435\u043D\u0435\u0440\u0430 \u043D\u0435 \u0431\u0443\u043B\u043E \u0441\u0442\u0432\u043E\u0440\u0435\u043D\u043E"
+            "\u0416\u043E\u0434\u043D\u043E\u0457 \u043D\u043E\u043C\u0456\u043D\u0430\u0446\u0456\u0457 \u0441\u0443\u0434\u0434\u0456 \u043D\u0435 \u0431\u0443\u043B\u043E \u0441\u0442\u0432\u043E\u0440\u0435\u043D\u043E"
         )
     );
     return _react2.default.createElement(
@@ -53175,106 +53267,10 @@ exports.default = RefGrid;
 /* 335 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _react = __webpack_require__(5);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _grid = __webpack_require__(35);
-
-var _grid2 = _interopRequireDefault(_grid);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var OfficialGrid = function OfficialGrid(props) {
-    if (!props.game) return null;
-    var duties = [{ value: "assistantCoach", text: "Асистент тренера" }, { value: "coach", text: "Тренер" }, { value: "doctor", text: "Лікар" }, { value: "headCoach", text: "Головний тренер" }, { value: "official", text: "Офіційна особа" }, { value: "physiotherapist", text: "Фізіотерапевт" }, { value: "unknown", text: "Невідомо" }];
-    var columns = [{
-        title: "#",
-        field: "number",
-        width: "28px",
-        class: "al-right"
-    }, {
-        title: "Ім'я",
-        field: "fullName",
-        width: "*"
-    }, {
-        title: "Обов'язки",
-        field: "duty",
-        width: "*"
-    }];
-    var controls = [{
-        title: "",
-        field: "id",
-        button: "edit",
-        width: "*",
-        action: function action(e) {
-            props.onOfficialEdit(e.target.dataset["rel"]);
-        }
-    }, {
-        title: "",
-        field: "id",
-        button: "delete",
-        width: "*",
-        action: function action(e) {
-            props.onDelete(e.target.dataset["rel"]);
-        }
-    }];
-    var info = props.game;
-    var bm7 = new Date(info.startDate).setDate(new Date(info.startDate).getDate() - 8);
-    if (+new Date() <= bm7) columns = columns.concat(controls);
-    var officials = props.nominations.map(function (x) {
-        var official = {};
-        official.id = x.id;
-        official.number = "";
-        official.fullName = x.surname + " " + x.firstName;
-        official.duty = duties.filter(function (d) {
-            return d.value === x.duty;
-        })[0].text;
-        return official;
-    });
-    officials.sort();
-    var counter = 1;
-    officials.map(function (official) {
-        official.number = counter++;
-    });
-    var table = _react2.default.createElement(_grid2.default, { data: { columns: columns, rows: officials } });
-    if (!props.nominations.length) table = _react2.default.createElement(
-        "div",
-        { className: "empty-nomination" },
-        _react2.default.createElement(
-            "p",
-            null,
-            "\u0416\u043E\u0434\u043D\u043E\u0457 \u043D\u043E\u043C\u0456\u043D\u0430\u0446\u0456\u0457 \u043E\u0444\u0456\u0446\u0456\u0439\u043D\u043E\u0457 \u043E\u0441\u043E\u0431\u0438 \u043D\u0435 \u0431\u0443\u043B\u043E \u0441\u0442\u0432\u043E\u0440\u0435\u043D\u043E"
-        )
-    );
-    return _react2.default.createElement(
-        "div",
-        { className: "nom-grid-wrap" },
-        _react2.default.createElement(
-            "h4",
-            null,
-            "\u0421\u043F\u0438\u0441\u043E\u043A \u043E\u0444\u0456\u0446\u0456\u0439\u043D\u0438\u0445 \u043E\u0441\u0456\u0431"
-        ),
-        table
-    );
-};
-exports.default = OfficialGrid;
-
-/***/ }),
-/* 336 */
-/***/ (function(module, exports, __webpack_require__) {
-
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(337);
+var content = __webpack_require__(336);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -53299,7 +53295,7 @@ if(false) {
 }
 
 /***/ }),
-/* 337 */
+/* 336 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(208)(undefined);
@@ -53307,7 +53303,7 @@ exports = module.exports = __webpack_require__(208)(undefined);
 
 
 // module
-exports.push([module.i, "#content {\n  width: 100% !important; }\n\n#nm-front .grid {\n  border-spacing: 0px;\n  border-collapse: collapse;\n  margin-bottom: 0; }\n  #nm-front .grid thead tr {\n    background-color: #ECE9DF; }\n    #nm-front .grid thead tr th {\n      font-family: Verdana, Geneva;\n      font-weight: normal;\n      font-size: 0.6em;\n      text-align: center;\n      padding: 2pt;\n      letter-spacing: 1pt;\n      background-color: #ECE9DF;\n      color: #000;\n      border: 1px solid #ccc;\n      text-shadow: 0 1px 2px #999; }\n  #nm-front .grid tbody tr td {\n    font-family: Verdana, Geneva;\n    font-weight: normal;\n    font-size: 0.7em;\n    padding: 3px;\n    border: 1px solid #ccc;\n    line-height: 15px; }\n    #nm-front .grid tbody tr td.al-right {\n      text-align: right; }\n    #nm-front .grid tbody tr td.exercise-total {\n      font-weight: 600; }\n    #nm-front .grid tbody tr td span.grid-rel {\n      color: #0062A4;\n      cursor: pointer; }\n      #nm-front .grid tbody tr td span.grid-rel:hover {\n        color: #f50000;\n        background-color: #ffffc5;\n        border-bottom: 1px dotted #f50000 !important; }\n    #nm-front .grid tbody tr td div.status-code {\n      font-weight: 600;\n      padding: 3px 0;\n      text-align: center; }\n    #nm-front .grid tbody tr td input[type=checkbox] {\n      display: block;\n      margin: 0 auto; }\n    #nm-front .grid tbody tr td i.fa {\n      display: block;\n      text-align: center;\n      font-size: 1.2em;\n      cursor: pointer; }\n      #nm-front .grid tbody tr td i.fa.edit {\n        color: #520600; }\n      #nm-front .grid tbody tr td i.fa.delete {\n        color: #E11404; }\n    #nm-front .grid tbody tr td sup {\n      color: #8d0200;\n      font-weight: 600; }\n\n.blackout {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  background-color: rgba(0, 0, 0, 0.8);\n  z-index: 10000; }\n  .blackout .spinner-wrap {\n    position: absolute;\n    top: 50%;\n    left: 50%; }\n    .blackout .spinner-wrap .fa-spin {\n      color: #6c6fff; }\n\n.nom-header {\n  display: flex;\n  flex-direction: row; }\n  .nom-header .nom-header-cell {\n    flex-grow: 1; }\n    .nom-header .nom-header-cell .back-to-nom-list {\n      color: white;\n      background-color: #4d90fe;\n      border: none;\n      padding: 5px 6px;\n      border-radius: 4px;\n      text-shadow: 0 0 1px #000;\n      cursor: pointer; }\n      .nom-header .nom-header-cell .back-to-nom-list:hover {\n        background-color: #6FA5FC; }\n      .nom-header .nom-header-cell .back-to-nom-list i.fa-chevron-left {\n        color: #290B0B;\n        margin-right: 5px; }\n    .nom-header .nom-header-cell .add-panel {\n      width: auto;\n      float: right;\n      margin: 10px 25px 10px 0;\n      z-index: 100;\n      vertical-align: middle;\n      text-align: right;\n      background-color: #f1efe3;\n      border: solid 1px #E8E4D9;\n      padding: 0.8em 1em 0.5em 1em; }\n      .nom-header .nom-header-cell .add-panel span {\n        width: 38px;\n        height: 36px;\n        float: left;\n        text-align: center;\n        padding: 3px 0 3px 0;\n        margin: 0;\n        display: block;\n        border: 1px solid #E0DED7;\n        background-color: #EAE6DC;\n        border-radius: 3px; }\n        .nom-header .nom-header-cell .add-panel span:nth-child(2) {\n          margin: 0 0 0 1em; }\n        .nom-header .nom-header-cell .add-panel span:hover {\n          background-color: #e2ddcf;\n          border: solid 1px #D1C9B2;\n          cursor: pointer; }\n\n.comp-info-header p {\n  font-family: Verdana, Geneva;\n  font-weight: 600;\n  text-align: center;\n  margin-top: 0px;\n  margin-bottom: 0px !important; }\n  .comp-info-header p.info-title {\n    font-size: 0.8em;\n    margin-top: 10px; }\n  .comp-info-header p.info-location {\n    font-size: 0.8em;\n    color: #676767; }\n  .comp-info-header p.info-date {\n    font-size: 0.7em;\n    color: #676767; }\n\n.comp-info-status {\n  display: block;\n  float: right;\n  width: auto;\n  margin: 0 1.5em 1em 1em;\n  padding: 0.3em 1em 0.3em 1em;\n  border: 1px solid #ECD5A2;\n  background-color: #FFFFC6;\n  text-align: left;\n  font-weight: normal;\n  font-family: Tahoma, Geneva;\n  font-size: 13px;\n  border-radius: 8px; }\n  .comp-info-status p {\n    margin-bottom: 5px !important;\n    line-height: 18px; }\n    .comp-info-status p.status {\n      border-bottom: 1px dotted #777;\n      margin-bottom: 15px !important; }\n      .comp-info-status p.status span {\n        font-weight: bold; }\n\n.custom-modal {\n  background-color: #ffffff;\n  position: absolute;\n  top: 10%;\n  left: 50%;\n  min-width: 500px;\n  min-height: 200px;\n  border-radius: 5px;\n  padding: 4px 10px;\n  margin-left: -250px; }\n  .custom-modal .custom-modal-header {\n    text-align: right;\n    padding-right: 5px; }\n    .custom-modal .custom-modal-header .fa-times {\n      color: #9a9aaf;\n      cursor: pointer; }\n      .custom-modal .custom-modal-header .fa-times:hover {\n        color: #68686f; }\n  .custom-modal h6,\n  .custom-modal h4 {\n    margin: 5px 0 10px 0px; }\n  .custom-modal h4 {\n    font-size: 1.2em;\n    color: #0849c5;\n    margin-top: 0px; }\n  .custom-modal .form-header {\n    display: block;\n    margin: 10px auto;\n    border: solid 1px #AACCAA;\n    background-color: #D5FCA1;\n    text-align: center;\n    border-radius: 5px;\n    padding: 10px; }\n    .custom-modal .form-header h3 {\n      font-weight: bold;\n      font-family: Tahoma, Verdana;\n      font-size: 1.3em;\n      margin-bottom: 10px !important; }\n    .custom-modal .form-header p {\n      font-family: Verdana, Geneva;\n      font-weight: 600;\n      text-align: center;\n      margin-top: 0px;\n      margin-bottom: 0px !important; }\n      .custom-modal .form-header p.comp-name {\n        font-size: 0.8em;\n        margin-top: 10px; }\n      .custom-modal .form-header p.comp-location {\n        font-size: 0.8em;\n        color: #676767; }\n      .custom-modal .form-header p.comp-date {\n        font-size: 0.7em;\n        color: #676767; }\n  .custom-modal .formBody {\n    width: 420px !important;\n    margin: 10px auto;\n    background-color: #f1efe3;\n    border: 1px solid #e0dbcb;\n    border-radius: 10px;\n    padding: 10px 15px; }\n    .custom-modal .formBody tr th,\n    .custom-modal .formBody thead th {\n      color: #777;\n      font-size: 12px;\n      font-weight: bold;\n      line-height: 18px;\n      padding: 0 !important; }\n    .custom-modal .formBody table {\n      border: none !important;\n      margin-bottom: 0px !important; }\n      .custom-modal .formBody table tr.another-position {\n        background-color: #EAE7D7; }\n      .custom-modal .formBody table tr td {\n        border: none !important;\n        padding: 0 !important;\n        vertical-align: top; }\n  .custom-modal .formFooter {\n    display: flex;\n    flex-direction: row; }\n    .custom-modal .formFooter .form-footer-tab {\n      flex-grow: 1; }\n      .custom-modal .formFooter .form-footer-tab.left {\n        text-align: right;\n        padding-right: 10px; }\n      .custom-modal .formFooter .form-footer-tab.right {\n        text-align: left;\n        padding-left: 10px; }\n      .custom-modal .formFooter .form-footer-tab .footer-button.success {\n        background-color: #24881e; }\n        .custom-modal .formFooter .form-footer-tab .footer-button.success:hover {\n          background-color: #2da926; }\n      .custom-modal .formFooter .form-footer-tab .footer-button.danger {\n        background-color: #ad2121; }\n        .custom-modal .formFooter .form-footer-tab .footer-button.danger:hover {\n          background-color: #e23333; }\n  .custom-modal form label {\n    display: block;\n    font-weight: 600;\n    text-align: right;\n    margin-right: 10px;\n    color: #000; }\n  .custom-modal form input,\n  .custom-modal form textarea {\n    font-family: Verdana, Geneva;\n    width: 100%;\n    margin-bottom: 10px;\n    font-size: 11px !important;\n    line-height: 16px !important; }\n    .custom-modal form input:read-only, .custom-modal form input:disabled,\n    .custom-modal form textarea:read-only,\n    .custom-modal form textarea:disabled {\n      opacity: 0.6;\n      cursor: not-allowed; }\n    .custom-modal form input[type=\"checkbox\"],\n    .custom-modal form textarea[type=\"checkbox\"] {\n      display: block;\n      float: left;\n      margin: 0;\n      width: auto; }\n  .custom-modal form select {\n    margin-bottom: 10px; }\n  .custom-modal form button {\n    color: #fff;\n    background-color: #038ece;\n    font-weight: 600;\n    border-radius: 4px;\n    border: 0px;\n    padding: 5px 5px 7px;\n    margin: 5px 0;\n    cursor: pointer; }\n    .custom-modal form button:hover {\n      background-color: #03A9F4; }\n    .custom-modal form button:disabled {\n      opacity: 0.5;\n      cursor: not-allowed; }\n      .custom-modal form button:disabled:hover {\n        background-color: #038ece; }\n\n.inform {\n  position: absolute;\n  top: 30%;\n  left: 50%;\n  min-width: 400px;\n  background-color: #fff;\n  margin-left: -200px;\n  padding: 5px 10px;\n  border-radius: 5px; }\n  .inform .inform-header .icons {\n    text-align: right; }\n    .inform .inform-header .icons .fa-times {\n      color: #9a9aaf;\n      cursor: pointer; }\n      .inform .inform-header .icons .fa-times:hover {\n        color: #68686f; }\n  .inform .inform-body {\n    padding: 10px 0;\n    font-family: Tahoma, Verdana;\n    font-size: 0.9em;\n    text-align: center; }\n\n.dialog {\n  position: absolute;\n  font-family: Verdana, Geneva;\n  top: 30%;\n  left: 50%;\n  min-width: 400px;\n  background-color: #fff;\n  margin-left: -200px;\n  padding: 5px 10px;\n  border-radius: 5px; }\n  .dialog .dialog-body {\n    padding: 10px 0;\n    font-size: 0.8em; }\n  .dialog .dialog-header .icons {\n    text-align: right; }\n    .dialog .dialog-header .icons .fa-times {\n      color: #9a9aaf;\n      cursor: pointer; }\n      .dialog .dialog-header .icons .fa-times:hover {\n        color: #68686f; }\n  .dialog .dialog-footer {\n    text-align: right;\n    padding-bottom: 5px; }\n    .dialog .dialog-footer button {\n      color: #fff;\n      background-color: #038ece;\n      border-radius: 4px;\n      border: 0px;\n      padding: 4px 3px 4px;\n      margin: 3px 10px 0 0;\n      cursor: pointer;\n      min-width: 50px; }\n      .dialog .dialog-footer button.btn-danger {\n        background-color: #ab3434; }\n        .dialog .dialog-footer button.btn-danger:hover {\n          background-color: #e25252; }\n      .dialog .dialog-footer button.btn-success {\n        background-color: #2f693b; }\n        .dialog .dialog-footer button.btn-success:hover {\n          background-color: #459255; }\n  .dialog h4 {\n    font-size: 1em !important;\n    margin: 0 !important;\n    color: #2e3fc5 !important; }\n\n.nom-grid-wrap {\n  margin-bottom: 25px;\n  clear: both; }\n  .nom-grid-wrap .division-wrap {\n    margin-bottom: 20px; }\n    .nom-grid-wrap .division-wrap .w-class-name {\n      font-family: Verdana, Geneva;\n      font-weight: 600;\n      font-size: 0.9em;\n      background-color: #fdfaf2;\n      color: #000;\n      border: 1px solid #ccc;\n      padding-left: 4px; }\n  .nom-grid-wrap h4 {\n    font-family: Verdana, Geneva;\n    font-weight: 600;\n    text-align: center;\n    clear: both;\n    font-size: 0.9em;\n    margin-bottom: 10px !important; }\n  .nom-grid-wrap .division-head {\n    background-color: #8d0000;\n    font-family: Verdana, Geneva;\n    color: #fff;\n    font-size: 0.8em;\n    font-weight: 600;\n    text-shadow: 0 0 1px #000;\n    padding-left: 5px; }\n  .nom-grid-wrap .empty-nomination {\n    clear: both;\n    background-color: #afd0ea;\n    border: 1px solid #ccc;\n    border-radius: 4px;\n    margin: 0 auto;\n    width: 50%;\n    padding: 20px 0; }\n    .nom-grid-wrap .empty-nomination p {\n      font-family: Verdana, Geneva;\n      font-size: 12px !important;\n      text-align: center;\n      margin-bottom: 0 !important; }\n  .nom-grid-wrap .division-counters {\n    font-family: Verdana, Geneva;\n    font-size: 0.8em;\n    text-align: right;\n    margin-bottom: 20px; }\n", ""]);
+exports.push([module.i, "#content {\n  width: 100% !important; }\n\n#nm-front .grid {\n  border-spacing: 0px;\n  border-collapse: collapse;\n  margin-bottom: 0; }\n  #nm-front .grid thead tr {\n    background-color: #ECE9DF; }\n    #nm-front .grid thead tr th {\n      font-family: Verdana, Geneva;\n      font-weight: normal;\n      font-size: 0.6em;\n      text-align: center;\n      padding: 2pt;\n      letter-spacing: 1pt;\n      background-color: #ECE9DF;\n      color: #000;\n      border: 1px solid #ccc;\n      text-shadow: 0 1px 2px #999; }\n  #nm-front .grid tbody tr td {\n    font-family: Verdana, Geneva;\n    font-weight: normal;\n    font-size: 0.7em;\n    padding: 3px;\n    border: 1px solid #ccc;\n    line-height: 15px; }\n    #nm-front .grid tbody tr td.al-right {\n      text-align: right; }\n    #nm-front .grid tbody tr td.exercise-total {\n      font-weight: 600; }\n    #nm-front .grid tbody tr td span.grid-rel {\n      color: #0062A4;\n      cursor: pointer; }\n      #nm-front .grid tbody tr td span.grid-rel:hover {\n        color: #f50000;\n        background-color: #ffffc5;\n        border-bottom: 1px dotted #f50000 !important; }\n    #nm-front .grid tbody tr td div.status-code {\n      font-weight: 600;\n      padding: 3px 0;\n      text-align: center; }\n    #nm-front .grid tbody tr td input[type=checkbox] {\n      display: block;\n      margin: 0 auto; }\n    #nm-front .grid tbody tr td i.fa {\n      display: block;\n      text-align: center;\n      font-size: 1.2em;\n      cursor: pointer; }\n      #nm-front .grid tbody tr td i.fa.edit {\n        color: #520600; }\n      #nm-front .grid tbody tr td i.fa.delete {\n        color: #E11404; }\n    #nm-front .grid tbody tr td sup {\n      color: #8d0200;\n      font-weight: 600; }\n\n.blackout {\n  overflow: auto;\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  background-color: rgba(0, 0, 0, 0.8);\n  z-index: 10000; }\n  .blackout .spinner-wrap {\n    position: absolute;\n    top: 50%;\n    left: 50%; }\n    .blackout .spinner-wrap .fa-spin {\n      color: #6c6fff; }\n\n.nom-header {\n  display: flex;\n  flex-direction: row; }\n  .nom-header .nom-header-cell {\n    flex-grow: 1; }\n    .nom-header .nom-header-cell .back-to-nom-list {\n      color: white;\n      background-color: #4d90fe;\n      border: none;\n      padding: 5px 6px;\n      border-radius: 4px;\n      text-shadow: 0 0 1px #000;\n      cursor: pointer; }\n      .nom-header .nom-header-cell .back-to-nom-list:hover {\n        background-color: #6FA5FC; }\n      .nom-header .nom-header-cell .back-to-nom-list i.fa-chevron-left {\n        color: #290B0B;\n        margin-right: 5px; }\n    .nom-header .nom-header-cell .add-panel {\n      width: auto;\n      float: right;\n      margin: 10px 25px 10px 0;\n      z-index: 100;\n      vertical-align: middle;\n      text-align: right;\n      background-color: #f1efe3;\n      border: solid 1px #E8E4D9;\n      padding: 0.8em 1em 0.5em 1em; }\n      .nom-header .nom-header-cell .add-panel span {\n        width: 38px;\n        height: 36px;\n        float: left;\n        text-align: center;\n        padding: 3px 0 3px 0;\n        margin: 0;\n        display: block;\n        border: 1px solid #E0DED7;\n        background-color: #EAE6DC;\n        border-radius: 3px; }\n        .nom-header .nom-header-cell .add-panel span:nth-child(2) {\n          margin: 0 0 0 1em; }\n        .nom-header .nom-header-cell .add-panel span:hover {\n          background-color: #e2ddcf;\n          border: solid 1px #D1C9B2;\n          cursor: pointer; }\n\n.comp-info-header p {\n  font-family: Verdana, Geneva;\n  font-weight: 600;\n  text-align: center;\n  margin-top: 0px;\n  margin-bottom: 0px !important; }\n  .comp-info-header p.info-title {\n    font-size: 0.8em;\n    margin-top: 10px; }\n  .comp-info-header p.info-location {\n    font-size: 0.8em;\n    color: #676767; }\n  .comp-info-header p.info-date {\n    font-size: 0.7em;\n    color: #676767; }\n\n.comp-info-status {\n  display: block;\n  float: right;\n  width: auto;\n  margin: 0 1.5em 1em 1em;\n  padding: 0.3em 1em 0.3em 1em;\n  border: 1px solid #ECD5A2;\n  background-color: #FFFFC6;\n  text-align: left;\n  font-weight: normal;\n  font-family: Tahoma, Geneva;\n  font-size: 13px;\n  border-radius: 8px; }\n  .comp-info-status p {\n    margin-bottom: 5px !important;\n    line-height: 18px; }\n    .comp-info-status p.status {\n      border-bottom: 1px dotted #777;\n      margin-bottom: 15px !important; }\n      .comp-info-status p.status span {\n        font-weight: bold; }\n\n.custom-modal {\n  background-color: #ffffff;\n  position: absolute;\n  top: 10%;\n  left: 50%;\n  min-width: 500px;\n  min-height: 200px;\n  border-radius: 5px;\n  padding: 4px 10px;\n  margin-left: -250px; }\n  .custom-modal .custom-modal-header {\n    text-align: right;\n    padding-right: 5px; }\n    .custom-modal .custom-modal-header .fa-times {\n      color: #9a9aaf;\n      cursor: pointer; }\n      .custom-modal .custom-modal-header .fa-times:hover {\n        color: #68686f; }\n  .custom-modal h6,\n  .custom-modal h4 {\n    margin: 5px 0 10px 0px; }\n  .custom-modal h4 {\n    font-size: 1.2em;\n    color: #0849c5;\n    margin-top: 0px; }\n  .custom-modal .form-header {\n    display: block;\n    margin: 10px auto;\n    border: solid 1px #AACCAA;\n    background-color: #D5FCA1;\n    text-align: center;\n    border-radius: 5px;\n    padding: 10px; }\n    .custom-modal .form-header h3 {\n      font-weight: bold;\n      font-family: Tahoma, Verdana;\n      font-size: 1.3em;\n      margin-bottom: 10px !important; }\n    .custom-modal .form-header p {\n      font-family: Verdana, Geneva;\n      font-weight: 600;\n      text-align: center;\n      margin-top: 0px;\n      margin-bottom: 0px !important; }\n      .custom-modal .form-header p.comp-name {\n        font-size: 0.8em;\n        margin-top: 10px; }\n      .custom-modal .form-header p.comp-location {\n        font-size: 0.8em;\n        color: #676767; }\n      .custom-modal .form-header p.comp-date {\n        font-size: 0.7em;\n        color: #676767; }\n  .custom-modal .formBody {\n    width: 420px !important;\n    margin: 10px auto;\n    background-color: #f1efe3;\n    border: 1px solid #e0dbcb;\n    border-radius: 10px;\n    padding: 10px 15px; }\n    .custom-modal .formBody tr th,\n    .custom-modal .formBody thead th {\n      color: #777;\n      font-size: 12px;\n      font-weight: bold;\n      line-height: 18px;\n      padding: 0 !important; }\n    .custom-modal .formBody table {\n      border: none !important;\n      margin-bottom: 0px !important; }\n      .custom-modal .formBody table tr.another-position {\n        background-color: #EAE7D7; }\n      .custom-modal .formBody table tr td {\n        border: none !important;\n        padding: 0 !important;\n        vertical-align: top; }\n  .custom-modal .formFooter {\n    display: flex;\n    flex-direction: row; }\n    .custom-modal .formFooter .form-footer-tab {\n      flex-grow: 1; }\n      .custom-modal .formFooter .form-footer-tab.left {\n        text-align: right;\n        padding-right: 10px; }\n      .custom-modal .formFooter .form-footer-tab.right {\n        text-align: left;\n        padding-left: 10px; }\n      .custom-modal .formFooter .form-footer-tab .footer-button.success {\n        background-color: #24881e; }\n        .custom-modal .formFooter .form-footer-tab .footer-button.success:hover {\n          background-color: #2da926; }\n      .custom-modal .formFooter .form-footer-tab .footer-button.danger {\n        background-color: #ad2121; }\n        .custom-modal .formFooter .form-footer-tab .footer-button.danger:hover {\n          background-color: #e23333; }\n  .custom-modal form label {\n    display: block;\n    font-weight: 600;\n    text-align: right;\n    margin-right: 10px;\n    color: #000; }\n  .custom-modal form input,\n  .custom-modal form textarea {\n    font-family: Verdana, Geneva;\n    width: 100%;\n    margin-bottom: 10px;\n    font-size: 11px !important;\n    line-height: 16px !important; }\n    .custom-modal form input:read-only, .custom-modal form input:disabled,\n    .custom-modal form textarea:read-only,\n    .custom-modal form textarea:disabled {\n      opacity: 0.6;\n      cursor: not-allowed; }\n    .custom-modal form input[type=\"checkbox\"],\n    .custom-modal form textarea[type=\"checkbox\"] {\n      display: block;\n      float: left;\n      margin: 0;\n      width: auto; }\n  .custom-modal form select {\n    margin-bottom: 10px; }\n  .custom-modal form button {\n    color: #fff;\n    background-color: #038ece;\n    font-weight: 600;\n    border-radius: 4px;\n    border: 0px;\n    padding: 5px 5px 7px;\n    margin: 5px 0;\n    cursor: pointer; }\n    .custom-modal form button:hover {\n      background-color: #03A9F4; }\n    .custom-modal form button:disabled {\n      opacity: 0.5;\n      cursor: not-allowed; }\n      .custom-modal form button:disabled:hover {\n        background-color: #038ece; }\n\n.inform {\n  position: absolute;\n  top: 30%;\n  left: 50%;\n  min-width: 400px;\n  background-color: #fff;\n  margin-left: -200px;\n  padding: 5px 10px;\n  border-radius: 5px; }\n  .inform .inform-header .icons {\n    text-align: right; }\n    .inform .inform-header .icons .fa-times {\n      color: #9a9aaf;\n      cursor: pointer; }\n      .inform .inform-header .icons .fa-times:hover {\n        color: #68686f; }\n  .inform .inform-body {\n    padding: 10px 0;\n    font-family: Tahoma, Verdana;\n    font-size: 0.9em;\n    text-align: center; }\n\n.dialog {\n  position: absolute;\n  font-family: Verdana, Geneva;\n  top: 30%;\n  left: 50%;\n  min-width: 400px;\n  background-color: #fff;\n  margin-left: -200px;\n  padding: 5px 10px;\n  border-radius: 5px; }\n  .dialog .dialog-body {\n    padding: 10px 0;\n    font-size: 0.8em; }\n  .dialog .dialog-header .icons {\n    text-align: right; }\n    .dialog .dialog-header .icons .fa-times {\n      color: #9a9aaf;\n      cursor: pointer; }\n      .dialog .dialog-header .icons .fa-times:hover {\n        color: #68686f; }\n  .dialog .dialog-footer {\n    text-align: right;\n    padding-bottom: 5px; }\n    .dialog .dialog-footer button {\n      color: #fff;\n      background-color: #038ece;\n      border-radius: 4px;\n      border: 0px;\n      padding: 4px 3px 4px;\n      margin: 3px 10px 0 0;\n      cursor: pointer;\n      min-width: 50px; }\n      .dialog .dialog-footer button.btn-danger {\n        background-color: #ab3434; }\n        .dialog .dialog-footer button.btn-danger:hover {\n          background-color: #e25252; }\n      .dialog .dialog-footer button.btn-success {\n        background-color: #2f693b; }\n        .dialog .dialog-footer button.btn-success:hover {\n          background-color: #459255; }\n  .dialog h4 {\n    font-size: 1em !important;\n    margin: 0 !important;\n    color: #2e3fc5 !important; }\n\n.nom-grid-wrap {\n  margin-bottom: 25px;\n  clear: both; }\n  .nom-grid-wrap .division-wrap {\n    margin-bottom: 20px; }\n    .nom-grid-wrap .division-wrap .w-class-name {\n      font-family: Verdana, Geneva;\n      font-weight: 600;\n      font-size: 0.9em;\n      background-color: #fdfaf2;\n      color: #000;\n      border: 1px solid #ccc;\n      padding-left: 4px; }\n  .nom-grid-wrap h4 {\n    font-family: Verdana, Geneva;\n    font-weight: 600;\n    text-align: center;\n    clear: both;\n    font-size: 0.9em;\n    margin-bottom: 10px !important; }\n  .nom-grid-wrap .division-head {\n    background-color: #8d0000;\n    font-family: Verdana, Geneva;\n    color: #fff;\n    font-size: 0.8em;\n    font-weight: 600;\n    text-shadow: 0 0 1px #000;\n    padding-left: 5px; }\n  .nom-grid-wrap .empty-nomination {\n    clear: both;\n    background-color: #afd0ea;\n    border: 1px solid #ccc;\n    border-radius: 4px;\n    margin: 0 auto;\n    width: 50%;\n    padding: 20px 0; }\n    .nom-grid-wrap .empty-nomination p {\n      font-family: Verdana, Geneva;\n      font-size: 12px !important;\n      text-align: center;\n      margin-bottom: 0 !important; }\n  .nom-grid-wrap .division-counters {\n    font-family: Verdana, Geneva;\n    font-size: 0.8em;\n    text-align: right;\n    margin-bottom: 20px; }\n", ""]);
 
 // exports
 

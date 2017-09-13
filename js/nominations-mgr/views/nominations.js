@@ -9,7 +9,6 @@ import OfficialForm from "./partial/official.form";
 import Inform from "../../components/modal/inform";
 import NomGrid from "./partial/nominations.grid";
 import RefGrid from "./partial/referee.grid";
-import OfficialGrid from "./partial/official.grid";
 
 class Nominations extends React.Component{
     constructor(props){
@@ -25,7 +24,6 @@ class Nominations extends React.Component{
             compStatus: "p",
             lNominations: [],
             rNominations: [],
-            oNominations: [],
             dialog: null
         }
         this.closeNom = this.closeNomination.bind(this);
@@ -49,7 +47,6 @@ class Nominations extends React.Component{
             this.evalCompStatus();
             this.getLifterNominations();
             this.getRefereeNominations();
-            this.getOfficialNominations();
         });
     }
 
@@ -74,18 +71,6 @@ class Nominations extends React.Component{
             type: "official"
         }).then(data => {
             this.setState({rNominations: JSON.parse(data)});
-            this.setState({isLoading: false});
-        })
-    }
-
-    getOfficialNominations(){
-        this.setState({isLoading: true});
-        services.getOfficialNominations({
-            competition: this.state.compInfo.id,
-            team: this.state.region,
-            type: "official"
-        }).then(data => {
-            this.setState({oNominations: JSON.parse(data)});
             this.setState({isLoading: false});
         })
     }
@@ -116,23 +101,28 @@ class Nominations extends React.Component{
             birthDate: null,
             gender: this.state.compInfo.gender,
             team: this.state.region,
+            city: "",
+            fst: "",
+            club: "",
+            school: "",
+            level: 1,
             division: "open",
             weightClass: this.state.wc[0].id,
-            squat: 0.00,
-            benchpress: 0.00,
-            deadlift: 0.00,
-            total: 0.00,
+            squat: 0,
+            benchpress: 0,
+            deadlift: 0,
+            total: 0,
             reserve: false,
             competition: this.state.compInfo.id,
+            coaches: "",
             status: false
         } : {
             type: type,
             surname: "",
             firstName: "",
+            middleName: "",
             team: this.state.region,
-            isOfficial: false,
-            duty: "unknown",
-            isReferee: false,
+            isReferee: true,
             refCategory: "category1",
             refRemark: "",
             competition: this.state.compInfo.id,
@@ -177,7 +167,6 @@ class Nominations extends React.Component{
                     this.showInform("Номінацію спортсмена було успішно оновлено");
                     this.getLifterNominations();   
                     this.getRefereeNominations();
-                    this.getOfficialNominations();
                 })
             }else{
                     services.insertLifterNomination(this.state.nomination).then(() => {
@@ -186,7 +175,6 @@ class Nominations extends React.Component{
                         this.showInform("Спортсмена було успішно додано до номінації");
                         this.getLifterNominations();
                         this.getRefereeNominations();
-                        this.getOfficialNominations();
                     })
             }
         }else{
@@ -194,19 +182,17 @@ class Nominations extends React.Component{
                 services.updateOfficialNominationById(this.state.nomination).then(() => {
                     this.closeNom();
                     this.setState({isLoading: false});
-                    this.showInform("Номінацію офіційної особи було успішно оновлено");
+                    this.showInform("Номінацію судді було успішно оновлено");
                     this.getLifterNominations();   
-                    this.getRefereeNominations(); 
-                    this.getOfficialNominations();                       
+                    this.getRefereeNominations();                      
                 })
             }else{            
             services.insertOfficialNomination(this.state.nomination).then(() => {
                 this.closeNom();
                 this.setState({isLoading: false});
-                this.showInform("Офіційну особу було успішно додано до номінації");
+                this.showInform("Суддю було успішно додано до номінації");
                 this.getLifterNominations();   
-                this.getRefereeNominations(); 
-                this.getOfficialNominations();                 
+                this.getRefereeNominations();               
             })
         }
         }
@@ -218,7 +204,6 @@ class Nominations extends React.Component{
             this.setState({isLoading: false});
             this.getLifterNominations();
             this.getRefereeNominations();
-            this.getOfficialNominations();
         })
     }
 
@@ -275,7 +260,6 @@ class Nominations extends React.Component{
             this.cancelDeleting();
             this.getLifterNominations();
             this.getRefereeNominations();
-            this.getOfficialNominations();
         })
     }    
 
@@ -303,7 +287,6 @@ class Nominations extends React.Component{
             <CompInfo compInfo={this.state.compInfo} />
             <NomGrid nominations={this.state.lNominations} game={this.state.compInfo} onChangeStatus={this.onCheckStatus} onLifterEdit={this.onLifterEdit} onDelete={this.onDelete} />
             <RefGrid nominations={this.state.rNominations} game={this.state.compInfo} onOfficialEdit={this.onOfficialEdit} onDelete={this.onDelete} />
-            <OfficialGrid nominations={this.state.oNominations} game={this.state.compInfo} onOfficialEdit={this.onOfficialEdit} onDelete={this.onDelete} />
             <Modal target={this.state.nomination} onClose={this.closeNom}>
                 <LifterForm nomination={this.state.nomination} compInfo={this.state.compInfo} onChange={this.onChange} regions={this.state.regions} wc={this.state.wc} onSave={this.onSave}  onClose={this.closeNom} />
                 <OfficialForm nomination={this.state.nomination} compInfo={this.state.compInfo} onChange={this.onChange} regions={this.state.regions} onSave={this.onSave} onClose={this.closeNom}  />

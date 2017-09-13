@@ -72,10 +72,35 @@ const LiftersGrid = (props) => {
             width: "*"
         },
         {
+            title: "Розряд",
+            field: "level",
+            width: "*"
+        },         
+        {
             title: "Область",
             field: "team",
             width: "*"
-        }                          
+        }, 
+        {
+            title: "Місто",
+            field: "city",
+            width: "*"
+        },  
+        {
+            title: "ФСТ",
+            field: "fst",
+            width: "*"
+        },  
+        {
+            title: "Клуб",
+            field: "club",
+            width: "*"
+        },   
+        {
+            title: "ДЮСШ",
+            field: "school",
+            width: "*"
+        }                                   
                     
     ];
     var results = [];
@@ -112,7 +137,13 @@ const LiftersGrid = (props) => {
                 class: "al-right exercise-total"
             }];
     } 
+    var coachesCol = [{
+        title: "Тренер(и)",
+        field: "coaches",
+        width: "*"
+    }];
     var gridColumns = columns.concat(results);
+    gridColumns = gridColumns.concat(coachesCol);
     var lifters = divisions.map(division => {
         if(division.items.length){
             var divName = (props.game.gender === "male")? division.titleM : division.titleF;
@@ -120,6 +151,9 @@ const LiftersGrid = (props) => {
             weightClasses.sort((a,b) => (parseInt(a.name.replace("-","").replace("+","")) - parseInt(b.name.replace("-","").replace("+",""))));
             var wcl = weightClasses.map(w => {
                 var wItems = division.items.filter(x => x.wId === w.id);
+                var cropZero = val => {
+                    return (val[(val.length - 1)] === "0")? val.slice(0, val.length - 1) : val;
+                }
                 if(wItems.length){
                     var items = wItems.map(i => {
                         var rowItem = {};
@@ -128,18 +162,24 @@ const LiftersGrid = (props) => {
                         rowItem.fullName = i.surname + " " + i.name;
                         rowItem.born = new Date(i.born).getFullYear();
                         rowItem.team = props.regions.filter(reg => reg.id === i.team)[0].name;
+                        rowItem.level = i.level;
+                        rowItem.city = i.city;
+                        rowItem.fst = i.fst;
+                        rowItem.club = i.club;
+                        rowItem.school = i.school;
+                        rowItem.coaches = i.coaches;                        
                         if(props.game.typeId === "1"){
-                            rowItem.squat = i.squat;
-                            rowItem.deadlift = i.deadlift;
-                            rowItem.total = i.total;
+                            rowItem.squat = cropZero(i.squat);
+                            rowItem.deadlift = cropZero(i.deadlift);
+                            rowItem.total = cropZero(i.total);
                         }
-                        rowItem.benchpress = i.benchpress;
+                        rowItem.benchpress = cropZero(i.benchpress);
                         return rowItem;                        
                     });
                     if(props.game.typeId === "1"){
-                        items.sort((a,b) => (parseInt(a.total) - parseInt(b.total)));  
+                        items.sort((a,b) => (parseInt(b.total) - parseInt(a.total)));  
                     }else{
-                        items.sort((a,b) => (parseInt(a.benchpress) - parseInt(b.benchpress))); 
+                        items.sort((a,b) => (parseInt(b.benchpress) - parseInt(a.benchpress))); 
                     }
                     var counter = 1;
                     items.map(item => {

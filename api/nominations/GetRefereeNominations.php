@@ -11,7 +11,7 @@
         
         $isReferee = "true";
 
-        $sql = $wpdb->prepare("SELECT id, surname, first_name AS firstName, ref_category AS refCategory, ref_remark AS refRemark FROM $tb_nominations WHERE competition = %d AND
+        $sql = $wpdb->prepare("SELECT id, surname, first_name AS firstName, middle_name AS middleName, ref_category AS refCategory, ref_remark AS refRemark FROM $tb_nominations WHERE competition = %d AND
         team = %d AND type = %s AND is_referee = %s", $competition, $team, $type, $isReferee);
         $nominations = $wpdb->get_results($sql);
         $result = json_encode($nominations);

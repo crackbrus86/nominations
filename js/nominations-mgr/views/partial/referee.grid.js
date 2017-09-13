@@ -3,7 +3,7 @@ import Grid from "../../../components/grid/grid";
 
 const RefGrid = (props) => {
     if(!props.game) return null;
-    var refCategories = [{value: "category1", text: "Кат. І"},{value: "category2", text: "Кат. ІІ"},{value: "national", text: "Нац."}];
+    var refCategories = [{value: "category1", text: "МК І"},{value: "category2", text: "МК ІІ"},{value: "national", text: "НК"}];
     var columns = [
         {
             title: "#",
@@ -52,7 +52,7 @@ const RefGrid = (props) => {
         var referee = {};
         referee.id = x.id;
         referee.number = "";
-        referee.fullName = x.surname + " " + x.firstName;
+        referee.fullName = x.surname + " " + x.firstName + " " + x.middleName;
         referee.refCategory = refCategories.filter(r => r.value === x.refCategory)[0].text;
         referee.refRemark = x.refRemark;
         return referee;
@@ -63,7 +63,7 @@ const RefGrid = (props) => {
         referee.number = counter++;
     })
     var table = <Grid data={{columns: columns, rows: referees}} />;
-    if(!props.nominations.length) table = (<div className="empty-nomination"><p>Жодної номінації тренера не було створено</p></div>);
+    if(!props.nominations.length) table = (<div className="empty-nomination"><p>Жодної номінації судді не було створено</p></div>);
     return (<div className="nom-grid-wrap">
         <h4>Список суддів</h4>
         {table}

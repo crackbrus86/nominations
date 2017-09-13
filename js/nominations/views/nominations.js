@@ -4,7 +4,6 @@ import CompInfo from "./partial/comp.info";
 import Preloader from "../../components/preloader/preloader";
 import LiftersGrid from "./partial/lifters.grid";
 import RefGrid from "./partial/referees.grid";
-import OfficialGrid from "./partial/officials.grid";
 
 class Nominations extends React.Component{
     constructor(props){
@@ -15,8 +14,7 @@ class Nominations extends React.Component{
             regions: [],
             weightClasses: [],
             lifters: [],
-            referees: [],
-            officials: []
+            referees: []
         }
     }
 
@@ -28,7 +26,6 @@ class Nominations extends React.Component{
             this.getWeightCategories(this.state.compInfo.gender);
             this.getAllLifters();
             this.getAllReferees();
-            this.getAllOfficials();
         })
     }
 
@@ -51,17 +48,6 @@ class Nominations extends React.Component{
             type: "official"
         }).then(data => {
             this.setState({referees: JSON.parse(data)});
-            this.setState({isLoading: false});
-        })
-    }
-
-    getAllOfficials(){
-        this.setState({isLoading: true});
-        services.getAllOfficials({
-            competition: this.state.compInfo.id,
-            type: "official"
-        }).then(data => {
-            this.setState({officials: JSON.parse(data)});
             this.setState({isLoading: false});
         })
     }
@@ -103,7 +89,6 @@ class Nominations extends React.Component{
             <CompInfo compInfo={this.state.compInfo} />
             <LiftersGrid nominations={this.state.lifters} game={this.state.compInfo} weightClasses={this.state.weightClasses} regions={this.state.regions} />
             <RefGrid nominations={this.state.referees} game={this.state.compInfo} regions={this.state.regions} />
-            <OfficialGrid nominations={this.state.officials} game={this.state.compInfo} regions={this.state.regions} />
             <Preloader loading={this.state.isLoading} />            
         </div>
     }

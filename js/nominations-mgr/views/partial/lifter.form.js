@@ -18,6 +18,9 @@ const LifterForm = (props) => {
     var weightClassList = props.wc.map(w => <option key={w.id} value={w.id}>{w.name}</option>);
     var st = (info.typeId === "1")? {squat: nom.squat, isDisabled: false} : { squat: nom.squat, isDisabled: true};
     var dl = (info.typeId === "1")? {deadlift: nom.deadlift, isDisabled: false} : { deadlift: nom.deadlift, isDisabled: true};
+    var levels = [{id: 1, name: "ІІІ юн"},{id: 2, name: "ІІ юн"},{id: 3, name: "І юн"},{id: 4, name: "ІІІ"},{id: 5, name: "ІІ"},
+    {id: 6, name: "І"},{id: 7, name: "КМСУ"},{id: 8, name: "МСУ"},{id: 9, name: "МСУМК"},{id: 10, name: "ЗМСУ"}];
+    var levelList = levels.map(level => <option key={level.id} value={level.id}>{level.name}</option>);
     return (<div>
         <div className="form-header">
             <h3>Додати спортсмена до номінації</h3>
@@ -50,6 +53,26 @@ const LifterForm = (props) => {
                         <td><select value={nom.team} disabled={true}>{regionsList}</select></td>
                     </tr>
                     <tr>
+                        <td><label>Місто</label></td>
+                        <td><input value={nom.city} type="text" maxLength="100" onChange={e => props.onChange("city", e.target.value)} /></td>
+                    </tr>
+                    <tr>
+                        <td><label>ФСТ</label></td>
+                        <td><input value={nom.fst} type="text" maxLength="100" onChange={e => props.onChange("fst", e.target.value)} /></td>
+                    </tr>  
+                    <tr>
+                        <td><label>Клуб</label></td>
+                        <td><input value={nom.club} type="text" maxLength="100" onChange={e => props.onChange("club", e.target.value)} /></td>
+                    </tr>  
+                    <tr>
+                        <td><label>ДЮСШ</label></td>
+                        <td><input value={nom.school} type="text" maxLength="100" onChange={e => props.onChange("school", e.target.value)} /></td>
+                    </tr>                                                                                  
+                    <tr>
+                        <td><label>Розряд</label></td>
+                        <td><select value={nom.level} onChange={e => props.onChange("level", e.target.value)}>{levelList}</select></td>
+                    </tr>
+                    <tr>
                         <td><label>Дивізіон</label></td>
                         <td><select value={nom.division} onChange={e => props.onChange("division", e.target.value)} >{divisionsList}</select></td>
                     </tr>
@@ -73,6 +96,10 @@ const LifterForm = (props) => {
                         <td><label>Сума</label></td>
                         <td><input value={nom.total} type="text" readOnly={true} /></td>
                     </tr>
+                    <tr>
+                        <td><label>Тренер(и)</label></td>
+                        <td><textarea value={nom.coaches} onChange={e => props.onChange("coaches", e.target.value)} maxLength="300" /></td>
+                    </tr>                      
                     <tr>
                         <td><label>Резерв</label></td>
                         <td><input checked={JSON.parse(nom.reserve)} type="checkbox" onChange={e => props.onChange("reserve", e.target.checked)} /></td>

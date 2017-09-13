@@ -80,7 +80,32 @@ const NomGrid = (props) => {
             title: "Вагова категорія",
             field: "wClass",
             width: "*"
-        }                          
+        },
+        {
+            title: "Розряд",
+            field: "level",
+            width: "*"
+        },  
+        {
+            title: "Місто",
+            field: "city",
+            width: "*"
+        },  
+        {
+            title: "ФСТ",
+            field: "fst",
+            width: "*"
+        },  
+        {
+            title: "Клуб",
+            field: "club",
+            width: "*"
+        },   
+        {
+            title: "ДЮСШ",
+            field: "school",
+            width: "*"
+        }                                                              
                     
     ];
     var results = []
@@ -117,7 +142,13 @@ const NomGrid = (props) => {
                 class: "al-right exercise-total"
             }];
     }
+    var coachesCol = [{
+        title: "Тренер(и)",
+        field: "coaches",
+        width: "*"
+    }]
     var gridColumns = columns.concat(results);
+    gridColumns = gridColumns.concat(coachesCol);
     var info = props.game;
     var f = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 11);
     var bm7 = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 8);    
@@ -153,6 +184,9 @@ const NomGrid = (props) => {
             var countOfLifters = division.items.length;
             var countOfReserve = 0;
             var countOfTeam = 0;
+            var cropZero = val => {
+                return (val[(val.length - 1)] === "0")? val.slice(0, val.length - 1) : val;
+            }
             var divName = (props.game.gender === "male")? division.titleM : division.titleF;
             var items = division.items.map(item => {
                 var rowItem = {};
@@ -165,20 +199,26 @@ const NomGrid = (props) => {
                 rowItem.number = "";
                 rowItem.fullName = item.surname + " " + item.name;
                 rowItem.born = new Date(item.born).getFullYear();
+                rowItem.level = item.level;
+                rowItem.city = item.city;
+                rowItem.fst = item.fst;
+                rowItem.club = item.club;
+                rowItem.school = item.school;
+                rowItem.coaches = item.coaches;
                 rowItem.wClass = item.wClass;
                 if(props.game.typeId === "1"){
-                    rowItem.squat = item.squat;
-                    rowItem.deadlift = item.deadlift;
-                    rowItem.total = item.total;
+                    rowItem.squat = cropZero(item.squat);
+                    rowItem.deadlift = cropZero(item.deadlift);
+                    rowItem.total = cropZero(item.total);
                 }
-                rowItem.benchpress = item.benchpress;
+                rowItem.benchpress = cropZero(item.benchpress);
                 return rowItem;
             });
             items.sort((a,b) => (parseInt(a.wClass.replace("-","").replace("+","")) - parseInt(b.wClass.replace("-","").replace("+",""))));
             if(props.game.typeId === "1"){
-                items.sort((a,b) => (parseInt(a.total) - parseInt(b.total)));  
+                items.sort((a,b) => (parseInt(b.total) - parseInt(a.total)));  
             }else{
-                items.sort((a,b) => (parseInt(a.benchpress) - parseInt(b.benchpress))); 
+                items.sort((a,b) => (parseInt(b.benchpress) - parseInt(a.benchpress))); 
             }            
             var counter = 1;
             items.map(item => {
