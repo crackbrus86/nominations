@@ -5,27 +5,27 @@
     }else{  
         $tb_nominations = $wpdb->get_blog_prefix()."nominations";
         
-        $id = esc_sql($_POST["id"]);
-        $type = esc_sql($_POST["type"]);
-        $surname = esc_sql($_POST["surname"]);
-        $firstName = esc_sql($_POST["firstName"]);
-        $birthDate = esc_sql($_POST["birthDate"]);
-        $gender = esc_sql($_POST["gender"]);
-        $team = esc_sql($_POST["team"]);
-        $division = esc_sql($_POST["division"]);
-        $weightClass = esc_sql($_POST["weightClass"]);
-        $squat = esc_sql($_POST["squat"]);
-        $benchpress = esc_sql($_POST["benchpress"]);
-        $deadlift = esc_sql($_POST["deadlift"]);
-        $total = esc_sql($_POST["total"]);
-        $reserve = esc_sql($_POST["reserve"]);
-        $competition = esc_sql($_POST["competition"]);
-        $city = esc_sql($_POST["city"]);
-        $fst = esc_sql($_POST["fst"]);
-        $club = esc_sql($_POST["club"]);
-        $school = esc_sql($_POST["school"]);
-        $level = esc_sql($_POST["level"]); 
-        $coaches = esc_sql($_POST["coaches"]);                
+        $id = stripslashes($_POST["id"]);
+        $type = stripslashes($_POST["type"]);
+        $surname = stripslashes($_POST["surname"]);
+        $firstName = stripslashes($_POST["firstName"]);
+        $birthDate = stripslashes($_POST["birthDate"]);
+        $gender = stripslashes($_POST["gender"]);
+        $team = stripslashes($_POST["team"]);
+        $division = stripslashes($_POST["division"]);
+        $weightClass = stripslashes($_POST["weightClass"]);
+        $squat = stripslashes($_POST["squat"]);
+        $benchpress = stripslashes($_POST["benchpress"]);
+        $deadlift = stripslashes($_POST["deadlift"]);
+        $total = stripslashes($_POST["total"]);
+        $reserve = stripslashes($_POST["reserve"]);
+        $competition = stripslashes($_POST["competition"]);
+        $city = stripslashes($_POST["city"]);
+        $fst = stripslashes($_POST["fst"]);
+        $club = stripslashes($_POST["club"]);
+        $school = stripslashes($_POST["school"]);
+        $level = stripslashes($_POST["level"]); 
+        $coaches = stripslashes($_POST["coaches"]);                
         
         $sql = $wpdb->prepare("UPDATE $tb_nominations SET type = %s, surname = %s, first_name = %s, birth_date = %s, gender = %s, team = %d, 
         division = %s, weight_class = %d, squat = %f, benchpress = %f, deadlift = %f, total = %f, reserve = %s, competition = %d, city = %s,

@@ -48658,6 +48658,7 @@ var _grid2 = _interopRequireDefault(_grid);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var CompGrid = function CompGrid(props) {
+    if (!props.data.length) return null;
     var columns = [{
         title: "Змагання",
         field: "name",

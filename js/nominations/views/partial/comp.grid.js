@@ -3,6 +3,7 @@ import moment from "moment";
 import Grid from "../../../components/grid/grid";
 
 const CompGrid = (props) => {
+    if(!props.data.length) return null;
     var columns = [
         {
             title: "Змагання",

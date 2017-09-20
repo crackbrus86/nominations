@@ -5,16 +5,16 @@
     }else{  
         $tb_nominations = $wpdb->get_blog_prefix()."nominations";
         
-        $id = esc_sql($_POST["id"]);
-        $type = esc_sql($_POST["type"]);
-        $surname = esc_sql($_POST["surname"]);
-        $firstName = esc_sql($_POST["firstName"]);
-        $middleName = esc_sql($_POST["middleName"]);
-        $team = esc_sql($_POST["team"]);
-        $isReferee = esc_sql($_POST["isReferee"]);
-        $refCategory = esc_sql($_POST["refCategory"]);
-        $refRemark = esc_sql($_POST["refRemark"]);
-        $competition = esc_sql($_POST["competition"]);        
+        $id = stripslashes($_POST["id"]);
+        $type = stripslashes($_POST["type"]);
+        $surname = stripslashes($_POST["surname"]);
+        $firstName = stripslashes($_POST["firstName"]);
+        $middleName = stripslashes($_POST["middleName"]);
+        $team = stripslashes($_POST["team"]);
+        $isReferee = stripslashes($_POST["isReferee"]);
+        $refCategory = stripslashes($_POST["refCategory"]);
+        $refRemark = stripslashes($_POST["refRemark"]);
+        $competition = stripslashes($_POST["competition"]);        
         
         $sql = $wpdb->prepare("UPDATE $tb_nominations SET type = %s, surname = %s, first_name = %s, team = %d, 
         is_official = %s, duty = %s, is_referee = %s, ref_category = %s, ref_remark = %s, competition = %d, middle_name = %s WHERE id=%d", 
