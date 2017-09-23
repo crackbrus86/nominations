@@ -20,6 +20,7 @@ class Nominations extends React.Component{
             region: this.props.region,
             regions: [],
             wc: [],
+            subwc:[],
             inform: null,
             compStatus: "p",
             lNominations: [],
@@ -238,7 +239,11 @@ class Nominations extends React.Component{
     getWeightCategories(gender){
         this.setState({isLoading: true});
         services.getWeightCategories({gender: gender}).then(data => {
-            this.setState({wc: JSON.parse(data)});
+            var categories = JSON.parse(data);
+            var wc = categories.filter(x => x.division === "open");
+            var subwc = categories.filter(y => y.division === "subjuniors");
+            this.setState({wc: wc});
+            this.setState({subwc: subwc})
             this.setState({isLoading: false});
         })
     }
@@ -288,7 +293,7 @@ class Nominations extends React.Component{
             <NomGrid nominations={this.state.lNominations} game={this.state.compInfo} onChangeStatus={this.onCheckStatus} onLifterEdit={this.onLifterEdit} onDelete={this.onDelete} />
             <RefGrid nominations={this.state.rNominations} game={this.state.compInfo} onOfficialEdit={this.onOfficialEdit} onDelete={this.onDelete} />
             <Modal target={this.state.nomination} onClose={this.closeNom}>
-                <LifterForm nomination={this.state.nomination} compInfo={this.state.compInfo} onChange={this.onChange} regions={this.state.regions} wc={this.state.wc} onSave={this.onSave}  onClose={this.closeNom} />
+                <LifterForm nomination={this.state.nomination} compInfo={this.state.compInfo} onChange={this.onChange} regions={this.state.regions} wc={this.state.wc} subwc = {this.state.subwc} onSave={this.onSave}  onClose={this.closeNom} />
                 <OfficialForm nomination={this.state.nomination} compInfo={this.state.compInfo} onChange={this.onChange} regions={this.state.regions} onSave={this.onSave} onClose={this.closeNom}  />
             </Modal>
             <Dialog dialog={this.state.dialog} onConfirm={this.onConfirm} onClose={this.onCancel} />

@@ -179,6 +179,16 @@ const NomGrid = (props) => {
     if(controls.length){
         gridColumns = gridColumns.concat(controls);
     }
+    var getAgeCat = (bdate) => {
+        var year = parseInt(new Date().getFullYear());
+        var born = new Date(bdate).getFullYear();
+        var diff = year - born;
+        if(diff >= 12 && diff <= 13) return "I група (" + parseInt(year-13) + " - " + parseInt(year-12) + "р.н.)";
+        if(diff >= 14 && diff <= 15) return "II група (" + parseInt(year-15) + " - " + parseInt(year-14) + "р.н.)";
+        if(diff >= 16 && diff <= 18) return "III група (" + parseInt(year-18) + " - " + parseInt(year-16) + "р.н.)";
+        if(diff >= 19 && diff <= 23) return "IV група (" + parseInt(year-23) + " - " + parseInt(year-19) + "р.н.)";
+        return null;
+    }    
     var tables = divisions.map(division => { 
         if(division.items.length) {
             var countOfLifters = division.items.length;
@@ -206,6 +216,9 @@ const NomGrid = (props) => {
                 rowItem.school = item.school;
                 rowItem.coaches = item.coaches;
                 rowItem.wClass = item.wClass;
+                if(division.id === "subjuniors" || division.id === "juniors") {
+                    rowItem.ageCat = getAgeCat(item.born);
+                }
                 if(props.game.typeId === "1"){
                     rowItem.squat = cropZero(item.squat);
                     rowItem.deadlift = cropZero(item.deadlift);
@@ -224,6 +237,13 @@ const NomGrid = (props) => {
             items.map(item => {
                 item.number = <div>{item.reserve}{counter++}</div>;
             });
+            if(division.id === "subjuniors" || division.id === "juniors"){
+                gridColumns.splice(4, 0, {
+                    title: "Вікова група",
+                    field: "ageCat",
+                    width: "*"
+                });
+            }
             return (<div key={division.id}>
                 <div key={division.id} className="division-head">Дивізіон "{divName}"</div>
                 <Grid data={{columns: gridColumns, rows: items}} />

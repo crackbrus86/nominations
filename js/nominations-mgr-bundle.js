@@ -50059,6 +50059,7 @@ var Nominations = function (_React$Component) {
             region: _this.props.region,
             regions: [],
             wc: [],
+            subwc: [],
             inform: null,
             compStatus: "p",
             lNominations: [],
@@ -50313,7 +50314,15 @@ var Nominations = function (_React$Component) {
 
             this.setState({ isLoading: true });
             services.getWeightCategories({ gender: gender }).then(function (data) {
-                _this10.setState({ wc: JSON.parse(data) });
+                var categories = JSON.parse(data);
+                var wc = categories.filter(function (x) {
+                    return x.division === "open";
+                });
+                var subwc = categories.filter(function (y) {
+                    return y.division === "subjuniors";
+                });
+                _this10.setState({ wc: wc });
+                _this10.setState({ subwc: subwc });
                 _this10.setState({ isLoading: false });
             });
         }
@@ -50398,7 +50407,7 @@ var Nominations = function (_React$Component) {
                 _react2.default.createElement(
                     _modal2.default,
                     { target: this.state.nomination, onClose: this.closeNom },
-                    _react2.default.createElement(_lifter2.default, { nomination: this.state.nomination, compInfo: this.state.compInfo, onChange: this.onChange, regions: this.state.regions, wc: this.state.wc, onSave: this.onSave, onClose: this.closeNom }),
+                    _react2.default.createElement(_lifter2.default, { nomination: this.state.nomination, compInfo: this.state.compInfo, onChange: this.onChange, regions: this.state.regions, wc: this.state.wc, subwc: this.state.subwc, onSave: this.onSave, onClose: this.closeNom }),
                     _react2.default.createElement(_official2.default, { nomination: this.state.nomination, compInfo: this.state.compInfo, onChange: this.onChange, regions: this.state.regions, onSave: this.onSave, onClose: this.closeNom })
                 ),
                 _react2.default.createElement(_dialog2.default, { dialog: this.state.dialog, onConfirm: this.onConfirm, onClose: this.onCancel }),
@@ -50741,6 +50750,13 @@ var LifterForm = function LifterForm(props) {
             w.name
         );
     });
+    var subWeightClassList = props.subwc.map(function (s) {
+        return _react2.default.createElement(
+            "option",
+            { key: s.id, value: s.id },
+            s.name
+        );
+    });
     var st = info.typeId === "1" ? { squat: nom.squat, isDisabled: false } : { squat: nom.squat, isDisabled: true };
     var dl = info.typeId === "1" ? { deadlift: nom.deadlift, isDisabled: false } : { deadlift: nom.deadlift, isDisabled: true };
     var levels = [{ id: 1, name: "ІІІ юн" }, { id: 2, name: "ІІ юн" }, { id: 3, name: "І юн" }, { id: 4, name: "ІІІ" }, { id: 5, name: "ІІ" }, { id: 6, name: "І" }, { id: 7, name: "КМСУ" }, { id: 8, name: "МСУ" }, { id: 9, name: "МСУМК" }, { id: 10, name: "ЗМСУ" }];
@@ -50751,6 +50767,34 @@ var LifterForm = function LifterForm(props) {
             level.name
         );
     });
+    var getAgeCat = function getAgeCat(bdate) {
+        var year = parseInt(new Date().getFullYear());
+        var born = new Date(bdate).getFullYear();
+        var diff = year - born;
+        if (diff >= 12 && diff <= 13) return "I група (" + parseInt(year - 13) + " - " + parseInt(year - 12) + "р.н.)";
+        if (diff >= 14 && diff <= 15) return "II група (" + parseInt(year - 15) + " - " + parseInt(year - 14) + "р.н.)";
+        if (diff >= 16 && diff <= 18) return "III група (" + parseInt(year - 18) + " - " + parseInt(year - 16) + "р.н.)";
+        if (diff >= 19 && diff <= 23) return "IV група (" + parseInt(year - 23) + " - " + parseInt(year - 19) + "р.н.)";
+        return null;
+    };
+    var ageGroups = (nom.division === "subjuniors" || nom.division === "juniors") && !!bDate ? _react2.default.createElement(
+        "tr",
+        null,
+        _react2.default.createElement(
+            "td",
+            null,
+            _react2.default.createElement(
+                "label",
+                null,
+                "\u0412\u0456\u043A\u043E\u0432\u0430 \u0433\u0440\u0443\u043F\u0430"
+            )
+        ),
+        _react2.default.createElement(
+            "td",
+            null,
+            _react2.default.createElement("input", { value: getAgeCat(bDate), type: "text", readOnly: true })
+        )
+    ) : null;
     return _react2.default.createElement(
         "div",
         null,
@@ -51022,6 +51066,7 @@ var LifterForm = function LifterForm(props) {
                                 )
                             )
                         ),
+                        ageGroups,
                         _react2.default.createElement(
                             "tr",
                             null,
@@ -51042,7 +51087,7 @@ var LifterForm = function LifterForm(props) {
                                     { value: nom.weightClass, onChange: function onChange(e) {
                                             return props.onChange("weightClass", e.target.value);
                                         } },
-                                    weightClassList
+                                    nom.division === "subjuniors" ? subWeightClassList : weightClassList
                                 )
                             )
                         ),
@@ -53042,6 +53087,16 @@ var NomGrid = function NomGrid(props) {
     if (controls.length) {
         gridColumns = gridColumns.concat(controls);
     }
+    var getAgeCat = function getAgeCat(bdate) {
+        var year = parseInt(new Date().getFullYear());
+        var born = new Date(bdate).getFullYear();
+        var diff = year - born;
+        if (diff >= 12 && diff <= 13) return "I група (" + parseInt(year - 13) + " - " + parseInt(year - 12) + "р.н.)";
+        if (diff >= 14 && diff <= 15) return "II група (" + parseInt(year - 15) + " - " + parseInt(year - 14) + "р.н.)";
+        if (diff >= 16 && diff <= 18) return "III група (" + parseInt(year - 18) + " - " + parseInt(year - 16) + "р.н.)";
+        if (diff >= 19 && diff <= 23) return "IV група (" + parseInt(year - 23) + " - " + parseInt(year - 19) + "р.н.)";
+        return null;
+    };
     var tables = divisions.map(function (division) {
         if (division.items.length) {
             var countOfLifters = division.items.length;
@@ -53073,6 +53128,9 @@ var NomGrid = function NomGrid(props) {
                 rowItem.school = item.school;
                 rowItem.coaches = item.coaches;
                 rowItem.wClass = item.wClass;
+                if (division.id === "subjuniors" || division.id === "juniors") {
+                    rowItem.ageCat = getAgeCat(item.born);
+                }
                 if (props.game.typeId === "1") {
                     rowItem.squat = cropZero(item.squat);
                     rowItem.deadlift = cropZero(item.deadlift);
@@ -53102,6 +53160,13 @@ var NomGrid = function NomGrid(props) {
                     counter++
                 );
             });
+            if (division.id === "subjuniors" || division.id === "juniors") {
+                gridColumns.splice(4, 0, {
+                    title: "Вікова група",
+                    field: "ageCat",
+                    width: "*"
+                });
+            }
             return _react2.default.createElement(
                 "div",
                 { key: division.id },

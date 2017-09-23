@@ -16,11 +16,26 @@ const LifterForm = (props) => {
     [{value: "open", name: "Відкритий"},{value: "subjuniors", name: "Дівчата"},{value: "juniors", name: "Юніорки"},{value: "seniors", name: "Жінки"},{value: "masters1", name: "Ветерани 1"},{value: "masters2", name: "Ветерани 2"},{value: "masters3", name: "Ветерани 3"},{value: "masters4", name: "Ветерани 4"}];
     var divisionsList = divisions.map(div => <option key={div.value} value={div.value}>{div.name}</option>);
     var weightClassList = props.wc.map(w => <option key={w.id} value={w.id}>{w.name}</option>);
+    var subWeightClassList = props.subwc.map(s => <option key={s.id} value={s.id}>{s.name}</option>);
     var st = (info.typeId === "1")? {squat: nom.squat, isDisabled: false} : { squat: nom.squat, isDisabled: true};
     var dl = (info.typeId === "1")? {deadlift: nom.deadlift, isDisabled: false} : { deadlift: nom.deadlift, isDisabled: true};
     var levels = [{id: 1, name: "ІІІ юн"},{id: 2, name: "ІІ юн"},{id: 3, name: "І юн"},{id: 4, name: "ІІІ"},{id: 5, name: "ІІ"},
     {id: 6, name: "І"},{id: 7, name: "КМСУ"},{id: 8, name: "МСУ"},{id: 9, name: "МСУМК"},{id: 10, name: "ЗМСУ"}];
     var levelList = levels.map(level => <option key={level.id} value={level.id}>{level.name}</option>);
+    var getAgeCat = (bdate) => {
+        var year = parseInt(new Date().getFullYear());
+        var born = new Date(bdate).getFullYear();
+        var diff = year - born;
+        if(diff >= 12 && diff <= 13) return "I група (" + parseInt(year-13) + " - " + parseInt(year-12) + "р.н.)";
+        if(diff >= 14 && diff <= 15) return "II група (" + parseInt(year-15) + " - " + parseInt(year-14) + "р.н.)";
+        if(diff >= 16 && diff <= 18) return "III група (" + parseInt(year-18) + " - " + parseInt(year-16) + "р.н.)";
+        if(diff >= 19 && diff <= 23) return "IV група (" + parseInt(year-23) + " - " + parseInt(year-19) + "р.н.)";
+        return null;
+    }
+    var ageGroups = ((nom.division === "subjuniors" || nom.division === "juniors") && !!bDate )? 
+    <tr><td><label>Вікова група</label></td>
+    <td><input value={getAgeCat(bDate)} type="text" readOnly={true} /></td>
+    </tr> : null;
     return (<div>
         <div className="form-header">
             <h3>Додати спортсмена до номінації</h3>
@@ -76,9 +91,14 @@ const LifterForm = (props) => {
                         <td><label>Дивізіон</label></td>
                         <td><select value={nom.division} onChange={e => props.onChange("division", e.target.value)} >{divisionsList}</select></td>
                     </tr>
+                    {ageGroups}
                     <tr>
                         <td><label>Вагова категорія</label></td>
-                        <td><select value={nom.weightClass} onChange={e => props.onChange("weightClass", e.target.value)} >{weightClassList}</select></td>
+                        <td>
+                            <select value={nom.weightClass} onChange={e => props.onChange("weightClass", e.target.value)} >
+                                {(nom.division === "subjuniors")? subWeightClassList : weightClassList }
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <td><label>Присідання</label></td>

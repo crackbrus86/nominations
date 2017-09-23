@@ -49520,6 +49520,16 @@ var LiftersGrid = function LiftersGrid(props) {
     }];
     var gridColumns = columns.concat(results);
     gridColumns = gridColumns.concat(coachesCol);
+    var getAgeCat = function getAgeCat(bdate) {
+        var year = parseInt(new Date().getFullYear());
+        var born = new Date(bdate).getFullYear();
+        var diff = year - born;
+        if (diff >= 12 && diff <= 13) return "I група (" + parseInt(year - 13) + " - " + parseInt(year - 12) + "р.н.)";
+        if (diff >= 14 && diff <= 15) return "II група (" + parseInt(year - 15) + " - " + parseInt(year - 14) + "р.н.)";
+        if (diff >= 16 && diff <= 18) return "III група (" + parseInt(year - 18) + " - " + parseInt(year - 16) + "р.н.)";
+        if (diff >= 19 && diff <= 23) return "IV група (" + parseInt(year - 23) + " - " + parseInt(year - 19) + "р.н.)";
+        return null;
+    };
     var lifters = divisions.map(function (division) {
         if (division.items.length) {
             var divName = props.game.gender === "male" ? division.titleM : division.titleF;
@@ -49554,6 +49564,9 @@ var LiftersGrid = function LiftersGrid(props) {
                         rowItem.club = i.club;
                         rowItem.school = i.school;
                         rowItem.coaches = i.coaches;
+                        if (division.id === "subjuniors" || division.id === "juniors") {
+                            rowItem.ageCat = getAgeCat(i.born);
+                        }
                         if (props.game.typeId === "1") {
                             rowItem.squat = cropZero(i.squat);
                             rowItem.deadlift = cropZero(i.deadlift);
@@ -49580,6 +49593,13 @@ var LiftersGrid = function LiftersGrid(props) {
                             counter++
                         );;
                     });
+                    if (division.id === "subjuniors" || division.id === "juniors") {
+                        gridColumns.splice(4, 0, {
+                            title: "Вікова група",
+                            field: "ageCat",
+                            width: "*"
+                        });
+                    }
                     return _react2.default.createElement(
                         "div",
                         { key: w.id },
