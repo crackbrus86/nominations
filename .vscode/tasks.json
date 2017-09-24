@@ -9,6 +9,13 @@
             "command": "node-sass styles/style-front.scss styles/style-front.css",
             "group": "build",
             "problemMatcher": []
-        }
+        },
+        {
+            "taskName": "Settings Sass Compile",
+            "type": "shell",
+            "command": "node-sass styles/style-settings.scss styles/style-settings.css",
+            "group": "build",
+            "problemMatcher": []
+        }      
     ]
 }

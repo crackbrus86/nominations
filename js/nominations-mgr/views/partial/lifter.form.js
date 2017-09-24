@@ -16,6 +16,11 @@ const LifterForm = (props) => {
     [{value: "open", name: "Відкритий"},{value: "subjuniors", name: "Дівчата"},{value: "juniors", name: "Юніорки"},{value: "seniors", name: "Жінки"},{value: "masters1", name: "Ветерани 1"},{value: "masters2", name: "Ветерани 2"},{value: "masters3", name: "Ветерани 3"},{value: "masters4", name: "Ветерани 4"}];
     var divisionsList = divisions.map(div => <option key={div.value} value={div.value}>{div.name}</option>);
     var weightClassList = props.wc.map(w => <option key={w.id} value={w.id}>{w.name}</option>);
+    var shortWc = [];
+    for(var i = 1; i < props.wc.length; i++){
+        shortWc.push(props.wc[i]);
+    }
+    var shortWCList = shortWc.map(w => <option key={w.id} value={w.id}>{w.name}</option>);
     var subWeightClassList = props.subwc.map(s => <option key={s.id} value={s.id}>{s.name}</option>);
     var st = (info.typeId === "1")? {squat: nom.squat, isDisabled: false} : { squat: nom.squat, isDisabled: true};
     var dl = (info.typeId === "1")? {deadlift: nom.deadlift, isDisabled: false} : { deadlift: nom.deadlift, isDisabled: true};
@@ -32,7 +37,7 @@ const LifterForm = (props) => {
         if(diff >= 19 && diff <= 23) return "IV група (" + parseInt(year-23) + " - " + parseInt(year-19) + "р.н.)";
         return null;
     }
-    var ageGroups = ((nom.division === "subjuniors" || nom.division === "juniors") && !!bDate )? 
+    var ageGroups = (((nom.division === "subjuniors" || nom.division === "juniors") && !!bDate) && JSON.parse(info.isJun) )? 
     <tr><td><label>Вікова група</label></td>
     <td><input value={getAgeCat(bDate)} type="text" readOnly={true} /></td>
     </tr> : null;
@@ -96,7 +101,9 @@ const LifterForm = (props) => {
                         <td><label>Вагова категорія</label></td>
                         <td>
                             <select value={nom.weightClass} onChange={e => props.onChange("weightClass", e.target.value)} >
-                                {(nom.division === "subjuniors")? subWeightClassList : weightClassList }
+                                {(nom.division === "juniors" || nom.division === "subjuniors")? 
+                                    (nom.division === "subjuniors" && JSON.parse(info.isJun))? subWeightClassList : weightClassList 
+                                : shortWCList }
                             </select>
                         </td>
                     </tr>

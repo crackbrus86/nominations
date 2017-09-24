@@ -5,7 +5,8 @@
   left: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0.8);
-  z-index: 10000; }
+  z-index: 10000;
+  overflow: auto; }
   .blackout .spinner-wrap {
     position: absolute;
     top: 50%;
@@ -16,6 +17,10 @@
 .grid {
   border-spacing: 0px;
   border-collapse: collapse; }
+  .grid sup {
+    color: #9e2600;
+    font-weight: 600;
+    margin-left: 3px; }
   .grid thead tr {
     background-color: #FF9800;
     color: #fff;
@@ -66,6 +71,8 @@
     font-weight: 600; }
   .custom-modal form input {
     width: 100%; }
+  .custom-modal form input[type=checkbox] {
+    width: 16px; }
   .custom-modal form button {
     color: #fff;
     background-color: #038ece;

@@ -50160,7 +50160,7 @@ var Nominations = function (_React$Component) {
                 school: "",
                 level: 1,
                 division: "open",
-                weightClass: this.state.wc[0].id,
+                weightClass: !JSON.parse(this.state.compInfo.isJun) ? this.state.wc[0].id : this.state.subwc[0].id,
                 squat: 0,
                 benchpress: 0,
                 deadlift: 0,
@@ -50293,6 +50293,8 @@ var Nominations = function (_React$Component) {
         key: "componentWillReceiveProps",
         value: function componentWillReceiveProps(props) {
             if (props.competition) {
+                this.setState({ lNominations: [] });
+                this.setState({ rNominations: [] });
                 this.getCompInfo(props.competition);
             }
         }
@@ -50750,6 +50752,17 @@ var LifterForm = function LifterForm(props) {
             w.name
         );
     });
+    var shortWc = [];
+    for (var i = 1; i < props.wc.length; i++) {
+        shortWc.push(props.wc[i]);
+    }
+    var shortWCList = shortWc.map(function (w) {
+        return _react2.default.createElement(
+            "option",
+            { key: w.id, value: w.id },
+            w.name
+        );
+    });
     var subWeightClassList = props.subwc.map(function (s) {
         return _react2.default.createElement(
             "option",
@@ -50777,7 +50790,7 @@ var LifterForm = function LifterForm(props) {
         if (diff >= 19 && diff <= 23) return "IV група (" + parseInt(year - 23) + " - " + parseInt(year - 19) + "р.н.)";
         return null;
     };
-    var ageGroups = (nom.division === "subjuniors" || nom.division === "juniors") && !!bDate ? _react2.default.createElement(
+    var ageGroups = (nom.division === "subjuniors" || nom.division === "juniors") && !!bDate && JSON.parse(info.isJun) ? _react2.default.createElement(
         "tr",
         null,
         _react2.default.createElement(
@@ -51087,7 +51100,7 @@ var LifterForm = function LifterForm(props) {
                                     { value: nom.weightClass, onChange: function onChange(e) {
                                             return props.onChange("weightClass", e.target.value);
                                         } },
-                                    nom.division === "subjuniors" ? subWeightClassList : weightClassList
+                                    nom.division === "juniors" || nom.division === "subjuniors" ? nom.division === "subjuniors" && JSON.parse(info.isJun) ? subWeightClassList : weightClassList : shortWCList
                                 )
                             )
                         ),
@@ -53128,7 +53141,7 @@ var NomGrid = function NomGrid(props) {
                 rowItem.school = item.school;
                 rowItem.coaches = item.coaches;
                 rowItem.wClass = item.wClass;
-                if (division.id === "subjuniors" || division.id === "juniors") {
+                if ((division.id === "subjuniors" || division.id === "juniors") && JSON.parse(props.game.isJun)) {
                     rowItem.ageCat = getAgeCat(item.born);
                 }
                 if (props.game.typeId === "1") {
@@ -53160,7 +53173,7 @@ var NomGrid = function NomGrid(props) {
                     counter++
                 );
             });
-            if (division.id === "subjuniors" || division.id === "juniors") {
+            if ((division.id === "subjuniors" || division.id === "juniors") && JSON.parse(props.game.isJun) && gridColumns[4].field != "ageCat") {
                 gridColumns.splice(4, 0, {
                     title: "Вікова група",
                     field: "ageCat",

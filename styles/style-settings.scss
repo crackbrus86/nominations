@@ -6,6 +6,7 @@
     right: 0;
     background-color:rgba(0,0,0,0.8);
     z-index: 10000;
+    overflow: auto;
     
     .spinner-wrap{
         position: absolute;
@@ -21,6 +22,11 @@
 .grid{
     border-spacing: 0px;
     border-collapse: collapse;
+    sup {
+        color: #9e2600;
+        font-weight: 600;
+        margin-left: 3px;
+    }
     thead{
         tr{
             background-color: #FF9800;
@@ -100,6 +106,10 @@
         }
         input{
             width: 100%;
+        }
+
+        input[type=checkbox]{
+            width: 16px;
         }
 
         button{

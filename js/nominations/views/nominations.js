@@ -3,6 +3,7 @@ import * as services from "../services/services";
 import CompInfo from "./partial/comp.info";
 import Preloader from "../../components/preloader/preloader";
 import LiftersGrid from "./partial/lifters.grid";
+import IsJunLiftersGrid from "./partial/isJun.lifters.grid";
 import RefGrid from "./partial/referees.grid";
 
 class Nominations extends React.Component{
@@ -87,6 +88,7 @@ class Nominations extends React.Component{
                 </div>
             </div>
             <CompInfo compInfo={this.state.compInfo} />
+            <IsJunLiftersGrid nominations={this.state.lifters} game={this.state.compInfo} weightClasses={this.state.weightClasses} regions={this.state.regions} />
             <LiftersGrid nominations={this.state.lifters} game={this.state.compInfo} weightClasses={this.state.weightClasses} regions={this.state.regions} />
             <RefGrid nominations={this.state.referees} game={this.state.compInfo} regions={this.state.regions} />
             <Preloader loading={this.state.isLoading} />            

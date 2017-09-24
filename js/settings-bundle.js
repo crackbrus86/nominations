@@ -16204,7 +16204,7 @@ var Grid = function (_React$Component) {
                     ) : row[column.field];
                     cells.push(_react2.default.createElement(
                         "td",
-                        { key: counter, width: column.width },
+                        { key: counter, width: column.width, className: column.class },
                         content
                     ));
                 }
@@ -49696,7 +49696,8 @@ var Competitions = function (_React$Component) {
                 location: "",
                 typeId: 1,
                 startDate: null,
-                endDate: null
+                endDate: null,
+                isJun: "false"
             };
             this.setState({ competition: competition });
         }
@@ -49862,7 +49863,20 @@ var CompGrid = function CompGrid(props) {
     var rows = props.data.map(function (item) {
         return {
             id: item.id,
-            name: item.name,
+            name: item.isJun && JSON.parse(item.isJun) ? _react2.default.createElement(
+                "div",
+                null,
+                item.name,
+                _react2.default.createElement(
+                    "sup",
+                    null,
+                    "\u0414\u042E\u0421\u0428"
+                )
+            ) : _react2.default.createElement(
+                "div",
+                null,
+                item.name
+            ),
             typeName: item.typeName,
             location: item.location,
             startDate: (0, _moment2.default)(item.startDate).format("DD-MM-YYYY"),
@@ -50212,6 +50226,7 @@ var CompForm = function CompForm(props) {
     var word = props.competition.id ? "Редагувати" : "Створити";
     var startDate = props.competition.startDate ? new Date(props.competition.startDate) : null;
     var endDate = props.competition.endDate ? new Date(props.competition.endDate) : null;
+    var isJun = props.competition.isJun ? JSON.parse(props.competition.isJun) : false;
     return _react2.default.createElement(
         "div",
         null,
@@ -50303,6 +50318,18 @@ var CompForm = function CompForm(props) {
                 _react2.default.createElement(_reactDatetime2.default, { value: endDate, dateFormat: "DD-MM-YYYY", timeFormat: false, onChange: function onChange(v) {
                         return props.onChange("endDate", v.format("YYYY-MM-DD"));
                     }, closeOnSelect: true })
+            ),
+            _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement(
+                    "label",
+                    null,
+                    "\u0404 \u0437\u043C\u0430\u0433\u0430\u043D\u043D\u044F\u043C \u0434\u043B\u044F \u0443\u0447\u043D\u0456\u0432 \u0414\u042E\u0421\u0428"
+                ),
+                _react2.default.createElement("input", { checked: isJun, type: "checkbox", onChange: function onChange(e) {
+                        return props.onChange("isJun", e.target.checked);
+                    } })
             ),
             _react2.default.createElement(
                 "div",

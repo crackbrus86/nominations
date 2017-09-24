@@ -216,7 +216,7 @@ const NomGrid = (props) => {
                 rowItem.school = item.school;
                 rowItem.coaches = item.coaches;
                 rowItem.wClass = item.wClass;
-                if(division.id === "subjuniors" || division.id === "juniors") {
+                if((division.id === "subjuniors" || division.id === "juniors") && JSON.parse(props.game.isJun)) {
                     rowItem.ageCat = getAgeCat(item.born);
                 }
                 if(props.game.typeId === "1"){
@@ -237,7 +237,7 @@ const NomGrid = (props) => {
             items.map(item => {
                 item.number = <div>{item.reserve}{counter++}</div>;
             });
-            if(division.id === "subjuniors" || division.id === "juniors"){
+            if((division.id === "subjuniors" || division.id === "juniors") && JSON.parse(props.game.isJun) && gridColumns[4].field != "ageCat"){
                 gridColumns.splice(4, 0, {
                     title: "Вікова група",
                     field: "ageCat",

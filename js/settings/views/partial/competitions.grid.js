@@ -52,7 +52,7 @@ const CompGrid = (props) => {
     var rows = props.data.map(item => {
         return{
             id: item.id,
-            name: item.name,
+            name: (item.isJun && JSON.parse(item.isJun))? <div>{item.name}<sup>ДЮСШ</sup></div> : <div>{item.name}</div>,
             typeName: item.typeName,
             location: item.location,
             startDate: moment(item.startDate).format("DD-MM-YYYY"),

@@ -108,7 +108,7 @@ class Nominations extends React.Component{
             school: "",
             level: 1,
             division: "open",
-            weightClass: this.state.wc[0].id,
+            weightClass: (!JSON.parse(this.state.compInfo.isJun))? this.state.wc[0].id : this.state.subwc[0].id,
             squat: 0,
             benchpress: 0,
             deadlift: 0,
@@ -224,6 +224,8 @@ class Nominations extends React.Component{
 
     componentWillReceiveProps(props){
         if(props.competition) {
+            this.setState({lNominations: []});
+            this.setState({rNominations: []});
             this.getCompInfo(props.competition);
         }
     }

@@ -4,6 +4,7 @@ import Grid from "../../../components/grid/grid";
 
 const LiftersGrid = (props) => {
     if(!props.game) return null;
+    if(JSON.parse(props.game.isJun)) return null;
     var divisions = [
         {
             id: "open",
@@ -177,10 +178,7 @@ const LiftersGrid = (props) => {
                         rowItem.fst = i.fst;
                         rowItem.club = i.club;
                         rowItem.school = i.school;
-                        rowItem.coaches = i.coaches;  
-                        if(division.id === "subjuniors" || division.id === "juniors") {
-                            rowItem.ageCat = getAgeCat(i.born);
-                        }                                              
+                        rowItem.coaches = i.coaches;                                             
                         if(props.game.typeId === "1"){
                             rowItem.squat = cropZero(i.squat);
                             rowItem.deadlift = cropZero(i.deadlift);
@@ -197,14 +195,7 @@ const LiftersGrid = (props) => {
                     var counter = 1;
                     items.map(item => {
                         item.number = <div>{item.reserve}{counter++}</div>;;
-                    });  
-                    if(division.id === "subjuniors" || division.id === "juniors"){
-                        gridColumns.splice(4, 0, {
-                            title: "Вікова група",
-                            field: "ageCat",
-                            width: "*"
-                        });
-                    }                                         
+                    });                                          
                     return (<div key={w.id}>
                         <div key={w.id} className="w-class-name">{w.name}</div>
                         <Grid data={{columns: gridColumns, rows: items}} />
