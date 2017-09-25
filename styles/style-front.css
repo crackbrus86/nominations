@@ -251,6 +251,12 @@
         background-color: #ad2121; }
         .custom-modal .formFooter .form-footer-tab .footer-button.danger:hover {
           background-color: #e23333; }
+  .custom-modal form .validation {
+    position: absolute;
+    margin-top: -16px;
+    font-size: 0.8em;
+    color: red;
+    margin-left: 10px; }
   .custom-modal form label {
     display: block;
     font-weight: 600;

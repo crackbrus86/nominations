@@ -326,6 +326,13 @@
         }
     }
     form {
+        .validation{
+            position: absolute;
+            margin-top: -16px;
+            font-size: 0.8em;
+            color: red;
+            margin-left: 10px;            
+        }
         label {
             display: block;
             font-weight: 600;
