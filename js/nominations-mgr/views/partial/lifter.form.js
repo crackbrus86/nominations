@@ -8,6 +8,7 @@ const LifterForm = (props) => {
     var info = props.compInfo;
     var date = moment(info.startDate).locale("uk").format("DD MMM") + "-" + moment(info.endDate).locale("uk").format("DD MMM") + ", " + moment(info.endDate).format("YYYY");    
     var nom = props.nomination;
+    var mName = (nom.mName)? nom.mName : "";
     var bDate = (nom.birthDate)? new Date(nom.birthDate) : null;
     var genders = [{type: "male", title: "чоловіки"}, {type: "female", title: "жінки"}];
     var gendersList = genders.map(gender => <option key={gender.type} value={gender.type}>{gender.title}</option>);  
@@ -81,6 +82,10 @@ const LifterForm = (props) => {
                         <td><label>Ім'я</label></td>
                         <td><input value={nom.firstName} type="text" maxLength="50" onChange={e => props.onChange("firstName", e.target.value)} /></td>
                     </tr>
+                    <tr>
+                        <td><label>По-батькові</label></td>
+                        <td><input value={mName} type="text" maxLength="50" onChange={e => props.onChange("mName", e.target.value)} /></td>
+                    </tr>                    
                     <tr>
                         <td><label>Дата народження</label></td>
                         <td><Datetime value={bDate} dateFormat="DD-MM-YYYY" timeFormat={false} onChange={(v) => props.onChange("birthDate", v.format("YYYY-MM-DD"))} closeOnSelect={true} /></td>

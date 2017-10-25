@@ -101,6 +101,7 @@ class Nominations extends React.Component{
             type: type,
             surname: "",
             firstName: "",
+            mName: "",
             birthDate: null,
             gender: this.state.compInfo.gender,
             team: this.state.region,

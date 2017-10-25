@@ -202,6 +202,7 @@ const NomGrid = (props) => {
                 // onChange={e => {props.onChangeStatus(e.target.dataset["rel"], !JSON.parse(item.status))}} />);
                 rowItem.number = "";
                 rowItem.fullName = item.surname + " " + item.name;
+                rowItem.fullName = (item.mName)? rowItem.fullName + " " + item.mName : rowItem.fullName;
                 rowItem.born = new Date(item.born).getFullYear();
                 rowItem.level = item.level;
                 rowItem.city = item.city;

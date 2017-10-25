@@ -49555,6 +49555,7 @@ var LiftersGrid = function LiftersGrid(props) {
                         ) : null;
                         rowItem.number = "";
                         rowItem.fullName = i.surname + " " + i.name;
+                        rowItem.fullName = i.mName ? rowItem.fullName + " " + i.mName : rowItem.fullName;
                         rowItem.born = new Date(i.born).getFullYear();
                         rowItem.team = props.regions.filter(function (reg) {
                             return reg.id === i.team;
@@ -49805,6 +49806,7 @@ var IsJunLiftersGrid = function IsJunLiftersGrid(props) {
                                 ) : null;
                                 rowItem.number = "";
                                 rowItem.fullName = i.surname + " " + i.name;
+                                rowItem.fullName = i.mName ? rowItem.fullName + " " + i.mName : rowItem.fullName;
                                 rowItem.born = new Date(i.born).getFullYear();
                                 rowItem.team = props.regions.filter(function (reg) {
                                     return reg.id === i.team;

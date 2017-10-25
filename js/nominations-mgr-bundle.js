@@ -50153,6 +50153,7 @@ var Nominations = function (_React$Component) {
                 type: type,
                 surname: "",
                 firstName: "",
+                mName: "",
                 birthDate: null,
                 gender: this.state.compInfo.gender,
                 team: this.state.region,
@@ -50723,6 +50724,7 @@ var LifterForm = function LifterForm(props) {
     var info = props.compInfo;
     var date = (0, _moment2.default)(info.startDate).locale("uk").format("DD MMM") + "-" + (0, _moment2.default)(info.endDate).locale("uk").format("DD MMM") + ", " + (0, _moment2.default)(info.endDate).format("YYYY");
     var nom = props.nomination;
+    var mName = nom.mName ? nom.mName : "";
     var bDate = nom.birthDate ? new Date(nom.birthDate) : null;
     var genders = [{ type: "male", title: "чоловіки" }, { type: "female", title: "жінки" }];
     var gendersList = genders.map(function (gender) {
@@ -50911,6 +50913,26 @@ var LifterForm = function LifterForm(props) {
                                 null,
                                 _react2.default.createElement("input", { value: nom.firstName, type: "text", maxLength: "50", onChange: function onChange(e) {
                                         return props.onChange("firstName", e.target.value);
+                                    } })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "tr",
+                            null,
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement(
+                                    "label",
+                                    null,
+                                    "\u041F\u043E-\u0431\u0430\u0442\u044C\u043A\u043E\u0432\u0456"
+                                )
+                            ),
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                _react2.default.createElement("input", { value: mName, type: "text", maxLength: "50", onChange: function onChange(e) {
+                                        return props.onChange("mName", e.target.value);
                                     } })
                             )
                         ),
@@ -53154,6 +53176,7 @@ var NomGrid = function NomGrid(props) {
                 // onChange={e => {props.onChangeStatus(e.target.dataset["rel"], !JSON.parse(item.status))}} />);
                 rowItem.number = "";
                 rowItem.fullName = item.surname + " " + item.name;
+                rowItem.fullName = item.mName ? rowItem.fullName + " " + item.mName : rowItem.fullName;
                 rowItem.born = new Date(item.born).getFullYear();
                 rowItem.level = item.level;
                 rowItem.city = item.city;
