@@ -22,7 +22,9 @@ class Nominations extends React.Component{
     getCompInfo(compId){
         this.setState({isLoading: true});
         services.getCompetitionById({id: compId}).then(data => {
-            this.setState({compInfo: JSON.parse(data)[0]});
+            var tmpComp = JSON.parse(data)[0];
+            if(tmpComp.isJun === "") tmpComp.isJun = "false";
+            this.setState({compInfo: tmpComp});
             this.setState({isLoading: false});
             this.getWeightCategories(this.state.compInfo.gender);
             this.getAllLifters();
