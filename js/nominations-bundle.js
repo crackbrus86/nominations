@@ -49396,13 +49396,6 @@ var LiftersGrid = function LiftersGrid(props) {
     if (!props.game) return null;
     if (JSON.parse(props.game.isJun)) return null;
     var divisions = [{
-        id: "open",
-        titleM: "Відкритий",
-        titleF: "Відкритий",
-        items: props.nominations.filter(function (nom) {
-            return nom.division === "open";
-        })
-    }, {
         id: "subjuniors",
         titleM: "Юнаки",
         titleF: "Дівчата",

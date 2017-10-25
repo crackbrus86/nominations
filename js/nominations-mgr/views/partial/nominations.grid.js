@@ -6,12 +6,6 @@ const NomGrid = (props) => {
     if(!props.game) return null;
     var divisions = [
         {
-            id: "open",
-            titleM: "Відкритий",
-            titleF: "Відкритий",
-            items: props.nominations.filter(nom => nom.division === "open")
-        },
-        {
             id: "subjuniors",
             titleM: "Юнаки",
             titleF: "Дівчата",

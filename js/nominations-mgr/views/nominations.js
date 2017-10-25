@@ -42,7 +42,9 @@ class Nominations extends React.Component{
     getCompInfo(id){
         this.setState({isLoading: true});
         services.getCompetitionById({id: id}).then(data => {
-            this.setState({compInfo: JSON.parse(data)[0]});
+            var tmpComp = JSON.parse(data)[0];
+            if(tmpComp.isJun === "") tmpComp.isJun = "false";
+            this.setState({compInfo: tmpComp});
             this.setState({isLoading: false});
             this.getWeightCategories(this.state.compInfo.gender);
             this.evalCompStatus();
@@ -107,7 +109,7 @@ class Nominations extends React.Component{
             club: "",
             school: "",
             level: 1,
-            division: "open",
+            division: "seniors",
             weightClass: (!JSON.parse(this.state.compInfo.isJun))? this.state.wc[0].id : this.state.subwc[0].id,
             squat: 0,
             benchpress: 0,

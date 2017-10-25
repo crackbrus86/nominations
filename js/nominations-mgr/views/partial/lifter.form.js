@@ -12,8 +12,8 @@ const LifterForm = (props) => {
     var genders = [{type: "male", title: "чоловіки"}, {type: "female", title: "жінки"}];
     var gendersList = genders.map(gender => <option key={gender.type} value={gender.type}>{gender.title}</option>);  
     var regionsList = props.regions.map(region => <option key={region.id} value={region.id}>{region.name}</option>);
-    var divisions = (nom.gender === "male")? [{value: "open", name: "Відкритий"},{value: "subjuniors", name: "Юнаки"},{value: "juniors", name: "Юніори"},{value: "seniors", name: "Чоловіки"},{value: "masters1", name: "Ветерани 1"},{value: "masters2", name: "Ветерани 2"},{value: "masters3", name: "Ветерани 3"},{value: "masters4", name: "Ветерани 4"}] : 
-    [{value: "open", name: "Відкритий"},{value: "subjuniors", name: "Дівчата"},{value: "juniors", name: "Юніорки"},{value: "seniors", name: "Жінки"},{value: "masters1", name: "Ветерани 1"},{value: "masters2", name: "Ветерани 2"},{value: "masters3", name: "Ветерани 3"},{value: "masters4", name: "Ветерани 4"}];
+    var divisions = (nom.gender === "male")? [{value: "seniors", name: "Чоловіки"},{value: "subjuniors", name: "Юнаки"},{value: "juniors", name: "Юніори"},{value: "masters1", name: "Ветерани 1"},{value: "masters2", name: "Ветерани 2"},{value: "masters3", name: "Ветерани 3"},{value: "masters4", name: "Ветерани 4"}] : 
+    [{value: "seniors", name: "Жінки"},{value: "subjuniors", name: "Дівчата"},{value: "juniors", name: "Юніорки"},{value: "masters1", name: "Ветерани 1"},{value: "masters2", name: "Ветерани 2"},{value: "masters3", name: "Ветерани 3"},{value: "masters4", name: "Ветерани 4"}];
     var evalAge = (bdate) => {
         var year = parseInt(new Date().getFullYear());
         var born = new Date(bdate).getFullYear();

@@ -7,12 +7,6 @@ const LiftersGrid = (props) => {
     if(JSON.parse(props.game.isJun)) return null;
     var divisions = [
         {
-            id: "open",
-            titleM: "Відкритий",
-            titleF: "Відкритий",
-            items: props.nominations.filter(nom => nom.division === "open")
-        },
-        {
             id: "subjuniors",
             titleM: "Юнаки",
             titleF: "Дівчата",
