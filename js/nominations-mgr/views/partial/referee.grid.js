@@ -14,7 +14,7 @@ const RefGrid = (props) => {
         {
             title: "Ім'я",
             field: "fullName",
-            width: "*"
+            width: "150px"
         },
         {
             title: "Категорія",
@@ -31,7 +31,7 @@ const RefGrid = (props) => {
         title: "",
         field: "id",
         button: "edit",
-        width: "*",
+        width: "30px",
         action: (e) => {
             props.onOfficialEdit(e.target.dataset["rel"]);
         }
@@ -40,7 +40,7 @@ const RefGrid = (props) => {
         title: "",
         field: "id",
         button: "delete",
-        width: "*",
+        width: "30px",
         action: (e) => {
             props.onDelete(e.target.dataset["rel"]);
         }

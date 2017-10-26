@@ -14,7 +14,7 @@ const RefGrid = (props) => {
         {
             title: "Ім'я",
             field: "fullName",
-            width: "*"
+            width: "150px"
         },
         {
             title: "Область",

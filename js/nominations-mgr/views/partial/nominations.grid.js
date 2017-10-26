@@ -63,7 +63,7 @@ const NomGrid = (props) => {
         {
             title: "Ім'я",
             field: "fullName",
-            width: "220px"
+            width: "150px"
         },
         {
             title: "Рік народження",

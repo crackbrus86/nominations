@@ -42,7 +42,11 @@ function nomMngButton(){
 add_shortcode('NomMngBtn', 'nomMngButton');
 
 function nominationsMgm(){
-    if(isset($_SESSION["regionObj"])){        
+    if(isset($_SESSION["regionObj"])){ 
+        wp_register_script( 'jq', plugins_url( '/js/scripts/jquery-3.2.1.min.js', __FILE__ ) );
+        wp_enqueue_script(  'jq');      
+        wp_register_script( 'resize', plugins_url( '/js/scripts/colResizable-1.6.js', __FILE__ ) );
+        wp_enqueue_script(  'resize');                 
         wp_register_script( 'nominations-mgr-bundle', plugins_url( './js/nominations-mgr-bundle.js', __FILE__ ) );
         wp_enqueue_script(  'nominations-mgr-bundle');          
     ?>
@@ -55,6 +59,10 @@ function nominationsMgm(){
 add_shortcode('NomMgm', 'nominationsMgm');
 
 function nomGrid(){
+    wp_register_script( 'jq', plugins_url( '/js/scripts/jquery-3.2.1.min.js', __FILE__ ) );
+    wp_enqueue_script(  'jq');      
+    wp_register_script( 'resize', plugins_url( '/js/scripts/colResizable-1.6.js', __FILE__ ) );
+    wp_enqueue_script(  'resize');     
     wp_register_script( 'nominations-bundle', plugins_url( './js/nominations-bundle.js', __FILE__ ) );
     wp_enqueue_script(  'nominations-bundle');     
     ?>

@@ -9161,6 +9161,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(10);
@@ -9220,9 +9222,10 @@ var Grid = function (_React$Component) {
                             } },
                         row[column.field]
                     ) : row[column.field];
+                    var hint = (typeof content === "undefined" ? "undefined" : _typeof(content)) != "object" ? content : "";
                     cells.push(_react2.default.createElement(
                         "td",
-                        { key: counter, width: column.width, className: column.class },
+                        { key: counter, width: column.width, className: column.class, title: hint },
                         content
                     ));
                 }
@@ -9240,7 +9243,7 @@ var Grid = function (_React$Component) {
                 counter++;
                 return _react2.default.createElement(
                     "th",
-                    { key: counter, width: column.width },
+                    { key: counter, width: column.width, title: column.title },
                     column.title
                 );
             });
@@ -48499,7 +48502,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-__webpack_require__(315);
+__webpack_require__(316);
 
 var NomLayout = function (_React$Component) {
     _inherits(NomLayout, _React$Component);
@@ -49122,6 +49125,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+__webpack_require__(315);
+
 var Nominations = function (_React$Component) {
     _inherits(Nominations, _React$Component);
 
@@ -49219,6 +49224,13 @@ var Nominations = function (_React$Component) {
         key: "componentDidMount",
         value: function componentDidMount() {
             this.getAllRegions();
+        }
+    }, {
+        key: "componentDidUpdate",
+        value: function componentDidUpdate() {
+            jQuery(function () {
+                jQuery(".grid").colResizable();
+            });
         }
     }, {
         key: "render",
@@ -49453,7 +49465,7 @@ var LiftersGrid = function LiftersGrid(props) {
     }, {
         title: "Ім'я",
         field: "fullName",
-        width: "220px"
+        width: "150px"
     }, {
         title: "Рік народження",
         field: "born",
@@ -49517,7 +49529,7 @@ var LiftersGrid = function LiftersGrid(props) {
     var coachesCol = [{
         title: "Тренер(и)",
         field: "coaches",
-        width: "*"
+        width: "150px"
     }];
     var gridColumns = columns.concat(results);
     gridColumns = gridColumns.concat(coachesCol);
@@ -49687,7 +49699,7 @@ var IsJunLiftersGrid = function IsJunLiftersGrid(props) {
     }, {
         title: "Ім'я",
         field: "fullName",
-        width: "220px"
+        width: "150px"
     }, {
         title: "Рік народження",
         field: "born",
@@ -49932,7 +49944,7 @@ var RefGrid = function RefGrid(props) {
     }, {
         title: "Ім'я",
         field: "fullName",
-        width: "*"
+        width: "150px"
     }, {
         title: "Область",
         field: "team",
@@ -49994,10 +50006,455 @@ exports.default = RefGrid;
 /* 315 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+/**
+               _ _____           _          _     _      
+              | |  __ \         (_)        | |   | |     
+      ___ ___ | | |__) |___  ___ _ ______ _| |__ | | ___ 
+     / __/ _ \| |  _  // _ \/ __| |_  / _` | '_ \| |/ _ \
+    | (_| (_) | | | \ \  __/\__ \ |/ / (_| | |_) | |  __/
+     \___\___/|_|_|  \_\___||___/_/___\__,_|_.__/|_|\___|
+	 
+	v1.6 - jQuery plugin created by Alvaro Prieto Lauroba
+	
+	Licences: MIT & GPL
+	Feel free to use or modify this plugin as far as my full name is kept	
+	
+	If you are going to use this plug-in in production environments it is 
+	strongly recommended to use its minified version: colResizable.min.js
+
+*/
+
+(function ($) {
+
+	var d = $(document); //window object
+	var h = $("head"); //head object
+	var drag = null; //reference to the current grip that is being dragged
+	var tables = {}; //object of the already processed tables (table.id as key)
+	var count = 0; //internal count to create unique IDs when needed.	
+
+	//common strings for packing
+	var ID = "id";
+	var PX = "px";
+	var SIGNATURE = "JColResizer";
+	var FLEX = "JCLRFlex";
+
+	//short-cuts
+	var I = parseInt;
+	var M = Math;
+	var ie = navigator.userAgent.indexOf('Trident/4.0') > 0;
+	var S;
+	try {
+		S = sessionStorage;
+	} catch (e) {} //Firefox crashes when executed as local file system
+
+	//append required CSS rules  
+	h.append("<style type='text/css'>  .JColResizer{table-layout:fixed;} .JColResizer > tbody > tr > td, .JColResizer > tbody > tr > th{overflow:hidden;padding-left:0!important; padding-right:0!important;}  .JCLRgrips{ height:0px; position:relative;} .JCLRgrip{margin-left:-5px; position:absolute; z-index:5; } .JCLRgrip .JColResizer{position:absolute;background-color:red;filter:alpha(opacity=1);opacity:0;width:10px;height:100%;cursor: e-resize;top:0px} .JCLRLastGrip{position:absolute; width:1px; } .JCLRgripDrag{ border-left:1px dotted black;	} .JCLRFlex{width:auto!important;} .JCLRgrip.JCLRdisabledGrip .JColResizer{cursor:default; display:none;}</style>");
+
+	/**
+  * Function to allow column resizing for table objects. It is the starting point to apply the plugin.
+  * @param {DOM node} tb - reference to the DOM table object to be enhanced
+  * @param {Object} options	- some customization values
+  */
+	var init = function init(tb, options) {
+		var t = $(tb); //the table object is wrapped
+		t.opt = options; //each table has its own options available at anytime
+		t.mode = options.resizeMode; //shortcuts
+		t.dc = t.opt.disabledColumns;
+		if (t.opt.disable) return destroy(t); //the user is asking to destroy a previously colResized table
+		var id = t.id = t.attr(ID) || SIGNATURE + count++; //its id is obtained, if null new one is generated		
+		t.p = t.opt.postbackSafe; //short-cut to detect postback safe 		
+		if (!t.is("table") || tables[id] && !t.opt.partialRefresh) return; //if the object is not a table or if it was already processed then it is ignored.
+		if (t.opt.hoverCursor !== 'e-resize') h.append("<style type='text/css'>.JCLRgrip .JColResizer:hover{cursor:" + t.opt.hoverCursor + "!important}</style>"); //if hoverCursor has been set, append the style
+		t.addClass(SIGNATURE).attr(ID, id).before('<div class="JCLRgrips"/>'); //the grips container object is added. Signature class forces table rendering in fixed-layout mode to prevent column's min-width
+		t.g = [];t.c = [];t.w = t.width();t.gc = t.prev();t.f = t.opt.fixed; //t.c and t.g are arrays of columns and grips respectively				
+		if (options.marginLeft) t.gc.css("marginLeft", options.marginLeft); //if the table contains margins, it must be specified
+		if (options.marginRight) t.gc.css("marginRight", options.marginRight); //since there is no (direct) way to obtain margin values in its original units (%, em, ...)
+		t.cs = I(ie ? tb.cellSpacing || tb.currentStyle.borderSpacing : t.css('border-spacing')) || 2; //table cellspacing (not even jQuery is fully cross-browser)
+		t.b = I(ie ? tb.border || tb.currentStyle.borderLeftWidth : t.css('border-left-width')) || 1; //outer border width (again cross-browser issues)
+		// if(!(tb.style.width || tb.width)) t.width(t.width()); //I am not an IE fan at all, but it is a pity that only IE has the currentStyle attribute working as expected. For this reason I can not check easily if the table has an explicit width or if it is rendered as "auto"
+		tables[id] = t; //the table object is stored using its id as key	
+		createGrips(t); //grips are created 
+	};
+
+	/**
+  * This function allows to remove any enhancements performed by this plugin on a previously processed table.
+  * @param {jQuery ref} t - table object
+  */
+	var destroy = function destroy(t) {
+		var id = t.attr(ID),
+		    t = tables[id]; //its table object is found
+		if (!t || !t.is("table")) return; //if none, then it wasn't processed	 
+		t.removeClass(SIGNATURE + " " + FLEX).gc.remove(); //class and grips are removed
+		delete tables[id]; //clean up data
+	};
+
+	/**
+  * Function to create all the grips associated with the table given by parameters 
+  * @param {jQuery ref} t - table object
+  */
+	var createGrips = function createGrips(t) {
+
+		var th = t.find(">thead>tr:first>th,>thead>tr:first>td"); //table headers are obtained
+		if (!th.length) th = t.find(">tbody>tr:first>th,>tr:first>th,>tbody>tr:first>td, >tr:first>td"); //but headers can also be included in different ways
+		th = th.filter(":visible"); //filter invisible columns
+		t.cg = t.find("col"); //a table can also contain a colgroup with col elements		
+		t.ln = th.length; //table length is stored	
+		if (t.p && S && S[t.id]) memento(t, th); //if 'postbackSafe' is enabled and there is data for the current table, its coloumn layout is restored
+		th.each(function (i) {
+			//iterate through the table column headers			
+			var c = $(this); //jquery wrap for the current column		
+			var dc = t.dc.indexOf(i) != -1; //is this a disabled column?
+			var g = $(t.gc.append('<div class="JCLRgrip"></div>')[0].lastChild); //add the visual node to be used as grip
+			g.append(dc ? "" : t.opt.gripInnerHtml).append('<div class="' + SIGNATURE + '"></div>');
+			if (i == t.ln - 1) {
+				//if the current grip is the las one 
+				g.addClass("JCLRLastGrip"); //add a different css class to stlye it in a different way if needed
+				if (t.f) g.html(""); //if the table resizing mode is set to fixed, the last grip is removed since table with can not change
+			}
+			g.bind('touchstart mousedown', onGripMouseDown); //bind the mousedown event to start dragging 
+
+			if (!dc) {
+				//if normal column bind the mousedown event to start dragging, if disabled then apply its css class
+				g.removeClass('JCLRdisabledGrip').bind('touchstart mousedown', onGripMouseDown);
+			} else {
+				g.addClass('JCLRdisabledGrip');
+			}
+
+			g.t = t;g.i = i;g.c = c;c.w = c.width(); //some values are stored in the grip's node data as shortcut
+			t.g.push(g);t.c.push(c); //the current grip and column are added to its table object
+			c.width(c.w).removeAttr("width"); //the width of the column is converted into pixel-based measurements
+			g.data(SIGNATURE, { i: i, t: t.attr(ID), last: i == t.ln - 1 }); //grip index and its table name are stored in the HTML 												
+		});
+		t.cg.removeAttr("width"); //remove the width attribute from elements in the colgroup 
+
+		t.find('td, th').not(th).not('table th, table td').each(function () {
+			$(this).removeAttr('width'); //the width attribute is removed from all table cells which are not nested in other tables and dont belong to the header
+		});
+		if (!t.f) {
+			t.removeAttr('width').addClass(FLEX); //if not fixed, let the table grow as needed
+		}
+		syncGrips(t); //the grips are positioned according to the current table layout			
+		//there is a small problem, some cells in the table could contain dimension values interfering with the 
+		//width value set by this plugin. Those values are removed
+	};
+
+	/**
+  * Function to allow the persistence of columns dimensions after a browser postback. It is based in
+  * the HTML5 sessionStorage object, which can be emulated for older browsers using sessionstorage.js
+  * @param {jQuery ref} t - table object
+  * @param {jQuery ref} th - reference to the first row elements (only set in deserialization)
+  */
+	var memento = function memento(t, th) {
+		var w,
+		    m = 0,
+		    i = 0,
+		    aux = [],
+		    tw;
+		if (th) {
+			//in deserialization mode (after a postback)
+			t.cg.removeAttr("width");
+			if (t.opt.flush) {
+				S[t.id] = "";return;
+			} //if flush is activated, stored data is removed
+			w = S[t.id].split(";"); //column widths is obtained
+			tw = w[t.ln + 1];
+			if (!t.f && tw) {
+				//if not fixed and table width data available its size is restored
+				t.width(tw *= 1);
+				if (t.opt.overflow) {
+					//if overfolw flag is set, restore table width also as table min-width
+					t.css('min-width', tw + PX);
+					t.w = tw;
+				}
+			}
+			for (; i < t.ln; i++) {
+				//for each column
+				aux.push(100 * w[i] / w[t.ln] + "%"); //width is stored in an array since it will be required again a couple of lines ahead
+				th.eq(i).css("width", aux[i]); //each column width in % is restored
+			}
+			for (i = 0; i < t.ln; i++) {
+				t.cg.eq(i).css("width", aux[i]);
+			} //this code is required in order to create an inline CSS rule with higher precedence than an existing CSS class in the "col" elements
+		} else {
+			//in serialization mode (after resizing a column)
+			S[t.id] = ""; //clean up previous data
+			for (; i < t.c.length; i++) {
+				//iterate through columns
+				w = t.c[i].width(); //width is obtained
+				S[t.id] += w + ";"; //width is appended to the sessionStorage object using ID as key
+				m += w; //carriage is updated to obtain the full size used by columns
+			}
+			S[t.id] += m; //the last item of the serialized string is the table's active area (width), 
+			//to be able to obtain % width value of each columns while deserializing
+			if (!t.f) S[t.id] += ";" + t.width(); //if not fixed, table width is stored
+		}
+	};
+
+	/**
+  * Function that places each grip in the correct position according to the current table layout	 
+  * @param {jQuery ref} t - table object
+  */
+	var syncGrips = function syncGrips(t) {
+		t.gc.width(t.w); //the grip's container width is updated				
+		for (var i = 0; i < t.ln; i++) {
+			//for each column
+			var c = t.c[i];
+			t.g[i].css({ //height and position of the grip is updated according to the table layout
+				left: c.offset().left - t.offset().left + c.outerWidth(false) + t.cs / 2 + PX,
+				height: t.opt.headerOnly ? t.c[0].outerHeight(false) : t.outerHeight(false)
+			});
+		}
+	};
+
+	/**
+ * This function updates column's width according to the horizontal position increment of the grip being
+ * dragged. The function can be called while dragging if liveDragging is enabled and also from the onGripDragOver
+ * event handler to synchronize grip's position with their related columns.
+ * @param {jQuery ref} t - table object
+ * @param {number} i - index of the grip being dragged
+ * @param {bool} isOver - to identify when the function is being called from the onGripDragOver event	
+ */
+	var syncCols = function syncCols(t, i, isOver) {
+		var inc = drag.x - drag.l,
+		    c = t.c[i],
+		    c2 = t.c[i + 1];
+		var w = c.w + inc;var w2 = c2.w - inc; //their new width is obtained					
+		c.width(w + PX);
+		t.cg.eq(i).width(w + PX);
+		if (t.f) {
+			//if fixed mode
+			c2.width(w2 + PX);
+			t.cg.eq(i + 1).width(w2 + PX);
+		} else if (t.opt.overflow) {
+			//if overflow is set, incriment min-width to force overflow
+			t.css('min-width', t.w + inc);
+		}
+		if (isOver) {
+			c.w = w;
+			c2.w = t.f ? w2 : c2.w;
+		}
+	};
+
+	/**
+ * This function updates all columns width according to its real width. It must be taken into account that the 
+ * sum of all columns can exceed the table width in some cases (if fixed is set to false and table has some kind 
+ * of max-width).
+ * @param {jQuery ref} t - table object	
+ */
+	var applyBounds = function applyBounds(t) {
+		var w = $.map(t.c, function (c) {
+			//obtain real widths
+			return c.width();
+		});
+		t.width(t.w = t.width()).removeClass(FLEX); //prevent table width changes
+		$.each(t.c, function (i, c) {
+			c.width(w[i]).w = w[i]; //set column widths applying bounds (table's max-width)
+		});
+		t.addClass(FLEX); //allow table width changes
+	};
+
+	/**
+  * Event handler used while dragging a grip. It checks if the next grip's position is valid and updates it. 
+  * @param {event} e - mousemove event binded to the window object
+  */
+	var onGripDrag = function onGripDrag(e) {
+		if (!drag) return;
+		var t = drag.t; //table object reference 
+		var oe = e.originalEvent.touches;
+		var ox = oe ? oe[0].pageX : e.pageX; //original position (touch or mouse)
+		var x = ox - drag.ox + drag.l; //next position according to horizontal mouse position increment
+		var mw = t.opt.minWidth,
+		    i = drag.i; //cell's min width
+		var l = t.cs * 1.5 + mw + t.b;
+		var last = i == t.ln - 1; //check if it is the last column's grip (usually hidden)
+		var min = i ? t.g[i - 1].position().left + t.cs + mw : l; //min position according to the contiguous cells
+		var max = t.f ? //fixed mode?
+		i == t.ln - 1 ? t.w - l : t.g[i + 1].position().left - t.cs - mw : Infinity; //max position according to the contiguous cells 
+		x = M.max(min, M.min(max, x)); //apply bounding		
+		drag.x = x;drag.css("left", x + PX); //apply position increment	
+		if (last) {
+			//if it is the last grip
+			var c = t.c[drag.i]; //width of the last column is obtained
+			drag.w = c.w + x - drag.l;
+		}
+		if (t.opt.liveDrag) {
+			//if liveDrag is enabled
+			if (last) {
+				c.width(drag.w);
+				if (!t.f && t.opt.overflow) {
+					//if overflow is set, incriment min-width to force overflow
+					t.css('min-width', t.w + x - drag.l);
+				} else {
+					t.w = t.width();
+				}
+			} else {
+				syncCols(t, i); //columns are synchronized
+			}
+			syncGrips(t);
+			var cb = t.opt.onDrag; //check if there is an onDrag callback
+			if (cb) {
+				e.currentTarget = t[0];cb(e);
+			} //if any, it is fired			
+		}
+		return false; //prevent text selection while dragging				
+	};
+
+	/**
+  * Event handler fired when the dragging is over, updating table layout
+     * @param {event} e - grip's drag over event
+  */
+	var onGripDragOver = function onGripDragOver(e) {
+
+		d.unbind('touchend.' + SIGNATURE + ' mouseup.' + SIGNATURE).unbind('touchmove.' + SIGNATURE + ' mousemove.' + SIGNATURE);
+		$("head :last-child").remove(); //remove the dragging cursor style	
+		if (!drag) return;
+		drag.removeClass(drag.t.opt.draggingClass); //remove the grip's dragging css-class
+		if (!(drag.x - drag.l == 0)) {
+			var t = drag.t;
+			var cb = t.opt.onResize; //get some values	
+			var i = drag.i; //column index
+			var last = i == t.ln - 1; //check if it is the last column's grip (usually hidden)
+			var c = t.g[i].c; //the column being dragged
+			if (last) {
+				c.width(drag.w);
+				c.w = drag.w;
+			} else {
+				syncCols(t, i, true); //the columns are updated
+			}
+			if (!t.f) applyBounds(t); //if not fixed mode, then apply bounds to obtain real width values
+			syncGrips(t); //the grips are updated
+			if (cb) {
+				e.currentTarget = t[0];cb(e);
+			} //if there is a callback function, it is fired
+			if (t.p && S) memento(t); //if postbackSafe is enabled and there is sessionStorage support, the new layout is serialized and stored
+		}
+		drag = null; //since the grip's dragging is over									
+	};
+
+	/**
+  * Event handler fired when the grip's dragging is about to start. Its main goal is to set up events 
+  * and store some values used while dragging.
+     * @param {event} e - grip's mousedown event
+  */
+	var onGripMouseDown = function onGripMouseDown(e) {
+		var o = $(this).data(SIGNATURE); //retrieve grip's data
+		var t = tables[o.t],
+		    g = t.g[o.i]; //shortcuts for the table and grip objects
+		var oe = e.originalEvent.touches; //touch or mouse event?
+		g.ox = oe ? oe[0].pageX : e.pageX; //the initial position is kept
+		g.l = g.position().left;
+		g.x = g.l;
+
+		d.bind('touchmove.' + SIGNATURE + ' mousemove.' + SIGNATURE, onGripDrag).bind('touchend.' + SIGNATURE + ' mouseup.' + SIGNATURE, onGripDragOver); //mousemove and mouseup events are bound
+		h.append("<style type='text/css'>*{cursor:" + t.opt.dragCursor + "!important}</style>"); //change the mouse cursor
+		g.addClass(t.opt.draggingClass); //add the dragging class (to allow some visual feedback)				
+		drag = g; //the current grip is stored as the current dragging object
+		if (t.c[o.i].l) for (var i = 0, c; i < t.ln; i++) {
+			c = t.c[i];c.l = false;c.w = c.width();
+		} //if the colum is locked (after browser resize), then c.w must be updated		
+		return false; //prevent text selection
+	};
+
+	/**
+  * Event handler fired when the browser is resized. The main purpose of this function is to update
+  * table layout according to the browser's size synchronizing related grips 
+  */
+	var onResize = function onResize() {
+		for (var t in tables) {
+			if (tables.hasOwnProperty(t)) {
+				t = tables[t];
+				var i,
+				    mw = 0;
+				t.removeClass(SIGNATURE); //firefox doesn't like layout-fixed in some cases
+				if (t.f) {
+					//in fixed mode
+					t.w = t.width(); //its new width is kept
+					for (i = 0; i < t.ln; i++) {
+						mw += t.c[i].w;
+					} //cell rendering is not as trivial as it might seem, and it is slightly different for
+					//each browser. In the beginning i had a big switch for each browser, but since the code
+					//was extremely ugly now I use a different approach with several re-flows. This works 
+					//pretty well but it's a bit slower. For now, lets keep things simple...   
+					for (i = 0; i < t.ln; i++) {
+						t.c[i].css("width", M.round(1000 * t.c[i].w / mw) / 10 + "%").l = true;
+					} //c.l locks the column, telling us that its c.w is outdated									
+				} else {
+					//in non fixed-sized tables
+					applyBounds(t); //apply the new bounds 
+					if (t.mode == 'flex' && t.p && S) {
+						//if postbackSafe is enabled and there is sessionStorage support,
+						memento(t); //the new layout is serialized and stored for 'flex' tables
+					}
+				}
+				syncGrips(t.addClass(SIGNATURE));
+			}
+		}
+	};
+
+	//bind resize event, to update grips position 
+	$(window).bind('resize.' + SIGNATURE, onResize);
+
+	/**
+  * The plugin is added to the jQuery library
+  * @param {Object} options -  an object that holds some basic customization values 
+  */
+	$.fn.extend({
+		colResizable: function colResizable(options) {
+			var defaults = {
+
+				//attributes:
+
+				resizeMode: 'fit', //mode can be 'fit', 'flex' or 'overflow'
+				draggingClass: 'JCLRgripDrag', //css-class used when a grip is being dragged (for visual feedback purposes)
+				gripInnerHtml: '', //if it is required to use a custom grip it can be done using some custom HTML				
+				liveDrag: false, //enables table-layout updating while dragging	
+				minWidth: 15, //minimum width value in pixels allowed for a column 
+				headerOnly: false, //specifies that the size of the the column resizing anchors will be bounded to the size of the first row 
+				hoverCursor: "e-resize", //cursor to be used on grip hover
+				dragCursor: "e-resize", //cursor to be used while dragging
+				postbackSafe: false, //when it is enabled, table layout can persist after postback or page refresh. It requires browsers with sessionStorage support (it can be emulated with sessionStorage.js). 
+				flush: false, //when postbakSafe is enabled, and it is required to prevent layout restoration after postback, 'flush' will remove its associated layout data 
+				marginLeft: null, //in case the table contains any margins, colResizable needs to know the values used, e.g. "10%", "15em", "5px" ...
+				marginRight: null, //in case the table contains any margins, colResizable needs to know the values used, e.g. "10%", "15em", "5px" ...
+				disable: false, //disables all the enhancements performed in a previously colResized table	
+				partialRefresh: false, //can be used in combination with postbackSafe when the table is inside of an updatePanel,
+				disabledColumns: [], //column indexes to be excluded
+
+				//events:
+				onDrag: null, //callback function to be fired during the column resizing process if liveDrag is enabled
+				onResize: null //callback function fired when the dragging process is over
+			};
+			var options = $.extend(defaults, options);
+
+			//since now there are 3 different ways of resizing columns, I changed the external interface to make it clear
+			//calling it 'resizeMode' but also to remove the "fixed" attribute which was confusing for many people
+			options.fixed = true;
+			options.overflow = false;
+			switch (options.resizeMode) {
+				case 'flex':
+					options.fixed = false;break;
+				case 'overflow':
+					options.fixed = false;options.overflow = true;break;
+			}
+
+			return this.each(function () {
+				init(this, options);
+			});
+		}
+	});
+})(jQuery);
+
+/***/ }),
+/* 316 */
+/***/ (function(module, exports, __webpack_require__) {
+
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(316);
+var content = __webpack_require__(317);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -50005,7 +50462,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(318)(content, options);
+var update = __webpack_require__(319)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -50022,21 +50479,21 @@ if(false) {
 }
 
 /***/ }),
-/* 316 */
+/* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(317)(undefined);
+exports = module.exports = __webpack_require__(318)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, "#content {\r\n  width: 100% !important; }\r\n\r\n#nm-front .grid {\r\n  border-spacing: 0px;\r\n  border-collapse: collapse;\r\n  margin-bottom: 0; }\r\n  #nm-front .grid thead tr {\r\n    background-color: #ECE9DF; }\r\n    #nm-front .grid thead tr th {\r\n      font-family: Verdana, Geneva;\r\n      font-weight: normal;\r\n      font-size: 0.6em;\r\n      text-align: center;\r\n      padding: 2pt;\r\n      letter-spacing: 1pt;\r\n      background-color: #ECE9DF;\r\n      color: #000;\r\n      border: 1px solid #ccc;\r\n      text-shadow: 0 1px 2px #999; }\r\n  #nm-front .grid tbody tr td {\r\n    font-family: Verdana, Geneva;\r\n    font-weight: normal;\r\n    font-size: 0.7em;\r\n    padding: 3px;\r\n    border: 1px solid #ccc;\r\n    line-height: 15px; }\r\n    #nm-front .grid tbody tr td.al-right {\r\n      text-align: right; }\r\n    #nm-front .grid tbody tr td.exercise-total {\r\n      font-weight: 600; }\r\n    #nm-front .grid tbody tr td span.grid-rel {\r\n      color: #0062A4;\r\n      cursor: pointer; }\r\n      #nm-front .grid tbody tr td span.grid-rel:hover {\r\n        color: #f50000;\r\n        background-color: #ffffc5;\r\n        border-bottom: 1px dotted #f50000 !important; }\r\n    #nm-front .grid tbody tr td div.status-code {\r\n      font-weight: 600;\r\n      padding: 3px 0;\r\n      text-align: center; }\r\n    #nm-front .grid tbody tr td input[type=checkbox] {\r\n      display: block;\r\n      margin: 0 auto; }\r\n    #nm-front .grid tbody tr td i.fa {\r\n      display: block;\r\n      text-align: center;\r\n      font-size: 1.2em;\r\n      cursor: pointer; }\r\n      #nm-front .grid tbody tr td i.fa.edit {\r\n        color: #520600; }\r\n      #nm-front .grid tbody tr td i.fa.delete {\r\n        color: #E11404; }\r\n    #nm-front .grid tbody tr td sup {\r\n      color: #8d0200;\r\n      font-weight: 600; }\r\n\r\n.blackout {\r\n  overflow: auto;\r\n  position: fixed;\r\n  top: 0;\r\n  bottom: 0;\r\n  left: 0;\r\n  right: 0;\r\n  background-color: rgba(0, 0, 0, 0.8);\r\n  z-index: 10000; }\r\n  .blackout .spinner-wrap {\r\n    position: absolute;\r\n    top: 50%;\r\n    left: 50%; }\r\n    .blackout .spinner-wrap .fa-spin {\r\n      color: #6c6fff; }\r\n\r\n.nom-header {\r\n  display: flex;\r\n  flex-direction: row; }\r\n  .nom-header .nom-header-cell {\r\n    flex-grow: 1; }\r\n    .nom-header .nom-header-cell .back-to-nom-list {\r\n      color: white;\r\n      background-color: #4d90fe;\r\n      border: none;\r\n      padding: 5px 6px;\r\n      border-radius: 4px;\r\n      text-shadow: 0 0 1px #000;\r\n      cursor: pointer; }\r\n      .nom-header .nom-header-cell .back-to-nom-list:hover {\r\n        background-color: #6FA5FC; }\r\n      .nom-header .nom-header-cell .back-to-nom-list i.fa-chevron-left {\r\n        color: #290B0B;\r\n        margin-right: 5px; }\r\n    .nom-header .nom-header-cell .add-panel {\r\n      width: auto;\r\n      float: right;\r\n      margin: 10px 25px 10px 0;\r\n      z-index: 100;\r\n      vertical-align: middle;\r\n      text-align: right;\r\n      background-color: #f1efe3;\r\n      border: solid 1px #E8E4D9;\r\n      padding: 0.8em 1em 0.5em 1em; }\r\n      .nom-header .nom-header-cell .add-panel span {\r\n        width: 38px;\r\n        height: 36px;\r\n        float: left;\r\n        text-align: center;\r\n        padding: 3px 0 3px 0;\r\n        margin: 0;\r\n        display: block;\r\n        border: 1px solid #E0DED7;\r\n        background-color: #EAE6DC;\r\n        border-radius: 3px; }\r\n        .nom-header .nom-header-cell .add-panel span:nth-child(2) {\r\n          margin: 0 0 0 1em; }\r\n        .nom-header .nom-header-cell .add-panel span:hover {\r\n          background-color: #e2ddcf;\r\n          border: solid 1px #D1C9B2;\r\n          cursor: pointer; }\r\n\r\n.comp-info-header p {\r\n  font-family: Verdana, Geneva;\r\n  font-weight: 600;\r\n  text-align: center;\r\n  margin-top: 0px;\r\n  margin-bottom: 0px !important; }\r\n  .comp-info-header p.info-title {\r\n    font-size: 0.8em;\r\n    margin-top: 10px; }\r\n  .comp-info-header p.info-location {\r\n    font-size: 0.8em;\r\n    color: #676767; }\r\n  .comp-info-header p.info-date {\r\n    font-size: 0.7em;\r\n    color: #676767; }\r\n\r\n.comp-info-status {\r\n  display: block;\r\n  float: right;\r\n  width: auto;\r\n  margin: 0 1.5em 1em 1em;\r\n  padding: 0.3em 1em 0.3em 1em;\r\n  border: 1px solid #ECD5A2;\r\n  background-color: #FFFFC6;\r\n  text-align: left;\r\n  font-weight: normal;\r\n  font-family: Tahoma, Geneva;\r\n  font-size: 13px;\r\n  border-radius: 8px; }\r\n  .comp-info-status p {\r\n    margin-bottom: 5px !important;\r\n    line-height: 18px; }\r\n    .comp-info-status p.status {\r\n      border-bottom: 1px dotted #777;\r\n      margin-bottom: 15px !important; }\r\n      .comp-info-status p.status span {\r\n        font-weight: bold; }\r\n\r\n.custom-modal {\r\n  background-color: #ffffff;\r\n  position: absolute;\r\n  top: 10%;\r\n  left: 50%;\r\n  min-width: 500px;\r\n  min-height: 200px;\r\n  border-radius: 5px;\r\n  padding: 4px 10px;\r\n  margin-left: -250px; }\r\n  .custom-modal .custom-modal-header {\r\n    text-align: right;\r\n    padding-right: 5px; }\r\n    .custom-modal .custom-modal-header .fa-times {\r\n      color: #9a9aaf;\r\n      cursor: pointer; }\r\n      .custom-modal .custom-modal-header .fa-times:hover {\r\n        color: #68686f; }\r\n  .custom-modal h6,\r\n  .custom-modal h4 {\r\n    margin: 5px 0 10px 0px; }\r\n  .custom-modal h4 {\r\n    font-size: 1.2em;\r\n    color: #0849c5;\r\n    margin-top: 0px; }\r\n  .custom-modal .form-header {\r\n    display: block;\r\n    margin: 10px auto;\r\n    border: solid 1px #AACCAA;\r\n    background-color: #D5FCA1;\r\n    text-align: center;\r\n    border-radius: 5px;\r\n    padding: 10px; }\r\n    .custom-modal .form-header h3 {\r\n      font-weight: bold;\r\n      font-family: Tahoma, Verdana;\r\n      font-size: 1.3em;\r\n      margin-bottom: 10px !important; }\r\n    .custom-modal .form-header p {\r\n      font-family: Verdana, Geneva;\r\n      font-weight: 600;\r\n      text-align: center;\r\n      margin-top: 0px;\r\n      margin-bottom: 0px !important; }\r\n      .custom-modal .form-header p.comp-name {\r\n        font-size: 0.8em;\r\n        margin-top: 10px; }\r\n      .custom-modal .form-header p.comp-location {\r\n        font-size: 0.8em;\r\n        color: #676767; }\r\n      .custom-modal .form-header p.comp-date {\r\n        font-size: 0.7em;\r\n        color: #676767; }\r\n  .custom-modal .formBody {\r\n    width: 420px !important;\r\n    margin: 10px auto;\r\n    background-color: #f1efe3;\r\n    border: 1px solid #e0dbcb;\r\n    border-radius: 10px;\r\n    padding: 10px 15px; }\r\n    .custom-modal .formBody tr th,\r\n    .custom-modal .formBody thead th {\r\n      color: #777;\r\n      font-size: 12px;\r\n      font-weight: bold;\r\n      line-height: 18px;\r\n      padding: 0 !important; }\r\n    .custom-modal .formBody table {\r\n      border: none !important;\r\n      margin-bottom: 0px !important; }\r\n      .custom-modal .formBody table tr.another-position {\r\n        background-color: #EAE7D7; }\r\n      .custom-modal .formBody table tr td {\r\n        border: none !important;\r\n        padding: 0 !important;\r\n        vertical-align: top; }\r\n  .custom-modal .formFooter {\r\n    display: flex;\r\n    flex-direction: row; }\r\n    .custom-modal .formFooter .form-footer-tab {\r\n      flex-grow: 1; }\r\n      .custom-modal .formFooter .form-footer-tab.left {\r\n        text-align: right;\r\n        padding-right: 10px; }\r\n      .custom-modal .formFooter .form-footer-tab.right {\r\n        text-align: left;\r\n        padding-left: 10px; }\r\n      .custom-modal .formFooter .form-footer-tab .footer-button.success {\r\n        background-color: #24881e; }\r\n        .custom-modal .formFooter .form-footer-tab .footer-button.success:hover {\r\n          background-color: #2da926; }\r\n      .custom-modal .formFooter .form-footer-tab .footer-button.danger {\r\n        background-color: #ad2121; }\r\n        .custom-modal .formFooter .form-footer-tab .footer-button.danger:hover {\r\n          background-color: #e23333; }\r\n  .custom-modal form .validation {\r\n    position: absolute;\r\n    margin-top: -16px;\r\n    font-size: 0.8em;\r\n    color: red;\r\n    margin-left: 10px; }\r\n  .custom-modal form label {\r\n    display: block;\r\n    font-weight: 600;\r\n    text-align: right;\r\n    margin-right: 10px;\r\n    color: #000; }\r\n  .custom-modal form input,\r\n  .custom-modal form textarea {\r\n    font-family: Verdana, Geneva;\r\n    width: 100%;\r\n    margin-bottom: 10px;\r\n    font-size: 11px !important;\r\n    line-height: 16px !important; }\r\n    .custom-modal form input:read-only, .custom-modal form input:disabled,\r\n    .custom-modal form textarea:read-only,\r\n    .custom-modal form textarea:disabled {\r\n      opacity: 0.6;\r\n      cursor: not-allowed; }\r\n    .custom-modal form input[type=\"checkbox\"],\r\n    .custom-modal form textarea[type=\"checkbox\"] {\r\n      display: block;\r\n      float: left;\r\n      margin: 0;\r\n      width: auto; }\r\n  .custom-modal form select {\r\n    margin-bottom: 10px; }\r\n  .custom-modal form button {\r\n    color: #fff;\r\n    background-color: #038ece;\r\n    font-weight: 600;\r\n    border-radius: 4px;\r\n    border: 0px;\r\n    padding: 5px 5px 7px;\r\n    margin: 5px 0;\r\n    cursor: pointer; }\r\n    .custom-modal form button:hover {\r\n      background-color: #03A9F4; }\r\n    .custom-modal form button:disabled {\r\n      opacity: 0.5;\r\n      cursor: not-allowed; }\r\n      .custom-modal form button:disabled:hover {\r\n        background-color: #038ece; }\r\n\r\n.inform {\r\n  position: absolute;\r\n  top: 30%;\r\n  left: 50%;\r\n  min-width: 400px;\r\n  background-color: #fff;\r\n  margin-left: -200px;\r\n  padding: 5px 10px;\r\n  border-radius: 5px; }\r\n  .inform .inform-header .icons {\r\n    text-align: right; }\r\n    .inform .inform-header .icons .fa-times {\r\n      color: #9a9aaf;\r\n      cursor: pointer; }\r\n      .inform .inform-header .icons .fa-times:hover {\r\n        color: #68686f; }\r\n  .inform .inform-body {\r\n    padding: 10px 0;\r\n    font-family: Tahoma, Verdana;\r\n    font-size: 0.9em;\r\n    text-align: center; }\r\n\r\n.dialog {\r\n  position: absolute;\r\n  font-family: Verdana, Geneva;\r\n  top: 30%;\r\n  left: 50%;\r\n  min-width: 400px;\r\n  background-color: #fff;\r\n  margin-left: -200px;\r\n  padding: 5px 10px;\r\n  border-radius: 5px; }\r\n  .dialog .dialog-body {\r\n    padding: 10px 0;\r\n    font-size: 0.8em; }\r\n  .dialog .dialog-header .icons {\r\n    text-align: right; }\r\n    .dialog .dialog-header .icons .fa-times {\r\n      color: #9a9aaf;\r\n      cursor: pointer; }\r\n      .dialog .dialog-header .icons .fa-times:hover {\r\n        color: #68686f; }\r\n  .dialog .dialog-footer {\r\n    text-align: right;\r\n    padding-bottom: 5px; }\r\n    .dialog .dialog-footer button {\r\n      color: #fff;\r\n      background-color: #038ece;\r\n      border-radius: 4px;\r\n      border: 0px;\r\n      padding: 4px 3px 4px;\r\n      margin: 3px 10px 0 0;\r\n      cursor: pointer;\r\n      min-width: 50px; }\r\n      .dialog .dialog-footer button.btn-danger {\r\n        background-color: #ab3434; }\r\n        .dialog .dialog-footer button.btn-danger:hover {\r\n          background-color: #e25252; }\r\n      .dialog .dialog-footer button.btn-success {\r\n        background-color: #2f693b; }\r\n        .dialog .dialog-footer button.btn-success:hover {\r\n          background-color: #459255; }\r\n  .dialog h4 {\r\n    font-size: 1em !important;\r\n    margin: 0 !important;\r\n    color: #2e3fc5 !important; }\r\n\r\n.nom-grid-wrap {\r\n  margin-bottom: 25px;\r\n  clear: both; }\r\n  .nom-grid-wrap .division-wrap {\r\n    margin-bottom: 20px; }\r\n    .nom-grid-wrap .division-wrap .w-class-name {\r\n      font-family: Verdana, Geneva;\r\n      font-weight: 600;\r\n      font-size: 0.9em;\r\n      background-color: #fdfaf2;\r\n      color: #000;\r\n      border: 1px solid #ccc;\r\n      padding-left: 4px; }\r\n  .nom-grid-wrap h4 {\r\n    font-family: Verdana, Geneva;\r\n    font-weight: 600;\r\n    text-align: center;\r\n    clear: both;\r\n    font-size: 0.9em;\r\n    margin-bottom: 10px !important; }\r\n  .nom-grid-wrap .division-head {\r\n    background-color: #8d0000;\r\n    font-family: Verdana, Geneva;\r\n    color: #fff;\r\n    font-size: 0.8em;\r\n    font-weight: 600;\r\n    text-shadow: 0 0 1px #000;\r\n    padding-left: 5px; }\r\n  .nom-grid-wrap .empty-nomination {\r\n    clear: both;\r\n    background-color: #afd0ea;\r\n    border: 1px solid #ccc;\r\n    border-radius: 4px;\r\n    margin: 0 auto;\r\n    width: 50%;\r\n    padding: 20px 0; }\r\n    .nom-grid-wrap .empty-nomination p {\r\n      font-family: Verdana, Geneva;\r\n      font-size: 12px !important;\r\n      text-align: center;\r\n      margin-bottom: 0 !important; }\r\n  .nom-grid-wrap .division-counters {\r\n    font-family: Verdana, Geneva;\r\n    font-size: 0.8em;\r\n    text-align: right;\r\n    margin-bottom: 20px; }\r\n", ""]);
+exports.push([module.i, "#content {\n  width: 100% !important; }\n\n#nm-front .grid {\n  border-spacing: 0px;\n  border-collapse: collapse;\n  margin-bottom: 0;\n  table-layout: fixed; }\n  #nm-front .grid thead tr {\n    background-color: #ECE9DF; }\n    #nm-front .grid thead tr th {\n      font-family: Verdana, Geneva;\n      font-weight: normal;\n      font-size: 0.6em;\n      text-align: center;\n      padding: 2pt;\n      letter-spacing: 1pt;\n      background-color: #ECE9DF;\n      color: #000;\n      border: 1px solid #ccc;\n      text-shadow: 0 1px 2px #999;\n      overflow: hidden;\n      white-space: nowrap;\n      text-overflow: ellipsis;\n      padding-left: 3px !important; }\n  #nm-front .grid tbody tr td {\n    font-family: Verdana, Geneva;\n    font-weight: normal;\n    font-size: 0.7em;\n    padding: 3px;\n    border: 1px solid #ccc;\n    line-height: 15px;\n    overflow: hidden;\n    white-space: nowrap;\n    text-overflow: ellipsis;\n    padding-left: 3px !important; }\n    #nm-front .grid tbody tr td.al-right {\n      text-align: right; }\n    #nm-front .grid tbody tr td.exercise-total {\n      font-weight: 600; }\n    #nm-front .grid tbody tr td span.grid-rel {\n      color: #0062A4;\n      cursor: pointer; }\n      #nm-front .grid tbody tr td span.grid-rel:hover {\n        color: #f50000;\n        background-color: #ffffc5;\n        border-bottom: 1px dotted #f50000 !important; }\n    #nm-front .grid tbody tr td div.status-code {\n      font-weight: 600;\n      padding: 3px 0;\n      text-align: center; }\n    #nm-front .grid tbody tr td input[type=checkbox] {\n      display: block;\n      margin: 0 auto; }\n    #nm-front .grid tbody tr td i.fa {\n      display: block;\n      text-align: center;\n      font-size: 1.2em;\n      cursor: pointer; }\n      #nm-front .grid tbody tr td i.fa.edit {\n        color: #520600; }\n      #nm-front .grid tbody tr td i.fa.delete {\n        color: #E11404; }\n    #nm-front .grid tbody tr td sup {\n      color: #8d0200;\n      font-weight: 600; }\n\n.blackout {\n  overflow: auto;\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  background-color: rgba(0, 0, 0, 0.8);\n  z-index: 10000; }\n  .blackout .spinner-wrap {\n    position: absolute;\n    top: 50%;\n    left: 50%; }\n    .blackout .spinner-wrap .fa-spin {\n      color: #6c6fff; }\n\n.nom-header {\n  display: flex;\n  flex-direction: row; }\n  .nom-header .nom-header-cell {\n    flex-grow: 1; }\n    .nom-header .nom-header-cell .back-to-nom-list {\n      color: white;\n      background-color: #4d90fe;\n      border: none;\n      padding: 5px 6px;\n      border-radius: 4px;\n      text-shadow: 0 0 1px #000;\n      cursor: pointer; }\n      .nom-header .nom-header-cell .back-to-nom-list:hover {\n        background-color: #6FA5FC; }\n      .nom-header .nom-header-cell .back-to-nom-list i.fa-chevron-left {\n        color: #290B0B;\n        margin-right: 5px; }\n    .nom-header .nom-header-cell .add-panel {\n      width: auto;\n      float: right;\n      margin: 10px 25px 10px 0;\n      z-index: 100;\n      vertical-align: middle;\n      text-align: right;\n      background-color: #f1efe3;\n      border: solid 1px #E8E4D9;\n      padding: 0.8em 1em 0.5em 1em; }\n      .nom-header .nom-header-cell .add-panel span {\n        width: 38px;\n        height: 36px;\n        float: left;\n        text-align: center;\n        padding: 3px 0 3px 0;\n        margin: 0;\n        display: block;\n        border: 1px solid #E0DED7;\n        background-color: #EAE6DC;\n        border-radius: 3px; }\n        .nom-header .nom-header-cell .add-panel span:nth-child(2) {\n          margin: 0 0 0 1em; }\n        .nom-header .nom-header-cell .add-panel span:hover {\n          background-color: #e2ddcf;\n          border: solid 1px #D1C9B2;\n          cursor: pointer; }\n\n.comp-info-header p {\n  font-family: Verdana, Geneva;\n  font-weight: 600;\n  text-align: center;\n  margin-top: 0px;\n  margin-bottom: 0px !important; }\n  .comp-info-header p.info-title {\n    font-size: 0.8em;\n    margin-top: 10px; }\n  .comp-info-header p.info-location {\n    font-size: 0.8em;\n    color: #676767; }\n  .comp-info-header p.info-date {\n    font-size: 0.7em;\n    color: #676767; }\n\n.comp-info-status {\n  display: block;\n  float: right;\n  width: auto;\n  margin: 0 1.5em 1em 1em;\n  padding: 0.3em 1em 0.3em 1em;\n  border: 1px solid #ECD5A2;\n  background-color: #FFFFC6;\n  text-align: left;\n  font-weight: normal;\n  font-family: Tahoma, Geneva;\n  font-size: 13px;\n  border-radius: 8px; }\n  .comp-info-status p {\n    margin-bottom: 5px !important;\n    line-height: 18px; }\n    .comp-info-status p.status {\n      border-bottom: 1px dotted #777;\n      margin-bottom: 15px !important; }\n      .comp-info-status p.status span {\n        font-weight: bold; }\n\n.custom-modal {\n  background-color: #ffffff;\n  position: absolute;\n  top: 10%;\n  left: 50%;\n  min-width: 500px;\n  min-height: 200px;\n  border-radius: 5px;\n  padding: 4px 10px;\n  margin-left: -250px; }\n  .custom-modal .custom-modal-header {\n    text-align: right;\n    padding-right: 5px; }\n    .custom-modal .custom-modal-header .fa-times {\n      color: #9a9aaf;\n      cursor: pointer; }\n      .custom-modal .custom-modal-header .fa-times:hover {\n        color: #68686f; }\n  .custom-modal h6,\n  .custom-modal h4 {\n    margin: 5px 0 10px 0px; }\n  .custom-modal h4 {\n    font-size: 1.2em;\n    color: #0849c5;\n    margin-top: 0px; }\n  .custom-modal .form-header {\n    display: block;\n    margin: 10px auto;\n    border: solid 1px #AACCAA;\n    background-color: #D5FCA1;\n    text-align: center;\n    border-radius: 5px;\n    padding: 10px; }\n    .custom-modal .form-header h3 {\n      font-weight: bold;\n      font-family: Tahoma, Verdana;\n      font-size: 1.3em;\n      margin-bottom: 10px !important; }\n    .custom-modal .form-header p {\n      font-family: Verdana, Geneva;\n      font-weight: 600;\n      text-align: center;\n      margin-top: 0px;\n      margin-bottom: 0px !important; }\n      .custom-modal .form-header p.comp-name {\n        font-size: 0.8em;\n        margin-top: 10px; }\n      .custom-modal .form-header p.comp-location {\n        font-size: 0.8em;\n        color: #676767; }\n      .custom-modal .form-header p.comp-date {\n        font-size: 0.7em;\n        color: #676767; }\n  .custom-modal .formBody {\n    width: 420px !important;\n    margin: 10px auto;\n    background-color: #f1efe3;\n    border: 1px solid #e0dbcb;\n    border-radius: 10px;\n    padding: 10px 15px; }\n    .custom-modal .formBody tr th,\n    .custom-modal .formBody thead th {\n      color: #777;\n      font-size: 12px;\n      font-weight: bold;\n      line-height: 18px;\n      padding: 0 !important; }\n    .custom-modal .formBody table {\n      border: none !important;\n      margin-bottom: 0px !important; }\n      .custom-modal .formBody table tr.another-position {\n        background-color: #EAE7D7; }\n      .custom-modal .formBody table tr td {\n        border: none !important;\n        padding: 0 !important;\n        vertical-align: top; }\n  .custom-modal .formFooter {\n    display: flex;\n    flex-direction: row; }\n    .custom-modal .formFooter .form-footer-tab {\n      flex-grow: 1; }\n      .custom-modal .formFooter .form-footer-tab.left {\n        text-align: right;\n        padding-right: 10px; }\n      .custom-modal .formFooter .form-footer-tab.right {\n        text-align: left;\n        padding-left: 10px; }\n      .custom-modal .formFooter .form-footer-tab .footer-button.success {\n        background-color: #24881e; }\n        .custom-modal .formFooter .form-footer-tab .footer-button.success:hover {\n          background-color: #2da926; }\n      .custom-modal .formFooter .form-footer-tab .footer-button.danger {\n        background-color: #ad2121; }\n        .custom-modal .formFooter .form-footer-tab .footer-button.danger:hover {\n          background-color: #e23333; }\n  .custom-modal form .validation {\n    position: absolute;\n    margin-top: -16px;\n    font-size: 0.8em;\n    color: red;\n    margin-left: 10px; }\n  .custom-modal form label {\n    display: block;\n    font-weight: 600;\n    text-align: right;\n    margin-right: 10px;\n    color: #000; }\n  .custom-modal form input,\n  .custom-modal form textarea {\n    font-family: Verdana, Geneva;\n    width: 100%;\n    margin-bottom: 10px;\n    font-size: 11px !important;\n    line-height: 16px !important; }\n    .custom-modal form input:read-only, .custom-modal form input:disabled,\n    .custom-modal form textarea:read-only,\n    .custom-modal form textarea:disabled {\n      opacity: 0.6;\n      cursor: not-allowed; }\n    .custom-modal form input[type=\"checkbox\"],\n    .custom-modal form textarea[type=\"checkbox\"] {\n      display: block;\n      float: left;\n      margin: 0;\n      width: auto; }\n  .custom-modal form select {\n    margin-bottom: 10px; }\n  .custom-modal form button {\n    color: #fff;\n    background-color: #038ece;\n    font-weight: 600;\n    border-radius: 4px;\n    border: 0px;\n    padding: 5px 5px 7px;\n    margin: 5px 0;\n    cursor: pointer; }\n    .custom-modal form button:hover {\n      background-color: #03A9F4; }\n    .custom-modal form button:disabled {\n      opacity: 0.5;\n      cursor: not-allowed; }\n      .custom-modal form button:disabled:hover {\n        background-color: #038ece; }\n\n.inform {\n  position: absolute;\n  top: 30%;\n  left: 50%;\n  min-width: 400px;\n  background-color: #fff;\n  margin-left: -200px;\n  padding: 5px 10px;\n  border-radius: 5px; }\n  .inform .inform-header .icons {\n    text-align: right; }\n    .inform .inform-header .icons .fa-times {\n      color: #9a9aaf;\n      cursor: pointer; }\n      .inform .inform-header .icons .fa-times:hover {\n        color: #68686f; }\n  .inform .inform-body {\n    padding: 10px 0;\n    font-family: Tahoma, Verdana;\n    font-size: 0.9em;\n    text-align: center; }\n\n.dialog {\n  position: absolute;\n  font-family: Verdana, Geneva;\n  top: 30%;\n  left: 50%;\n  min-width: 400px;\n  background-color: #fff;\n  margin-left: -200px;\n  padding: 5px 10px;\n  border-radius: 5px; }\n  .dialog .dialog-body {\n    padding: 10px 0;\n    font-size: 0.8em; }\n  .dialog .dialog-header .icons {\n    text-align: right; }\n    .dialog .dialog-header .icons .fa-times {\n      color: #9a9aaf;\n      cursor: pointer; }\n      .dialog .dialog-header .icons .fa-times:hover {\n        color: #68686f; }\n  .dialog .dialog-footer {\n    text-align: right;\n    padding-bottom: 5px; }\n    .dialog .dialog-footer button {\n      color: #fff;\n      background-color: #038ece;\n      border-radius: 4px;\n      border: 0px;\n      padding: 4px 3px 4px;\n      margin: 3px 10px 0 0;\n      cursor: pointer;\n      min-width: 50px; }\n      .dialog .dialog-footer button.btn-danger {\n        background-color: #ab3434; }\n        .dialog .dialog-footer button.btn-danger:hover {\n          background-color: #e25252; }\n      .dialog .dialog-footer button.btn-success {\n        background-color: #2f693b; }\n        .dialog .dialog-footer button.btn-success:hover {\n          background-color: #459255; }\n  .dialog h4 {\n    font-size: 1em !important;\n    margin: 0 !important;\n    color: #2e3fc5 !important; }\n\n.nom-grid-wrap {\n  margin-bottom: 25px;\n  clear: both; }\n  .nom-grid-wrap .division-wrap {\n    margin-bottom: 20px; }\n    .nom-grid-wrap .division-wrap .w-class-name {\n      font-family: Verdana, Geneva;\n      font-weight: 600;\n      font-size: 0.9em;\n      background-color: #fdfaf2;\n      color: #000;\n      border: 1px solid #ccc;\n      padding-left: 4px; }\n  .nom-grid-wrap h4 {\n    font-family: Verdana, Geneva;\n    font-weight: 600;\n    text-align: center;\n    clear: both;\n    font-size: 0.9em;\n    margin-bottom: 10px !important; }\n  .nom-grid-wrap .division-head {\n    background-color: #8d0000;\n    font-family: Verdana, Geneva;\n    color: #fff;\n    font-size: 0.8em;\n    font-weight: 600;\n    text-shadow: 0 0 1px #000;\n    padding-left: 5px; }\n  .nom-grid-wrap .empty-nomination {\n    clear: both;\n    background-color: #afd0ea;\n    border: 1px solid #ccc;\n    border-radius: 4px;\n    margin: 0 auto;\n    width: 50%;\n    padding: 20px 0; }\n    .nom-grid-wrap .empty-nomination p {\n      font-family: Verdana, Geneva;\n      font-size: 12px !important;\n      text-align: center;\n      margin-bottom: 0 !important; }\n  .nom-grid-wrap .division-counters {\n    font-family: Verdana, Geneva;\n    font-size: 0.8em;\n    text-align: right;\n    margin-bottom: 20px; }\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 317 */
+/* 318 */
 /***/ (function(module, exports) {
 
 /*
@@ -50118,7 +50575,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 318 */
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -50164,7 +50621,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(319);
+var	fixUrls = __webpack_require__(320);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -50477,7 +50934,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 319 */
+/* 320 */
 /***/ (function(module, exports) {
 
 

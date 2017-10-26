@@ -4,7 +4,8 @@
 #nm-front .grid {
   border-spacing: 0px;
   border-collapse: collapse;
-  margin-bottom: 0; }
+  margin-bottom: 0;
+  table-layout: fixed; }
   #nm-front .grid thead tr {
     background-color: #ECE9DF; }
     #nm-front .grid thead tr th {
@@ -17,14 +18,22 @@
       background-color: #ECE9DF;
       color: #000;
       border: 1px solid #ccc;
-      text-shadow: 0 1px 2px #999; }
+      text-shadow: 0 1px 2px #999;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      padding-left: 3px !important; }
   #nm-front .grid tbody tr td {
     font-family: Verdana, Geneva;
     font-weight: normal;
     font-size: 0.7em;
     padding: 3px;
     border: 1px solid #ccc;
-    line-height: 15px; }
+    line-height: 15px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding-left: 3px !important; }
     #nm-front .grid tbody tr td.al-right {
       text-align: right; }
     #nm-front .grid tbody tr td.exercise-total {

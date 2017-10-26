@@ -5,6 +5,7 @@ import Preloader from "../../components/preloader/preloader";
 import LiftersGrid from "./partial/lifters.grid";
 import IsJunLiftersGrid from "./partial/isJun.lifters.grid";
 import RefGrid from "./partial/referees.grid";
+require("../../scripts/colResizable-1.6.js");
 
 class Nominations extends React.Component{
     constructor(props){
@@ -79,6 +80,10 @@ class Nominations extends React.Component{
 
     componentDidMount(){
         this.getAllRegions();
+    }
+
+    componentDidUpdate(){
+        jQuery(function(){jQuery(".grid").colResizable();});
     }
 
     render(){

@@ -277,6 +277,10 @@ class Nominations extends React.Component{
         this.getAllRegions();
     }
 
+    componentDidUpdate(){
+        jQuery(function(){jQuery(".grid").colResizable();});
+    }
+
     render(){
         if(!this.props.competition) return null;
         var addLifterButton = (this.state.compStatus === "p")? <span><img src="../wp-content/plugins/nominations/images/nom_add.png" alt="" title="Додати спортсмена" onClick={this.setNomination.bind(this, "lifter")} /></span> : "";

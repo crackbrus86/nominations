@@ -59,7 +59,7 @@ const LiftersGrid = (props) => {
         {
             title: "Ім'я",
             field: "fullName",
-            width: "220px"
+            width: "150px"
         },
         {
             title: "Рік народження",
@@ -135,7 +135,7 @@ const LiftersGrid = (props) => {
     var coachesCol = [{
         title: "Тренер(и)",
         field: "coaches",
-        width: "*"
+        width: "150px"
     }];
     var gridColumns = columns.concat(results);
     gridColumns = gridColumns.concat(coachesCol);
