@@ -111,7 +111,7 @@ class Nominations extends React.Component{
             school: "",
             level: 1,
             division: "seniors",
-            weightClass: (!JSON.parse(this.state.compInfo.isJun))? this.state.wc[0].id : this.state.subwc[0].id,
+            weightClass: 0,
             squat: 0,
             benchpress: 0,
             deadlift: 0,

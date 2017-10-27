@@ -2,6 +2,7 @@ import React from "react";
 import moment from "moment";
 require("../../../../styles/react-datetime.css");
 import Datetime from "react-datetime";
+import * as validation from "../../../components/validation/validation";
 
 const LifterForm = (props) => {
     if(props.nomination.type !== "lifter") return null;
@@ -123,31 +124,37 @@ const LifterForm = (props) => {
                         <td><select value={nom.division} onChange={e => props.onChange("division", e.target.value)} >{divisionsList}</select></td>
                     </tr>
                     {ageGroups}
+                    <tr><td></td><td>{validation.isSelectValid(nom.weightClass)}</td></tr>
                     <tr>
                         <td><label>Вагова категорія</label></td>
                         <td>
                             <select value={nom.weightClass} onChange={e => props.onChange("weightClass", e.target.value)} >
+                                <option id="0" value="0">[не обрано]</option>
                                 {(nom.division === "juniors" || nom.division === "subjuniors")? 
+                                
                                     (nom.division === "subjuniors" && JSON.parse(info.isJun))? subWeightClassList : weightClassList 
                                 : shortWCList }
                             </select>
                         </td>
                     </tr>
+                    <tr><td></td><td>{validation.hasComma(st.squat)}</td></tr>
                     <tr>
                         <td><label>Присідання</label></td>
-                        <td><input value={st.squat} type="text" maxLength="10" onChange={e => props.onChange("squat", e.target.value)} disabled={st.isDisabled} /></td>
+                        <td><input value={st.squat} type="number" maxLength="10" onChange={e => props.onChange("squat", e.target.value)} disabled={st.isDisabled} /></td>
                     </tr>
+                    <tr><td></td><td>{validation.hasComma(nom.benchpress)}</td></tr>
                     <tr>
                         <td><label>Жим</label></td>
-                        <td><input value={nom.benchpress} type="text" maxLength="10" onChange={e => props.onChange("benchpress", e.target.value)} /></td>
+                        <td><input value={nom.benchpress} type="number" maxLength="10" onChange={e => props.onChange("benchpress", e.target.value)} /></td>
                     </tr>
+                    <tr><td></td><td>{validation.hasComma(dl.deadlift)}</td></tr>
                     <tr>
                         <td><label>Тяга</label></td>
-                        <td><input value={dl.deadlift} type="text" maxLength="10" onChange={e => props.onChange("deadlift", e.target.value)} disabled={dl.isDisabled} /></td>
+                        <td><input value={dl.deadlift} type="number" maxLength="10" onChange={e => props.onChange("deadlift", e.target.value)} disabled={dl.isDisabled} /></td>
                     </tr>
                     <tr>
                         <td><label>Сума</label></td>
-                        <td><input value={nom.total} type="text" readOnly={true} /></td>
+                        <td><input value={nom.total} type="number" readOnly={true} /></td>
                     </tr>
                     <tr>
                         <td><label>Тренер(и)</label></td>

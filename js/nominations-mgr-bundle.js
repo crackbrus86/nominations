@@ -37820,7 +37820,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(330);
+var	fixUrls = __webpack_require__(331);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -49408,7 +49408,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-__webpack_require__(335);
+__webpack_require__(336);
 
 var NomMnmApp = function (_React$Component) {
     _inherits(NomMnmApp, _React$Component);
@@ -50021,19 +50021,19 @@ var _lifter = __webpack_require__(319);
 
 var _lifter2 = _interopRequireDefault(_lifter);
 
-var _official = __webpack_require__(331);
+var _official = __webpack_require__(332);
 
 var _official2 = _interopRequireDefault(_official);
 
-var _inform = __webpack_require__(332);
+var _inform = __webpack_require__(333);
 
 var _inform2 = _interopRequireDefault(_inform);
 
-var _nominations = __webpack_require__(333);
+var _nominations = __webpack_require__(334);
 
 var _nominations2 = _interopRequireDefault(_nominations);
 
-var _referee = __webpack_require__(334);
+var _referee = __webpack_require__(335);
 
 var _referee2 = _interopRequireDefault(_referee);
 
@@ -50166,7 +50166,7 @@ var Nominations = function (_React$Component) {
                 school: "",
                 level: 1,
                 division: "seniors",
-                weightClass: !JSON.parse(this.state.compInfo.isJun) ? this.state.wc[0].id : this.state.subwc[0].id,
+                weightClass: 0,
                 squat: 0,
                 benchpress: 0,
                 deadlift: 0,
@@ -50724,9 +50724,15 @@ var _reactDatetime = __webpack_require__(320);
 
 var _reactDatetime2 = _interopRequireDefault(_reactDatetime);
 
+var _validation = __webpack_require__(328);
+
+var validation = _interopRequireWildcard(_validation);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-__webpack_require__(328);
+__webpack_require__(329);
 
 
 var LifterForm = function LifterForm(props) {
@@ -51143,6 +51149,16 @@ var LifterForm = function LifterForm(props) {
                         _react2.default.createElement(
                             "tr",
                             null,
+                            _react2.default.createElement("td", null),
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                validation.isSelectValid(nom.weightClass)
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "tr",
+                            null,
                             _react2.default.createElement(
                                 "td",
                                 null,
@@ -51160,8 +51176,23 @@ var LifterForm = function LifterForm(props) {
                                     { value: nom.weightClass, onChange: function onChange(e) {
                                             return props.onChange("weightClass", e.target.value);
                                         } },
+                                    _react2.default.createElement(
+                                        "option",
+                                        { id: "0", value: "0" },
+                                        "[\u043D\u0435 \u043E\u0431\u0440\u0430\u043D\u043E]"
+                                    ),
                                     nom.division === "juniors" || nom.division === "subjuniors" ? nom.division === "subjuniors" && JSON.parse(info.isJun) ? subWeightClassList : weightClassList : shortWCList
                                 )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "tr",
+                            null,
+                            _react2.default.createElement("td", null),
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                validation.hasComma(st.squat)
                             )
                         ),
                         _react2.default.createElement(
@@ -51179,9 +51210,19 @@ var LifterForm = function LifterForm(props) {
                             _react2.default.createElement(
                                 "td",
                                 null,
-                                _react2.default.createElement("input", { value: st.squat, type: "text", maxLength: "10", onChange: function onChange(e) {
+                                _react2.default.createElement("input", { value: st.squat, type: "number", maxLength: "10", onChange: function onChange(e) {
                                         return props.onChange("squat", e.target.value);
                                     }, disabled: st.isDisabled })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "tr",
+                            null,
+                            _react2.default.createElement("td", null),
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                validation.hasComma(nom.benchpress)
                             )
                         ),
                         _react2.default.createElement(
@@ -51199,9 +51240,19 @@ var LifterForm = function LifterForm(props) {
                             _react2.default.createElement(
                                 "td",
                                 null,
-                                _react2.default.createElement("input", { value: nom.benchpress, type: "text", maxLength: "10", onChange: function onChange(e) {
+                                _react2.default.createElement("input", { value: nom.benchpress, type: "number", maxLength: "10", onChange: function onChange(e) {
                                         return props.onChange("benchpress", e.target.value);
                                     } })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "tr",
+                            null,
+                            _react2.default.createElement("td", null),
+                            _react2.default.createElement(
+                                "td",
+                                null,
+                                validation.hasComma(dl.deadlift)
                             )
                         ),
                         _react2.default.createElement(
@@ -51219,7 +51270,7 @@ var LifterForm = function LifterForm(props) {
                             _react2.default.createElement(
                                 "td",
                                 null,
-                                _react2.default.createElement("input", { value: dl.deadlift, type: "text", maxLength: "10", onChange: function onChange(e) {
+                                _react2.default.createElement("input", { value: dl.deadlift, type: "number", maxLength: "10", onChange: function onChange(e) {
                                         return props.onChange("deadlift", e.target.value);
                                     }, disabled: dl.isDisabled })
                             )
@@ -51239,7 +51290,7 @@ var LifterForm = function LifterForm(props) {
                             _react2.default.createElement(
                                 "td",
                                 null,
-                                _react2.default.createElement("input", { value: nom.total, type: "text", readOnly: true })
+                                _react2.default.createElement("input", { value: nom.total, type: "number", readOnly: true })
                             )
                         ),
                         _react2.default.createElement(
@@ -52520,10 +52571,103 @@ module.exports = DateTimePickerTime;
 /* 328 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.hasComma = exports.isSelectValid = exports.isEmailValid = exports.isFieldValid = exports.isFormValid = undefined;
+
+var _react = __webpack_require__(5);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var isFormValid = exports.isFormValid = function isFormValid(formObject, required) {
+    for (var i = 0; i < required.length; i++) {
+        if (!formObject[required[i]]) return true;
+    }
+    return false;
+};
+
+var isFieldValid = exports.isFieldValid = function isFieldValid(field) {
+    var text = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+
+    if (!!field) return null;
+    return _react2.default.createElement(
+        "i",
+        { className: "invalid" },
+        "*",
+        _react2.default.createElement(
+            "sub",
+            null,
+            text
+        )
+    );
+};
+
+var isEmailValid = exports.isEmailValid = function isEmailValid(field) {
+    var required = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+    if (!field && required) return _react2.default.createElement(
+        "i",
+        { className: "invalid" },
+        "*",
+        _react2.default.createElement(
+            "sub",
+            null,
+            "Це поле є обов'язковим"
+        )
+    );
+    var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
+    if (!pattern.test(field) && field !== "") return _react2.default.createElement(
+        "i",
+        { className: "invalid" },
+        "*",
+        _react2.default.createElement(
+            "sub",
+            null,
+            "Не вірно вказано email"
+        )
+    );
+};
+
+var isSelectValid = exports.isSelectValid = function isSelectValid(value) {
+    if (!value || value === 0 || value === "0" || !JSON.parse(value)) return _react2.default.createElement(
+        "i",
+        { className: "invalid" },
+        "*",
+        _react2.default.createElement(
+            "sub",
+            null,
+            "Оберіть корректне значення"
+        )
+    );
+};
+
+var hasComma = exports.hasComma = function hasComma(str) {
+    if (str.toString().indexOf(",") > -1) return _react2.default.createElement(
+        "i",
+        { className: "invalid" },
+        "*",
+        _react2.default.createElement(
+            "sub",
+            null,
+            "Використовуйте '.' замість ','!"
+        )
+    );
+};
+
+/***/ }),
+/* 329 */
+/***/ (function(module, exports, __webpack_require__) {
+
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(329);
+var content = __webpack_require__(330);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -52548,7 +52692,7 @@ if(false) {
 }
 
 /***/ }),
-/* 329 */
+/* 330 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(208)(undefined);
@@ -52562,7 +52706,7 @@ exports.push([module.i, "/*!\r\n * https://github.com/YouCanBookMe/react-datetim
 
 
 /***/ }),
-/* 330 */
+/* 331 */
 /***/ (function(module, exports) {
 
 
@@ -52657,7 +52801,7 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 331 */
+/* 332 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52897,7 +53041,7 @@ var OfficialForm = function OfficialForm(props) {
 exports.default = OfficialForm;
 
 /***/ }),
-/* 332 */
+/* 333 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52965,7 +53109,7 @@ var Inform = function (_React$Component) {
 exports.default = Inform;
 
 /***/ }),
-/* 333 */
+/* 334 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53295,7 +53439,7 @@ var NomGrid = function NomGrid(props) {
 exports.default = NomGrid;
 
 /***/ }),
-/* 334 */
+/* 335 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53396,13 +53540,13 @@ var RefGrid = function RefGrid(props) {
 exports.default = RefGrid;
 
 /***/ }),
-/* 335 */
+/* 336 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(336);
+var content = __webpack_require__(337);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -53427,7 +53571,7 @@ if(false) {
 }
 
 /***/ }),
-/* 336 */
+/* 337 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(208)(undefined);
@@ -53435,7 +53579,7 @@ exports = module.exports = __webpack_require__(208)(undefined);
 
 
 // module
-exports.push([module.i, "#content {\n  width: 100% !important; }\n\n#nm-front .grid {\n  border-spacing: 0px;\n  border-collapse: collapse;\n  margin-bottom: 0;\n  table-layout: fixed; }\n  #nm-front .grid thead tr {\n    background-color: #ECE9DF; }\n    #nm-front .grid thead tr th {\n      font-family: Verdana, Geneva;\n      font-weight: normal;\n      font-size: 0.6em;\n      text-align: center;\n      padding: 2pt;\n      letter-spacing: 1pt;\n      background-color: #ECE9DF;\n      color: #000;\n      border: 1px solid #ccc;\n      text-shadow: 0 1px 2px #999;\n      overflow: hidden;\n      white-space: nowrap;\n      text-overflow: ellipsis;\n      padding-left: 3px !important; }\n  #nm-front .grid tbody tr td {\n    font-family: Verdana, Geneva;\n    font-weight: normal;\n    font-size: 0.7em;\n    padding: 3px;\n    border: 1px solid #ccc;\n    line-height: 15px;\n    overflow: hidden;\n    white-space: nowrap;\n    text-overflow: ellipsis;\n    padding-left: 3px !important; }\n    #nm-front .grid tbody tr td.al-right {\n      text-align: right; }\n    #nm-front .grid tbody tr td.exercise-total {\n      font-weight: 600; }\n    #nm-front .grid tbody tr td span.grid-rel {\n      color: #0062A4;\n      cursor: pointer; }\n      #nm-front .grid tbody tr td span.grid-rel:hover {\n        color: #f50000;\n        background-color: #ffffc5;\n        border-bottom: 1px dotted #f50000 !important; }\n    #nm-front .grid tbody tr td div.status-code {\n      font-weight: 600;\n      padding: 3px 0;\n      text-align: center; }\n    #nm-front .grid tbody tr td input[type=checkbox] {\n      display: block;\n      margin: 0 auto; }\n    #nm-front .grid tbody tr td i.fa {\n      display: block;\n      text-align: center;\n      font-size: 1.2em;\n      cursor: pointer; }\n      #nm-front .grid tbody tr td i.fa.edit {\n        color: #520600; }\n      #nm-front .grid tbody tr td i.fa.delete {\n        color: #E11404; }\n    #nm-front .grid tbody tr td sup {\n      color: #8d0200;\n      font-weight: 600; }\n\n.blackout {\n  overflow: auto;\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  background-color: rgba(0, 0, 0, 0.8);\n  z-index: 10000; }\n  .blackout .spinner-wrap {\n    position: absolute;\n    top: 50%;\n    left: 50%; }\n    .blackout .spinner-wrap .fa-spin {\n      color: #6c6fff; }\n\n.nom-header {\n  display: flex;\n  flex-direction: row; }\n  .nom-header .nom-header-cell {\n    flex-grow: 1; }\n    .nom-header .nom-header-cell .back-to-nom-list {\n      color: white;\n      background-color: #4d90fe;\n      border: none;\n      padding: 5px 6px;\n      border-radius: 4px;\n      text-shadow: 0 0 1px #000;\n      cursor: pointer; }\n      .nom-header .nom-header-cell .back-to-nom-list:hover {\n        background-color: #6FA5FC; }\n      .nom-header .nom-header-cell .back-to-nom-list i.fa-chevron-left {\n        color: #290B0B;\n        margin-right: 5px; }\n    .nom-header .nom-header-cell .add-panel {\n      width: auto;\n      float: right;\n      margin: 10px 25px 10px 0;\n      z-index: 100;\n      vertical-align: middle;\n      text-align: right;\n      background-color: #f1efe3;\n      border: solid 1px #E8E4D9;\n      padding: 0.8em 1em 0.5em 1em; }\n      .nom-header .nom-header-cell .add-panel span {\n        width: 38px;\n        height: 36px;\n        float: left;\n        text-align: center;\n        padding: 3px 0 3px 0;\n        margin: 0;\n        display: block;\n        border: 1px solid #E0DED7;\n        background-color: #EAE6DC;\n        border-radius: 3px; }\n        .nom-header .nom-header-cell .add-panel span:nth-child(2) {\n          margin: 0 0 0 1em; }\n        .nom-header .nom-header-cell .add-panel span:hover {\n          background-color: #e2ddcf;\n          border: solid 1px #D1C9B2;\n          cursor: pointer; }\n\n.comp-info-header p {\n  font-family: Verdana, Geneva;\n  font-weight: 600;\n  text-align: center;\n  margin-top: 0px;\n  margin-bottom: 0px !important; }\n  .comp-info-header p.info-title {\n    font-size: 0.8em;\n    margin-top: 10px; }\n  .comp-info-header p.info-location {\n    font-size: 0.8em;\n    color: #676767; }\n  .comp-info-header p.info-date {\n    font-size: 0.7em;\n    color: #676767; }\n\n.comp-info-status {\n  display: block;\n  float: right;\n  width: auto;\n  margin: 0 1.5em 1em 1em;\n  padding: 0.3em 1em 0.3em 1em;\n  border: 1px solid #ECD5A2;\n  background-color: #FFFFC6;\n  text-align: left;\n  font-weight: normal;\n  font-family: Tahoma, Geneva;\n  font-size: 13px;\n  border-radius: 8px; }\n  .comp-info-status p {\n    margin-bottom: 5px !important;\n    line-height: 18px; }\n    .comp-info-status p.status {\n      border-bottom: 1px dotted #777;\n      margin-bottom: 15px !important; }\n      .comp-info-status p.status span {\n        font-weight: bold; }\n\n.custom-modal {\n  background-color: #ffffff;\n  position: absolute;\n  top: 10%;\n  left: 50%;\n  min-width: 500px;\n  min-height: 200px;\n  border-radius: 5px;\n  padding: 4px 10px;\n  margin-left: -250px; }\n  .custom-modal .custom-modal-header {\n    text-align: right;\n    padding-right: 5px; }\n    .custom-modal .custom-modal-header .fa-times {\n      color: #9a9aaf;\n      cursor: pointer; }\n      .custom-modal .custom-modal-header .fa-times:hover {\n        color: #68686f; }\n  .custom-modal h6,\n  .custom-modal h4 {\n    margin: 5px 0 10px 0px; }\n  .custom-modal h4 {\n    font-size: 1.2em;\n    color: #0849c5;\n    margin-top: 0px; }\n  .custom-modal .form-header {\n    display: block;\n    margin: 10px auto;\n    border: solid 1px #AACCAA;\n    background-color: #D5FCA1;\n    text-align: center;\n    border-radius: 5px;\n    padding: 10px; }\n    .custom-modal .form-header h3 {\n      font-weight: bold;\n      font-family: Tahoma, Verdana;\n      font-size: 1.3em;\n      margin-bottom: 10px !important; }\n    .custom-modal .form-header p {\n      font-family: Verdana, Geneva;\n      font-weight: 600;\n      text-align: center;\n      margin-top: 0px;\n      margin-bottom: 0px !important; }\n      .custom-modal .form-header p.comp-name {\n        font-size: 0.8em;\n        margin-top: 10px; }\n      .custom-modal .form-header p.comp-location {\n        font-size: 0.8em;\n        color: #676767; }\n      .custom-modal .form-header p.comp-date {\n        font-size: 0.7em;\n        color: #676767; }\n  .custom-modal .formBody {\n    width: 420px !important;\n    margin: 10px auto;\n    background-color: #f1efe3;\n    border: 1px solid #e0dbcb;\n    border-radius: 10px;\n    padding: 10px 15px; }\n    .custom-modal .formBody tr th,\n    .custom-modal .formBody thead th {\n      color: #777;\n      font-size: 12px;\n      font-weight: bold;\n      line-height: 18px;\n      padding: 0 !important; }\n    .custom-modal .formBody table {\n      border: none !important;\n      margin-bottom: 0px !important; }\n      .custom-modal .formBody table tr.another-position {\n        background-color: #EAE7D7; }\n      .custom-modal .formBody table tr td {\n        border: none !important;\n        padding: 0 !important;\n        vertical-align: top; }\n  .custom-modal .formFooter {\n    display: flex;\n    flex-direction: row; }\n    .custom-modal .formFooter .form-footer-tab {\n      flex-grow: 1; }\n      .custom-modal .formFooter .form-footer-tab.left {\n        text-align: right;\n        padding-right: 10px; }\n      .custom-modal .formFooter .form-footer-tab.right {\n        text-align: left;\n        padding-left: 10px; }\n      .custom-modal .formFooter .form-footer-tab .footer-button.success {\n        background-color: #24881e; }\n        .custom-modal .formFooter .form-footer-tab .footer-button.success:hover {\n          background-color: #2da926; }\n      .custom-modal .formFooter .form-footer-tab .footer-button.danger {\n        background-color: #ad2121; }\n        .custom-modal .formFooter .form-footer-tab .footer-button.danger:hover {\n          background-color: #e23333; }\n  .custom-modal form .validation {\n    position: absolute;\n    margin-top: -16px;\n    font-size: 0.8em;\n    color: red;\n    margin-left: 10px; }\n  .custom-modal form label {\n    display: block;\n    font-weight: 600;\n    text-align: right;\n    margin-right: 10px;\n    color: #000; }\n  .custom-modal form input,\n  .custom-modal form textarea {\n    font-family: Verdana, Geneva;\n    width: 100%;\n    margin-bottom: 10px;\n    font-size: 11px !important;\n    line-height: 16px !important; }\n    .custom-modal form input:read-only, .custom-modal form input:disabled,\n    .custom-modal form textarea:read-only,\n    .custom-modal form textarea:disabled {\n      opacity: 0.6;\n      cursor: not-allowed; }\n    .custom-modal form input[type=\"checkbox\"],\n    .custom-modal form textarea[type=\"checkbox\"] {\n      display: block;\n      float: left;\n      margin: 0;\n      width: auto; }\n  .custom-modal form select {\n    margin-bottom: 10px; }\n  .custom-modal form button {\n    color: #fff;\n    background-color: #038ece;\n    font-weight: 600;\n    border-radius: 4px;\n    border: 0px;\n    padding: 5px 5px 7px;\n    margin: 5px 0;\n    cursor: pointer; }\n    .custom-modal form button:hover {\n      background-color: #03A9F4; }\n    .custom-modal form button:disabled {\n      opacity: 0.5;\n      cursor: not-allowed; }\n      .custom-modal form button:disabled:hover {\n        background-color: #038ece; }\n\n.inform {\n  position: absolute;\n  top: 30%;\n  left: 50%;\n  min-width: 400px;\n  background-color: #fff;\n  margin-left: -200px;\n  padding: 5px 10px;\n  border-radius: 5px; }\n  .inform .inform-header .icons {\n    text-align: right; }\n    .inform .inform-header .icons .fa-times {\n      color: #9a9aaf;\n      cursor: pointer; }\n      .inform .inform-header .icons .fa-times:hover {\n        color: #68686f; }\n  .inform .inform-body {\n    padding: 10px 0;\n    font-family: Tahoma, Verdana;\n    font-size: 0.9em;\n    text-align: center; }\n\n.dialog {\n  position: absolute;\n  font-family: Verdana, Geneva;\n  top: 30%;\n  left: 50%;\n  min-width: 400px;\n  background-color: #fff;\n  margin-left: -200px;\n  padding: 5px 10px;\n  border-radius: 5px; }\n  .dialog .dialog-body {\n    padding: 10px 0;\n    font-size: 0.8em; }\n  .dialog .dialog-header .icons {\n    text-align: right; }\n    .dialog .dialog-header .icons .fa-times {\n      color: #9a9aaf;\n      cursor: pointer; }\n      .dialog .dialog-header .icons .fa-times:hover {\n        color: #68686f; }\n  .dialog .dialog-footer {\n    text-align: right;\n    padding-bottom: 5px; }\n    .dialog .dialog-footer button {\n      color: #fff;\n      background-color: #038ece;\n      border-radius: 4px;\n      border: 0px;\n      padding: 4px 3px 4px;\n      margin: 3px 10px 0 0;\n      cursor: pointer;\n      min-width: 50px; }\n      .dialog .dialog-footer button.btn-danger {\n        background-color: #ab3434; }\n        .dialog .dialog-footer button.btn-danger:hover {\n          background-color: #e25252; }\n      .dialog .dialog-footer button.btn-success {\n        background-color: #2f693b; }\n        .dialog .dialog-footer button.btn-success:hover {\n          background-color: #459255; }\n  .dialog h4 {\n    font-size: 1em !important;\n    margin: 0 !important;\n    color: #2e3fc5 !important; }\n\n.nom-grid-wrap {\n  margin-bottom: 25px;\n  clear: both; }\n  .nom-grid-wrap .division-wrap {\n    margin-bottom: 20px; }\n    .nom-grid-wrap .division-wrap .w-class-name {\n      font-family: Verdana, Geneva;\n      font-weight: 600;\n      font-size: 0.9em;\n      background-color: #fdfaf2;\n      color: #000;\n      border: 1px solid #ccc;\n      padding-left: 4px; }\n  .nom-grid-wrap h4 {\n    font-family: Verdana, Geneva;\n    font-weight: 600;\n    text-align: center;\n    clear: both;\n    font-size: 0.9em;\n    margin-bottom: 10px !important; }\n  .nom-grid-wrap .division-head {\n    background-color: #8d0000;\n    font-family: Verdana, Geneva;\n    color: #fff;\n    font-size: 0.8em;\n    font-weight: 600;\n    text-shadow: 0 0 1px #000;\n    padding-left: 5px; }\n  .nom-grid-wrap .empty-nomination {\n    clear: both;\n    background-color: #afd0ea;\n    border: 1px solid #ccc;\n    border-radius: 4px;\n    margin: 0 auto;\n    width: 50%;\n    padding: 20px 0; }\n    .nom-grid-wrap .empty-nomination p {\n      font-family: Verdana, Geneva;\n      font-size: 12px !important;\n      text-align: center;\n      margin-bottom: 0 !important; }\n  .nom-grid-wrap .division-counters {\n    font-family: Verdana, Geneva;\n    font-size: 0.8em;\n    text-align: right;\n    margin-bottom: 20px; }\n", ""]);
+exports.push([module.i, "#content {\n  width: 100% !important; }\n\n.invalid {\n  color: red; }\n\n#nm-front .grid {\n  border-spacing: 0px;\n  border-collapse: collapse;\n  margin-bottom: 0;\n  table-layout: fixed; }\n  #nm-front .grid thead tr {\n    background-color: #ECE9DF; }\n    #nm-front .grid thead tr th {\n      font-family: Verdana, Geneva;\n      font-weight: normal;\n      font-size: 0.6em;\n      text-align: center;\n      padding: 2pt;\n      letter-spacing: 1pt;\n      background-color: #ECE9DF;\n      color: #000;\n      border: 1px solid #ccc;\n      text-shadow: 0 1px 2px #999;\n      overflow: hidden;\n      white-space: nowrap;\n      text-overflow: ellipsis;\n      padding-left: 3px !important; }\n  #nm-front .grid tbody tr td {\n    font-family: Verdana, Geneva;\n    font-weight: normal;\n    font-size: 0.7em;\n    padding: 3px;\n    border: 1px solid #ccc;\n    line-height: 15px;\n    overflow: hidden;\n    white-space: nowrap;\n    text-overflow: ellipsis;\n    padding-left: 3px !important; }\n    #nm-front .grid tbody tr td.al-right {\n      text-align: right; }\n    #nm-front .grid tbody tr td.exercise-total {\n      font-weight: 600; }\n    #nm-front .grid tbody tr td span.grid-rel {\n      color: #0062A4;\n      cursor: pointer; }\n      #nm-front .grid tbody tr td span.grid-rel:hover {\n        color: #f50000;\n        background-color: #ffffc5;\n        border-bottom: 1px dotted #f50000 !important; }\n    #nm-front .grid tbody tr td div.status-code {\n      font-weight: 600;\n      padding: 3px 0;\n      text-align: center; }\n    #nm-front .grid tbody tr td input[type=checkbox] {\n      display: block;\n      margin: 0 auto; }\n    #nm-front .grid tbody tr td i.fa {\n      display: block;\n      text-align: center;\n      font-size: 1.2em;\n      cursor: pointer; }\n      #nm-front .grid tbody tr td i.fa.edit {\n        color: #520600; }\n      #nm-front .grid tbody tr td i.fa.delete {\n        color: #E11404; }\n    #nm-front .grid tbody tr td sup {\n      color: #8d0200;\n      font-weight: 600; }\n\n.blackout {\n  overflow: auto;\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  background-color: rgba(0, 0, 0, 0.8);\n  z-index: 10000; }\n  .blackout .spinner-wrap {\n    position: absolute;\n    top: 50%;\n    left: 50%; }\n    .blackout .spinner-wrap .fa-spin {\n      color: #6c6fff; }\n\n.nom-header {\n  display: flex;\n  flex-direction: row; }\n  .nom-header .nom-header-cell {\n    flex-grow: 1; }\n    .nom-header .nom-header-cell .back-to-nom-list {\n      color: white;\n      background-color: #4d90fe;\n      border: none;\n      padding: 5px 6px;\n      border-radius: 4px;\n      text-shadow: 0 0 1px #000;\n      cursor: pointer; }\n      .nom-header .nom-header-cell .back-to-nom-list:hover {\n        background-color: #6FA5FC; }\n      .nom-header .nom-header-cell .back-to-nom-list i.fa-chevron-left {\n        color: #290B0B;\n        margin-right: 5px; }\n    .nom-header .nom-header-cell .add-panel {\n      width: auto;\n      float: right;\n      margin: 10px 25px 10px 0;\n      z-index: 100;\n      vertical-align: middle;\n      text-align: right;\n      background-color: #f1efe3;\n      border: solid 1px #E8E4D9;\n      padding: 0.8em 1em 0.5em 1em; }\n      .nom-header .nom-header-cell .add-panel span {\n        width: 38px;\n        height: 36px;\n        float: left;\n        text-align: center;\n        padding: 3px 0 3px 0;\n        margin: 0;\n        display: block;\n        border: 1px solid #E0DED7;\n        background-color: #EAE6DC;\n        border-radius: 3px; }\n        .nom-header .nom-header-cell .add-panel span:nth-child(2) {\n          margin: 0 0 0 1em; }\n        .nom-header .nom-header-cell .add-panel span:hover {\n          background-color: #e2ddcf;\n          border: solid 1px #D1C9B2;\n          cursor: pointer; }\n\n.comp-info-header p {\n  font-family: Verdana, Geneva;\n  font-weight: 600;\n  text-align: center;\n  margin-top: 0px;\n  margin-bottom: 0px !important; }\n  .comp-info-header p.info-title {\n    font-size: 0.8em;\n    margin-top: 10px; }\n  .comp-info-header p.info-location {\n    font-size: 0.8em;\n    color: #676767; }\n  .comp-info-header p.info-date {\n    font-size: 0.7em;\n    color: #676767; }\n\n.comp-info-status {\n  display: block;\n  float: right;\n  width: auto;\n  margin: 0 1.5em 1em 1em;\n  padding: 0.3em 1em 0.3em 1em;\n  border: 1px solid #ECD5A2;\n  background-color: #FFFFC6;\n  text-align: left;\n  font-weight: normal;\n  font-family: Tahoma, Geneva;\n  font-size: 13px;\n  border-radius: 8px; }\n  .comp-info-status p {\n    margin-bottom: 5px !important;\n    line-height: 18px; }\n    .comp-info-status p.status {\n      border-bottom: 1px dotted #777;\n      margin-bottom: 15px !important; }\n      .comp-info-status p.status span {\n        font-weight: bold; }\n\n.custom-modal {\n  background-color: #ffffff;\n  position: absolute;\n  top: 10%;\n  left: 50%;\n  min-width: 500px;\n  min-height: 200px;\n  border-radius: 5px;\n  padding: 4px 10px;\n  margin-left: -250px; }\n  .custom-modal .custom-modal-header {\n    text-align: right;\n    padding-right: 5px; }\n    .custom-modal .custom-modal-header .fa-times {\n      color: #9a9aaf;\n      cursor: pointer; }\n      .custom-modal .custom-modal-header .fa-times:hover {\n        color: #68686f; }\n  .custom-modal h6,\n  .custom-modal h4 {\n    margin: 5px 0 10px 0px; }\n  .custom-modal h4 {\n    font-size: 1.2em;\n    color: #0849c5;\n    margin-top: 0px; }\n  .custom-modal .form-header {\n    display: block;\n    margin: 10px auto;\n    border: solid 1px #AACCAA;\n    background-color: #D5FCA1;\n    text-align: center;\n    border-radius: 5px;\n    padding: 10px; }\n    .custom-modal .form-header h3 {\n      font-weight: bold;\n      font-family: Tahoma, Verdana;\n      font-size: 1.3em;\n      margin-bottom: 10px !important; }\n    .custom-modal .form-header p {\n      font-family: Verdana, Geneva;\n      font-weight: 600;\n      text-align: center;\n      margin-top: 0px;\n      margin-bottom: 0px !important; }\n      .custom-modal .form-header p.comp-name {\n        font-size: 0.8em;\n        margin-top: 10px; }\n      .custom-modal .form-header p.comp-location {\n        font-size: 0.8em;\n        color: #676767; }\n      .custom-modal .form-header p.comp-date {\n        font-size: 0.7em;\n        color: #676767; }\n  .custom-modal .formBody {\n    width: 420px !important;\n    margin: 10px auto;\n    background-color: #f1efe3;\n    border: 1px solid #e0dbcb;\n    border-radius: 10px;\n    padding: 10px 15px; }\n    .custom-modal .formBody tr th,\n    .custom-modal .formBody thead th {\n      color: #777;\n      font-size: 12px;\n      font-weight: bold;\n      line-height: 18px;\n      padding: 0 !important; }\n    .custom-modal .formBody table {\n      border: none !important;\n      margin-bottom: 0px !important; }\n      .custom-modal .formBody table tr.another-position {\n        background-color: #EAE7D7; }\n      .custom-modal .formBody table tr td {\n        border: none !important;\n        padding: 0 !important;\n        vertical-align: top; }\n  .custom-modal .formFooter {\n    display: flex;\n    flex-direction: row; }\n    .custom-modal .formFooter .form-footer-tab {\n      flex-grow: 1; }\n      .custom-modal .formFooter .form-footer-tab.left {\n        text-align: right;\n        padding-right: 10px; }\n      .custom-modal .formFooter .form-footer-tab.right {\n        text-align: left;\n        padding-left: 10px; }\n      .custom-modal .formFooter .form-footer-tab .footer-button.success {\n        background-color: #24881e; }\n        .custom-modal .formFooter .form-footer-tab .footer-button.success:hover {\n          background-color: #2da926; }\n      .custom-modal .formFooter .form-footer-tab .footer-button.danger {\n        background-color: #ad2121; }\n        .custom-modal .formFooter .form-footer-tab .footer-button.danger:hover {\n          background-color: #e23333; }\n  .custom-modal form .validation {\n    position: absolute;\n    margin-top: -16px;\n    font-size: 0.8em;\n    color: red;\n    margin-left: 10px; }\n  .custom-modal form label {\n    display: block;\n    font-weight: 600;\n    text-align: right;\n    margin-right: 10px;\n    color: #000; }\n  .custom-modal form input,\n  .custom-modal form textarea {\n    font-family: Verdana, Geneva;\n    width: 100%;\n    margin-bottom: 10px;\n    font-size: 11px !important;\n    line-height: 16px !important; }\n    .custom-modal form input:read-only, .custom-modal form input:disabled,\n    .custom-modal form textarea:read-only,\n    .custom-modal form textarea:disabled {\n      opacity: 0.6;\n      cursor: not-allowed; }\n    .custom-modal form input[type=\"checkbox\"],\n    .custom-modal form textarea[type=\"checkbox\"] {\n      display: block;\n      float: left;\n      margin: 0;\n      width: auto; }\n  .custom-modal form select {\n    margin-bottom: 10px; }\n  .custom-modal form button {\n    color: #fff;\n    background-color: #038ece;\n    font-weight: 600;\n    border-radius: 4px;\n    border: 0px;\n    padding: 5px 5px 7px;\n    margin: 5px 0;\n    cursor: pointer; }\n    .custom-modal form button:hover {\n      background-color: #03A9F4; }\n    .custom-modal form button:disabled {\n      opacity: 0.5;\n      cursor: not-allowed; }\n      .custom-modal form button:disabled:hover {\n        background-color: #038ece; }\n\n.inform {\n  position: absolute;\n  top: 30%;\n  left: 50%;\n  min-width: 400px;\n  background-color: #fff;\n  margin-left: -200px;\n  padding: 5px 10px;\n  border-radius: 5px; }\n  .inform .inform-header .icons {\n    text-align: right; }\n    .inform .inform-header .icons .fa-times {\n      color: #9a9aaf;\n      cursor: pointer; }\n      .inform .inform-header .icons .fa-times:hover {\n        color: #68686f; }\n  .inform .inform-body {\n    padding: 10px 0;\n    font-family: Tahoma, Verdana;\n    font-size: 0.9em;\n    text-align: center; }\n\n.dialog {\n  position: absolute;\n  font-family: Verdana, Geneva;\n  top: 30%;\n  left: 50%;\n  min-width: 400px;\n  background-color: #fff;\n  margin-left: -200px;\n  padding: 5px 10px;\n  border-radius: 5px; }\n  .dialog .dialog-body {\n    padding: 10px 0;\n    font-size: 0.8em; }\n  .dialog .dialog-header .icons {\n    text-align: right; }\n    .dialog .dialog-header .icons .fa-times {\n      color: #9a9aaf;\n      cursor: pointer; }\n      .dialog .dialog-header .icons .fa-times:hover {\n        color: #68686f; }\n  .dialog .dialog-footer {\n    text-align: right;\n    padding-bottom: 5px; }\n    .dialog .dialog-footer button {\n      color: #fff;\n      background-color: #038ece;\n      border-radius: 4px;\n      border: 0px;\n      padding: 4px 3px 4px;\n      margin: 3px 10px 0 0;\n      cursor: pointer;\n      min-width: 50px; }\n      .dialog .dialog-footer button.btn-danger {\n        background-color: #ab3434; }\n        .dialog .dialog-footer button.btn-danger:hover {\n          background-color: #e25252; }\n      .dialog .dialog-footer button.btn-success {\n        background-color: #2f693b; }\n        .dialog .dialog-footer button.btn-success:hover {\n          background-color: #459255; }\n  .dialog h4 {\n    font-size: 1em !important;\n    margin: 0 !important;\n    color: #2e3fc5 !important; }\n\n.nom-grid-wrap {\n  margin-bottom: 25px;\n  clear: both; }\n  .nom-grid-wrap .division-wrap {\n    margin-bottom: 20px; }\n    .nom-grid-wrap .division-wrap .w-class-name {\n      font-family: Verdana, Geneva;\n      font-weight: 600;\n      font-size: 0.9em;\n      background-color: #fdfaf2;\n      color: #000;\n      border: 1px solid #ccc;\n      padding-left: 4px; }\n  .nom-grid-wrap h4 {\n    font-family: Verdana, Geneva;\n    font-weight: 600;\n    text-align: center;\n    clear: both;\n    font-size: 0.9em;\n    margin-bottom: 10px !important; }\n  .nom-grid-wrap .division-head {\n    background-color: #8d0000;\n    font-family: Verdana, Geneva;\n    color: #fff;\n    font-size: 0.8em;\n    font-weight: 600;\n    text-shadow: 0 0 1px #000;\n    padding-left: 5px; }\n  .nom-grid-wrap .empty-nomination {\n    clear: both;\n    background-color: #afd0ea;\n    border: 1px solid #ccc;\n    border-radius: 4px;\n    margin: 0 auto;\n    width: 50%;\n    padding: 20px 0; }\n    .nom-grid-wrap .empty-nomination p {\n      font-family: Verdana, Geneva;\n      font-size: 12px !important;\n      text-align: center;\n      margin-bottom: 0 !important; }\n  .nom-grid-wrap .division-counters {\n    font-family: Verdana, Geneva;\n    font-size: 0.8em;\n    text-align: right;\n    margin-bottom: 20px; }\n", ""]);
 
 // exports
 
