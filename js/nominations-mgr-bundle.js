@@ -53201,9 +53201,9 @@ var NomGrid = function NomGrid(props) {
         field: "fullName",
         width: "150px"
     }, {
-        title: "Рік народження",
+        title: "Дата народження",
         field: "born",
-        width: "*"
+        width: "75px"
     }, {
         title: "Вагова категорія",
         field: "wClass",
@@ -53234,17 +53234,17 @@ var NomGrid = function NomGrid(props) {
         results = [{
             title: "Присідання",
             field: "squat",
-            width: "*",
+            width: "45px",
             class: "al-right"
         }, {
             title: "Жим",
             field: "benchpress",
-            width: "*",
+            width: "45px",
             class: "al-right"
         }, {
             title: "Тяга",
             field: "deadlift",
-            width: "*",
+            width: "45px",
             class: "al-right"
         }, {
             title: "Сума",
@@ -53256,7 +53256,7 @@ var NomGrid = function NomGrid(props) {
         results = [{
             title: "Жим",
             field: "benchpress",
-            width: "*",
+            width: "45px",
             class: "al-right exercise-total"
         }];
     }
@@ -53276,7 +53276,7 @@ var NomGrid = function NomGrid(props) {
             title: "",
             field: "id",
             button: "edit",
-            width: "*",
+            width: "30px",
             action: function action(e) {
                 props.onLifterEdit(e.target.dataset["rel"]);
             }
@@ -53287,7 +53287,7 @@ var NomGrid = function NomGrid(props) {
             title: "",
             field: "id",
             button: "delete",
-            width: "*",
+            width: "30px",
             action: function action(e) {
                 props.onDelete(e.target.dataset["rel"]);
             }
@@ -53331,7 +53331,7 @@ var NomGrid = function NomGrid(props) {
                 rowItem.number = "";
                 rowItem.fullName = item.surname + " " + item.name;
                 rowItem.fullName = item.mName ? rowItem.fullName + " " + item.mName : rowItem.fullName;
-                rowItem.born = new Date(item.born).getFullYear();
+                rowItem.born = (0, _moment2.default)(new Date(item.born)).format("DD.MM.YYYY");
                 rowItem.level = item.level;
                 rowItem.city = item.city;
                 rowItem.fst = item.fst;
