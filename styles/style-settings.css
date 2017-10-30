@@ -41,6 +41,9 @@
       color: #6b3e1d; }
     .grid tbody tr td .delete {
       color: #cc3227; }
+    .grid tbody tr td .cup-marker {
+      margin: 0 5px;
+      color: #000ba5; }
 
 .custom-modal {
   background-color: #ffffff;

@@ -51,7 +51,8 @@ class Competitions extends React.Component{
             typeId: 1,
             startDate: null,
             endDate: null,
-            isJun: "false"
+            isJun: "false",
+            isCup: false
         }
         this.setState({competition: competition});
     }

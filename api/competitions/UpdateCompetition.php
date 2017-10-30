@@ -11,8 +11,10 @@ if(current_user_can('edit_others_pages')):
     $endDate = stripslashes($_POST["endDate"]);
     $typeId = stripslashes($_POST["typeId"]);
     $isJun = stripslashes($_POST["isJun"]);
+    $isCup = stripslashes($_POST["isCup"]);
 
-    $sql = $wpdb->prepare("UPDATE $tb_competitions SET name = %s, location = %s, gender = %s, start_date = %s, end_date = %s, type = %d, is_jun = %s WHERE id = %d", 
-    $name, $location, $gender, $startDate, $endDate, $typeId, $isJun, $id);
+    $sql = $wpdb->prepare("UPDATE $tb_competitions SET name = %s, location = %s, gender = %s, start_date = %s, end_date = %s, type = %d, is_jun = %s,
+    is_cup = %s WHERE id = %d", 
+    $name, $location, $gender, $startDate, $endDate, $typeId, $isJun, $isCup, $id);
     if($wpdb->query($sql)) print_r("Competition was updated");
 endif;

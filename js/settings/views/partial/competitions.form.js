@@ -14,6 +14,7 @@ const CompForm = (props) => {
     var startDate = (props.competition.startDate)? new Date(props.competition.startDate) : null;
     var endDate = (props.competition.endDate)? new Date(props.competition.endDate) : null;
     var isJun = (props.competition.isJun)? JSON.parse(props.competition.isJun) : false;
+    var isCup = (props.competition.isCup)? JSON.parse(props.competition.isCup) : false;
     return (<div>
         <h4>{word + " змагання"}</h4>
         <form>
@@ -45,6 +46,10 @@ const CompForm = (props) => {
                 <label>Є змаганням для учнів ДЮСШ</label>
                 <input checked={isJun} type="checkbox" onChange={e => props.onChange("isJun", e.target.checked)} />
             </div>  
+            <div>
+                <label>Кубок</label>
+                <input checked={isCup} type="checkbox" onChange={e => props.onChange("isCup", e.target.checked)} />
+            </div>
             <div>
                 <button type="button" disabled={validation.isFormValid(props.competition, required)} onClick={() => props.onSave()}>Зберегти</button>    
             </div>                                                       

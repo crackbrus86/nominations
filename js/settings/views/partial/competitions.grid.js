@@ -50,9 +50,11 @@ const CompGrid = (props) => {
                       
     ];
     var rows = props.data.map(item => {
+        var gameName = (item.isJun && JSON.parse(item.isJun))? <div>{item.name}<sup>ДЮСШ</sup></div> : <div>{item.name}</div>;
+        if(JSON.parse(item.isCup)) gameName = <div>{item.name}<i className="fa fa-trophy cup-marker"></i></div>;
         return{
             id: item.id,
-            name: (item.isJun && JSON.parse(item.isJun))? <div>{item.name}<sup>ДЮСШ</sup></div> : <div>{item.name}</div>,
+            name: gameName,
             typeName: item.typeName,
             location: item.location,
             startDate: moment(item.startDate).format("DD-MM-YYYY"),

@@ -121,7 +121,7 @@ const LifterForm = (props) => {
                     </tr>
                     <tr>
                         <td><label>Дивізіон{(!validateDivision().isValid)? validateDivision().text : ""}</label></td>
-                        <td><select value={nom.division} onChange={e => props.onChange("division", e.target.value)} >{divisionsList}</select></td>
+                        <td><select value={nom.division} onChange={e => props.onChange("division", e.target.value)} disabled={JSON.parse(info.isCup)}>{divisionsList}</select></td>
                     </tr>
                     {ageGroups}
                     <tr><td></td><td>{validation.isSelectValid(nom.weightClass)}</td></tr>

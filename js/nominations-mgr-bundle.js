@@ -51141,7 +51141,7 @@ var LifterForm = function LifterForm(props) {
                                     "select",
                                     { value: nom.division, onChange: function onChange(e) {
                                             return props.onChange("division", e.target.value);
-                                        } },
+                                        }, disabled: JSON.parse(info.isCup) },
                                     divisionsList
                                 )
                             )

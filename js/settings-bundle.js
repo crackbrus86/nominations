@@ -16143,6 +16143,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(6);
@@ -16202,9 +16204,10 @@ var Grid = function (_React$Component) {
                             } },
                         row[column.field]
                     ) : row[column.field];
+                    var hint = (typeof content === "undefined" ? "undefined" : _typeof(content)) != "object" ? content : "";
                     cells.push(_react2.default.createElement(
                         "td",
-                        { key: counter, width: column.width, className: column.class },
+                        { key: counter, width: column.width, className: column.class, title: hint },
                         content
                     ));
                 }
@@ -16222,7 +16225,7 @@ var Grid = function (_React$Component) {
                 counter++;
                 return _react2.default.createElement(
                     "th",
-                    { key: counter, width: column.width },
+                    { key: counter, width: column.width, title: column.title },
                     column.title
                 );
             });
@@ -16341,7 +16344,7 @@ exports.default = Modal;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.isEmailValid = exports.isFieldValid = exports.isFormValid = undefined;
+exports.hasComma = exports.isSelectValid = exports.isEmailValid = exports.isFieldValid = exports.isFormValid = undefined;
 
 var _react = __webpack_require__(6);
 
@@ -16394,6 +16397,32 @@ var isEmailValid = exports.isEmailValid = function isEmailValid(field) {
             "sub",
             null,
             "Не вірно вказано email"
+        )
+    );
+};
+
+var isSelectValid = exports.isSelectValid = function isSelectValid(value) {
+    if (!value || value === 0 || value === "0" || !JSON.parse(value)) return _react2.default.createElement(
+        "i",
+        { className: "invalid" },
+        "*",
+        _react2.default.createElement(
+            "sub",
+            null,
+            "Оберіть корректне значення"
+        )
+    );
+};
+
+var hasComma = exports.hasComma = function hasComma(str) {
+    if (str.toString().indexOf(",") > -1) return _react2.default.createElement(
+        "i",
+        { className: "invalid" },
+        "*",
+        _react2.default.createElement(
+            "sub",
+            null,
+            "Використовуйте '.' замість ','!"
         )
     );
 };
@@ -49697,7 +49726,8 @@ var Competitions = function (_React$Component) {
                 typeId: 1,
                 startDate: null,
                 endDate: null,
-                isJun: "false"
+                isJun: "false",
+                isCup: false
             };
             this.setState({ competition: competition });
         }
@@ -49861,22 +49891,29 @@ var CompGrid = function CompGrid(props) {
         width: "*"
     }];
     var rows = props.data.map(function (item) {
+        var gameName = item.isJun && JSON.parse(item.isJun) ? _react2.default.createElement(
+            "div",
+            null,
+            item.name,
+            _react2.default.createElement(
+                "sup",
+                null,
+                "\u0414\u042E\u0421\u0428"
+            )
+        ) : _react2.default.createElement(
+            "div",
+            null,
+            item.name
+        );
+        if (JSON.parse(item.isCup)) gameName = _react2.default.createElement(
+            "div",
+            null,
+            item.name,
+            _react2.default.createElement("i", { className: "fa fa-trophy cup-marker" })
+        );
         return {
             id: item.id,
-            name: item.isJun && JSON.parse(item.isJun) ? _react2.default.createElement(
-                "div",
-                null,
-                item.name,
-                _react2.default.createElement(
-                    "sup",
-                    null,
-                    "\u0414\u042E\u0421\u0428"
-                )
-            ) : _react2.default.createElement(
-                "div",
-                null,
-                item.name
-            ),
+            name: gameName,
             typeName: item.typeName,
             location: item.location,
             startDate: (0, _moment2.default)(item.startDate).format("DD-MM-YYYY"),
@@ -50227,6 +50264,7 @@ var CompForm = function CompForm(props) {
     var startDate = props.competition.startDate ? new Date(props.competition.startDate) : null;
     var endDate = props.competition.endDate ? new Date(props.competition.endDate) : null;
     var isJun = props.competition.isJun ? JSON.parse(props.competition.isJun) : false;
+    var isCup = props.competition.isCup ? JSON.parse(props.competition.isCup) : false;
     return _react2.default.createElement(
         "div",
         null,
@@ -50329,6 +50367,18 @@ var CompForm = function CompForm(props) {
                 ),
                 _react2.default.createElement("input", { checked: isJun, type: "checkbox", onChange: function onChange(e) {
                         return props.onChange("isJun", e.target.checked);
+                    } })
+            ),
+            _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement(
+                    "label",
+                    null,
+                    "\u041A\u0443\u0431\u043E\u043A"
+                ),
+                _react2.default.createElement("input", { checked: isCup, type: "checkbox", onChange: function onChange(e) {
+                        return props.onChange("isCup", e.target.checked);
                     } })
             ),
             _react2.default.createElement(
