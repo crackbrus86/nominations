@@ -148,12 +148,20 @@ const LiftersGrid = (props) => {
         if(diff >= 16 && diff <= 18) return "III група (" + parseInt(year-18) + " - " + parseInt(year-16) + "р.н.)";
         if(diff >= 19 && diff <= 23) return "IV група (" + parseInt(year-23) + " - " + parseInt(year-19) + "р.н.)";
         return null;
-    } 
+    }
+    var weightClassSorting = (a,b) => {
+        var tmpA = parseInt(a.name.replace("-","").replace("+",""));
+        var tmpB = parseInt(b.name.replace("-","").replace("+",""));
+        if(a.name.indexOf("+") >= 0) tmpA += 1;
+        if(b.name.indexOf("+") >=0)  tmpB +=1;
+        return tmpA - tmpB;
+    }
+    
     var lifters = divisions.map(division => {
         if(division.items.length){
             var divName = (props.game.gender === "male")? division.titleM : division.titleF;
             var weightClasses = props.weightClasses;
-            weightClasses.sort((a,b) => (parseInt(a.name.replace("-","").replace("+","")) - parseInt(b.name.replace("-","").replace("+",""))));
+            weightClasses.sort((a,b) => (weightClassSorting(a,b)));
             var wcl = weightClasses.map(w => {
                 var wItems = division.items.filter(x => x.wId === w.id);
                 var cropZero = val => {

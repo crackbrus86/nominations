@@ -50196,6 +50196,7 @@ var Nominations = function (_React$Component) {
             var temp = this.state.nomination;
             temp[field] = value;
             if (temp["type"] === "lifter") temp["total"] = parseFloat(temp.squat) + parseFloat(temp.benchpress) + parseFloat(temp.deadlift);
+            if (field === "division") temp["weightClass"] = 0;
             this.setState({ nomination: temp });
         }
     }, {

@@ -49543,12 +49543,20 @@ var LiftersGrid = function LiftersGrid(props) {
         if (diff >= 19 && diff <= 23) return "IV група (" + parseInt(year - 23) + " - " + parseInt(year - 19) + "р.н.)";
         return null;
     };
+    var weightClassSorting = function weightClassSorting(a, b) {
+        var tmpA = parseInt(a.name.replace("-", "").replace("+", ""));
+        var tmpB = parseInt(b.name.replace("-", "").replace("+", ""));
+        if (a.name.indexOf("+") >= 0) tmpA += 1;
+        if (b.name.indexOf("+") >= 0) tmpB += 1;
+        return tmpA - tmpB;
+    };
+
     var lifters = divisions.map(function (division) {
         if (division.items.length) {
             var divName = props.game.gender === "male" ? division.titleM : division.titleF;
             var weightClasses = props.weightClasses;
             weightClasses.sort(function (a, b) {
-                return parseInt(a.name.replace("-", "").replace("+", "")) - parseInt(b.name.replace("-", "").replace("+", ""));
+                return weightClassSorting(a, b);
             });
             var wcl = weightClasses.map(function (w) {
                 var wItems = division.items.filter(function (x) {
@@ -49789,12 +49797,20 @@ var IsJunLiftersGrid = function IsJunLiftersGrid(props) {
 
     var ageGroups = [1, 2, 3, 4];
 
+    var weightClassSorting = function weightClassSorting(a, b) {
+        var tmpA = parseInt(a.name.replace("-", "").replace("+", ""));
+        var tmpB = parseInt(b.name.replace("-", "").replace("+", ""));
+        if (a.name.indexOf("+") >= 0) tmpA += 1;
+        if (b.name.indexOf("+") >= 0) tmpB += 1;
+        return tmpA - tmpB;
+    };
+
     var lifters = divisions.map(function (d) {
         if (d.items.length) {
             var divName = props.game.gender === "male" ? d.titleM : d.titleF;
             var weightClasses = props.weightClasses;
             weightClasses.sort(function (a, b) {
-                return parseInt(a.name.replace("-", "").replace("+", "")) - parseInt(b.name.replace("-", "").replace("+", ""));
+                return weightClassSorting(a, b);
             });
             var ag = ageGroups.map(function (i) {
                 var ac = d.items.filter(function (x) {
