@@ -48692,8 +48692,8 @@ var CompGrid = function CompGrid(props) {
         width: "*"
     }];
     var rows = props.data.map(function (item) {
-        var p = new Date(item.startDate).setDate(new Date(item.startDate).getDate() - 22);
-        var f = new Date(item.startDate).setDate(new Date(item.startDate).getDate() - 11);
+        var p = new Date(item.startDate).setDate(new Date(item.startDate).getDate() - 21);
+        var f = new Date(item.startDate).setDate(new Date(item.startDate).getDate() - 10);
         var mc = new Date(item.startDate).setDate(new Date(item.startDate).getDate() - 1);
         var status = "";
         if (+new Date() <= p) {
@@ -49326,9 +49326,9 @@ var CompInfo = function CompInfo(props) {
     if (!props.compInfo) return null;
     var info = props.compInfo;
     var date = (0, _moment2.default)(info.startDate).locale("uk").format("DD MMM") + "-" + (0, _moment2.default)(info.endDate).locale("uk").format("DD MMM") + ", " + (0, _moment2.default)(info.endDate).format("YYYY");
-    var p = new Date(info.startDate).setDate(new Date(info.startDate).getDate() - 22);
-    var f = new Date(info.startDate).setDate(new Date(info.startDate).getDate() - 11);
-    var bm7 = new Date(info.startDate).setDate(new Date(info.startDate).getDate() - 8);
+    var p = new Date(info.startDate).setDate(new Date(info.startDate).getDate() - 21);
+    var f = new Date(info.startDate).setDate(new Date(info.startDate).getDate() - 10);
+    var bm7 = new Date(info.startDate).setDate(new Date(info.startDate).getDate() - 7);
     var mc = new Date(info.startDate).setDate(new Date(info.startDate).getDate() - 1);
     var status = null;
     var statusColor = null;

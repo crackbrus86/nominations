@@ -46,7 +46,7 @@ const RefGrid = (props) => {
         }
     }];
     var info = props.game;
-    var bm7 = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 8);   
+    var bm7 = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 7);   
     if((+new Date()) <= bm7) columns = columns.concat(controls);
     var referees = props.nominations.map(x => {
         var referee = {};

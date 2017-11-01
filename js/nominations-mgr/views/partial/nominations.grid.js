@@ -144,8 +144,8 @@ const NomGrid = (props) => {
     var gridColumns = columns.concat(results);
     gridColumns = gridColumns.concat(coachesCol);
     var info = props.game;
-    var f = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 11);
-    var bm7 = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 8);    
+    var f = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 10);
+    var bm7 = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 7);    
     var controls = [];
     if((+new Date()) <= f){
         controls.push({

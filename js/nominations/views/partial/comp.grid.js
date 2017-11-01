@@ -42,8 +42,8 @@ const CompGrid = (props) => {
                     
     ];   
     var rows = props.data.map(item => {
-        var p = (new Date(item.startDate)).setDate((new Date(item.startDate)).getDate() - 22);
-        var f = (new Date(item.startDate)).setDate((new Date(item.startDate)).getDate() - 11);
+        var p = (new Date(item.startDate)).setDate((new Date(item.startDate)).getDate() - 21);
+        var f = (new Date(item.startDate)).setDate((new Date(item.startDate)).getDate() - 10);
         var mc = (new Date(item.startDate)).setDate((new Date(item.startDate)).getDate() - 1);
         var status = "";
         if((+new Date()) <= p){
