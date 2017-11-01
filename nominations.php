@@ -80,6 +80,7 @@ add_shortcode('NomGrid', 'nomGrid');
 class Nominations{
     function initSettings(){
         add_menu_page("Nominations", "Номінації", "manage_options", "nominations", array("Nominations", "nomEditor"));
+        add_submenu_page("nominations", "Управління номінаціями", "Управління", "manage_options", "nominations-admin", array("Nominations", "nomAdmin"));
     }
 
     function nomEditor(){
@@ -92,6 +93,19 @@ class Nominations{
             <h2>Налаштування</h2>
             <div id="settings"></div>
         </div>        
+        <?php
+    }
+
+    function nomAdmin(){
+        wp_register_style('style-front', plugins_url( '/styles/style-front.css?v='.time(), __FILE__ ));
+        wp_enqueue_style( 'style-front');          
+        wp_register_script( 'nom-adm', plugins_url( './js/nominations-adm-bundle.js?v='.time(), __FILE__ ) );
+        wp_enqueue_script(  'nom-adm');         
+        ?>
+        <div class="container-fluid">
+            <h2>Управління номінаціями</h2>
+            <div id="nom-adm"></div>
+        </div>         
         <?php
     }
 }
