@@ -60,7 +60,13 @@ add_shortcode('NomMgm', 'nominationsMgm');
 
 function nomGrid(){
     wp_register_script( 'jq', plugins_url( '/js/scripts/jquery-3.2.1.min.js?v='.time(), __FILE__ ) );
-    wp_enqueue_script(  'jq');      
+    wp_enqueue_script(  'jq');   
+    wp_register_script( 'print', plugins_url( '/js/scripts/jQuery.print.js?v='.time(), __FILE__ ) );
+    wp_enqueue_script(  'print');   
+    wp_register_script( 'FileSaver', plugins_url( '/js/scripts/FileSaver.min.js?v='.time(), __FILE__ ) );
+    wp_enqueue_script(  'FileSaver'); 
+    wp_register_script( 'wordexport', plugins_url( '/js/scripts/jquery.wordexport.js?v='.time(), __FILE__ ) );
+    wp_enqueue_script(  'wordexport');          
     wp_register_script( 'resize', plugins_url( '/js/scripts/colResizable-1.6.js?v='.time(), __FILE__ ) );
     wp_enqueue_script(  'resize');     
     wp_register_script( 'nominations-bundle', plugins_url( './js/nominations-bundle.js?v='.time(), __FILE__ ) );

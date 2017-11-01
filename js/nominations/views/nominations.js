@@ -18,6 +18,8 @@ class Nominations extends React.Component{
             lifters: [],
             referees: []
         }
+        this.onPrint = this.printGrid.bind(this);
+        this.onExport = this.exportGrid.bind(this);
     }
 
     getCompInfo(compId){
@@ -70,7 +72,15 @@ class Nominations extends React.Component{
             this.setState({weightClasses: JSON.parse(data)});
             this.setState({isLoading: false});
         })
-    }    
+    }   
+    
+    printGrid(){
+        jQuery.print(".print-wrap");
+    }
+
+    exportGrid(){
+        jQuery(".print-wrap").wordExport();
+    }
 
     componentWillReceiveProps(props){
         if(props.competition){
@@ -93,11 +103,17 @@ class Nominations extends React.Component{
                 <div className="nom-header-cell">
                     <button type="button" className="back-to-nom-list" onClick={() => this.props.back()}><i className="fa fa-chevron-left"></i>Назад до списку номінацій</button>
                 </div>
+                <div className="nom-header-cell right-header-cell">
+                    <button type="button" className="print-btn" title="Друкувати"  onClick={this.onPrint}><i className="fa fa-print"></i></button>
+                    <button type="button" className="print-btn" title="Експортувати в Word"   onClick={this.onExport}><i className="fa fa-file-word-o"></i></button>
+                </div>
             </div>
             <CompInfo compInfo={this.state.compInfo} />
-            <IsJunLiftersGrid nominations={this.state.lifters} game={this.state.compInfo} weightClasses={this.state.weightClasses} regions={this.state.regions} />
-            <LiftersGrid nominations={this.state.lifters} game={this.state.compInfo} weightClasses={this.state.weightClasses} regions={this.state.regions} />
-            <RefGrid nominations={this.state.referees} game={this.state.compInfo} regions={this.state.regions} />
+            <div className="print-wrap">
+                <IsJunLiftersGrid nominations={this.state.lifters} game={this.state.compInfo} weightClasses={this.state.weightClasses} regions={this.state.regions} />
+                <LiftersGrid nominations={this.state.lifters} game={this.state.compInfo} weightClasses={this.state.weightClasses} regions={this.state.regions} />
+                <RefGrid nominations={this.state.referees} game={this.state.compInfo} regions={this.state.regions} />
+            </div>
             <Preloader loading={this.state.isLoading} />            
         </div>
     }

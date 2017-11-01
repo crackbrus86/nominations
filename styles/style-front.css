@@ -129,6 +129,11 @@
           background-color: #e2ddcf;
           border: solid 1px #D1C9B2;
           cursor: pointer; }
+    .nom-header .nom-header-cell.right-header-cell {
+      text-align: right; }
+    .nom-header .nom-header-cell .print-btn {
+      cursor: pointer;
+      margin-left: 4px; }
 
 .comp-info-header p {
   font-family: Verdana, Geneva;

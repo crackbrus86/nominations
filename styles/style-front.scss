@@ -164,6 +164,15 @@
                 }
             }
         }
+
+        &.right-header-cell{
+            text-align: right;
+        }
+
+        .print-btn{
+            cursor: pointer;
+            margin-left: 4px;
+        }
     }
 }
 
