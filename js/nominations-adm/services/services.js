@@ -11,3 +11,42 @@ export const getCompetitions = () => {
         type: "POST"
     })
 }
+
+export const getCompetitionById = (contract) => {
+    return $.ajax({
+        url: compPath + "GetCompetitionById.php",
+        type: "POST",
+        data: contract
+    })
+}
+
+export const getAllRegionsNames = () => {
+    return $.ajax({
+        url: regPath + "GetAllRegionsNames.php",
+        type: "POST"
+    })
+}
+
+export const getWeightCategories = (contract) => {
+    return $.ajax({
+        url: wcPath + "GetWeightCategoriesByGender.php",
+        type: "POST",
+        data: contract
+    })
+}
+
+export const getAllLifters = (contract) => {
+    return $.ajax({
+        url: nomPath + "GetAllLifters.php",
+        type: "POST",
+        data: contract
+    })
+}
+
+export const getAllReferees = (contract) => {
+    return $.ajax({
+        url: nomPath + "GetAllReferees.php",
+        type: "POST",
+        data: contract
+    })
+}

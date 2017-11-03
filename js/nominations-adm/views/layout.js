@@ -1,5 +1,6 @@
 import React from "react";
 import Competitions from "./competitions";
+import Nominations from "./nominations";
 
 class NomAdmin extends React.Component{
     constructor(){
@@ -22,6 +23,7 @@ class NomAdmin extends React.Component{
     render(){
         return <div id="nm-front">
             <Competitions competition = {this.state.competition} getComp = {this.getComp} />
+            <Nominations competition={this.state.competition} back={this.unsetComp} />
         </div>
     }
 }
