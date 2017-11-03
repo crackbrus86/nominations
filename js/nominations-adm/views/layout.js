@@ -23,7 +23,7 @@ class NomAdmin extends React.Component{
     render(){
         return <div id="nm-front">
             <Competitions competition = {this.state.competition} getComp = {this.getComp} />
-            <Nominations competition={this.state.competition} back={this.unsetComp} />
+            <Nominations competition={this.state.competition} back={this.unComp} />
         </div>
     }
 }

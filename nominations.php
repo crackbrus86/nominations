@@ -100,7 +100,9 @@ class Nominations{
         wp_register_script( 'resize', plugins_url( '/js/scripts/colResizable-1.6.js?v='.time(), __FILE__ ) );
         wp_enqueue_script(  'resize');           
         wp_register_style('style-front', plugins_url( '/styles/style-front.css?v='.time(), __FILE__ ));
-        wp_enqueue_style( 'style-front');          
+        wp_enqueue_style( 'style-front'); 
+        wp_register_style('style-adm', plugins_url( '/styles/style-adm.css?v='.time(), __FILE__ ));
+        wp_enqueue_style( 'style-adm');                   
         wp_register_script( 'nom-adm', plugins_url( './js/nominations-adm-bundle.js?v='.time(), __FILE__ ) );
         wp_enqueue_script(  'nom-adm');         
         ?>

@@ -16,6 +16,13 @@
             "command": "node-sass styles/style-settings.scss styles/style-settings.css",
             "group": "build",
             "problemMatcher": []
-        }      
+        },
+        {
+            "taskName": "Admin Sass Compile",
+            "type": "shell",
+            "command": "node-sass styles/style-adm.scss styles/style-adm.css",
+            "group": "build",
+            "problemMatcher": []
+        }            
     ]
 }
