@@ -107,8 +107,29 @@ const IsJunLiftersGrid = (props) => {
         field: "coaches",
         width: "*"
     }];
+    var controls = [
+        {
+            title: "",
+            field: "id",
+            button: "edit",
+            width: "30px",
+            action: (e) => {
+                props.onEdit(e.target.dataset["rel"]);
+            }         
+        },
+        {
+            title: "",
+            field: "id",
+            button: "delete",
+            width: "30px",
+            action: (e) => {
+                props.onDelete(e.target.dataset["rel"]);
+            }                     
+        }
+    ];
     var gridColumns = columns.concat(results);
     gridColumns = gridColumns.concat(coachesCol);
+    gridColumns = gridColumns.concat(controls);
     var getAgeCatByDate = (bdate) => {
         var year = parseInt(new Date().getFullYear());
         var born = new Date(bdate).getFullYear();
@@ -156,6 +177,7 @@ const IsJunLiftersGrid = (props) => {
                             var items = wItems.map(i => {
                                 var rowItem = {};
                                 rowItem.reserve = (i.reserve && JSON.parse(i.reserve))? <sup>R</sup> : null;
+                                rowItem.id = i.id;
                                 rowItem.number = "";
                                 rowItem.fullName = i.surname + " " + i.name;
                                 rowItem.fullName = (i.mName)? rowItem.fullName + " " + i.mName : rowItem.fullName;

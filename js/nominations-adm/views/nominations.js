@@ -6,7 +6,11 @@ import CompInfo from "./partial/comp.info";
 import IsJunLiftersGrid from "./partial/isJun.lifters.grid";
 import LiftersGrid from "./partial/lifters.grid";
 import RefGrid from "./partial/referees.grid";
-
+import Modal from "../../components/modal/modal";
+import Dialog from "../../components/modal/dialog";
+import LifterForm from "./partial/lifter.form";
+import OfficialForm from "./partial/official.form";
+import Inform from "../../components/modal/inform";
 
 class Nominations extends React.Component{
     constructor(props){
@@ -15,10 +19,23 @@ class Nominations extends React.Component{
             compInfo: null,
             isLoading: false,
             regions: [],
-            wClasses: [],
+            wClass: [],
+            wc: [],
+            subwc: [],
             lifters: [],
-            referees: []
+            referees: [],
+            nomination: null,
+            inform: null,
+            dialog: null
         }
+        this.onClose = this.closeNomination.bind(this);
+        this.onChange = this.changeNom.bind(this);
+        this.onCloseInform = this.hideInform.bind(this);
+        this.onSave = this.saveNom.bind(this);
+        this.onEditLifter = this.editLifterNom.bind(this);
+        this.onDelete = this.deleteDialog.bind(this);
+        this.onCancel = this.cancelDeleting.bind(this);
+        this.onConfirm = this.confirmDeleting.bind(this);
     }
 
     getCompInfo(compId){
@@ -68,8 +85,129 @@ class Nominations extends React.Component{
     getWeightCategories(gender){
         this.setState({isLoading: true});
         services.getWeightCategories({gender: gender}).then(data => {
-            this.setState({wClasses: JSON.parse(data)});
+            var categories = JSON.parse(data);
+            this.setState({wClass: categories});
+            var wc = categories.filter(x => x.division === "open");
+            var subwc = categories.filter(y => y.division === "subjuniors");
+            this.setState({wc: wc});
+            this.setState({subwc: subwc})
             this.setState({isLoading: false});
+        })
+    }
+
+    editLifterNom(id){
+        this.setState({isLoading: true});
+        services.getLifterNominationById({id: id}).then(data => {
+            var nom = JSON.parse(data)[0];
+            this.setState({isLoading: false});
+            this.setState({nomination: nom});
+        })
+    }
+
+    createNomination(type){
+        var nom = (type === "lifter")? {
+            type: type,
+            surname: "",
+            firstName: "",
+            mName: "",
+            birthDate: null,
+            gender: this.state.compInfo.gender,
+            team: this.state.regions[0].id,
+            city: "",
+            fst: "",
+            club: "",
+            school: "",
+            level: 1,
+            division: "seniors",
+            weightClass: 0,
+            squat: 0,
+            benchpress: 0,
+            deadlift: 0,
+            total: 0,
+            reserve: false,
+            competition: this.state.compInfo.id,
+            coaches: "",
+            status: false
+        } : {
+            type: type,
+            surname: "",
+            firstName: "",
+            middleName: "",
+            team: this.state.region,
+            isReferee: true,
+            refCategory: "category1",
+            refRemark: "",
+            competition: this.state.compInfo.id,
+            status: false            
+        };
+
+        this.setState({nomination: nom})
+    }
+
+    closeNomination(){
+        this.setState({nomination: null});
+    }
+
+    changeNom(field, value){
+        var temp = this.state.nomination;
+        temp[field] = value;
+        if(temp["type"] === "lifter") temp["total"] = parseFloat(temp.squat) + parseFloat(temp.benchpress) + parseFloat(temp.deadlift);
+        if(field === "division") temp["weightClass"] = 0;
+        this.setState({nomination: temp});
+    }
+
+    saveNom(){
+        this.setState({isLoading: true});
+        if(this.state.nomination.type === "lifter"){
+            if(this.state.nomination.id){
+                services.updateLifterNominationById(this.state.nomination).then(() => {
+                    this.closeNomination();
+                    this.setState({isLoading: false});
+                    this.showInform("Номінацію спортсмена було успішно оновлено");
+                    this.getAllLifters();
+                    this.getAllReferees();
+                })
+            }else{
+                services.insertLifterNomination(this.state.nomination).then(() => {
+                    this.closeNomination();
+                    this.setState({isLoading: false});
+                    this.showInform("Спортсмена було успішно додано до номінації");
+                    this.getAllLifters();
+                    this.getAllReferees();
+                })
+            }
+        }else{
+
+        }
+    }
+
+    showInform(txt){
+        this.setState({inform: {
+            text: txt
+        }})
+    }
+
+    hideInform(){
+        this.setState({inform: null});
+    }
+
+    deleteDialog(id){
+        this.setState({dialog: {
+            id: id,
+            text: "Ви впевнені, що хочете видалити цей запис?"
+        }})
+    }
+
+    cancelDeleting(){
+        this.setState({dialog: null});
+    }
+
+    confirmDeleting(){
+        this.setState({isLoading: true});
+        services.deleteNomination({id: this.state.dialog.id}).then(() => {
+            this.cancelDeleting();
+            this.getAllLifters();
+            this.getAllReferees();
         })
     }
 
@@ -96,17 +234,23 @@ class Nominations extends React.Component{
                 </div>
                 <div className="nom-header-cell">
                     <div className="add-panel">
-                        <span><img src="../wp-content/plugins/nominations/images/nom_add.png" alt="" title="Додати спортсмена" onClick={() => null} /></span>
-                        <span><img src="../wp-content/plugins/nominations/images/nom_add_ref.png" alt="" title="Додати офіційну особу" onClick={()=>null} /></span>
+                        <span><img src="../wp-content/plugins/nominations/images/nom_add.png" alt="" title="Додати спортсмена" onClick={this.createNomination.bind(this, "lifter")} /></span>
+                        <span><img src="../wp-content/plugins/nominations/images/nom_add_ref.png" alt="" title="Додати офіційну особу" onClick={this.createNomination.bind(this, "official")} /></span>
                     </div>          
                 </div>                
             </div>  
             <CompInfo compInfo={this.state.compInfo} />  
             <div className="adm-grids-wrap">
-                <IsJunLiftersGrid nominations={this.state.lifters} game={this.state.compInfo} weightClasses={this.state.wClasses} regions={this.state.regions} />
-                <LiftersGrid nominations={this.state.lifters} game={this.state.compInfo} weightClasses={this.state.wClasses} regions={this.state.regions} />
+                <IsJunLiftersGrid nominations={this.state.lifters} game={this.state.compInfo} weightClasses={this.state.wClass} regions={this.state.regions} onEdit={this.onEditLifter} onDelete={this.onDelete} />
+                <LiftersGrid nominations={this.state.lifters} game={this.state.compInfo} weightClasses={this.state.wClass} regions={this.state.regions} onEdit={this.onEditLifter} onDelete={this.onDelete} />
                 <RefGrid nominations={this.state.referees} game={this.state.compInfo} regions={this.state.regions} />
-            </div>        
+            </div>
+            <Modal target={this.state.nomination} onClose={this.onClose}>
+                <LifterForm nomination={this.state.nomination} compInfo={this.state.compInfo} onChange={this.onChange} regions={this.state.regions} wc={this.state.wc} subwc = {this.state.subwc} onSave={this.onSave}  onClose={this.onClose} />
+                <OfficialForm nomination={this.state.nomination} compInfo={this.state.compInfo} onChange={this.onChange} regions={this.state.regions} onSave={this.onSave} onClose={this.onClose}  />
+            </Modal>   
+            <Dialog dialog={this.state.dialog} onConfirm={this.onConfirm} onClose={this.onCancel} />
+            <Inform inform={this.state.inform} onClose={this.onCloseInform} />               
             <Preloader loading={this.state.isLoading} />
         </div>
     }

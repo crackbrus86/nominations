@@ -50,3 +50,35 @@ export const getAllReferees = (contract) => {
         data: contract
     })
 }
+
+export const insertLifterNomination = (contract) => {
+    return $.ajax({
+        url: nomPath + "InsertLifterNominationAdmin.php",
+        type: "POST",
+        data: contract
+    })
+}
+
+export const getLifterNominationById = (contract) => {
+    return $.ajax({
+        url: nomPath + "GetLifterNominationByIdAdmin.php",
+        type: "POST",
+        data: contract
+    })
+}
+
+export const updateLifterNominationById = (contract) => {
+    return $.ajax({
+        url: nomPath + "UpdateLifterNominationByIdAdmin.php",
+        type: "POST",
+        data: contract
+    })
+}
+
+export const deleteNomination = (contract) => {
+    return $.ajax({
+        url: nomPath + "DeleteNominationAdmin.php",
+        type: "POST",
+        data: contract
+    })
+}
