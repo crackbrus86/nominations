@@ -30,7 +30,25 @@ const RefGrid = (props) => {
             title: "Примітки",
             field: "refRemark",
             width: "*"
-        }                 
+        },
+        {
+            title: "",
+            field: "id",
+            button: "edit",
+            width: "30px",
+            action: (e) => {
+                props.onEdit(e.target.dataset["rel"]);
+            }
+        },
+        {
+            title: "",
+            field: "id",
+            button: "delete",
+            width: "30px",
+            action: (e) => {
+                props.onDelete(e.target.dataset["rel"]);
+            }
+        }               
     ];
     var referees = props.nominations.map(x => {
         var referee = {};

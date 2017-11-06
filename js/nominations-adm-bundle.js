@@ -26379,7 +26379,7 @@ return jQuery;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.deleteNomination = exports.updateLifterNominationById = exports.getLifterNominationById = exports.insertLifterNomination = exports.getAllReferees = exports.getAllLifters = exports.getWeightCategories = exports.getAllRegionsNames = exports.getCompetitionById = exports.getCompetitions = undefined;
+exports.updateOfficialNominationById = exports.getOfficialNominationById = exports.deleteNomination = exports.updateLifterNominationById = exports.getLifterNominationById = exports.insertOfficialNomination = exports.insertLifterNomination = exports.getAllReferees = exports.getAllLifters = exports.getWeightCategories = exports.getAllRegionsNames = exports.getCompetitionById = exports.getCompetitions = undefined;
 
 var _jquery = __webpack_require__(89);
 
@@ -26446,6 +26446,14 @@ var insertLifterNomination = exports.insertLifterNomination = function insertLif
     });
 };
 
+var insertOfficialNomination = exports.insertOfficialNomination = function insertOfficialNomination(contract) {
+    return _jquery2.default.ajax({
+        url: nomPath + "InsertOfficialNominationAdmin.php",
+        type: "POST",
+        data: contract
+    });
+};
+
 var getLifterNominationById = exports.getLifterNominationById = function getLifterNominationById(contract) {
     return _jquery2.default.ajax({
         url: nomPath + "GetLifterNominationByIdAdmin.php",
@@ -26465,6 +26473,22 @@ var updateLifterNominationById = exports.updateLifterNominationById = function u
 var deleteNomination = exports.deleteNomination = function deleteNomination(contract) {
     return _jquery2.default.ajax({
         url: nomPath + "DeleteNominationAdmin.php",
+        type: "POST",
+        data: contract
+    });
+};
+
+var getOfficialNominationById = exports.getOfficialNominationById = function getOfficialNominationById(contract) {
+    return _jquery2.default.ajax({
+        url: nomPath + "GetOfficialNominationByIdAdmin.php",
+        type: "POST",
+        data: contract
+    });
+};
+
+var updateOfficialNominationById = exports.updateOfficialNominationById = function updateOfficialNominationById(contract) {
+    return _jquery2.default.ajax({
+        url: nomPath + "UpdateOfficialNominationAdmin.php",
         type: "POST",
         data: contract
     });
@@ -49597,6 +49621,7 @@ var Nominations = function (_React$Component) {
         _this.onDelete = _this.deleteDialog.bind(_this);
         _this.onCancel = _this.cancelDeleting.bind(_this);
         _this.onConfirm = _this.confirmDeleting.bind(_this);
+        _this.onEditReferee = _this.editRefereeNom.bind(_this);
         return _this;
     }
 
@@ -49689,6 +49714,18 @@ var Nominations = function (_React$Component) {
             });
         }
     }, {
+        key: "editRefereeNom",
+        value: function editRefereeNom(id) {
+            var _this8 = this;
+
+            this.setState({ isLoading: true });
+            services.getOfficialNominationById({ id: id }).then(function (data) {
+                var nom = JSON.parse(data)[0];
+                _this8.setState({ isLoading: false });
+                _this8.setState({ nomination: nom });
+            });
+        }
+    }, {
         key: "createNomination",
         value: function createNomination(type) {
             var nom = type === "lifter" ? {
@@ -49719,7 +49756,7 @@ var Nominations = function (_React$Component) {
                 surname: "",
                 firstName: "",
                 middleName: "",
-                team: this.state.region,
+                team: this.state.regions[0].id,
                 isReferee: true,
                 refCategory: "category1",
                 refRemark: "",
@@ -49746,28 +49783,46 @@ var Nominations = function (_React$Component) {
     }, {
         key: "saveNom",
         value: function saveNom() {
-            var _this8 = this;
+            var _this9 = this;
 
             this.setState({ isLoading: true });
             if (this.state.nomination.type === "lifter") {
                 if (this.state.nomination.id) {
                     services.updateLifterNominationById(this.state.nomination).then(function () {
-                        _this8.closeNomination();
-                        _this8.setState({ isLoading: false });
-                        _this8.showInform("Номінацію спортсмена було успішно оновлено");
-                        _this8.getAllLifters();
-                        _this8.getAllReferees();
+                        _this9.closeNomination();
+                        _this9.setState({ isLoading: false });
+                        _this9.showInform("Номінацію спортсмена було успішно оновлено");
+                        _this9.getAllLifters();
+                        _this9.getAllReferees();
                     });
                 } else {
                     services.insertLifterNomination(this.state.nomination).then(function () {
-                        _this8.closeNomination();
-                        _this8.setState({ isLoading: false });
-                        _this8.showInform("Спортсмена було успішно додано до номінації");
-                        _this8.getAllLifters();
-                        _this8.getAllReferees();
+                        _this9.closeNomination();
+                        _this9.setState({ isLoading: false });
+                        _this9.showInform("Спортсмена було успішно додано до номінації");
+                        _this9.getAllLifters();
+                        _this9.getAllReferees();
                     });
                 }
-            } else {}
+            } else {
+                if (this.state.nomination.id) {
+                    services.updateOfficialNominationById(this.state.nomination).then(function () {
+                        _this9.closeNomination();
+                        _this9.setState({ isLoading: false });
+                        _this9.showInform("Номінацію судді було успішно оновлено");
+                        _this9.getAllLifters();
+                        _this9.getAllReferees();
+                    });
+                } else {
+                    services.insertOfficialNomination(this.state.nomination).then(function () {
+                        _this9.closeNomination();
+                        _this9.setState({ isLoading: false });
+                        _this9.showInform("Суддю було успішно додано до номінації");
+                        _this9.getAllLifters();
+                        _this9.getAllReferees();
+                    });
+                }
+            }
         }
     }, {
         key: "showInform",
@@ -49797,13 +49852,13 @@ var Nominations = function (_React$Component) {
     }, {
         key: "confirmDeleting",
         value: function confirmDeleting() {
-            var _this9 = this;
+            var _this10 = this;
 
             this.setState({ isLoading: true });
             services.deleteNomination({ id: this.state.dialog.id }).then(function () {
-                _this9.cancelDeleting();
-                _this9.getAllLifters();
-                _this9.getAllReferees();
+                _this10.cancelDeleting();
+                _this10.getAllLifters();
+                _this10.getAllReferees();
             });
         }
     }, {
@@ -49828,7 +49883,7 @@ var Nominations = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
-            var _this10 = this;
+            var _this11 = this;
 
             if (!this.props.competition) return null;
             return _react2.default.createElement(
@@ -49843,7 +49898,7 @@ var Nominations = function (_React$Component) {
                         _react2.default.createElement(
                             "button",
                             { type: "button", className: "back-to-nom-list", onClick: function onClick() {
-                                    return _this10.props.back();
+                                    return _this11.props.back();
                                 } },
                             _react2.default.createElement("i", { className: "fa fa-chevron-left" }),
                             "\u041D\u0430\u0437\u0430\u0434 \u0434\u043E \u0441\u043F\u0438\u0441\u043A\u0443 \u043D\u043E\u043C\u0456\u043D\u0430\u0446\u0456\u0439"
@@ -49874,7 +49929,7 @@ var Nominations = function (_React$Component) {
                     { className: "adm-grids-wrap" },
                     _react2.default.createElement(_isJunLifters2.default, { nominations: this.state.lifters, game: this.state.compInfo, weightClasses: this.state.wClass, regions: this.state.regions, onEdit: this.onEditLifter, onDelete: this.onDelete }),
                     _react2.default.createElement(_lifters2.default, { nominations: this.state.lifters, game: this.state.compInfo, weightClasses: this.state.wClass, regions: this.state.regions, onEdit: this.onEditLifter, onDelete: this.onDelete }),
-                    _react2.default.createElement(_referees2.default, { nominations: this.state.referees, game: this.state.compInfo, regions: this.state.regions })
+                    _react2.default.createElement(_referees2.default, { nominations: this.state.referees, game: this.state.compInfo, regions: this.state.regions, onEdit: this.onEditReferee, onDelete: this.onDelete })
                 ),
                 _react2.default.createElement(
                     _modal2.default,
@@ -50634,6 +50689,22 @@ var RefGrid = function RefGrid(props) {
         title: "Примітки",
         field: "refRemark",
         width: "*"
+    }, {
+        title: "",
+        field: "id",
+        button: "edit",
+        width: "30px",
+        action: function action(e) {
+            props.onEdit(e.target.dataset["rel"]);
+        }
+    }, {
+        title: "",
+        field: "id",
+        button: "delete",
+        width: "30px",
+        action: function action(e) {
+            props.onDelete(e.target.dataset["rel"]);
+        }
     }];
     var referees = props.nominations.map(function (x) {
         var referee = {};

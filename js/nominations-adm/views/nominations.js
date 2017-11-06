@@ -36,6 +36,7 @@ class Nominations extends React.Component{
         this.onDelete = this.deleteDialog.bind(this);
         this.onCancel = this.cancelDeleting.bind(this);
         this.onConfirm = this.confirmDeleting.bind(this);
+        this.onEditReferee = this.editRefereeNom.bind(this);
     }
 
     getCompInfo(compId){
@@ -104,6 +105,15 @@ class Nominations extends React.Component{
         })
     }
 
+    editRefereeNom(id){
+        this.setState({isLoading: true});
+        services.getOfficialNominationById({id: id}).then(data => {
+            var nom = JSON.parse(data)[0];
+            this.setState({isLoading: false});
+            this.setState({nomination: nom});
+        })
+    }
+
     createNomination(type){
         var nom = (type === "lifter")? {
             type: type,
@@ -133,7 +143,7 @@ class Nominations extends React.Component{
             surname: "",
             firstName: "",
             middleName: "",
-            team: this.state.region,
+            team: this.state.regions[0].id,
             isReferee: true,
             refCategory: "category1",
             refRemark: "",
@@ -177,7 +187,23 @@ class Nominations extends React.Component{
                 })
             }
         }else{
-
+            if(this.state.nomination.id){
+                services.updateOfficialNominationById(this.state.nomination).then(() => {
+                    this.closeNomination();
+                    this.setState({isLoading: false});
+                    this.showInform("Номінацію судді було успішно оновлено");
+                    this.getAllLifters();
+                    this.getAllReferees();
+                })
+            }else{
+                services.insertOfficialNomination(this.state.nomination).then(() => {
+                    this.closeNomination();
+                    this.setState({isLoading: false});
+                    this.showInform("Суддю було успішно додано до номінації");
+                    this.getAllLifters();
+                    this.getAllReferees();                    
+                })
+            }
         }
     }
 
@@ -243,7 +269,7 @@ class Nominations extends React.Component{
             <div className="adm-grids-wrap">
                 <IsJunLiftersGrid nominations={this.state.lifters} game={this.state.compInfo} weightClasses={this.state.wClass} regions={this.state.regions} onEdit={this.onEditLifter} onDelete={this.onDelete} />
                 <LiftersGrid nominations={this.state.lifters} game={this.state.compInfo} weightClasses={this.state.wClass} regions={this.state.regions} onEdit={this.onEditLifter} onDelete={this.onDelete} />
-                <RefGrid nominations={this.state.referees} game={this.state.compInfo} regions={this.state.regions} />
+                <RefGrid nominations={this.state.referees} game={this.state.compInfo} regions={this.state.regions} onEdit={this.onEditReferee} onDelete={this.onDelete} />
             </div>
             <Modal target={this.state.nomination} onClose={this.onClose}>
                 <LifterForm nomination={this.state.nomination} compInfo={this.state.compInfo} onChange={this.onChange} regions={this.state.regions} wc={this.state.wc} subwc = {this.state.subwc} onSave={this.onSave}  onClose={this.onClose} />
