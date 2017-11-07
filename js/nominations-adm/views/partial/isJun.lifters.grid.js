@@ -27,6 +27,11 @@ const IsJunLiftersGrid = (props) => {
             class: "al-right"
         },
         {
+            title: "Статус",
+            field: "status",
+            width: "45px"
+        },
+        {
             title: "Ім'я",
             field: "fullName",
             width: "250px"
@@ -179,6 +184,8 @@ const IsJunLiftersGrid = (props) => {
                                 rowItem.reserve = (i.reserve && JSON.parse(i.reserve))? <sup>R</sup> : null;
                                 rowItem.id = i.id;
                                 rowItem.number = "";
+                                rowItem.status = (<input type="checkbox" checked={JSON.parse(i.status)} data-rel={i.id} 
+                                onChange={e => {props.onChangeStatus(e.target.dataset["rel"], !JSON.parse(i.status))}} />);                                
                                 rowItem.fullName = i.surname + " " + i.name;
                                 rowItem.fullName = (i.mName)? rowItem.fullName + " " + i.mName : rowItem.fullName;
                                 rowItem.born = moment(new Date(i.born)).format("DD.MM.YYYY");

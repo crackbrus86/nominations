@@ -37,6 +37,7 @@ class Nominations extends React.Component{
         this.onCancel = this.cancelDeleting.bind(this);
         this.onConfirm = this.confirmDeleting.bind(this);
         this.onEditReferee = this.editRefereeNom.bind(this);
+        this.onChangeStatus = this.changeStatus.bind(this);
     }
 
     getCompInfo(compId){
@@ -237,6 +238,18 @@ class Nominations extends React.Component{
         })
     }
 
+    changeStatus(id, value){
+        this.setState({isLoading: true});
+        services.changeStatus({
+            id: id,
+            status: value
+        }).then(() => {
+            this.setState({isLoading: false});
+            this.getAllLifters();
+            this.getAllReferees();
+        })
+    }
+
     componentWillReceiveProps(props){
         if(props.competition){
             this.getCompInfo(props.competition);
@@ -267,9 +280,9 @@ class Nominations extends React.Component{
             </div>  
             <CompInfo compInfo={this.state.compInfo} />  
             <div className="adm-grids-wrap">
-                <IsJunLiftersGrid nominations={this.state.lifters} game={this.state.compInfo} weightClasses={this.state.wClass} regions={this.state.regions} onEdit={this.onEditLifter} onDelete={this.onDelete} />
-                <LiftersGrid nominations={this.state.lifters} game={this.state.compInfo} weightClasses={this.state.wClass} regions={this.state.regions} onEdit={this.onEditLifter} onDelete={this.onDelete} />
-                <RefGrid nominations={this.state.referees} game={this.state.compInfo} regions={this.state.regions} onEdit={this.onEditReferee} onDelete={this.onDelete} />
+                <IsJunLiftersGrid nominations={this.state.lifters} game={this.state.compInfo} weightClasses={this.state.wClass} regions={this.state.regions} onEdit={this.onEditLifter} onDelete={this.onDelete} onChangeStatus={this.onChangeStatus} />
+                <LiftersGrid nominations={this.state.lifters} game={this.state.compInfo} weightClasses={this.state.wClass} regions={this.state.regions} onEdit={this.onEditLifter} onDelete={this.onDelete} onChangeStatus={this.onChangeStatus} />
+                <RefGrid nominations={this.state.referees} game={this.state.compInfo} regions={this.state.regions} onEdit={this.onEditReferee} onDelete={this.onDelete} onChangeStatus={this.onChangeStatus} />
             </div>
             <Modal target={this.state.nomination} onClose={this.onClose}>
                 <LifterForm nomination={this.state.nomination} compInfo={this.state.compInfo} onChange={this.onChange} regions={this.state.regions} wc={this.state.wc} subwc = {this.state.subwc} onSave={this.onSave}  onClose={this.onClose} />

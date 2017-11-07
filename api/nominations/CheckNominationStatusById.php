@@ -1,8 +1,6 @@
 <?php
     include_once("../connect.php");
-    if(empty($_SESSION["regionObj"])){
-        echo "None";
-    }else{
+    if(current_user_can("edit_others_pages")):
         $tb_nominations = $wpdb->get_blog_prefix()."nominations";
 
         $id = esc_sql($_POST["id"]);
@@ -10,4 +8,4 @@
 
         $sql = $wpdb->prepare("UPDATE $tb_nominations SET status = %s WHERE id = %d", $status, $id);
         if($wpdb->query($sql)) echo "Status was changed";
-    }
+    endif;

@@ -106,3 +106,11 @@ export const updateOfficialNominationById = (contract) => {
         data: contract
     })
 }
+
+export const changeStatus = (contact) => {
+    return $.ajax({
+        url: nomPath + "CheckNominationStatusById.php",
+        type: "POST",
+        data: contact
+    })
+}

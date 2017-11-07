@@ -26379,7 +26379,7 @@ return jQuery;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.updateOfficialNominationById = exports.getOfficialNominationById = exports.deleteNomination = exports.updateLifterNominationById = exports.getLifterNominationById = exports.insertOfficialNomination = exports.insertLifterNomination = exports.getAllReferees = exports.getAllLifters = exports.getWeightCategories = exports.getAllRegionsNames = exports.getCompetitionById = exports.getCompetitions = undefined;
+exports.changeStatus = exports.updateOfficialNominationById = exports.getOfficialNominationById = exports.deleteNomination = exports.updateLifterNominationById = exports.getLifterNominationById = exports.insertOfficialNomination = exports.insertLifterNomination = exports.getAllReferees = exports.getAllLifters = exports.getWeightCategories = exports.getAllRegionsNames = exports.getCompetitionById = exports.getCompetitions = undefined;
 
 var _jquery = __webpack_require__(89);
 
@@ -26491,6 +26491,14 @@ var updateOfficialNominationById = exports.updateOfficialNominationById = functi
         url: nomPath + "UpdateOfficialNominationAdmin.php",
         type: "POST",
         data: contract
+    });
+};
+
+var changeStatus = exports.changeStatus = function changeStatus(contact) {
+    return _jquery2.default.ajax({
+        url: nomPath + "CheckNominationStatusById.php",
+        type: "POST",
+        data: contact
     });
 };
 
@@ -49622,6 +49630,7 @@ var Nominations = function (_React$Component) {
         _this.onCancel = _this.cancelDeleting.bind(_this);
         _this.onConfirm = _this.confirmDeleting.bind(_this);
         _this.onEditReferee = _this.editRefereeNom.bind(_this);
+        _this.onChangeStatus = _this.changeStatus.bind(_this);
         return _this;
     }
 
@@ -49862,6 +49871,21 @@ var Nominations = function (_React$Component) {
             });
         }
     }, {
+        key: "changeStatus",
+        value: function changeStatus(id, value) {
+            var _this11 = this;
+
+            this.setState({ isLoading: true });
+            services.changeStatus({
+                id: id,
+                status: value
+            }).then(function () {
+                _this11.setState({ isLoading: false });
+                _this11.getAllLifters();
+                _this11.getAllReferees();
+            });
+        }
+    }, {
         key: "componentWillReceiveProps",
         value: function componentWillReceiveProps(props) {
             if (props.competition) {
@@ -49883,7 +49907,7 @@ var Nominations = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
-            var _this11 = this;
+            var _this12 = this;
 
             if (!this.props.competition) return null;
             return _react2.default.createElement(
@@ -49898,7 +49922,7 @@ var Nominations = function (_React$Component) {
                         _react2.default.createElement(
                             "button",
                             { type: "button", className: "back-to-nom-list", onClick: function onClick() {
-                                    return _this11.props.back();
+                                    return _this12.props.back();
                                 } },
                             _react2.default.createElement("i", { className: "fa fa-chevron-left" }),
                             "\u041D\u0430\u0437\u0430\u0434 \u0434\u043E \u0441\u043F\u0438\u0441\u043A\u0443 \u043D\u043E\u043C\u0456\u043D\u0430\u0446\u0456\u0439"
@@ -49927,9 +49951,9 @@ var Nominations = function (_React$Component) {
                 _react2.default.createElement(
                     "div",
                     { className: "adm-grids-wrap" },
-                    _react2.default.createElement(_isJunLifters2.default, { nominations: this.state.lifters, game: this.state.compInfo, weightClasses: this.state.wClass, regions: this.state.regions, onEdit: this.onEditLifter, onDelete: this.onDelete }),
-                    _react2.default.createElement(_lifters2.default, { nominations: this.state.lifters, game: this.state.compInfo, weightClasses: this.state.wClass, regions: this.state.regions, onEdit: this.onEditLifter, onDelete: this.onDelete }),
-                    _react2.default.createElement(_referees2.default, { nominations: this.state.referees, game: this.state.compInfo, regions: this.state.regions, onEdit: this.onEditReferee, onDelete: this.onDelete })
+                    _react2.default.createElement(_isJunLifters2.default, { nominations: this.state.lifters, game: this.state.compInfo, weightClasses: this.state.wClass, regions: this.state.regions, onEdit: this.onEditLifter, onDelete: this.onDelete, onChangeStatus: this.onChangeStatus }),
+                    _react2.default.createElement(_lifters2.default, { nominations: this.state.lifters, game: this.state.compInfo, weightClasses: this.state.wClass, regions: this.state.regions, onEdit: this.onEditLifter, onDelete: this.onDelete, onChangeStatus: this.onChangeStatus }),
+                    _react2.default.createElement(_referees2.default, { nominations: this.state.referees, game: this.state.compInfo, regions: this.state.regions, onEdit: this.onEditReferee, onDelete: this.onDelete, onChangeStatus: this.onChangeStatus })
                 ),
                 _react2.default.createElement(
                     _modal2.default,
@@ -50106,6 +50130,10 @@ var IsJunLiftersGrid = function IsJunLiftersGrid(props) {
         width: "28px",
         class: "al-right"
     }, {
+        title: "Статус",
+        field: "status",
+        width: "45px"
+    }, {
         title: "Ім'я",
         field: "fullName",
         width: "250px"
@@ -50253,6 +50281,10 @@ var IsJunLiftersGrid = function IsJunLiftersGrid(props) {
                                 ) : null;
                                 rowItem.id = i.id;
                                 rowItem.number = "";
+                                rowItem.status = _react2.default.createElement("input", { type: "checkbox", checked: JSON.parse(i.status), "data-rel": i.id,
+                                    onChange: function onChange(e) {
+                                        props.onChangeStatus(e.target.dataset["rel"], !JSON.parse(i.status));
+                                    } });
                                 rowItem.fullName = i.surname + " " + i.name;
                                 rowItem.fullName = i.mName ? rowItem.fullName + " " + i.mName : rowItem.fullName;
                                 rowItem.born = (0, _moment2.default)(new Date(i.born)).format("DD.MM.YYYY");
@@ -50432,6 +50464,10 @@ var LiftersGrid = function LiftersGrid(props) {
         width: "28px",
         class: "al-right"
     }, {
+        title: "Статус",
+        field: "status",
+        width: "45px"
+    }, {
         title: "Ім'я",
         field: "fullName",
         width: "250px"
@@ -50562,6 +50598,10 @@ var LiftersGrid = function LiftersGrid(props) {
                             "R"
                         ) : null;
                         rowItem.number = "";
+                        rowItem.status = _react2.default.createElement("input", { type: "checkbox", checked: JSON.parse(i.status), "data-rel": i.id,
+                            onChange: function onChange(e) {
+                                props.onChangeStatus(e.target.dataset["rel"], !JSON.parse(i.status));
+                            } });
                         rowItem.fullName = i.surname + " " + i.name;
                         rowItem.fullName = i.mName ? rowItem.fullName + " " + i.mName : rowItem.fullName;
                         rowItem.born = (0, _moment2.default)(new Date(i.born)).format("DD.MM.YYYY");
@@ -50674,6 +50714,10 @@ var RefGrid = function RefGrid(props) {
         width: "28px",
         class: "al-right"
     }, {
+        title: "Статус",
+        field: "status",
+        width: "45px"
+    }, {
         title: "Ім'я",
         field: "fullName",
         width: "150px"
@@ -50710,6 +50754,10 @@ var RefGrid = function RefGrid(props) {
         var referee = {};
         referee.id = x.id;
         referee.number = "";
+        referee.status = _react2.default.createElement("input", { type: "checkbox", checked: JSON.parse(x.status), "data-rel": x.id,
+            onChange: function onChange(e) {
+                props.onChangeStatus(e.target.dataset["rel"], !JSON.parse(x.status));
+            } });
         referee.fullName = x.surname + " " + x.firstName + " " + x.middleName;
         referee.team = props.regions.filter(function (reg) {
             return reg.id === x.team;
