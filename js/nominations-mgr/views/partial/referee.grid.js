@@ -12,6 +12,11 @@ const RefGrid = (props) => {
             class: "al-right"
         },
         {
+            title: "Статус",
+            field: "status",
+            width: "45px"
+        },           
+        {
             title: "Ім'я",
             field: "fullName",
             width: "150px"
@@ -51,6 +56,9 @@ const RefGrid = (props) => {
     var referees = props.nominations.map(x => {
         var referee = {};
         referee.id = x.id;
+        var statusTitle = (JSON.parse(x.status))? "Підтверджено" : "Очікує підтвердження";
+        var statusClass = (JSON.parse(x.status))? "fa fa-check status-mark status-ok" : "fa fa-question status-mark status-pending";        
+        referee.status = (<span className={statusClass} title={statusTitle}></span>);
         referee.number = "";
         referee.fullName = x.surname + " " + x.firstName + " " + x.middleName;
         referee.refCategory = refCategories.filter(r => r.value === x.refCategory)[0].text;

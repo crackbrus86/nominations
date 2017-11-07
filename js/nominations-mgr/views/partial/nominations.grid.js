@@ -49,17 +49,17 @@ const NomGrid = (props) => {
         }                                                   
     ];
     var columns = [
-        // {
-        //     title: "Статус",
-        //     field: "status",
-        //     width: "*"
-        // }, 
         {
             title: "#",
             field: "number",
             width: "28px",
             class: "al-right"
         },
+        {
+            title: "Статус",
+            field: "status",
+            width: "45px"
+        },         
         {
             title: "Ім'я",
             field: "fullName",
@@ -198,8 +198,9 @@ const NomGrid = (props) => {
                 countOfTeam = countOfLifters - countOfReserve;
                 rowItem.reserve = (item.reserve && JSON.parse(item.reserve))? <sup>R</sup> : null;
                 rowItem.id = item.id;
-                // rowItem.status = (<input type="checkbox" checked={JSON.parse(item.status)} data-rel={item.id} 
-                // onChange={e => {props.onChangeStatus(e.target.dataset["rel"], !JSON.parse(item.status))}} />);
+                var statusTitle = (JSON.parse(item.status))? "Підтверджено" : "Очікує підтвердження";
+                var statusClass = (JSON.parse(item.status))? "fa fa-check status-mark status-ok" : "fa fa-question status-mark status-pending";
+                rowItem.status = (<span className={statusClass} title={statusTitle}></span>);
                 rowItem.number = "";
                 rowItem.fullName = item.surname + " " + item.name;
                 rowItem.fullName = (item.mName)? rowItem.fullName + " " + item.mName : rowItem.fullName;

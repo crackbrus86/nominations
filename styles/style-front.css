@@ -67,6 +67,13 @@
     #nm-front .grid tbody tr td sup {
       color: #8d0200;
       font-weight: 600; }
+    #nm-front .grid tbody tr td span.status-mark {
+      width: 100%;
+      text-align: center; }
+      #nm-front .grid tbody tr td span.status-mark.status-ok {
+        color: #33a238; }
+      #nm-front .grid tbody tr td span.status-mark.status-pending {
+        color: #949494; }
 
 .blackout {
   overflow: auto;

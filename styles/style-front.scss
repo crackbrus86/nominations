@@ -87,6 +87,16 @@
                         color: #8d0200;
                         font-weight: 600;
                     }
+                    span.status-mark{
+                        width: 100%;
+                        text-align: center;
+                        &.status-ok{
+                            color: #33a238;
+                        }
+                        &.status-pending{
+                            color: #949494;
+                        }
+                    }
                 }
             }
         }
