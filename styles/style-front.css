@@ -51,7 +51,10 @@
     #nm-front .grid tbody tr td div.status-code {
       font-weight: 600;
       padding: 3px 0;
-      text-align: center; }
+      text-align: center;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap; }
     #nm-front .grid tbody tr td input[type=checkbox] {
       display: block;
       margin: 0 auto; }
