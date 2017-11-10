@@ -49186,7 +49186,7 @@ var CompGrid = function CompGrid(props) {
     });
     return _react2.default.createElement(
         "div",
-        null,
+        { className: "adm-grids-wrap" },
         _react2.default.createElement(_grid2.default, { data: { columns: columns, rows: rows } })
     );
 };

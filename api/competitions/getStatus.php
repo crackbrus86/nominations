@@ -12,8 +12,3 @@
         $result = $wpdb->get_results($sql, OBJECT);
         return $result[0];
     }
-
-    // $statuses = getStatuses(5);
-    // echo "<pre>";
-    // print_r($statuses);
-    // echo "</pre>";

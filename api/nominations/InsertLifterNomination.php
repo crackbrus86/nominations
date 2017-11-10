@@ -1,5 +1,6 @@
 <?php
     include_once("../connect.php");
+    include_once("../competitions/getStatus.php");
     if(empty($_SESSION["regionObj"])){
         echo "None";
     }else{    
@@ -28,10 +29,15 @@
         $coaches = stripslashes($_POST["coaches"]);
         $status = stripslashes($_POST["status"]);  
             
-        $sql = $wpdb->prepare("INSERT INTO $tb_nominations (type, surname, first_name, birth_date, gender, team, division, weight_class,
+        $statuses = getStatuses($competition);
+        if($statuses->previous){
+            $sql = $wpdb->prepare("INSERT INTO $tb_nominations (type, surname, first_name, birth_date, gender, team, division, weight_class,
             squat, benchpress, deadlift, total, reserve, competition, status, city, fst, club, school, level, coaches, middle_name) VALUES 
             (%s, %s, %s, %s, %s, %d, %s, %d, %f, %f, %f, %f, %s, %d, %s, %s, %s, %s, %s, %d, %s, %s)", $type, $surname, $firstName,
             $birthDate, $gender, $team, $division, $weightClass, $squat, $benchpress, $deadlift, $total, $reserve, $competition, $status,
             $city, $fst, $club, $school, $level, $coaches, $mName);
-        if($wpdb->query($sql)) print_r("Nomination was saved");
+            if($wpdb->query($sql)) print_r("Nomination was saved");
+        }else{
+            print_r("Expired");
+        }
     }

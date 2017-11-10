@@ -1,5 +1,6 @@
 <?php
     include_once("../connect.php");
+    include_once("../competitions/getStatus.php");
     if(empty($_SESSION["regionObj"])){
         echo "None";
     }else{  
@@ -28,10 +29,15 @@
         $coaches = stripslashes($_POST["coaches"]); 
         $mName = stripslashes($_POST["mName"]);
         
-        $sql = $wpdb->prepare("UPDATE $tb_nominations SET type = %s, surname = %s, first_name = %s, birth_date = %s, gender = %s, team = %d, 
-        division = %s, weight_class = %d, squat = %f, benchpress = %f, deadlift = %f, total = %f, reserve = %s, competition = %d, city = %s,
-        fst = %s, club = %s, school = %s, level = %d, coaches = %s, middle_name = %s WHERE id=%d", 
-        $type, $surname, $firstName, $birthDate, $gender, $team, $division, $weightClass, $squat, $benchpress, $deadlift, $total, $reserve, 
-        $competition, $city, $fst, $club, $school, $level, $coaches, $mName, $id);
-        if($wpdb->query($sql)) print_r("Nomination was saved");        
+        $statuses = getStatuses($competition);
+        if($statuses->previous || $statuses->final){
+            $sql = $wpdb->prepare("UPDATE $tb_nominations SET type = %s, surname = %s, first_name = %s, birth_date = %s, gender = %s, team = %d, 
+            division = %s, weight_class = %d, squat = %f, benchpress = %f, deadlift = %f, total = %f, reserve = %s, competition = %d, city = %s,
+            fst = %s, club = %s, school = %s, level = %d, coaches = %s, middle_name = %s WHERE id=%d", 
+            $type, $surname, $firstName, $birthDate, $gender, $team, $division, $weightClass, $squat, $benchpress, $deadlift, $total, $reserve, 
+            $competition, $city, $fst, $club, $school, $level, $coaches, $mName, $id);
+            if($wpdb->query($sql)) print_r("Nomination was saved");  
+        }else{
+            print_r("Expired");
+        }      
     }

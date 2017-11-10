@@ -65,6 +65,6 @@ const CompGrid = (props) => {
             status: status
         }
     });
-    return(<div><Grid data={{columns, rows}} /></div>) 
+    return(<div className="adm-grids-wrap"><Grid data={{columns, rows}} /></div>) 
 }
 export default CompGrid;
