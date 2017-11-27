@@ -62,7 +62,8 @@ const RefGrid = (props) => {
         referee.status = (<input type="checkbox" checked={JSON.parse(x.status)} data-rel={x.id} 
         onChange={e => {props.onChangeStatus(e.target.dataset["rel"], !JSON.parse(x.status))}} />);   
         referee.fullName = x.surname + " " + x.firstName + " " + x.middleName;
-        referee.team = props.regions.filter(reg => reg.id === x.team)[0].name;
+        referee.fullName = referee.fullName.toUpperCase();
+        referee.team = props.regions.filter(reg => reg.id === x.team)[0].name.toUpperCase();
         referee.refCategory = refCategories.filter(r => r.value === x.refCategory)[0].text;
         referee.refRemark = x.refRemark;
         return referee;

@@ -49644,7 +49644,6 @@ var Nominations = function (_React$Component) {
                 var tmpComp = JSON.parse(data)[0];
                 if (tmpComp.isJun === "") tmpComp.isJun = "false";
                 _this2.setState({ compInfo: tmpComp });
-                _this2.setState({ isLoading: false });
                 _this2.getWeightCategories(_this2.state.compInfo.gender);
                 _this2.getAllLifters();
                 _this2.getAllReferees();
@@ -49655,7 +49654,6 @@ var Nominations = function (_React$Component) {
         value: function getAllLifters() {
             var _this3 = this;
 
-            this.setState({ isLoading: true });
             services.getAllLifters({
                 competition: this.state.compInfo.id,
                 gender: this.state.compInfo.gender,
@@ -49670,7 +49668,6 @@ var Nominations = function (_React$Component) {
         value: function getAllReferees() {
             var _this4 = this;
 
-            this.setState({ isLoading: true });
             services.getAllReferees({
                 competition: this.state.compInfo.id,
                 type: "official"
@@ -49684,10 +49681,8 @@ var Nominations = function (_React$Component) {
         value: function getAllRegions() {
             var _this5 = this;
 
-            this.setState({ isLoading: true });
             services.getAllRegionsNames().then(function (data) {
                 _this5.setState({ regions: JSON.parse(data) });
-                _this5.setState({ isLoading: false });
             });
         }
     }, {
@@ -49695,7 +49690,6 @@ var Nominations = function (_React$Component) {
         value: function getWeightCategories(gender) {
             var _this6 = this;
 
-            this.setState({ isLoading: true });
             services.getWeightCategories({ gender: gender }).then(function (data) {
                 var categories = JSON.parse(data);
                 _this6.setState({ wClass: categories });
@@ -49707,7 +49701,6 @@ var Nominations = function (_React$Component) {
                 });
                 _this6.setState({ wc: wc });
                 _this6.setState({ subwc: subwc });
-                _this6.setState({ isLoading: false });
             });
         }
     }, {
@@ -49718,8 +49711,8 @@ var Nominations = function (_React$Component) {
             this.setState({ isLoading: true });
             services.getLifterNominationById({ id: id }).then(function (data) {
                 var nom = JSON.parse(data)[0];
-                _this7.setState({ isLoading: false });
                 _this7.setState({ nomination: nom });
+                _this7.setState({ isLoading: false });
             });
         }
     }, {
@@ -49730,8 +49723,8 @@ var Nominations = function (_React$Component) {
             this.setState({ isLoading: true });
             services.getOfficialNominationById({ id: id }).then(function (data) {
                 var nom = JSON.parse(data)[0];
-                _this8.setState({ isLoading: false });
                 _this8.setState({ nomination: nom });
+                _this8.setState({ isLoading: false });
             });
         }
     }, {
@@ -49799,7 +49792,6 @@ var Nominations = function (_React$Component) {
                 if (this.state.nomination.id) {
                     services.updateLifterNominationById(this.state.nomination).then(function () {
                         _this9.closeNomination();
-                        _this9.setState({ isLoading: false });
                         _this9.showInform("Номінацію спортсмена було успішно оновлено");
                         _this9.getAllLifters();
                         _this9.getAllReferees();
@@ -49807,7 +49799,6 @@ var Nominations = function (_React$Component) {
                 } else {
                     services.insertLifterNomination(this.state.nomination).then(function () {
                         _this9.closeNomination();
-                        _this9.setState({ isLoading: false });
                         _this9.showInform("Спортсмена було успішно додано до номінації");
                         _this9.getAllLifters();
                         _this9.getAllReferees();
@@ -49817,7 +49808,6 @@ var Nominations = function (_React$Component) {
                 if (this.state.nomination.id) {
                     services.updateOfficialNominationById(this.state.nomination).then(function () {
                         _this9.closeNomination();
-                        _this9.setState({ isLoading: false });
                         _this9.showInform("Номінацію судді було успішно оновлено");
                         _this9.getAllLifters();
                         _this9.getAllReferees();
@@ -49825,7 +49815,6 @@ var Nominations = function (_React$Component) {
                 } else {
                     services.insertOfficialNomination(this.state.nomination).then(function () {
                         _this9.closeNomination();
-                        _this9.setState({ isLoading: false });
                         _this9.showInform("Суддю було успішно додано до номінації");
                         _this9.getAllLifters();
                         _this9.getAllReferees();
@@ -49880,7 +49869,6 @@ var Nominations = function (_React$Component) {
                 id: id,
                 status: value
             }).then(function () {
-                _this11.setState({ isLoading: false });
                 _this11.getAllLifters();
                 _this11.getAllReferees();
             });
@@ -49895,6 +49883,7 @@ var Nominations = function (_React$Component) {
     }, {
         key: "componentDidMount",
         value: function componentDidMount() {
+            this.setState({ isLoading: true });
             this.getAllRegions();
         }
     }, {
@@ -50287,16 +50276,17 @@ var IsJunLiftersGrid = function IsJunLiftersGrid(props) {
                                     } });
                                 rowItem.fullName = i.surname + " " + i.name;
                                 rowItem.fullName = i.mName ? rowItem.fullName + " " + i.mName : rowItem.fullName;
+                                rowItem.fullName = rowItem.fullName.toUpperCase();
                                 rowItem.born = (0, _moment2.default)(new Date(i.born)).format("DD.MM.YYYY");
                                 rowItem.team = props.regions.filter(function (reg) {
                                     return reg.id === i.team;
-                                })[0].name;
+                                })[0].name.toUpperCase();
                                 rowItem.level = i.level;
-                                rowItem.city = i.city;
-                                rowItem.fst = i.fst;
-                                rowItem.club = i.club;
-                                rowItem.school = i.school;
-                                rowItem.coaches = i.coaches;
+                                rowItem.city = i.city.toUpperCase();
+                                rowItem.fst = i.fst.toUpperCase();
+                                rowItem.club = i.club.toUpperCase();
+                                rowItem.school = i.school.toUpperCase();
+                                rowItem.coaches = i.coaches.toUpperCase();
                                 if (props.game.typeId === "1") {
                                     rowItem.squat = cropZero(i.squat);
                                     rowItem.deadlift = cropZero(i.deadlift);
@@ -50604,16 +50594,17 @@ var LiftersGrid = function LiftersGrid(props) {
                             } });
                         rowItem.fullName = i.surname + " " + i.name;
                         rowItem.fullName = i.mName ? rowItem.fullName + " " + i.mName : rowItem.fullName;
+                        rowItem.fullName = rowItem.fullName.toUpperCase();
                         rowItem.born = (0, _moment2.default)(new Date(i.born)).format("DD.MM.YYYY");
                         rowItem.team = props.regions.filter(function (reg) {
                             return reg.id === i.team;
-                        })[0].name;
+                        })[0].name.toUpperCase();
                         rowItem.level = i.level;
-                        rowItem.city = i.city;
-                        rowItem.fst = i.fst;
-                        rowItem.club = i.club;
-                        rowItem.school = i.school;
-                        rowItem.coaches = i.coaches;
+                        rowItem.city = i.city.toUpperCase();
+                        rowItem.fst = i.fst.toUpperCase();
+                        rowItem.club = i.club.toUpperCase();
+                        rowItem.school = i.school.toUpperCase();
+                        rowItem.coaches = i.coaches.toUpperCase();
                         if (props.game.typeId === "1") {
                             rowItem.squat = cropZero(i.squat);
                             rowItem.deadlift = cropZero(i.deadlift);
@@ -50759,9 +50750,10 @@ var RefGrid = function RefGrid(props) {
                 props.onChangeStatus(e.target.dataset["rel"], !JSON.parse(x.status));
             } });
         referee.fullName = x.surname + " " + x.firstName + " " + x.middleName;
+        referee.fullName = referee.fullName.toUpperCase();
         referee.team = props.regions.filter(function (reg) {
             return reg.id === x.team;
-        })[0].name;
+        })[0].name.toUpperCase();
         referee.refCategory = refCategories.filter(function (r) {
             return r.value === x.refCategory;
         })[0].text;

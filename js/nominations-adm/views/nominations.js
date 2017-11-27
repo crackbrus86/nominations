@@ -46,15 +46,13 @@ class Nominations extends React.Component{
             var tmpComp = JSON.parse(data)[0];
             if(tmpComp.isJun === "") tmpComp.isJun = "false";
             this.setState({compInfo: tmpComp});
-            this.setState({isLoading: false});
             this.getWeightCategories(this.state.compInfo.gender);
             this.getAllLifters();
-            this.getAllReferees();
+            this.getAllReferees();            
         })
     }
 
-    getAllLifters(){
-        this.setState({isLoading: true});
+    getAllLifters(){        
         services.getAllLifters({
             competition: this.state.compInfo.id,
             gender: this.state.compInfo.gender,
@@ -66,7 +64,6 @@ class Nominations extends React.Component{
     }
 
     getAllReferees(){
-        this.setState({isLoading: true});
         services.getAllReferees({
             competition: this.state.compInfo.id,
             type: "official"
@@ -77,15 +74,12 @@ class Nominations extends React.Component{
     }
 
     getAllRegions(){
-        this.setState({isLoading: true});
         services.getAllRegionsNames().then(data => {
             this.setState({regions: JSON.parse(data)});
-            this.setState({isLoading: false});
         })
     }
 
     getWeightCategories(gender){
-        this.setState({isLoading: true});
         services.getWeightCategories({gender: gender}).then(data => {
             var categories = JSON.parse(data);
             this.setState({wClass: categories});
@@ -93,25 +87,24 @@ class Nominations extends React.Component{
             var subwc = categories.filter(y => y.division === "subjuniors");
             this.setState({wc: wc});
             this.setState({subwc: subwc})
-            this.setState({isLoading: false});
         })
     }
 
     editLifterNom(id){
         this.setState({isLoading: true});
         services.getLifterNominationById({id: id}).then(data => {
-            var nom = JSON.parse(data)[0];
-            this.setState({isLoading: false});
+            var nom = JSON.parse(data)[0];            
             this.setState({nomination: nom});
+            this.setState({isLoading: false});
         })
     }
 
     editRefereeNom(id){
         this.setState({isLoading: true});
         services.getOfficialNominationById({id: id}).then(data => {
-            var nom = JSON.parse(data)[0];
-            this.setState({isLoading: false});
+            var nom = JSON.parse(data)[0];            
             this.setState({nomination: nom});
+            this.setState({isLoading: false});
         })
     }
 
@@ -172,16 +165,14 @@ class Nominations extends React.Component{
         if(this.state.nomination.type === "lifter"){
             if(this.state.nomination.id){
                 services.updateLifterNominationById(this.state.nomination).then(() => {
-                    this.closeNomination();
-                    this.setState({isLoading: false});
+                    this.closeNomination();                    
                     this.showInform("Номінацію спортсмена було успішно оновлено");
                     this.getAllLifters();
                     this.getAllReferees();
                 })
             }else{
                 services.insertLifterNomination(this.state.nomination).then(() => {
-                    this.closeNomination();
-                    this.setState({isLoading: false});
+                    this.closeNomination();                    
                     this.showInform("Спортсмена було успішно додано до номінації");
                     this.getAllLifters();
                     this.getAllReferees();
@@ -191,18 +182,16 @@ class Nominations extends React.Component{
             if(this.state.nomination.id){
                 services.updateOfficialNominationById(this.state.nomination).then(() => {
                     this.closeNomination();
-                    this.setState({isLoading: false});
                     this.showInform("Номінацію судді було успішно оновлено");
                     this.getAllLifters();
                     this.getAllReferees();
                 })
             }else{
                 services.insertOfficialNomination(this.state.nomination).then(() => {
-                    this.closeNomination();
-                    this.setState({isLoading: false});
+                    this.closeNomination();                    
                     this.showInform("Суддю було успішно додано до номінації");
                     this.getAllLifters();
-                    this.getAllReferees();                    
+                    this.getAllReferees();                 
                 })
             }
         }
@@ -244,7 +233,6 @@ class Nominations extends React.Component{
             id: id,
             status: value
         }).then(() => {
-            this.setState({isLoading: false});
             this.getAllLifters();
             this.getAllReferees();
         })
@@ -257,14 +245,17 @@ class Nominations extends React.Component{
     }
 
     componentDidMount(){
+        this.setState({isLoading: true});
         this.getAllRegions();
     }
 
     componentDidUpdate(){
-        jQuery(function(){jQuery(".grid").colResizable();});
+        jQuery(function(){jQuery(".grid").colResizable()});
     }
 
     render(){
+        
+
         if(!this.props.competition) return null;
         return <div>
             <div className="nom-header">

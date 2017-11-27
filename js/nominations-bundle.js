@@ -49606,16 +49606,17 @@ var LiftersGrid = function LiftersGrid(props) {
                         rowItem.number = "";
                         rowItem.fullName = i.surname + " " + i.name;
                         rowItem.fullName = i.mName ? rowItem.fullName + " " + i.mName : rowItem.fullName;
+                        rowItem.fullName = rowItem.fullName.toUpperCase();
                         rowItem.born = (0, _moment2.default)(new Date(i.born)).format("DD.MM.YYYY");
                         rowItem.team = props.regions.filter(function (reg) {
                             return reg.id === i.team;
-                        })[0].name;
+                        })[0].name.toUpperCase();
                         rowItem.level = i.level;
-                        rowItem.city = i.city;
-                        rowItem.fst = i.fst;
-                        rowItem.club = i.club;
-                        rowItem.school = i.school;
-                        rowItem.coaches = i.coaches;
+                        rowItem.city = i.city.toUpperCase();
+                        rowItem.fst = i.fst.toUpperCase();
+                        rowItem.club = i.club.toUpperCase();
+                        rowItem.school = i.school.toUpperCase();
+                        rowItem.coaches = i.coaches.toUpperCase();
                         if (props.game.typeId === "1") {
                             rowItem.squat = cropZero(i.squat);
                             rowItem.deadlift = cropZero(i.deadlift);
@@ -49865,16 +49866,17 @@ var IsJunLiftersGrid = function IsJunLiftersGrid(props) {
                                 rowItem.number = "";
                                 rowItem.fullName = i.surname + " " + i.name;
                                 rowItem.fullName = i.mName ? rowItem.fullName + " " + i.mName : rowItem.fullName;
+                                rowItem.fullName = rowItem.fullName.toUpperCase();
                                 rowItem.born = (0, _moment2.default)(new Date(i.born)).format("DD.MM.YYYY");
                                 rowItem.team = props.regions.filter(function (reg) {
                                     return reg.id === i.team;
-                                })[0].name;
+                                })[0].name.toUpperCase();
                                 rowItem.level = i.level;
-                                rowItem.city = i.city;
-                                rowItem.fst = i.fst;
-                                rowItem.club = i.club;
-                                rowItem.school = i.school;
-                                rowItem.coaches = i.coaches;
+                                rowItem.city = i.city.toUpperCase();
+                                rowItem.fst = i.fst.toUpperCase();
+                                rowItem.club = i.club.toUpperCase();
+                                rowItem.school = i.school.toUpperCase();
+                                rowItem.coaches = i.coaches.toUpperCase();
                                 if (props.game.typeId === "1") {
                                     rowItem.squat = cropZero(i.squat);
                                     rowItem.deadlift = cropZero(i.deadlift);
@@ -50009,9 +50011,10 @@ var RefGrid = function RefGrid(props) {
         referee.id = x.id;
         referee.number = "";
         referee.fullName = x.surname + " " + x.firstName + " " + x.middleName;
+        referee.fullName = referee.fullName.toUpperCase();
         referee.team = props.regions.filter(function (reg) {
             return reg.id === x.team;
-        })[0].name;
+        })[0].name.toUpperCase();
         referee.refCategory = refCategories.filter(function (r) {
             return r.value === x.refCategory;
         })[0].text;

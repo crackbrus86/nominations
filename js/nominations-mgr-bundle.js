@@ -53331,13 +53331,14 @@ var NomGrid = function NomGrid(props) {
                 rowItem.number = "";
                 rowItem.fullName = item.surname + " " + item.name;
                 rowItem.fullName = item.mName ? rowItem.fullName + " " + item.mName : rowItem.fullName;
+                rowItem.fullName = rowItem.fullName.toUpperCase();
                 rowItem.born = (0, _moment2.default)(new Date(item.born)).format("DD.MM.YYYY");
                 rowItem.level = item.level;
-                rowItem.city = item.city;
-                rowItem.fst = item.fst;
-                rowItem.club = item.club;
-                rowItem.school = item.school;
-                rowItem.coaches = item.coaches;
+                rowItem.city = item.city.toUpperCase();
+                rowItem.fst = item.fst.toUpperCase();
+                rowItem.club = item.club.toUpperCase();
+                rowItem.school = item.school.toUpperCase();
+                rowItem.coaches = item.coaches.toUpperCase();
                 rowItem.wClass = item.wClass;
                 if ((division.id === "subjuniors" || division.id === "juniors") && JSON.parse(props.game.isJun)) {
                     rowItem.ageCat = getAgeCat(item.born);
@@ -53512,6 +53513,7 @@ var RefGrid = function RefGrid(props) {
         referee.status = _react2.default.createElement("span", { className: statusClass, title: statusTitle });
         referee.number = "";
         referee.fullName = x.surname + " " + x.firstName + " " + x.middleName;
+        referee.fullName = referee.fullName.toUpperCase();
         referee.refCategory = refCategories.filter(function (r) {
             return r.value === x.refCategory;
         })[0].text;

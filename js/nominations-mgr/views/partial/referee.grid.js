@@ -61,6 +61,7 @@ const RefGrid = (props) => {
         referee.status = (<span className={statusClass} title={statusTitle}></span>);
         referee.number = "";
         referee.fullName = x.surname + " " + x.firstName + " " + x.middleName;
+        referee.fullName = referee.fullName.toUpperCase();
         referee.refCategory = refCategories.filter(r => r.value === x.refCategory)[0].text;
         referee.refRemark = x.refRemark;
         return referee;
