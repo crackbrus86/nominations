@@ -50854,6 +50854,8 @@ var LifterForm = function LifterForm(props) {
             _react2.default.createElement("input", { value: getAgeCat(bDate), type: "text", readOnly: true })
         )
     ) : null;
+    var statusPrev = new Date(info.startDate).setDate(new Date(info.startDate).getDate() - 21);
+    var isNameDisabled = !(+new Date() <= statusPrev);
     return _react2.default.createElement(
         "div",
         null,
@@ -50910,7 +50912,7 @@ var LifterForm = function LifterForm(props) {
                                 null,
                                 _react2.default.createElement("input", { value: nom.surname, type: "text", maxLength: "150", onChange: function onChange(e) {
                                         return props.onChange("surname", e.target.value);
-                                    } })
+                                    }, disabled: isNameDisabled })
                             )
                         ),
                         _react2.default.createElement(
@@ -50930,7 +50932,7 @@ var LifterForm = function LifterForm(props) {
                                 null,
                                 _react2.default.createElement("input", { value: nom.firstName, type: "text", maxLength: "50", onChange: function onChange(e) {
                                         return props.onChange("firstName", e.target.value);
-                                    } })
+                                    }, disabled: isNameDisabled })
                             )
                         ),
                         _react2.default.createElement(
@@ -50950,7 +50952,7 @@ var LifterForm = function LifterForm(props) {
                                 null,
                                 _react2.default.createElement("input", { value: mName, type: "text", maxLength: "50", onChange: function onChange(e) {
                                         return props.onChange("mName", e.target.value);
-                                    } })
+                                    }, disabled: isNameDisabled })
                             )
                         ),
                         _react2.default.createElement(
@@ -52842,6 +52844,8 @@ var OfficialForm = function OfficialForm(props) {
             cat.text
         );
     });
+    var statusFinal = new Date(info.startDate).setDate(new Date(info.startDate).getDate() - 10);
+    var isNameDisabled = !(+new Date() <= statusFinal);
     return _react2.default.createElement(
         "div",
         null,
@@ -52898,7 +52902,7 @@ var OfficialForm = function OfficialForm(props) {
                                 null,
                                 _react2.default.createElement("input", { value: nom.surname, type: "text", maxLength: "150", onChange: function onChange(e) {
                                         return props.onChange("surname", e.target.value);
-                                    } })
+                                    }, disabled: isNameDisabled })
                             )
                         ),
                         _react2.default.createElement(
@@ -52918,7 +52922,7 @@ var OfficialForm = function OfficialForm(props) {
                                 null,
                                 _react2.default.createElement("input", { value: nom.firstName, type: "text", maxLength: "50", onChange: function onChange(e) {
                                         return props.onChange("firstName", e.target.value);
-                                    } })
+                                    }, disabled: isNameDisabled })
                             )
                         ),
                         _react2.default.createElement(
@@ -52938,7 +52942,7 @@ var OfficialForm = function OfficialForm(props) {
                                 null,
                                 _react2.default.createElement("input", { value: nom.middleName, type: "text", maxLength: "50", onChange: function onChange(e) {
                                         return props.onChange("middleName", e.target.value);
-                                    } })
+                                    }, disabled: isNameDisabled })
                             )
                         ),
                         _react2.default.createElement(

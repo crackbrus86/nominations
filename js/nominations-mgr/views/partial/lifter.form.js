@@ -64,6 +64,8 @@ const LifterForm = (props) => {
     <tr><td><label>Вікова група</label></td>
     <td><input value={getAgeCat(bDate)} type="text" readOnly={true} /></td>
     </tr> : null;
+    var statusPrev = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 21);
+    var isNameDisabled = !((+ new Date()) <= statusPrev);
     return (<div>
         <div className="form-header">
             <h3>Додати спортсмена до номінації</h3>
@@ -77,15 +79,15 @@ const LifterForm = (props) => {
                     <tbody>
                     <tr>
                         <td><label>Прізвище</label></td>
-                        <td><input value={nom.surname} type="text" maxLength="150" onChange={e => props.onChange("surname", e.target.value)} /></td>
+                        <td><input value={nom.surname} type="text" maxLength="150" onChange={e => props.onChange("surname", e.target.value)} disabled={isNameDisabled} /></td>
                     </tr>
                     <tr>
                         <td><label>Ім'я</label></td>
-                        <td><input value={nom.firstName} type="text" maxLength="50" onChange={e => props.onChange("firstName", e.target.value)} /></td>
+                        <td><input value={nom.firstName} type="text" maxLength="50" onChange={e => props.onChange("firstName", e.target.value)} disabled={isNameDisabled} /></td>
                     </tr>
                     <tr>
                         <td><label>По-батькові</label></td>
-                        <td><input value={mName} type="text" maxLength="50" onChange={e => props.onChange("mName", e.target.value)} /></td>
+                        <td><input value={mName} type="text" maxLength="50" onChange={e => props.onChange("mName", e.target.value)} disabled={isNameDisabled} /></td>
                     </tr>                    
                     <tr>
                         <td><label>Дата народження</label></td>
