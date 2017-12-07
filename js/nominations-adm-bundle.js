@@ -49749,7 +49749,7 @@ var Nominations = function (_React$Component) {
                 benchpress: 0,
                 deadlift: 0,
                 total: 0,
-                reserve: false,
+                personally: false,
                 competition: this.state.compInfo.id,
                 coaches: "",
                 status: false
@@ -50263,10 +50263,10 @@ var IsJunLiftersGrid = function IsJunLiftersGrid(props) {
                         if (wItems.length) {
                             var items = wItems.map(function (i) {
                                 var rowItem = {};
-                                rowItem.reserve = i.reserve && JSON.parse(i.reserve) ? _react2.default.createElement(
+                                rowItem.personally = i.personally && JSON.parse(i.personally) ? _react2.default.createElement(
                                     "sup",
-                                    null,
-                                    "R"
+                                    { title: "\u041E\u0441\u043E\u0431\u0438\u0441\u0442\u043E" },
+                                    "\u041E"
                                 ) : null;
                                 rowItem.id = i.id;
                                 rowItem.number = "";
@@ -50309,7 +50309,7 @@ var IsJunLiftersGrid = function IsJunLiftersGrid(props) {
                                 item.number = _react2.default.createElement(
                                     "div",
                                     null,
-                                    item.reserve,
+                                    item.personally,
                                     counter++
                                 );;
                             });
@@ -50582,10 +50582,10 @@ var LiftersGrid = function LiftersGrid(props) {
                     var items = wItems.map(function (i) {
                         var rowItem = {};
                         rowItem.id = i.id;
-                        rowItem.reserve = i.reserve && JSON.parse(i.reserve) ? _react2.default.createElement(
+                        rowItem.personally = i.personally && JSON.parse(i.personally) ? _react2.default.createElement(
                             "sup",
-                            null,
-                            "R"
+                            { title: "\u041E\u0441\u043E\u0431\u0438\u0441\u0442\u043E" },
+                            "\u041E"
                         ) : null;
                         rowItem.number = "";
                         rowItem.status = _react2.default.createElement("input", { type: "checkbox", checked: JSON.parse(i.status), "data-rel": i.id,
@@ -50627,7 +50627,7 @@ var LiftersGrid = function LiftersGrid(props) {
                         item.number = _react2.default.createElement(
                             "div",
                             null,
-                            item.reserve,
+                            item.personally,
                             counter++
                         );;
                     });
@@ -51569,14 +51569,14 @@ var LifterForm = function LifterForm(props) {
                                 _react2.default.createElement(
                                     "label",
                                     null,
-                                    "\u0420\u0435\u0437\u0435\u0440\u0432"
+                                    "\u041E\u0441\u043E\u0431\u0438\u0441\u0442\u043E"
                                 )
                             ),
                             _react2.default.createElement(
                                 "td",
                                 null,
-                                _react2.default.createElement("input", { checked: JSON.parse(nom.reserve), type: "checkbox", onChange: function onChange(e) {
-                                        return props.onChange("reserve", e.target.checked);
+                                _react2.default.createElement("input", { checked: JSON.parse(nom.personally), type: "checkbox", onChange: function onChange(e) {
+                                        return props.onChange("personally", e.target.checked ? 1 : 0);
                                     } })
                             )
                         )

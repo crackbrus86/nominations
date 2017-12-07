@@ -50171,7 +50171,7 @@ var Nominations = function (_React$Component) {
                 benchpress: 0,
                 deadlift: 0,
                 total: 0,
-                reserve: false,
+                personally: false,
                 competition: this.state.compInfo.id,
                 coaches: "",
                 status: false
@@ -51325,14 +51325,14 @@ var LifterForm = function LifterForm(props) {
                                 _react2.default.createElement(
                                     "label",
                                     null,
-                                    "\u0420\u0435\u0437\u0435\u0440\u0432"
+                                    "\u041E\u0441\u043E\u0431\u0438\u0441\u0442\u043E"
                                 )
                             ),
                             _react2.default.createElement(
                                 "td",
                                 null,
-                                _react2.default.createElement("input", { checked: JSON.parse(nom.reserve), type: "checkbox", onChange: function onChange(e) {
-                                        return props.onChange("reserve", e.target.checked);
+                                _react2.default.createElement("input", { checked: JSON.parse(nom.personally), type: "checkbox", onChange: function onChange(e) {
+                                        return props.onChange("personally", e.target.checked ? 1 : 0);
                                     } })
                             )
                         )
@@ -53313,7 +53313,7 @@ var NomGrid = function NomGrid(props) {
     var tables = divisions.map(function (division) {
         if (division.items.length) {
             var countOfLifters = division.items.length;
-            var countOfReserve = 0;
+            var countOfPersonally = 0;
             var countOfTeam = 0;
             var cropZero = function cropZero(val) {
                 return val[val.length - 1] === "0" ? val.slice(0, val.length - 1) : val;
@@ -53321,12 +53321,12 @@ var NomGrid = function NomGrid(props) {
             var divName = props.game.gender === "male" ? division.titleM : division.titleF;
             var items = division.items.map(function (item) {
                 var rowItem = {};
-                if (item.reserve && JSON.parse(item.reserve)) countOfReserve++;
-                countOfTeam = countOfLifters - countOfReserve;
-                rowItem.reserve = item.reserve && JSON.parse(item.reserve) ? _react2.default.createElement(
+                if (item.personally && JSON.parse(item.personally)) countOfPersonally++;
+                countOfTeam = countOfLifters - countOfPersonally;
+                rowItem.personally = item.personally && JSON.parse(item.personally) ? _react2.default.createElement(
                     "sup",
-                    null,
-                    "R"
+                    { title: "\u041E\u0441\u043E\u0431\u0438\u0441\u0442\u043E" },
+                    "\u041E"
                 ) : null;
                 rowItem.id = item.id;
                 var statusTitle = JSON.parse(item.status) ? "Підтверджено" : "Очікує підтвердження";
@@ -53372,7 +53372,7 @@ var NomGrid = function NomGrid(props) {
                 item.number = _react2.default.createElement(
                     "div",
                     null,
-                    item.reserve,
+                    item.personally,
                     counter++
                 );
             });
@@ -53409,11 +53409,11 @@ var NomGrid = function NomGrid(props) {
                         null,
                         countOfTeam
                     ),
-                    ", \u0432 \u0440\u0435\u0437\u0435\u0440\u0432\u0456: ",
+                    ", \u043E\u0441\u043E\u0431\u0438\u0441\u0442\u043E: ",
                     _react2.default.createElement(
                         "strong",
                         null,
-                        countOfReserve
+                        countOfPersonally
                     ),
                     ")"
                 )

@@ -161,8 +161,8 @@ const LifterForm = (props) => {
                         <td><textarea value={nom.coaches} onChange={e => props.onChange("coaches", e.target.value)} maxLength="300" /></td>
                     </tr>                      
                     <tr>
-                        <td><label>Резерв</label></td>
-                        <td><input checked={JSON.parse(nom.reserve)} type="checkbox" onChange={e => props.onChange("reserve", e.target.checked)} /></td>
+                        <td><label>Особисто</label></td>
+                        <td><input checked={JSON.parse(nom.personally)} type="checkbox" onChange={e => props.onChange("personally", e.target.checked ? 1:0)} /></td>
                     </tr>
                     </tbody>
                 </table>

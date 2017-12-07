@@ -155,7 +155,7 @@ const IsJunLiftersGrid = (props) => {
                         if(wItems.length){
                             var items = wItems.map(i => {
                                 var rowItem = {};
-                                rowItem.reserve = (i.reserve && JSON.parse(i.reserve))? <sup>R</sup> : null;
+                                rowItem.personally = (i.personally && JSON.parse(i.personally))? <sup title="Особисто">О</sup> : null;
                                 rowItem.number = "";
                                 rowItem.fullName = i.surname + " " + i.name;
                                 rowItem.fullName = (i.mName)? rowItem.fullName + " " + i.mName : rowItem.fullName;
@@ -183,7 +183,7 @@ const IsJunLiftersGrid = (props) => {
                             }
                             var counter = 1;
                             items.map(item => {
-                                item.number = <div>{item.reserve}{counter++}</div>;;
+                                item.number = <div>{item.personally}{counter++}</div>;;
                             });                                          
                             return (<div key={w.id}>
                                 <div key={w.id} className="w-class-name">{w.name}</div>

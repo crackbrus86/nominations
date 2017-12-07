@@ -128,7 +128,7 @@ class Nominations extends React.Component{
             benchpress: 0,
             deadlift: 0,
             total: 0,
-            reserve: false,
+            personally: false,
             competition: this.state.compInfo.id,
             coaches: "",
             status: false

@@ -49598,10 +49598,10 @@ var LiftersGrid = function LiftersGrid(props) {
                 if (wItems.length) {
                     var items = wItems.map(function (i) {
                         var rowItem = {};
-                        rowItem.reserve = i.reserve && JSON.parse(i.reserve) ? _react2.default.createElement(
+                        rowItem.personally = i.personally && JSON.parse(i.personally) ? _react2.default.createElement(
                             "sup",
-                            null,
-                            "R"
+                            { title: "\u041E\u0441\u043E\u0431\u0438\u0441\u0442\u043E" },
+                            "\u041E"
                         ) : null;
                         rowItem.number = "";
                         rowItem.fullName = i.surname + " " + i.name;
@@ -49639,7 +49639,7 @@ var LiftersGrid = function LiftersGrid(props) {
                         item.number = _react2.default.createElement(
                             "div",
                             null,
-                            item.reserve,
+                            item.personally,
                             counter++
                         );;
                     });
@@ -49858,10 +49858,10 @@ var IsJunLiftersGrid = function IsJunLiftersGrid(props) {
                         if (wItems.length) {
                             var items = wItems.map(function (i) {
                                 var rowItem = {};
-                                rowItem.reserve = i.reserve && JSON.parse(i.reserve) ? _react2.default.createElement(
+                                rowItem.personally = i.personally && JSON.parse(i.personally) ? _react2.default.createElement(
                                     "sup",
-                                    null,
-                                    "R"
+                                    { title: "\u041E\u0441\u043E\u0431\u0438\u0441\u0442\u043E" },
+                                    "\u041E"
                                 ) : null;
                                 rowItem.number = "";
                                 rowItem.fullName = i.surname + " " + i.name;
@@ -49899,7 +49899,7 @@ var IsJunLiftersGrid = function IsJunLiftersGrid(props) {
                                 item.number = _react2.default.createElement(
                                     "div",
                                     null,
-                                    item.reserve,
+                                    item.personally,
                                     counter++
                                 );;
                             });

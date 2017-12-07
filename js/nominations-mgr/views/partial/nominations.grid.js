@@ -186,7 +186,7 @@ const NomGrid = (props) => {
     var tables = divisions.map(division => { 
         if(division.items.length) {
             var countOfLifters = division.items.length;
-            var countOfReserve = 0;
+            var countOfPersonally = 0;
             var countOfTeam = 0;
             var cropZero = val => {
                 return (val[(val.length - 1)] === "0")? val.slice(0, val.length - 1) : val;
@@ -194,9 +194,9 @@ const NomGrid = (props) => {
             var divName = (props.game.gender === "male")? division.titleM : division.titleF;
             var items = division.items.map(item => {
                 var rowItem = {};
-                if(item.reserve && JSON.parse(item.reserve)) countOfReserve++;
-                countOfTeam = countOfLifters - countOfReserve;
-                rowItem.reserve = (item.reserve && JSON.parse(item.reserve))? <sup>R</sup> : null;
+                if(item.personally && JSON.parse(item.personally)) countOfPersonally++;
+                countOfTeam = countOfLifters - countOfPersonally;
+                rowItem.personally = (item.personally && JSON.parse(item.personally))? <sup title="Особисто">О</sup> : null;
                 rowItem.id = item.id;
                 var statusTitle = (JSON.parse(item.status))? "Підтверджено" : "Очікує підтвердження";
                 var statusClass = (JSON.parse(item.status))? "fa fa-check status-mark status-ok" : "fa fa-question status-mark status-pending";
@@ -232,7 +232,7 @@ const NomGrid = (props) => {
             }            
             var counter = 1;
             items.map(item => {
-                item.number = <div>{item.reserve}{counter++}</div>;
+                item.number = <div>{item.personally}{counter++}</div>;
             });
             if((division.id === "subjuniors" || division.id === "juniors") && JSON.parse(props.game.isJun) && gridColumns[4].field != "ageCat"){
                 gridColumns.splice(4, 0, {
@@ -244,7 +244,7 @@ const NomGrid = (props) => {
             return (<div key={division.id}>
                 <div key={division.id} className="division-head">Дивізіон "{divName}"</div>
                 <Grid data={{columns: gridColumns, rows: items}} />
-                <div className="division-counters">У дивізіоні <strong>{countOfLifters}</strong> спортсменів (в команді: <strong>{countOfTeam}</strong>, в резерві: <strong>{countOfReserve}</strong>)</div>
+                <div className="division-counters">У дивізіоні <strong>{countOfLifters}</strong> спортсменів (в команді: <strong>{countOfTeam}</strong>, особисто: <strong>{countOfPersonally}</strong>)</div>
             </div>)
         }
     });

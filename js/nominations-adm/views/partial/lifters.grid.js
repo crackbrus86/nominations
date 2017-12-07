@@ -197,7 +197,7 @@ const LiftersGrid = (props) => {
                     var items = wItems.map(i => {
                         var rowItem = {};
                         rowItem.id = i.id;
-                        rowItem.reserve = (i.reserve && JSON.parse(i.reserve))? <sup>R</sup> : null;
+                        rowItem.personally = (i.personally && JSON.parse(i.personally))? <sup title="Особисто">О</sup> : null;
                         rowItem.number = "";
                         rowItem.status = (<input type="checkbox" checked={JSON.parse(i.status)} data-rel={i.id} 
                         onChange={e => {props.onChangeStatus(e.target.dataset["rel"], !JSON.parse(i.status))}} />);
@@ -227,7 +227,7 @@ const LiftersGrid = (props) => {
                     }
                     var counter = 1;
                     items.map(item => {
-                        item.number = <div>{item.reserve}{counter++}</div>;;
+                        item.number = <div>{item.personally}{counter++}</div>;;
                     });                                          
                     return (<div key={w.id}>
                         <div key={w.id} className="w-class-name">{w.name}</div>
