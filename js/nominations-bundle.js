@@ -5629,6 +5629,16 @@ module.exports = ReactComponentTreeHook;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+module.exports = __webpack_require__(18);
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
  * Copyright 2016-present, Facebook, Inc.
  * All rights reserved.
@@ -5653,16 +5663,6 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = { debugTool: debugTool };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = __webpack_require__(18);
-
 
 /***/ }),
 /* 11 */
@@ -7151,7 +7151,7 @@ module.exports = reactProdInvariant;
 
 
 var ReactRef = __webpack_require__(227);
-var ReactInstrumentation = __webpack_require__(9);
+var ReactInstrumentation = __webpack_require__(10);
 
 var warning = __webpack_require__(3);
 
@@ -9165,7 +9165,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(10);
+var _react = __webpack_require__(9);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -9841,7 +9841,7 @@ module.exports = getEventModifierState;
 var DOMLazyTree = __webpack_require__(21);
 var Danger = __webpack_require__(238);
 var ReactDOMComponentTree = __webpack_require__(6);
-var ReactInstrumentation = __webpack_require__(9);
+var ReactInstrumentation = __webpack_require__(10);
 
 var createMicrosoftUnsafeLocalFunction = __webpack_require__(43);
 var setInnerHTML = __webpack_require__(31);
@@ -10514,7 +10514,7 @@ var _prodInvariant = __webpack_require__(4);
 
 var ReactCurrentOwner = __webpack_require__(12);
 var ReactInstanceMap = __webpack_require__(25);
-var ReactInstrumentation = __webpack_require__(9);
+var ReactInstrumentation = __webpack_require__(10);
 var ReactUpdates = __webpack_require__(13);
 
 var invariant = __webpack_require__(2);
@@ -12590,7 +12590,7 @@ module.exports = CSSProperty;
 
 var DOMProperty = __webpack_require__(15);
 var ReactDOMComponentTree = __webpack_require__(6);
-var ReactInstrumentation = __webpack_require__(9);
+var ReactInstrumentation = __webpack_require__(10);
 
 var quoteAttributeValueForBrowser = __webpack_require__(252);
 var warning = __webpack_require__(3);
@@ -13796,7 +13796,7 @@ var ReactDOMContainerInfo = __webpack_require__(294);
 var ReactDOMFeatureFlags = __webpack_require__(295);
 var ReactFeatureFlags = __webpack_require__(64);
 var ReactInstanceMap = __webpack_require__(25);
-var ReactInstrumentation = __webpack_require__(9);
+var ReactInstrumentation = __webpack_require__(10);
 var ReactMarkupChecksum = __webpack_require__(296);
 var ReactReconciler = __webpack_require__(20);
 var ReactUpdateQueue = __webpack_require__(49);
@@ -24696,7 +24696,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(10);
+var _react = __webpack_require__(9);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -35825,7 +35825,7 @@ return zhTw;
 "use strict";
 
 
-var _react = __webpack_require__(10);
+var _react = __webpack_require__(9);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -38422,7 +38422,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 if (process.env.NODE_ENV !== 'production') {
-  var ReactInstrumentation = __webpack_require__(9);
+  var ReactInstrumentation = __webpack_require__(10);
   var ReactDOMUnknownPropertyHook = __webpack_require__(301);
   var ReactDOMNullInputValuePropHook = __webpack_require__(302);
   var ReactDOMInvalidARIAHook = __webpack_require__(303);
@@ -41062,7 +41062,7 @@ var ReactDOMInput = __webpack_require__(255);
 var ReactDOMOption = __webpack_require__(256);
 var ReactDOMSelect = __webpack_require__(73);
 var ReactDOMTextarea = __webpack_require__(257);
-var ReactInstrumentation = __webpack_require__(9);
+var ReactInstrumentation = __webpack_require__(10);
 var ReactMultiChild = __webpack_require__(258);
 var ReactServerRenderingTransaction = __webpack_require__(267);
 
@@ -42089,7 +42089,7 @@ module.exports = AutoFocusUtils;
 
 var CSSProperty = __webpack_require__(70);
 var ExecutionEnvironment = __webpack_require__(7);
-var ReactInstrumentation = __webpack_require__(9);
+var ReactInstrumentation = __webpack_require__(10);
 
 var camelizeStyleName = __webpack_require__(246);
 var dangerousStyleValue = __webpack_require__(248);
@@ -43357,7 +43357,7 @@ var _prodInvariant = __webpack_require__(4);
 
 var ReactComponentEnvironment = __webpack_require__(45);
 var ReactInstanceMap = __webpack_require__(25);
-var ReactInstrumentation = __webpack_require__(9);
+var ReactInstrumentation = __webpack_require__(10);
 
 var ReactCurrentOwner = __webpack_require__(12);
 var ReactReconciler = __webpack_require__(20);
@@ -43972,7 +43972,7 @@ var ReactComponentEnvironment = __webpack_require__(45);
 var ReactCurrentOwner = __webpack_require__(12);
 var ReactErrorUtils = __webpack_require__(37);
 var ReactInstanceMap = __webpack_require__(25);
-var ReactInstrumentation = __webpack_require__(9);
+var ReactInstrumentation = __webpack_require__(10);
 var ReactNodeTypes = __webpack_require__(75);
 var ReactReconciler = __webpack_require__(20);
 
@@ -45177,7 +45177,7 @@ var _assign = __webpack_require__(5);
 
 var PooledClass = __webpack_require__(17);
 var Transaction = __webpack_require__(29);
-var ReactInstrumentation = __webpack_require__(9);
+var ReactInstrumentation = __webpack_require__(10);
 var ReactServerUpdateQueue = __webpack_require__(268);
 
 /**
@@ -46111,7 +46111,7 @@ var CallbackQueue = __webpack_require__(63);
 var PooledClass = __webpack_require__(17);
 var ReactBrowserEventEmitter = __webpack_require__(33);
 var ReactInputSelection = __webpack_require__(80);
-var ReactInstrumentation = __webpack_require__(9);
+var ReactInstrumentation = __webpack_require__(10);
 var Transaction = __webpack_require__(29);
 var ReactUpdateQueue = __webpack_require__(49);
 
@@ -48482,7 +48482,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(10);
+var _react = __webpack_require__(9);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -48502,7 +48502,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-__webpack_require__(316);
+__webpack_require__(317);
 
 var NomLayout = function (_React$Component) {
     _inherits(NomLayout, _React$Component);
@@ -48560,7 +48560,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(10);
+var _react = __webpack_require__(9);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -48646,7 +48646,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _react = __webpack_require__(10);
+var _react = __webpack_require__(9);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -49087,7 +49087,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(10);
+var _react = __webpack_require__(9);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -49103,15 +49103,15 @@ var _preloader = __webpack_require__(86);
 
 var _preloader2 = _interopRequireDefault(_preloader);
 
-var _lifters = __webpack_require__(312);
+var _lifters = __webpack_require__(313);
 
 var _lifters2 = _interopRequireDefault(_lifters);
 
-var _isJunLifters = __webpack_require__(313);
+var _isJunLifters = __webpack_require__(314);
 
 var _isJunLifters2 = _interopRequireDefault(_isJunLifters);
 
-var _referees = __webpack_require__(314);
+var _referees = __webpack_require__(315);
 
 var _referees2 = _interopRequireDefault(_referees);
 
@@ -49125,7 +49125,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-__webpack_require__(315);
+__webpack_require__(316);
 
 var Nominations = function (_React$Component) {
     _inherits(Nominations, _React$Component);
@@ -49312,13 +49312,17 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _react = __webpack_require__(10);
+var _react = __webpack_require__(9);
 
 var _react2 = _interopRequireDefault(_react);
 
 var _moment = __webpack_require__(0);
 
 var _moment2 = _interopRequireDefault(_moment);
+
+var _countdown = __webpack_require__(312);
+
+var _countdown2 = _interopRequireDefault(_countdown);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -49332,15 +49336,19 @@ var CompInfo = function CompInfo(props) {
     var mc = new Date(info.startDate).setDate(new Date(info.startDate).getDate() - 1);
     var status = null;
     var statusColor = null;
+    var statusEnd = null;
     if (+new Date() <= p) {
         status = "Попередня номінація";
         statusColor = "#7AB800";
+        statusEnd = p;
     } else if (p < +new Date() && +new Date() <= f) {
         status = "Остаточна номінація";
         statusColor = "#0582FF";
+        statusEnd = f;
     } else if (f < +new Date() && +new Date() <= mc) {
         status = "Перед мандатною комісією";
         statusColor = "#CC0033";
+        statusEnd = mc;
     } else {
         status = "Архів";
         statusColor = "#8E8E48";
@@ -49380,6 +49388,7 @@ var CompInfo = function CompInfo(props) {
                     String(status).toUpperCase()
                 )
             ),
+            _react2.default.createElement(_countdown2.default, { till: statusEnd }),
             _react2.default.createElement(
                 "p",
                 null,
@@ -49420,7 +49429,106 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _react = __webpack_require__(10);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(9);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Countdown = function (_React$Component) {
+    _inherits(Countdown, _React$Component);
+
+    function Countdown(props) {
+        _classCallCheck(this, Countdown);
+
+        var _this = _possibleConstructorReturn(this, (Countdown.__proto__ || Object.getPrototypeOf(Countdown)).call(this, props));
+
+        _this.state = {
+            currentDate: new Date()
+        };
+        return _this;
+    }
+
+    _createClass(Countdown, [{
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            this.timerId = setInterval(function () {
+                return _this2.tick();
+            }, 1000);
+        }
+    }, {
+        key: "componentWillUnmount",
+        value: function componentWillUnmount() {
+            clearInterval(this.timerId);
+        }
+    }, {
+        key: "tick",
+        value: function tick() {
+            this.setState({
+                currentDate: new Date()
+            });
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            if (!this.props.till) return null;
+            var endDay = new Date(this.props.till);
+            var timeDiff = Math.abs(endDay.getTime() - this.state.currentDate.getTime());
+            var diffDays = Math.floor(timeDiff / (1000 * 3600 * 24));
+            var diffHours = Math.floor(timeDiff % (1000 * 3600 * 24) / (1000 * 3600));
+            var diffMin = Math.floor(timeDiff % (1000 * 60 * 60) / (1000 * 60));
+            var diffSec = Math.floor(timeDiff % (1000 * 60) / 1000);
+            return _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement(
+                    "div",
+                    null,
+                    "\u0434\u043E \u0437\u043C\u0456\u043D\u0438 \u0441\u0442\u0430\u0442\u0443\u0441\u0443 \u0437\u0430\u043B\u0438\u0448\u0438\u043B\u043E\u0441\u044C:"
+                ),
+                _react2.default.createElement(
+                    "div",
+                    null,
+                    diffDays,
+                    " \u0434\u043D\u0456\u0432 ",
+                    diffHours,
+                    " \u0433\u043E\u0434. ",
+                    diffMin,
+                    " \u0445\u0432. ",
+                    diffSec,
+                    " \u0441\u0435\u043A."
+                )
+            );
+        }
+    }]);
+
+    return Countdown;
+}(_react2.default.Component);
+
+exports.default = Countdown;
+
+/***/ }),
+/* 313 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(9);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -49688,7 +49796,7 @@ var LiftersGrid = function LiftersGrid(props) {
 exports.default = LiftersGrid;
 
 /***/ }),
-/* 313 */
+/* 314 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49698,7 +49806,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _react = __webpack_require__(10);
+var _react = __webpack_require__(9);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -49961,7 +50069,7 @@ var IsJunLiftersGrid = function IsJunLiftersGrid(props) {
 exports.default = IsJunLiftersGrid;
 
 /***/ }),
-/* 314 */
+/* 315 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49971,7 +50079,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _react = __webpack_require__(10);
+var _react = __webpack_require__(9);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -50052,7 +50160,7 @@ var RefGrid = function RefGrid(props) {
 exports.default = RefGrid;
 
 /***/ }),
-/* 315 */
+/* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50497,13 +50605,13 @@ exports.default = RefGrid;
 })(jQuery);
 
 /***/ }),
-/* 316 */
+/* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(317);
+var content = __webpack_require__(318);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -50511,7 +50619,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(319)(content, options);
+var update = __webpack_require__(320)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -50528,10 +50636,10 @@ if(false) {
 }
 
 /***/ }),
-/* 317 */
+/* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(318)(undefined);
+exports = module.exports = __webpack_require__(319)(undefined);
 // imports
 
 
@@ -50542,7 +50650,7 @@ exports.push([module.i, "#content {\n  width: 100% !important; }\n\n.invalid {\n
 
 
 /***/ }),
-/* 318 */
+/* 319 */
 /***/ (function(module, exports) {
 
 /*
@@ -50624,7 +50732,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 319 */
+/* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -50670,7 +50778,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(320);
+var	fixUrls = __webpack_require__(321);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -50983,7 +51091,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 320 */
+/* 321 */
 /***/ (function(module, exports) {
 
 

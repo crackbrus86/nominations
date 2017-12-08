@@ -1,5 +1,6 @@
 import React from "react";
 import moment from "moment";
+import Countdown from "../../../components/countdown/countdown";
 
 const CompInfo = (props) => {
     if(!props.compInfo) return null;
@@ -11,15 +12,19 @@ const CompInfo = (props) => {
     var mc = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 1);
     var status = null;
     var statusColor = null;
+    var statusEnd = null;
     if((+new Date()) <= p){
         status = "Попередня номінація";
         statusColor = "#7AB800";
+        statusEnd = p;
     }else if(p < (+new Date()) && (+new Date()) <= f){
         status = "Остаточна номінація";
         statusColor = "#0582FF";
+        statusEnd = f;
     }else if(f < (+new Date()) && (+new Date()) <= mc){
         status = "Перед мандатною комісією";
         statusColor = "#CC0033";
+        statusEnd = bm7;
     }else{
         status = "Архів";
         statusColor = "#8E8E48";
@@ -32,6 +37,7 @@ const CompInfo = (props) => {
         </div>
         <div className="comp-info-status">
             <p className="status">Статус: <span style={{color: statusColor}}>{String(status).toUpperCase()}</span></p>
+            <Countdown till={statusEnd} />
             <p>Попередня номінація: {moment(p).locale("uk").format("DD.MM.YYYY")}</p>
             <p>Остаточна номінація: {moment(f).locale("uk").format("DD.MM.YYYY")}</p>
             <p>7 днів до мандатної комісії: {moment(bm7).locale("uk").format("DD.MM.YYYY")}</p>

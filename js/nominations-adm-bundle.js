@@ -49556,35 +49556,35 @@ var _comp = __webpack_require__(314);
 
 var _comp2 = _interopRequireDefault(_comp);
 
-var _isJunLifters = __webpack_require__(315);
+var _isJunLifters = __webpack_require__(316);
 
 var _isJunLifters2 = _interopRequireDefault(_isJunLifters);
 
-var _lifters = __webpack_require__(316);
+var _lifters = __webpack_require__(317);
 
 var _lifters2 = _interopRequireDefault(_lifters);
 
-var _referees = __webpack_require__(317);
+var _referees = __webpack_require__(318);
 
 var _referees2 = _interopRequireDefault(_referees);
 
-var _modal = __webpack_require__(318);
+var _modal = __webpack_require__(319);
 
 var _modal2 = _interopRequireDefault(_modal);
 
-var _dialog = __webpack_require__(319);
+var _dialog = __webpack_require__(320);
 
 var _dialog2 = _interopRequireDefault(_dialog);
 
-var _lifter = __webpack_require__(320);
+var _lifter = __webpack_require__(321);
 
 var _lifter2 = _interopRequireDefault(_lifter);
 
-var _official = __webpack_require__(335);
+var _official = __webpack_require__(336);
 
 var _official2 = _interopRequireDefault(_official);
 
-var _inform = __webpack_require__(336);
+var _inform = __webpack_require__(337);
 
 var _inform2 = _interopRequireDefault(_inform);
 
@@ -49598,7 +49598,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-__webpack_require__(337);
+__webpack_require__(338);
 
 var Nominations = function (_React$Component) {
     _inherits(Nominations, _React$Component);
@@ -49981,6 +49981,10 @@ var _moment = __webpack_require__(0);
 
 var _moment2 = _interopRequireDefault(_moment);
 
+var _countdown = __webpack_require__(315);
+
+var _countdown2 = _interopRequireDefault(_countdown);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var CompInfo = function CompInfo(props) {
@@ -49993,15 +49997,19 @@ var CompInfo = function CompInfo(props) {
     var mc = new Date(info.startDate).setDate(new Date(info.startDate).getDate() - 1);
     var status = null;
     var statusColor = null;
+    var statusEnd = null;
     if (+new Date() <= p) {
         status = "Попередня номінація";
         statusColor = "#7AB800";
+        statusEnd = p;
     } else if (p < +new Date() && +new Date() <= f) {
         status = "Остаточна номінація";
         statusColor = "#0582FF";
+        statusEnd = f;
     } else if (f < +new Date() && +new Date() <= mc) {
         status = "Перед мандатною комісією";
         statusColor = "#CC0033";
+        statusEnd = bm7;
     } else {
         status = "Архів";
         statusColor = "#8E8E48";
@@ -50041,6 +50049,7 @@ var CompInfo = function CompInfo(props) {
                     String(status).toUpperCase()
                 )
             ),
+            _react2.default.createElement(_countdown2.default, { till: statusEnd }),
             _react2.default.createElement(
                 "p",
                 null,
@@ -50072,6 +50081,105 @@ exports.default = CompInfo;
 
 /***/ }),
 /* 315 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(5);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Countdown = function (_React$Component) {
+    _inherits(Countdown, _React$Component);
+
+    function Countdown(props) {
+        _classCallCheck(this, Countdown);
+
+        var _this = _possibleConstructorReturn(this, (Countdown.__proto__ || Object.getPrototypeOf(Countdown)).call(this, props));
+
+        _this.state = {
+            currentDate: new Date()
+        };
+        return _this;
+    }
+
+    _createClass(Countdown, [{
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            this.timerId = setInterval(function () {
+                return _this2.tick();
+            }, 1000);
+        }
+    }, {
+        key: "componentWillUnmount",
+        value: function componentWillUnmount() {
+            clearInterval(this.timerId);
+        }
+    }, {
+        key: "tick",
+        value: function tick() {
+            this.setState({
+                currentDate: new Date()
+            });
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            if (!this.props.till) return null;
+            var endDay = new Date(this.props.till);
+            var timeDiff = Math.abs(endDay.getTime() - this.state.currentDate.getTime());
+            var diffDays = Math.floor(timeDiff / (1000 * 3600 * 24));
+            var diffHours = Math.floor(timeDiff % (1000 * 3600 * 24) / (1000 * 3600));
+            var diffMin = Math.floor(timeDiff % (1000 * 60 * 60) / (1000 * 60));
+            var diffSec = Math.floor(timeDiff % (1000 * 60) / 1000);
+            return _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement(
+                    "div",
+                    null,
+                    "\u0434\u043E \u0437\u043C\u0456\u043D\u0438 \u0441\u0442\u0430\u0442\u0443\u0441\u0443 \u0437\u0430\u043B\u0438\u0448\u0438\u043B\u043E\u0441\u044C:"
+                ),
+                _react2.default.createElement(
+                    "div",
+                    null,
+                    diffDays,
+                    " \u0434\u043D\u0456\u0432 ",
+                    diffHours,
+                    " \u0433\u043E\u0434. ",
+                    diffMin,
+                    " \u0445\u0432. ",
+                    diffSec,
+                    " \u0441\u0435\u043A."
+                )
+            );
+        }
+    }]);
+
+    return Countdown;
+}(_react2.default.Component);
+
+exports.default = Countdown;
+
+/***/ }),
+/* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50371,7 +50479,7 @@ var IsJunLiftersGrid = function IsJunLiftersGrid(props) {
 exports.default = IsJunLiftersGrid;
 
 /***/ }),
-/* 316 */
+/* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50676,7 +50784,7 @@ var LiftersGrid = function LiftersGrid(props) {
 exports.default = LiftersGrid;
 
 /***/ }),
-/* 317 */
+/* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50791,7 +50899,7 @@ var RefGrid = function RefGrid(props) {
 exports.default = RefGrid;
 
 /***/ }),
-/* 318 */
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50860,7 +50968,7 @@ var Modal = function (_React$Component) {
 exports.default = Modal;
 
 /***/ }),
-/* 319 */
+/* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50947,7 +51055,7 @@ var Dialog = function (_React$Component) {
 exports.default = Dialog;
 
 /***/ }),
-/* 320 */
+/* 321 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50965,11 +51073,11 @@ var _moment = __webpack_require__(0);
 
 var _moment2 = _interopRequireDefault(_moment);
 
-var _reactDatetime = __webpack_require__(321);
+var _reactDatetime = __webpack_require__(322);
 
 var _reactDatetime2 = _interopRequireDefault(_reactDatetime);
 
-var _validation = __webpack_require__(329);
+var _validation = __webpack_require__(330);
 
 var validation = _interopRequireWildcard(_validation);
 
@@ -50977,7 +51085,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-__webpack_require__(330);
+__webpack_require__(331);
 
 
 var LifterForm = function LifterForm(props) {
@@ -51615,18 +51723,18 @@ var LifterForm = function LifterForm(props) {
 exports.default = LifterForm;
 
 /***/ }),
-/* 321 */
+/* 322 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var assign = __webpack_require__(207),
-	PropTypes = __webpack_require__(322),
+	PropTypes = __webpack_require__(323),
 	createClass = __webpack_require__(18),
 	moment = __webpack_require__(0),
 	React = __webpack_require__(5),
-	CalendarContainer = __webpack_require__(324)
+	CalendarContainer = __webpack_require__(325)
 	;
 
 var TYPES = PropTypes;
@@ -52069,7 +52177,7 @@ module.exports = Datetime;
 
 
 /***/ }),
-/* 322 */
+/* 323 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {/**
@@ -52100,13 +52208,13 @@ if (process.env.NODE_ENV !== 'production') {
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(323)();
+  module.exports = __webpack_require__(324)();
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 323 */
+/* 324 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52172,7 +52280,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 324 */
+/* 325 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52180,10 +52288,10 @@ module.exports = function() {
 
 var React = __webpack_require__(5),
 	createClass = __webpack_require__(18),
-	DaysView = __webpack_require__(325),
-	MonthsView = __webpack_require__(326),
-	YearsView = __webpack_require__(327),
-	TimeView = __webpack_require__(328)
+	DaysView = __webpack_require__(326),
+	MonthsView = __webpack_require__(327),
+	YearsView = __webpack_require__(328),
+	TimeView = __webpack_require__(329)
 	;
 
 var CalendarContainer = createClass({
@@ -52203,7 +52311,7 @@ module.exports = CalendarContainer;
 
 
 /***/ }),
-/* 325 */
+/* 326 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52354,7 +52462,7 @@ module.exports = DateTimePickerDays;
 
 
 /***/ }),
-/* 326 */
+/* 327 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52468,7 +52576,7 @@ module.exports = DateTimePickerMonths;
 
 
 /***/ }),
-/* 327 */
+/* 328 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52580,7 +52688,7 @@ module.exports = DateTimePickerYears;
 
 
 /***/ }),
-/* 328 */
+/* 329 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52815,7 +52923,7 @@ module.exports = DateTimePickerTime;
 
 
 /***/ }),
-/* 329 */
+/* 330 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52908,13 +53016,13 @@ var hasComma = exports.hasComma = function hasComma(str) {
 };
 
 /***/ }),
-/* 330 */
+/* 331 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(331);
+var content = __webpack_require__(332);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -52922,7 +53030,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(333)(content, options);
+var update = __webpack_require__(334)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -52939,10 +53047,10 @@ if(false) {
 }
 
 /***/ }),
-/* 331 */
+/* 332 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(332)(undefined);
+exports = module.exports = __webpack_require__(333)(undefined);
 // imports
 
 
@@ -52953,7 +53061,7 @@ exports.push([module.i, "/*!\r\n * https://github.com/YouCanBookMe/react-datetim
 
 
 /***/ }),
-/* 332 */
+/* 333 */
 /***/ (function(module, exports) {
 
 /*
@@ -53035,7 +53143,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 333 */
+/* 334 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -53081,7 +53189,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(334);
+var	fixUrls = __webpack_require__(335);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -53394,7 +53502,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 334 */
+/* 335 */
 /***/ (function(module, exports) {
 
 
@@ -53489,7 +53597,7 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 335 */
+/* 336 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53731,7 +53839,7 @@ var OfficialForm = function OfficialForm(props) {
 exports.default = OfficialForm;
 
 /***/ }),
-/* 336 */
+/* 337 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53799,7 +53907,7 @@ var Inform = function (_React$Component) {
 exports.default = Inform;
 
 /***/ }),
-/* 337 */
+/* 338 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
