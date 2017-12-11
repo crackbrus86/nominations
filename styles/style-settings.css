@@ -1,0 +1,161 @@
+.blackout {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 10000;
+  overflow: auto; }
+  .blackout .spinner-wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%; }
+    .blackout .spinner-wrap .fa-spin {
+      color: #6c6fff; }
+
+.grid {
+  border-spacing: 0px;
+  border-collapse: collapse; }
+  .grid sup {
+    color: #9e2600;
+    font-weight: 600;
+    margin-left: 3px; }
+  .grid thead tr {
+    background-color: #FF9800;
+    color: #fff;
+    text-shadow: 1px 1px 5px #000; }
+    .grid thead tr th {
+      text-align: left;
+      padding: 0 5px; }
+  .grid tbody tr:nth-child(odd) {
+    background-color: #d8e8f5; }
+  .grid tbody tr:nth-child(even) {
+    background-color: #d4d4d4; }
+  .grid tbody tr:hover {
+    background-color: #91caf7;
+    cursor: pointer; }
+  .grid tbody tr td {
+    padding: 3px; }
+    .grid tbody tr td .edit {
+      color: #6b3e1d; }
+    .grid tbody tr td .delete {
+      color: #cc3227; }
+    .grid tbody tr td .cup-marker {
+      margin: 0 5px;
+      color: #000ba5; }
+
+.custom-modal {
+  background-color: #ffffff;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  min-width: 500px;
+  min-height: 200px;
+  border-radius: 5px;
+  padding: 4px 10px;
+  margin-left: -250px; }
+  .custom-modal .custom-modal-header {
+    text-align: right;
+    padding-right: 5px; }
+    .custom-modal .custom-modal-header .fa-times {
+      color: #9a9aaf;
+      cursor: pointer; }
+      .custom-modal .custom-modal-header .fa-times:hover {
+        color: #68686f; }
+  .custom-modal h6, .custom-modal h4 {
+    margin: 5px 0 10px 0px; }
+  .custom-modal h4 {
+    font-size: 1.2em;
+    color: #0849c5;
+    margin-top: 0px; }
+  .custom-modal form label {
+    display: block;
+    font-weight: 600; }
+  .custom-modal form input {
+    width: 100%; }
+  .custom-modal form input[type=checkbox] {
+    width: 16px; }
+  .custom-modal form button {
+    color: #fff;
+    background-color: #038ece;
+    font-weight: 600;
+    border-radius: 4px;
+    border: 0px;
+    padding: 5px 5px 7px;
+    margin: 5px 0;
+    cursor: pointer; }
+    .custom-modal form button:hover {
+      background-color: #03A9F4; }
+    .custom-modal form button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed; }
+      .custom-modal form button:disabled:hover {
+        background-color: #038ece; }
+
+.invalid {
+  color: red; }
+
+.dialog {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  min-width: 400px;
+  background-color: #fff;
+  margin-left: -200px;
+  padding: 5px 10px;
+  border-radius: 5px; }
+  .dialog .dialog-body {
+    padding: 10px 0;
+    font-size: 1.2em; }
+  .dialog .dialog-header .icons {
+    text-align: right; }
+    .dialog .dialog-header .icons .fa-times {
+      color: #9a9aaf;
+      cursor: pointer; }
+      .dialog .dialog-header .icons .fa-times:hover {
+        color: #68686f; }
+  .dialog .dialog-footer {
+    text-align: right;
+    padding-bottom: 5px; }
+    .dialog .dialog-footer button {
+      color: #fff;
+      background-color: #038ece;
+      font-weight: 600;
+      border-radius: 4px;
+      border: 0px;
+      padding: 0px 3px 4px;
+      margin: 3px 10px 0 0;
+      cursor: pointer;
+      min-width: 50px; }
+      .dialog .dialog-footer button.btn-danger {
+        background-color: #ab3434; }
+        .dialog .dialog-footer button.btn-danger:hover {
+          background-color: #e25252; }
+      .dialog .dialog-footer button.btn-success {
+        background-color: #2f693b; }
+        .dialog .dialog-footer button.btn-success:hover {
+          background-color: #459255; }
+  .dialog h4 {
+    font-size: 1.4em;
+    margin: 0;
+    color: #2e3fc5; }
+
+.control-panel button {
+  color: #fff;
+  background-color: #038ece;
+  font-weight: 600;
+  border-radius: 4px;
+  border: 0px;
+  padding: 0px 3px 4px;
+  margin: 3px 0;
+  cursor: pointer; }
+  .control-panel button:hover {
+    background-color: #03A9F4; }
+
+.row-wrap {
+  display: flex;
+  flex-direction: row; }
+  .row-wrap .col-flex:nth-child(2) {
+    flex-grow: 2;
+    padding-left: 20px; }
