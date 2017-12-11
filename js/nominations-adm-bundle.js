@@ -50009,7 +50009,7 @@ var CompInfo = function CompInfo(props) {
     } else if (f < +new Date() && +new Date() <= mc) {
         status = "Перед мандатною комісією";
         statusColor = "#CC0033";
-        statusEnd = bm7;
+        statusEnd = mc;
     } else {
         status = "Архів";
         statusColor = "#8E8E48";
@@ -50161,7 +50161,7 @@ var Countdown = function (_React$Component) {
                     "div",
                     null,
                     diffDays,
-                    " \u0434\u043D\u0456\u0432 ",
+                    " \u0434. ",
                     diffHours,
                     " \u0433\u043E\u0434. ",
                     diffMin,

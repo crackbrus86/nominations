@@ -24,7 +24,7 @@ const CompInfo = (props) => {
     }else if(f < (+new Date()) && (+new Date()) <= mc){
         status = "Перед мандатною комісією";
         statusColor = "#CC0033";
-        statusEnd = bm7;
+        statusEnd = mc;
     }else{
         status = "Архів";
         statusColor = "#8E8E48";

@@ -35,7 +35,7 @@ class Countdown extends React.Component{
         var diffSec = Math.floor((timeDiff % (1000 * 60)) / 1000);
         return <div>
             <div>до зміни статусу залишилось:</div>
-            <div>{diffDays} днів {diffHours} год. {diffMin} хв. {diffSec} сек.</div>
+            <div>{diffDays} д. {diffHours} год. {diffMin} хв. {diffSec} сек.</div>
         </div>
     }
 }

@@ -50637,7 +50637,7 @@ var Countdown = function (_React$Component) {
                     "div",
                     null,
                     diffDays,
-                    " \u0434\u043D\u0456\u0432 ",
+                    " \u0434. ",
                     diffHours,
                     " \u0433\u043E\u0434. ",
                     diffMin,
