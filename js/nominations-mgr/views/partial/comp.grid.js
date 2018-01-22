@@ -43,7 +43,7 @@ const CompGrid = (props) => {
     var rows = props.data.map(item => {
         var p = (new Date(item.startDate)).setDate((new Date(item.startDate)).getDate() - 21);
         var f = (new Date(item.startDate)).setDate((new Date(item.startDate)).getDate() - 10);
-        var mc = (new Date(item.startDate)).setDate((new Date(item.startDate)).getDate() - 1);
+        var mc = (new Date(item.startDate)).setDate((new Date(item.startDate)).getDate());
         var status = "";
         if((+new Date()) <= p){
             status = <div className="status-code" style={{backgroundColor: "#BDF4BD"}}>{"Попередня"}</div>;

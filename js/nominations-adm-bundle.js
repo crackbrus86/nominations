@@ -9613,10 +9613,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
   function setupBinding(root, factory) {
     if (true) {
       // AMD. Register as an anonymous module.
-      !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(5),__webpack_require__(63),__webpack_require__(18)], __WEBPACK_AMD_DEFINE_RESULT__ = function(React, ReactDom, createReactClass) {
+      !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(5),__webpack_require__(63),__webpack_require__(18)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(React, ReactDom, createReactClass) {
         if (!createReactClass) createReactClass = React.createClass;
         return factory(root, React, ReactDom, createReactClass);
-      }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+      }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
     } else if (typeof exports === 'object') {
       // Node. Note that this does not work with strict
@@ -26326,9 +26326,9 @@ jQuery.nodeName = nodeName;
 // https://github.com/jrburke/requirejs/wiki/Updating-existing-libraries#wiki-anon
 
 if ( true ) {
-	!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function() {
+	!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function() {
 		return jQuery;
-	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+	}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 }
 
@@ -49147,7 +49147,7 @@ var CompGrid = function CompGrid(props) {
     var rows = props.data.map(function (item) {
         var p = new Date(item.startDate).setDate(new Date(item.startDate).getDate() - 21);
         var f = new Date(item.startDate).setDate(new Date(item.startDate).getDate() - 10);
-        var mc = new Date(item.startDate).setDate(new Date(item.startDate).getDate() - 1);
+        var mc = new Date(item.startDate).setDate(new Date(item.startDate).getDate());
         var status = "";
         if (+new Date() <= p) {
             status = _react2.default.createElement(
@@ -49517,9 +49517,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 		module.exports = classNames;
 	} else if (true) {
 		// register as 'classnames', consistent with npm package name
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
 			return classNames;
-		}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	} else {
 		window.classNames = classNames;
@@ -49994,7 +49994,7 @@ var CompInfo = function CompInfo(props) {
     var p = new Date(info.startDate).setDate(new Date(info.startDate).getDate() - 21);
     var f = new Date(info.startDate).setDate(new Date(info.startDate).getDate() - 10);
     var bm7 = new Date(info.startDate).setDate(new Date(info.startDate).getDate() - 7);
-    var mc = new Date(info.startDate).setDate(new Date(info.startDate).getDate() - 1);
+    var mc = new Date(info.startDate).setDate(new Date(info.startDate).getDate());
     var status = null;
     var statusColor = null;
     var statusEnd = null;

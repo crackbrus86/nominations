@@ -9,7 +9,7 @@ const CompInfo = (props) => {
     var p = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 21);
     var f = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 10);
     var bm7 = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 7);
-    var mc = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 1);
+    var mc = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate());
     var status = null;
     var statusColor = null;
     var statusEnd = null;
