@@ -50964,6 +50964,16 @@ var LifterForm = function LifterForm(props) {
     ) : null;
     var statusPrev = new Date(info.startDate).setDate(new Date(info.startDate).getDate() - 21);
     var isNameDisabled = !(+new Date() <= statusPrev);
+    var dateValidation = _react2.default.createElement(
+        "tr",
+        null,
+        _react2.default.createElement("td", null),
+        _react2.default.createElement(
+            "td",
+            { style: { width: "50%" } },
+            validation.isTooYoung(bDate, info.startDate).message
+        )
+    );
     return _react2.default.createElement(
         "div",
         null,
@@ -51063,6 +51073,7 @@ var LifterForm = function LifterForm(props) {
                                     }, disabled: isNameDisabled })
                             )
                         ),
+                        dateValidation,
                         _react2.default.createElement(
                             "tr",
                             null,
@@ -51457,7 +51468,7 @@ var LifterForm = function LifterForm(props) {
                         "button",
                         { type: "button", className: "footer-button success", onClick: function onClick() {
                                 return props.onSave();
-                            }, disabled: !validateDivision().isValid },
+                            }, disabled: !validateDivision().isValid || !!validation.isTooYoung(bDate, info.startDate).value },
                         "\u0417\u0431\u0435\u0440\u0435\u0433\u0442\u0438"
                     )
                 ),
@@ -52688,7 +52699,7 @@ module.exports = DateTimePickerTime;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.hasComma = exports.isSelectValid = exports.isEmailValid = exports.isFieldValid = exports.isFormValid = undefined;
+exports.isTooYoung = exports.hasComma = exports.isSelectValid = exports.isEmailValid = exports.isFieldValid = exports.isFormValid = undefined;
 
 var _react = __webpack_require__(5);
 
@@ -52769,6 +52780,28 @@ var hasComma = exports.hasComma = function hasComma(str) {
             "Використовуйте '.' замість ','!"
         )
     );
+};
+
+var isTooYoung = exports.isTooYoung = function isTooYoung(date, startDate) {
+    if (!date) return { value: false, message: '' };
+    var bDate = new Date(date);
+    var bDate13 = bDate.setFullYear(bDate.getFullYear() + 13);
+    return new Date(bDate13) > new Date(startDate) ? {
+        value: true,
+        message: _react2.default.createElement(
+            "i",
+            { className: "invalid" },
+            "*",
+            _react2.default.createElement(
+                "sub",
+                null,
+                "Спортсмен(ка) повинен(на) досягти 13 років на момент змагань"
+            )
+        )
+    } : {
+        value: false,
+        message: ""
+    };
 };
 
 /***/ }),

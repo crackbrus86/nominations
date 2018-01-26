@@ -66,6 +66,7 @@ const LifterForm = (props) => {
     </tr> : null;
     var statusPrev = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 21);
     var isNameDisabled = !((+ new Date()) <= statusPrev);
+    var dateValidation = <tr><td></td><td style={{width: "50%"}}>{validation.isTooYoung(bDate, info.startDate).message}</td></tr>;
     return (<div>
         <div className="form-header">
             <h3>Додати спортсмена до номінації</h3>
@@ -88,7 +89,8 @@ const LifterForm = (props) => {
                     <tr>
                         <td><label>По-батькові</label></td>
                         <td><input value={mName} type="text" maxLength="50" onChange={e => props.onChange("mName", e.target.value)} disabled={isNameDisabled} /></td>
-                    </tr>                    
+                    </tr> 
+                    {dateValidation}                   
                     <tr>
                         <td><label>Дата народження</label></td>
                         <td><Datetime value={bDate} dateFormat="DD-MM-YYYY" timeFormat={false} onChange={(v) => props.onChange("birthDate", v.format("YYYY-MM-DD"))} closeOnSelect={true} /></td>
@@ -171,7 +173,8 @@ const LifterForm = (props) => {
             </div>
             <div className="formFooter">
                 <div className="form-footer-tab left">
-                    <button type="button" className="footer-button success" onClick={() => props.onSave()} disabled={!validateDivision().isValid}>Зберегти</button>
+                    <button type="button" className="footer-button success" onClick={() => props.onSave()} disabled={!validateDivision().isValid || 
+                    !!validation.isTooYoung(bDate, info.startDate).value}>Зберегти</button>
                 </div>
                 <div className="form-footer-tab right">
                 <button type="button" className="footer-button danger" onClick={() => props.onClose()}>Скасувати</button>

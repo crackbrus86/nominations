@@ -25,3 +25,16 @@ export const isSelectValid = (value) => {
 export const hasComma = (str) => {
     if((str.toString()).indexOf(",") > -1) return <i className="invalid">*<sub>{"Використовуйте '.' замість ','!"}</sub></i>;
 }
+
+export const isTooYoung = (date, startDate) => {
+    if(!date) return { value: false, message: ''}
+    var bDate = new Date(date);
+    var bDate13 = bDate.setFullYear(bDate.getFullYear() + 13);
+    return (new Date(bDate13) > new Date(startDate))? { 
+        value: true, 
+        message: <i className="invalid">*<sub>{"Спортсмен(ка) повинен(на) досягти 13 років на момент змагань"}</sub></i>
+    } : {
+        value: false,
+        message: ""
+    }
+}
