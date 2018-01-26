@@ -95,6 +95,8 @@
 
 .invalid {
   color: red; }
+  .invalid sub {
+    line-height: 15px; }
 
 .dialog {
   position: absolute;
