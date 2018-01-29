@@ -10,7 +10,12 @@ const RefGrid = (props) => {
             field: "number",
             width: "28px",
             class: "al-right"
-        },      
+        },  
+        {
+            title: "Статус",
+            field: "status",
+            width: "45px"
+        },            
         {
             title: "Ім'я",
             field: "fullName",
@@ -36,6 +41,9 @@ const RefGrid = (props) => {
         var referee = {};
         referee.id = x.id;
         referee.number = "";
+        var statusTitle = (JSON.parse(x.status))? "Підтверджено" : "Очікує підтвердження";
+        var statusClass = (JSON.parse(x.status))? "fa fa-check status-mark status-ok" : "fa fa-question status-mark status-pending";
+        referee.status = (<span className={statusClass} title={statusTitle}></span>);        
         referee.fullName = x.surname + " " + x.firstName + " " + x.middleName;
         referee.fullName = referee.fullName.toUpperCase();
         referee.team = props.regions.filter(reg => reg.id === x.team)[0].name.toUpperCase();

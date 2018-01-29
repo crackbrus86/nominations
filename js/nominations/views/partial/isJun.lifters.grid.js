@@ -27,6 +27,11 @@ const IsJunLiftersGrid = (props) => {
             class: "al-right"
         },
         {
+            title: "Статус",
+            field: "status",
+            width: "45px"
+        },         
+        {
             title: "Ім'я",
             field: "fullName",
             width: "150px"
@@ -157,6 +162,9 @@ const IsJunLiftersGrid = (props) => {
                                 var rowItem = {};
                                 rowItem.personally = (i.personally && JSON.parse(i.personally))? <sup title="Особисто">О</sup> : null;
                                 rowItem.number = "";
+                                var statusTitle = (JSON.parse(i.status))? "Підтверджено" : "Очікує підтвердження";
+                                var statusClass = (JSON.parse(i.status))? "fa fa-check status-mark status-ok" : "fa fa-question status-mark status-pending";
+                                rowItem.status = (<span className={statusClass} title={statusTitle}></span>);                                   
                                 rowItem.fullName = i.surname + " " + i.name;
                                 rowItem.fullName = (i.mName)? rowItem.fullName + " " + i.mName : rowItem.fullName;
                                 rowItem.fullName = rowItem.fullName.toUpperCase();
