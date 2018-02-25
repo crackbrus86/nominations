@@ -75,11 +75,23 @@ class Nominations extends React.Component{
     }   
     
     printGrid(){
-        jQuery.print(".print-wrap");
+        this.openPereview();
+        jQuery.print(".nom-preview");
+        this.removePreview();
     }
 
     exportGrid(){
         jQuery(".print-wrap").wordExport();
+    }
+
+    openPereview(){
+        jQuery("body").append("<div class='nom-preview'></div>");
+        jQuery(".nom-preview").html(jQuery(".print-wrap").html());
+    }
+
+    removePreview(){
+        jQuery(".nom-preview").html();
+        jQuery(".nom-preview").remove();
     }
 
     componentWillReceiveProps(props){

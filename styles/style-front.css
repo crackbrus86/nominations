@@ -442,3 +442,21 @@
     font-size: 0.8em;
     text-align: right;
     margin-bottom: 20px; }
+
+.nom-preview {
+  font-size: 8px !important; }
+  .nom-preview .division-head {
+    text-shadow: none;
+    font-size: 12px;
+    font-weight: 600;
+    color: #000; }
+  .nom-preview .w-class-name {
+    border: 1px solid #000 !important; }
+  .nom-preview table thead th {
+    border: 1px solid #000;
+    background-color: #ccc; }
+  .nom-preview table tr {
+    border: 1px solid #000; }
+    .nom-preview table tr td {
+      border: 1px solid #000;
+      padding: 4px !important; }
