@@ -589,6 +589,8 @@
         border: 1px solid #000!important;
     }
     table{
+        border-collapse: separate;
+        border-spacing: 0;
         thead{
             th{
                 border: 1px solid #000;
