@@ -454,10 +454,41 @@
     border: 1px solid #000 !important; }
   .nom-preview table {
     border-collapse: separate;
-    border-spacing: 0; }
+    border-spacing: 0;
+    width: 994px !important; }
     .nom-preview table thead th {
       border: 1px solid #000;
       background-color: #ccc; }
+      .nom-preview table thead th:nth-child(1) {
+        width: 31px !important; }
+      .nom-preview table thead th:nth-child(2) {
+        width: 50px !important; }
+      .nom-preview table thead th:nth-child(3) {
+        width: 150px !important; }
+      .nom-preview table thead th:nth-child(4) {
+        width: 84px !important; }
+      .nom-preview table thead th:nth-child(5) {
+        width: 60px !important; }
+      .nom-preview table thead th:nth-child(6) {
+        width: 39px !important; }
+      .nom-preview table thead th:nth-child(7) {
+        width: 60px !important; }
+      .nom-preview table thead th:nth-child(8) {
+        width: 60px !important; }
+      .nom-preview table thead th:nth-child(9) {
+        width: 60px !important; }
+      .nom-preview table thead th:nth-child(10) {
+        width: 60px !important; }
+      .nom-preview table thead th:nth-child(11) {
+        width: 60px !important; }
+      .nom-preview table thead th:nth-child(12) {
+        width: 60px !important; }
+      .nom-preview table thead th:nth-child(13) {
+        width: 60px !important; }
+      .nom-preview table thead th:nth-child(14) {
+        width: 60px !important; }
+      .nom-preview table thead th:nth-child(15) {
+        width: 100px !important; }
     .nom-preview table tr {
       border: 1px solid #000; }
       .nom-preview table tr td {

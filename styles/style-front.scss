@@ -591,10 +591,56 @@
     table{
         border-collapse: separate;
         border-spacing: 0;
+        width: 994px!important;
         thead{
             th{
                 border: 1px solid #000;
                 background-color: #ccc;
+                &:nth-child(1){
+                    width: 31px!important;
+                }
+                &:nth-child(2){
+                    width: 50px!important;
+                }
+                &:nth-child(3){
+                    width: 150px!important;
+                }    
+                &:nth-child(4){
+                    width: 84px!important;
+                }  
+                &:nth-child(5){
+                    width: 60px!important;
+                }     
+                &:nth-child(6){
+                    width: 39px!important;
+                }    
+                &:nth-child(7){
+                    width: 60px!important;
+                }  
+                &:nth-child(8){
+                    width: 60px!important;
+                }    
+                &:nth-child(9){
+                    width: 60px!important;
+                }    
+                &:nth-child(10){
+                    width: 60px!important;
+                }  
+                &:nth-child(11){
+                    width: 60px!important;
+                }    
+                &:nth-child(12){
+                    width: 60px!important;
+                }    
+                &:nth-child(13){
+                    width: 60px!important;
+                }  
+                &:nth-child(14){
+                    width: 60px!important;
+                }  
+                &:nth-child(15){
+                    width: 100px!important;
+                }                                                                                                    
             }
         }
         tr{

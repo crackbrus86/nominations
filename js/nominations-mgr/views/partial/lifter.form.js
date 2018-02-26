@@ -66,7 +66,7 @@ const LifterForm = (props) => {
     </tr> : null;
     var statusPrev = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 21);
     var isNameDisabled = !((+ new Date()) <= statusPrev);
-    var dateValidation = <tr><td></td><td style={{width: "50%"}}>{validation.isTooYoung(bDate, info.startDate).message}</td></tr>;
+    var dateValidation = (!JSON.parse(info.isJun))? <tr><td></td><td style={{width: "50%"}}>{validation.isTooYoung(bDate, info.startDate).message}</td></tr> : null;
     return (<div>
         <div className="form-header">
             <h3>Додати спортсмена до номінації</h3>
@@ -174,7 +174,7 @@ const LifterForm = (props) => {
             <div className="formFooter">
                 <div className="form-footer-tab left">
                     <button type="button" className="footer-button success" onClick={() => props.onSave()} disabled={!validateDivision().isValid || 
-                    !!validation.isTooYoung(bDate, info.startDate).value}>Зберегти</button>
+                    (!JSON.parse(info.isJun) && !!validation.isTooYoung(bDate, info.startDate).value)}>Зберегти</button>
                 </div>
                 <div className="form-footer-tab right">
                 <button type="button" className="footer-button danger" onClick={() => props.onClose()}>Скасувати</button>
