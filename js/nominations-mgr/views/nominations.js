@@ -81,7 +81,7 @@ class Nominations extends React.Component{
     evalCompStatus(){
         var info = this.state.compInfo;
         var compStatus = "";
-        var p = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 21);
+        var p = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 16);
         var f = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 10);
         var mc = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate());
         if((+new Date()) <= p){

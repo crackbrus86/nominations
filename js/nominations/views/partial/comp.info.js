@@ -6,7 +6,7 @@ const CompInfo = (props) => {
     if(!props.compInfo) return null;
     var info = props.compInfo;
     var date = moment(info.startDate).locale("uk").format("DD MMM") + "-" + moment(info.endDate).locale("uk").format("DD MMM") + ", " + moment(info.endDate).format("YYYY");
-    var p = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 21);
+    var p = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 16);
     var f = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 10);
     var bm7 = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 7);
     var mc = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate());
