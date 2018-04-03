@@ -19,12 +19,12 @@ const RefGrid = (props) => {
         {
             title: "Ім'я",
             field: "fullName",
-            width: "150px"
+            width: "200px"
         },
         {
             title: "Категорія",
             field: "refCategory",
-            width: "*"
+            width: "50px"
         },
         {
             title: "Примітки",

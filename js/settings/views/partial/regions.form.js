@@ -5,6 +5,7 @@ const RegionForm = (props) => {
     var required = ["name", "login", "token"];
     var email = (props.region.email)? props.region.email : "";
     var word = (props.region.id)? "Редагувати" : "Створити";
+    var shortName = props.region.short_name || "";
     return (<div>
         <h4>{word + " регіон"}</h4>
         <form>
@@ -24,6 +25,10 @@ const RegionForm = (props) => {
                 <label>Email {validation.isEmailValid(email)}</label>
                 <input value={email} type="email" maxLength="30" onChange={e => props.onChange("email", e.target.value)} />
             </div>  
+            <div>
+                <label>Скорочена назва</label>
+                <input type="text" value={shortName} maxLength="20" onChange={e => props.onChange("short_name", e.target.value)} />
+            </div>
             <div>
                 <button type="button" disabled={validation.isFormValid(props.region, required)} onClick={() => props.onSave()}>Зберегти</button>    
             </div>                                  

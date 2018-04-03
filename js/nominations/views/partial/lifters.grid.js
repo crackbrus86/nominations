@@ -106,7 +106,7 @@ const LiftersGrid = (props) => {
     var results = [];
     if(props.game.typeId === "1"){
         results = [{
-                title: "Присідання",
+                title: "Присід.",
                 field: "squat",
                 width: "45px",
                 class: "al-right"
@@ -184,7 +184,8 @@ const LiftersGrid = (props) => {
                         rowItem.fullName = (i.mName)? rowItem.fullName + " " + i.mName : rowItem.fullName;
                         rowItem.fullName = rowItem.fullName.toUpperCase();
                         rowItem.born = moment(new Date(i.born)).format("DD.MM.YYYY");
-                        rowItem.team = props.regions.filter(reg => reg.id === i.team)[0].name.toUpperCase();
+                        var region = props.regions.filter(reg => reg.id === i.team)[0];
+                        rowItem.team = region.shortName.toUpperCase() || region.name.toUpperCase();
                         rowItem.level = i.level;
                         rowItem.city = i.city.toUpperCase();
                         rowItem.fst = i.fst.toUpperCase();

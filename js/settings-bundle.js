@@ -9480,10 +9480,10 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
   function setupBinding(root, factory) {
     if (true) {
       // AMD. Register as an anonymous module.
-      !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(6),__webpack_require__(62),__webpack_require__(18)], __WEBPACK_AMD_DEFINE_RESULT__ = function(React, ReactDom, createReactClass) {
+      !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(6),__webpack_require__(62),__webpack_require__(18)], __WEBPACK_AMD_DEFINE_RESULT__ = (function(React, ReactDom, createReactClass) {
         if (!createReactClass) createReactClass = React.createClass;
         return factory(root, React, ReactDom, createReactClass);
-      }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+      }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
     } else if (typeof exports === 'object') {
       // Node. Note that this does not work with strict
@@ -16344,7 +16344,7 @@ exports.default = Modal;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.hasComma = exports.isSelectValid = exports.isEmailValid = exports.isFieldValid = exports.isFormValid = undefined;
+exports.isTooYoung = exports.hasComma = exports.isSelectValid = exports.isEmailValid = exports.isFieldValid = exports.isFormValid = undefined;
 
 var _react = __webpack_require__(6);
 
@@ -16425,6 +16425,28 @@ var hasComma = exports.hasComma = function hasComma(str) {
             "Використовуйте '.' замість ','!"
         )
     );
+};
+
+var isTooYoung = exports.isTooYoung = function isTooYoung(date, startDate) {
+    if (!date) return { value: false, message: '' };
+    var bDate = new Date(date);
+    var bDate13 = bDate.setFullYear(bDate.getFullYear() + 13);
+    return new Date(bDate13) > new Date(startDate) ? {
+        value: true,
+        message: _react2.default.createElement(
+            "i",
+            { className: "invalid" },
+            "*",
+            _react2.default.createElement(
+                "sub",
+                null,
+                "Спортсмен(ка) повинен(на) досягти 13 років на момент змагань"
+            )
+        )
+    } : {
+        value: false,
+        message: ""
+    };
 };
 
 /***/ }),
@@ -39027,7 +39049,8 @@ var Regions = function (_React$Component) {
                 name: "",
                 login: "",
                 token: "",
-                email: ""
+                email: "",
+                short_name: ""
             };
             this.setState({ region: region });
         }
@@ -49344,9 +49367,9 @@ jQuery.nodeName = nodeName;
 // https://github.com/jrburke/requirejs/wiki/Updating-existing-libraries#wiki-anon
 
 if ( true ) {
-	!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function() {
+	!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function() {
 		return jQuery;
-	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+	}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 }
 
@@ -49434,6 +49457,10 @@ var RegionsGrid = function RegionsGrid(props) {
         field: "login",
         width: "*"
     }, {
+        title: "Скорочена назва",
+        field: "short_name",
+        width: "*"
+    }, {
         title: "Email",
         field: "email",
         width: "*"
@@ -49444,7 +49471,8 @@ var RegionsGrid = function RegionsGrid(props) {
             name: item.name,
             login: item.login,
             token: item.token,
-            email: item.email
+            email: item.email,
+            short_name: item.short_name || ''
         };
     });
     return _react2.default.createElement(
@@ -49501,9 +49529,9 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 		module.exports = classNames;
 	} else if (true) {
 		// register as 'classnames', consistent with npm package name
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
 			return classNames;
-		}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	} else {
 		window.classNames = classNames;
@@ -49538,6 +49566,7 @@ var RegionForm = function RegionForm(props) {
     var required = ["name", "login", "token"];
     var email = props.region.email ? props.region.email : "";
     var word = props.region.id ? "Редагувати" : "Створити";
+    var shortName = props.region.short_name || "";
     return _react2.default.createElement(
         "div",
         null,
@@ -49599,6 +49628,18 @@ var RegionForm = function RegionForm(props) {
                 ),
                 _react2.default.createElement("input", { value: email, type: "email", maxLength: "30", onChange: function onChange(e) {
                         return props.onChange("email", e.target.value);
+                    } })
+            ),
+            _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement(
+                    "label",
+                    null,
+                    "\u0421\u043A\u043E\u0440\u043E\u0447\u0435\u043D\u0430 \u043D\u0430\u0437\u0432\u0430"
+                ),
+                _react2.default.createElement("input", { type: "text", value: shortName, maxLength: "20", onChange: function onChange(e) {
+                        return props.onChange("short_name", e.target.value);
                     } })
             ),
             _react2.default.createElement(

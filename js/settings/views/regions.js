@@ -48,7 +48,8 @@ class Regions extends React.Component{
             name: "",
             login: "",
             token: "",
-            email: ""
+            email: "",
+            short_name: ""
         }
         this.setState({region: region});
     }

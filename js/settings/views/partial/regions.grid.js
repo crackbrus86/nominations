@@ -32,10 +32,15 @@ const RegionsGrid = (props) => {
             width: "*"
         },
         {
+            title: "Скорочена назва",
+            field: "short_name",
+            width: "*"
+        },
+        {
             title: "Email",
             field: "email",
             width: "*"
-        }                          
+        }                        
     ];
     var rows = props.data.map(item => {
         return {
@@ -43,7 +48,8 @@ const RegionsGrid = (props) => {
             name: item.name,
             login: item.login,
             token: item.token,
-            email: item.email
+            email: item.email,
+            short_name: item.short_name || ''
         }
     });
     return(<div><Grid data={{columns, rows}}/></div>)

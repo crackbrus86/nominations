@@ -50245,11 +50245,11 @@ var IsJunLiftersGrid = function IsJunLiftersGrid(props) {
     }, {
         title: "Область",
         field: "team",
-        width: "150px"
+        width: "50px"
     }, {
         title: "Місто",
         field: "city",
-        width: "150px"
+        width: "100px"
     }, {
         title: "ФСТ",
         field: "fst",
@@ -50386,9 +50386,10 @@ var IsJunLiftersGrid = function IsJunLiftersGrid(props) {
                                 rowItem.fullName = i.mName ? rowItem.fullName + " " + i.mName : rowItem.fullName;
                                 rowItem.fullName = rowItem.fullName.toUpperCase();
                                 rowItem.born = (0, _moment2.default)(new Date(i.born)).format("DD.MM.YYYY");
-                                rowItem.team = props.regions.filter(function (reg) {
+                                var region = props.regions.filter(function (reg) {
                                     return reg.id === i.team;
-                                })[0].name.toUpperCase();
+                                })[0];
+                                rowItem.team = region.shortName.toUpperCase() || region.name.toUpperCase();
                                 rowItem.level = i.level;
                                 rowItem.city = i.city.toUpperCase();
                                 rowItem.fst = i.fst.toUpperCase();
@@ -50580,11 +50581,11 @@ var LiftersGrid = function LiftersGrid(props) {
     }, {
         title: "Область",
         field: "team",
-        width: "150px"
+        width: "50px"
     }, {
         title: "Місто",
         field: "city",
-        width: "150px"
+        width: "100px"
     }, {
         title: "ФСТ",
         field: "fst",
@@ -50704,9 +50705,10 @@ var LiftersGrid = function LiftersGrid(props) {
                         rowItem.fullName = i.mName ? rowItem.fullName + " " + i.mName : rowItem.fullName;
                         rowItem.fullName = rowItem.fullName.toUpperCase();
                         rowItem.born = (0, _moment2.default)(new Date(i.born)).format("DD.MM.YYYY");
-                        rowItem.team = props.regions.filter(function (reg) {
+                        var region = props.regions.filter(function (reg) {
                             return reg.id === i.team;
-                        })[0].name.toUpperCase();
+                        })[0];
+                        rowItem.team = region.shortName.toUpperCase() || region.name.toUpperCase();
                         rowItem.level = i.level;
                         rowItem.city = i.city.toUpperCase();
                         rowItem.fst = i.fst.toUpperCase();
@@ -50819,15 +50821,15 @@ var RefGrid = function RefGrid(props) {
     }, {
         title: "Ім'я",
         field: "fullName",
-        width: "150px"
+        width: "250px"
     }, {
         title: "Область",
         field: "team",
-        width: "*"
+        width: "50px"
     }, {
         title: "Категорія",
         field: "refCategory",
-        width: "*"
+        width: "50px"
     }, {
         title: "Примітки",
         field: "refRemark",
@@ -50859,9 +50861,10 @@ var RefGrid = function RefGrid(props) {
             } });
         referee.fullName = x.surname + " " + x.firstName + " " + x.middleName;
         referee.fullName = referee.fullName.toUpperCase();
-        referee.team = props.regions.filter(function (reg) {
+        var region = props.regions.filter(function (reg) {
             return reg.id === x.team;
-        })[0].name.toUpperCase();
+        })[0];
+        referee.team = region.shortName.toUpperCase() || region.name.toUpperCase();
         referee.refCategory = refCategories.filter(function (r) {
             return r.value === x.refCategory;
         })[0].text;
@@ -52932,7 +52935,7 @@ module.exports = DateTimePickerTime;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.hasComma = exports.isSelectValid = exports.isEmailValid = exports.isFieldValid = exports.isFormValid = undefined;
+exports.isTooYoung = exports.hasComma = exports.isSelectValid = exports.isEmailValid = exports.isFieldValid = exports.isFormValid = undefined;
 
 var _react = __webpack_require__(5);
 
@@ -53013,6 +53016,28 @@ var hasComma = exports.hasComma = function hasComma(str) {
             "Використовуйте '.' замість ','!"
         )
     );
+};
+
+var isTooYoung = exports.isTooYoung = function isTooYoung(date, startDate) {
+    if (!date) return { value: false, message: '' };
+    var bDate = new Date(date);
+    var bDate13 = bDate.setFullYear(bDate.getFullYear() + 13);
+    return new Date(bDate13) > new Date(startDate) ? {
+        value: true,
+        message: _react2.default.createElement(
+            "i",
+            { className: "invalid" },
+            "*",
+            _react2.default.createElement(
+                "sub",
+                null,
+                "Спортсмен(ка) повинен(на) досягти 13 років на момент змагань"
+            )
+        )
+    } : {
+        value: false,
+        message: ""
+    };
 };
 
 /***/ }),

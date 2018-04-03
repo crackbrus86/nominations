@@ -19,17 +19,17 @@ const RefGrid = (props) => {
         {
             title: "Ім'я",
             field: "fullName",
-            width: "150px"
+            width: "250px"
         },
         {
             title: "Область",
             field: "team",
-            width: "*"
+            width: "50px"
         },          
         {
             title: "Категорія",
             field: "refCategory",
-            width: "*"
+            width: "50px"
         },
         {
             title: "Примітки",
@@ -63,7 +63,8 @@ const RefGrid = (props) => {
         onChange={e => {props.onChangeStatus(e.target.dataset["rel"], !JSON.parse(x.status))}} />);   
         referee.fullName = x.surname + " " + x.firstName + " " + x.middleName;
         referee.fullName = referee.fullName.toUpperCase();
-        referee.team = props.regions.filter(reg => reg.id === x.team)[0].name.toUpperCase();
+        var region = props.regions.filter(reg => reg.id === x.team)[0];
+        referee.team = region.shortName.toUpperCase() || region.name.toUpperCase();
         referee.refCategory = refCategories.filter(r => r.value === x.refCategory)[0].text;
         referee.refRemark = x.refRemark;
         return referee;

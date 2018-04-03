@@ -586,33 +586,33 @@
         color: #000;
     }
     .w-class-name{
-        border: 1px solid #000!important;
+        border: 0.2px solid #000!important;
     }
     table{
-        border-collapse: separate;
+        // border-collapse: separate;
         border-spacing: 0;
         width: 994px!important;
         thead{
             th{
-                border: 1px solid #000;
+                border: 0.2px solid #000;
                 background-color: #ccc;
                 &:nth-child(1){
-                    width: 31px!important;
+                    width: 20px!important;
                 }
                 &:nth-child(2){
-                    width: 50px!important;
+                    width: 30px!important;
                 }
                 &:nth-child(3){
                     width: 150px!important;
                 }    
                 &:nth-child(4){
-                    width: 84px!important;
+                    width: 50px!important;
                 }  
                 &:nth-child(5){
-                    width: 60px!important;
+                    width: 30px!important;
                 }     
                 &:nth-child(6){
-                    width: 39px!important;
+                    width: 40px!important;
                 }    
                 &:nth-child(7){
                     width: 60px!important;
@@ -627,28 +627,29 @@
                     width: 60px!important;
                 }  
                 &:nth-child(11){
-                    width: 60px!important;
+                    width: 40px!important;
                 }    
                 &:nth-child(12){
-                    width: 60px!important;
+                    width: 40px!important;
                 }    
                 &:nth-child(13){
-                    width: 60px!important;
+                    width: 40px!important;
                 }  
                 &:nth-child(14){
-                    width: 60px!important;
+                    width: 40px!important;
                 }  
                 &:nth-child(15){
-                    width: 100px!important;
+                    width: 150px!important;
                 }                                                                                                    
             }
         }
         tr{
-            border: 1px solid #000;
+            border: 0.2px solid #000;
 
             td{
-                border: 1px solid #000;
+                border: 0.2px solid #000;
                 padding: 4px!important;
+                color: #000;
             }
         }
     }
