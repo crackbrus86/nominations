@@ -49740,7 +49740,7 @@ var LiftersGrid = function LiftersGrid(props) {
                         var region = props.regions.filter(function (reg) {
                             return reg.id === i.team;
                         })[0];
-                        rowItem.team = region.shortName.toUpperCase() || region.name.toUpperCase();
+                        rowItem.team = !!region.shortName ? region.shortName.toUpperCase() : region.name.toUpperCase();
                         rowItem.level = i.level;
                         rowItem.city = i.city.toUpperCase();
                         rowItem.fst = i.fst.toUpperCase();
@@ -50008,7 +50008,7 @@ var IsJunLiftersGrid = function IsJunLiftersGrid(props) {
                                 var region = props.regions.filter(function (reg) {
                                     return reg.id === i.team;
                                 })[0];
-                                rowItem.team = region.shortName.toUpperCase() || region.name.toUpperCase();
+                                rowItem.team = !!region.shortName ? region.shortName.toUpperCase() : region.name.toUpperCase();
                                 rowItem.level = i.level;
                                 rowItem.city = i.city.toUpperCase();
                                 rowItem.fst = i.fst.toUpperCase();
@@ -50160,7 +50160,7 @@ var RefGrid = function RefGrid(props) {
         var region = props.regions.filter(function (reg) {
             return reg.id === x.team;
         })[0];
-        referee.team = region.shortName.toUpperCase() || region.name.toUpperCase();
+        referee.team = !!region.shortName ? region.shortName.toUpperCase() : region.name.toUpperCase();
         referee.refCategory = refCategories.filter(function (r) {
             return r.value === x.refCategory;
         })[0].text;

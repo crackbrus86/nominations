@@ -64,7 +64,7 @@ const RefGrid = (props) => {
         referee.fullName = x.surname + " " + x.firstName + " " + x.middleName;
         referee.fullName = referee.fullName.toUpperCase();
         var region = props.regions.filter(reg => reg.id === x.team)[0];
-        referee.team = region.shortName.toUpperCase() || region.name.toUpperCase();
+        referee.team = (!!region.shortName) ? region.shortName.toUpperCase() : region.name.toUpperCase();
         referee.refCategory = refCategories.filter(r => r.value === x.refCategory)[0].text;
         referee.refRemark = x.refRemark;
         return referee;

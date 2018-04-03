@@ -191,7 +191,7 @@ const IsJunLiftersGrid = (props) => {
                                 rowItem.fullName = rowItem.fullName.toUpperCase();
                                 rowItem.born = moment(new Date(i.born)).format("DD.MM.YYYY");
                                 var region = props.regions.filter(reg => reg.id === i.team)[0];
-                                rowItem.team = region.shortName.toUpperCase() || region.name.toUpperCase();
+                                rowItem.team = (!!region.shortName) ? region.shortName.toUpperCase() : region.name.toUpperCase();
                                 rowItem.level = i.level;
                                 rowItem.city = i.city.toUpperCase();
                                 rowItem.fst = i.fst.toUpperCase();
