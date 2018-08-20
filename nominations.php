@@ -47,7 +47,7 @@ function nominationsMgm(){
         wp_enqueue_script(  'jq');      
         wp_register_script( 'resize', plugins_url( '/js/scripts/colResizable-1.6.js?v='.time(), __FILE__ ) );
         wp_enqueue_script(  'resize');                 
-        wp_register_script( 'nominations-mgr-bundle', plugins_url( './js/nominations-mgr-bundle.js?v='.time(), __FILE__ ) );
+        wp_register_script( 'nominations-mgr-bundle', plugins_url( './js/dist/nominations-mgr-bundle.js?v='.time(), __FILE__ ) );
         wp_enqueue_script(  'nominations-mgr-bundle');          
     ?>
     <div id="nm-app" data-rel="<?php echo $_SESSION['regionObj']->id ?>"></div>
@@ -84,7 +84,7 @@ class Nominations{
     }
 
     function nomEditor(){
-        wp_register_script( 'nom-settings', plugins_url( './js/settings-bundle.js?v='.time(), __FILE__ ) );
+        wp_register_script( 'nom-settings', plugins_url( './js/dist/settings-bundle.js?v='.time(), __FILE__ ) );
         wp_enqueue_script(  'nom-settings');   
         wp_register_style('style-settings', plugins_url( '/styles/style-settings.css?v='.time(), __FILE__ ));
         wp_enqueue_style( 'style-settings');             
@@ -103,7 +103,7 @@ class Nominations{
         wp_enqueue_style( 'style-front'); 
         wp_register_style('style-adm', plugins_url( '/styles/style-adm.css?v='.time(), __FILE__ ));
         wp_enqueue_style( 'style-adm');                   
-        wp_register_script( 'nom-adm', plugins_url( './js/nominations-adm-bundle.js?v='.time(), __FILE__ ) );
+        wp_register_script( 'nom-adm', plugins_url( './js/dist/nominations-adm-bundle.js?v='.time(), __FILE__ ) );
         wp_enqueue_script(  'nom-adm');         
         ?>
         <div class="container-fluid">

@@ -23,6 +23,13 @@
             "command": "node-sass styles/style-adm.scss styles/style-adm.css",
             "group": "build",
             "problemMatcher": []
-        }            
+        },
+        {
+            "label": "npm:build",
+            "type": "npm",
+            "script": "build",
+            "group": "build",
+            "problemMatcher": []
+        }
     ]
 }

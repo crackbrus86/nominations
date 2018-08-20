@@ -3,7 +3,8 @@ import Grid from "../../../components/grid/grid";
 
 const RefGrid = (props) => {
     if(!props.game) return null;
-    var refCategories = [{value: "category1", text: "МК І"},{value: "category2", text: "МК ІІ"},{value: "national", text: "НК"}];
+    var refCategories = [{value: "category1", text: "МК І"},{value: "category2", text: "МК ІІ"},{value: "national", text: "НК"}, {value: "first", text: "I кат."}, 
+    {value: "second", text: "ІІ кат."}];
     var columns = [
         {
             title: "#",

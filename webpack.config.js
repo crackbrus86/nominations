@@ -4,7 +4,8 @@ module.exports = {
     entry: {
       nominations: "./js/nominations/index.js",
       "nominations-adm": "./js/nominations-adm/index.js",
-      "nominations-mgr": "./js/nominations-mgr/index.js"
+      "nominations-mgr": "./js/nominations-mgr/index.js",
+      settings: "./js/settings/index.js"
     },
     output: {
         path: path.resolve(__dirname, 'js/dist'),
@@ -15,6 +16,7 @@ module.exports = {
         rules: [
           {
             test: /\.js$/,
+            use: ["source-map-loader"],
             exclude: /(node_modules|bower_components)/,
             use: {
               loader: 'babel-loader',

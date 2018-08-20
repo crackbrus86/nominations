@@ -4,7 +4,9 @@
   "description": "Nominations management",
   "main": "webpack.config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "watch": "webpack --watch"
   },
   "repository": {
     "type": "git",
@@ -31,11 +33,13 @@
     "react-datetime": "^2.10.1",
     "react-dom": "^15.6.1",
     "sass": "^1.0.0-beta.2",
-    "style-loader": "^0.18.2"
+    "style-loader": "^0.18.2",
+    "webpack-cli": "^3.1.0"
   },
   "devDependencies": {
     "node-sass": "^4.9.3",
     "sass-loader": "^7.1.0",
+    "source-map-loader": "^0.2.4",
     "webpack": "^4.16.5"
   }
 }

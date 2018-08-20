@@ -7,7 +7,8 @@ const OfficialForm = (props) => {
     var date = moment(info.startDate).locale("uk").format("DD MMM") + "-" + moment(info.endDate).locale("uk").format("DD MMM") + ", " + moment(info.endDate).format("YYYY");
     var nom = props.nomination;
     var regionsList = props.regions.map(region => <option key={region.id} value={region.id}>{region.name}</option>);
-    var refCategories = [{value: "category1", text: "МК І"},{value: "category2", text: "МК ІІ"},{value: "national", text: "НК"}];
+    var refCategories = [{value: "category1", text: "МК І"},{value: "category2", text: "МК ІІ"},{value: "national", text: "НК"}, {value: "first", text: "I кат."}, 
+    {value: "second", text: "ІІ кат."}];
     var refCatList = refCategories.map(cat => <option key={cat.value} value={cat.value}>{cat.text}</option>);
     return (<div>
         <div className="form-header">
