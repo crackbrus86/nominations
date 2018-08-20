@@ -1,22 +1,36 @@
+const path = require('path');
+
 module.exports = {
-    entry: "./js/nominations-adm/index.js",
-    output: {
-        filename: "./js/nominations-adm-bundle.js"
+    entry: {
+      nominations: "./js/nominations/index.js",
+      "nominations-adm": "./js/nominations-adm/index.js",
+      "nominations-mgr": "./js/nominations-mgr/index.js"
     },
-    module:{
-        loaders: [
-            {
-                test: /\.js$/, 
-                exclude: /node_modules/,
-                loader: "babel-loader",
-                query: {
-                    presets: ['es2015', 'react']
-                }    
-            },
-            {
-                test: /\.css$/,
-                loader: "style-loader!css-loader"
+    output: {
+        path: path.resolve(__dirname, 'js/dist'),
+        filename: '[name]-bundle.js'
+    },
+    mode: 'development',
+    module: {
+        rules: [
+          {
+            test: /\.js$/,
+            exclude: /(node_modules|bower_components)/,
+            use: {
+              loader: 'babel-loader',
+              options: {
+                presets: ['es2015', 'react']
+              }
             }
+          },
+          {
+            test: /\.css$/,
+            use: [
+                {loader: "style-loader"},
+                { loader: 'css-loader' },
+                { loader: 'sass-loader' }
+            ]
+          }
         ]
-    }
+      }
 };

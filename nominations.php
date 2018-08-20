@@ -68,8 +68,8 @@ function nomGrid(){
     wp_register_script( 'wordexport', plugins_url( '/js/scripts/jquery.wordexport.js?v='.time(), __FILE__ ) );
     wp_enqueue_script(  'wordexport');          
     wp_register_script( 'resize', plugins_url( '/js/scripts/colResizable-1.6.js?v='.time(), __FILE__ ) );
-    wp_enqueue_script(  'resize');     
-    wp_register_script( 'nominations-bundle', plugins_url( './js/nominations-bundle.js?v='.time(), __FILE__ ) );
+    wp_enqueue_script(  'resize');      
+    wp_register_script( 'nominations-bundle', plugins_url( '/js/dist/nominations-bundle.js?v='.time(), __FILE__ ) );
     wp_enqueue_script(  'nominations-bundle');     
     ?>
     <div id="nom-app"></div>
