@@ -28,6 +28,7 @@ class Countdown extends React.Component{
     render(){
         if(!this.props.till) return null;
         var endDay = new Date(this.props.till);
+        endDay.setHours(0,0,0,0);
         var timeDiff = Math.abs(endDay.getTime() - this.state.currentDate.getTime());
         var diffDays = Math.floor(timeDiff / (1000*3600*24));
         var diffHours = Math.floor((timeDiff % (1000*3600*24))/(1000*3600));
