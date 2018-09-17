@@ -16,6 +16,23 @@ const LifterForm = (props) => {
     var regionsList = props.regions.map(region => <option key={region.id} value={region.id}>{region.name}</option>);
     var divisions = (nom.gender === "male")? [{value: "seniors", name: "Чоловіки"},{value: "subjuniors", name: "Юнаки"},{value: "juniors", name: "Юніори"},{value: "masters1", name: "Ветерани 1"},{value: "masters2", name: "Ветерани 2"},{value: "masters3", name: "Ветерани 3"},{value: "masters4", name: "Ветерани 4"}] : 
     [{value: "seniors", name: "Жінки"},{value: "subjuniors", name: "Дівчата"},{value: "juniors", name: "Юніорки"},{value: "masters1", name: "Ветерани 1"},{value: "masters2", name: "Ветерани 2"},{value: "masters3", name: "Ветерани 3"},{value: "masters4", name: "Ветерани 4"}];
+    var age = bDate ? new Date().getFullYear() - bDate.getFullYear() : null;
+    
+    if((age >= 13 && age <= 18) || (JSON.parse(info.isJun) && (age >= 12 && age <= 18))){
+        divisions = divisions.filter(x => x.value == "seniors" || x.value == "subjuniors");
+    }else if((age >= 19 && age <= 23) || (JSON.parse(info.isJun) && (age >= 19 && age <= 23))){
+        divisions = divisions.filter(x => x.value == "seniors" || x.value == "juniors");
+    }else if(age >= 40 && age <= 49){
+        divisions = divisions.filter(x => x.value == "seniors" || x.value == "masters1");
+    }else if(age >= 50 && age <= 59){
+        divisions = divisions.filter(x => x.value == "seniors" || x.value == "masters2");
+    }else if(age >= 60 && age <= 69){
+        divisions = divisions.filter(x => x.value == "seniors" || x.value == "masters3");
+    }else if(age >= 70){
+        divisions = divisions.filter(x => x.value == "seniors" || x.value == "masters4");
+    }else{
+        divisions = divisions.filter(x => x.value == "seniors");
+    }
     var evalAge = (bdate) => {
         var year = parseInt(new Date().getFullYear());
         var born = new Date(bdate).getFullYear();
@@ -60,7 +77,7 @@ const LifterForm = (props) => {
         if(diff >= 19 && diff <= 23) return "IV група (" + parseInt(year-23) + " - " + parseInt(year-19) + "р.н.)";
         return null;
     }
-    var ageGroups = (((nom.division === "subjuniors" || nom.division === "juniors") && !!bDate) && JSON.parse(info.isJun) )? 
+    var ageGroups = (((nom.division === "subjuniors" || nom.division === "juniors") && !!bDate && !!getAgeCat(bDate)) && JSON.parse(info.isJun))? 
     <tr><td><label>Вікова група</label></td>
     <td><input value={getAgeCat(bDate)} type="text" readOnly={true} /></td>
     </tr> : null;
@@ -174,7 +191,8 @@ const LifterForm = (props) => {
             <div className="formFooter">
                 <div className="form-footer-tab left">
                     <button type="button" className="footer-button success" onClick={() => props.onSave()} disabled={!validateDivision().isValid || 
-                    (!JSON.parse(info.isJun) && !!validation.isTooYoung(bDate, info.startDate).value)}>Зберегти</button>
+                    (!JSON.parse(info.isJun) && !!validation.isTooYoung(bDate, info.startDate).value) || (!!JSON.parse(info.isJun) && (age < 12 || age > 23))
+                    || (nom.weightClass < 1)}>Зберегти</button>
                 </div>
                 <div className="form-footer-tab right">
                 <button type="button" className="footer-button danger" onClick={() => props.onClose()}>Скасувати</button>
