@@ -222,9 +222,9 @@ const LiftersGrid = (props) => {
                         return rowItem;                        
                     });
                     if(props.game.typeId === "1"){
-                        items.sort((a,b) => (parseInt(b.total) - parseInt(a.total)));  
+                        items.sort((a,b) => (parseFloat(b.total) - parseFloat(a.total)));  
                     }else{
-                        items.sort((a,b) => (parseInt(b.benchpress) - parseInt(a.benchpress))); 
+                        items.sort((a,b) => (parseFloat(b.benchpress) - parseFloat(a.benchpress))); 
                     }
                     var counter = 1;
                     items.map(item => {

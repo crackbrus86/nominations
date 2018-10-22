@@ -226,9 +226,9 @@ const NomGrid = (props) => {
             });
             items.sort((a,b) => (parseInt(a.wClass.replace("-","").replace("+","")) - parseInt(b.wClass.replace("-","").replace("+",""))));
             if(props.game.typeId === "1"){
-                items.sort((a,b) => (parseInt(b.total) - parseInt(a.total)));  
+                items.sort((a,b) => (parseFloat(b.total) - parseFloat(a.total)));  
             }else{
-                items.sort((a,b) => (parseInt(b.benchpress) - parseInt(a.benchpress))); 
+                items.sort((a,b) => (parseFloat(b.benchpress) - parseFloat(a.benchpress))); 
             }            
             var counter = 1;
             items.map(item => {
