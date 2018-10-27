@@ -45,8 +45,9 @@ const LifterForm = (props) => {
     }
     var shortWCList = shortWc.map(w => <option key={w.id} value={w.id}>{w.name}</option>);
     var subWeightClassList = props.subwc.map(s => <option key={s.id} value={s.id}>{s.name}</option>);
-    var st = (info.typeId === "1")? {squat: nom.squat, isDisabled: false} : { squat: nom.squat, isDisabled: true};
-    var dl = (info.typeId === "1")? {deadlift: nom.deadlift, isDisabled: false} : { deadlift: nom.deadlift, isDisabled: true};
+    var st = (info.typeId === "1" && !JSON.parse(nom.outOfContest))? {squat: nom.squat, isDisabled: false} : { squat: nom.squat, isDisabled: true};
+    var dl = (info.typeId === "1" && !JSON.parse(nom.outOfContest))? {deadlift: nom.deadlift, isDisabled: false} : { deadlift: nom.deadlift, isDisabled: true};
+    var bp = (!JSON.parse(nom.outOfContest)) ? {isDisabled: false} : {isDisabled: true};
     var levels = [{id: 1, name: "ІІІ юн"},{id: 2, name: "ІІ юн"},{id: 3, name: "І юн"},{id: 4, name: "ІІІ"},{id: 5, name: "ІІ"},
     {id: 6, name: "І"},{id: 7, name: "КМСУ"},{id: 8, name: "МСУ"},{id: 9, name: "МСУМК"},{id: 10, name: "ЗМСУ"}];
     var levelList = levels.map(level => <option key={level.id} value={level.id}>{level.name}</option>);
@@ -145,7 +146,7 @@ const LifterForm = (props) => {
                     <tr><td></td><td>{validation.hasComma(nom.benchpress)}</td></tr>
                     <tr>
                         <td><label>Жим</label></td>
-                        <td><input value={nom.benchpress} type="number" maxLength="10" onChange={e => props.onChange("benchpress", e.target.value)} /></td>
+                        <td><input value={nom.benchpress} type="number" maxLength="10" onChange={e => props.onChange("benchpress", e.target.value)} disabled={bp.isDisabled} /></td>
                     </tr>
                     <tr><td></td><td>{validation.hasComma(dl.deadlift)}</td></tr>
                     <tr>
@@ -163,6 +164,10 @@ const LifterForm = (props) => {
                     <tr>
                         <td><label>Особисто</label></td>
                         <td><input checked={JSON.parse(nom.personally)} type="checkbox" onChange={e => props.onChange("personally", e.target.checked ? 1:0)} /></td>
+                    </tr>
+                    <tr>
+                        <td><label>Поза конкурсом</label></td>
+                        <td><input checked={JSON.parse(nom.outOfContest)} type="checkbox" onChange={e => props.onChangeOutOfContest(e.target.checked ? 1:0)} /></td>
                     </tr>
                     </tbody>
                 </table>

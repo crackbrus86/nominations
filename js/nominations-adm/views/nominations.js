@@ -38,6 +38,7 @@ class Nominations extends React.Component{
         this.onConfirm = this.confirmDeleting.bind(this);
         this.onEditReferee = this.editRefereeNom.bind(this);
         this.onChangeStatus = this.changeStatus.bind(this);
+        this.onChangeOutOfContest = this.changeOutOfContest.bind(this);
     }
 
     getCompInfo(compId){
@@ -131,7 +132,8 @@ class Nominations extends React.Component{
             personally: false,
             competition: this.state.compInfo.id,
             coaches: "",
-            status: false
+            status: false,
+            outOfContest: false
         } : {
             type: type,
             surname: "",
@@ -157,6 +159,18 @@ class Nominations extends React.Component{
         temp[field] = value;
         if(temp["type"] === "lifter") temp["total"] = parseFloat(temp.squat) + parseFloat(temp.benchpress) + parseFloat(temp.deadlift);
         if(field === "division") temp["weightClass"] = 0;
+        this.setState({nomination: temp});
+    }
+
+    changeOutOfContest(value){
+        var temp = this.state.nomination;
+        if(!!value){
+            temp.squat = 0;
+            temp.benchpress = 0;
+            temp.deadlift = 0;
+            temp.total = 0;
+        }
+        temp.outOfContest = value;
         this.setState({nomination: temp});
     }
 
@@ -276,7 +290,16 @@ class Nominations extends React.Component{
                 <RefGrid nominations={this.state.referees} game={this.state.compInfo} regions={this.state.regions} onEdit={this.onEditReferee} onDelete={this.onDelete} onChangeStatus={this.onChangeStatus} />
             </div>
             <Modal target={this.state.nomination} onClose={this.onClose}>
-                <LifterForm nomination={this.state.nomination} compInfo={this.state.compInfo} onChange={this.onChange} regions={this.state.regions} wc={this.state.wc} subwc = {this.state.subwc} onSave={this.onSave}  onClose={this.onClose} />
+                <LifterForm 
+                nomination={this.state.nomination} 
+                compInfo={this.state.compInfo} 
+                onChange={this.onChange} 
+                regions={this.state.regions} 
+                wc={this.state.wc} 
+                subwc = {this.state.subwc} 
+                onSave={this.onSave}  
+                onClose={this.onClose}
+                onChangeOutOfContest={this.onChangeOutOfContest} />
                 <OfficialForm nomination={this.state.nomination} compInfo={this.state.compInfo} onChange={this.onChange} regions={this.state.regions} onSave={this.onSave} onClose={this.onClose}  />
             </Modal>   
             <Dialog dialog={this.state.dialog} onConfirm={this.onConfirm} onClose={this.onCancel} />

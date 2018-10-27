@@ -197,6 +197,7 @@ const NomGrid = (props) => {
                 if(item.personally && JSON.parse(item.personally)) countOfPersonally++;
                 countOfTeam = countOfLifters - countOfPersonally;
                 rowItem.personally = (item.personally && JSON.parse(item.personally))? <sup title="Особисто">О</sup> : null;
+                rowItem.outOfContest = (item.outOfContest && JSON.parse(item.outOfContest)) ? <sup title="Поза конкурсом">ПК</sup> : null;
                 rowItem.id = item.id;
                 var statusTitle = (JSON.parse(item.status))? "Підтверджено" : "Очікує підтвердження";
                 var statusClass = (JSON.parse(item.status))? "fa fa-check status-mark status-ok" : "fa fa-question status-mark status-pending";
@@ -232,7 +233,7 @@ const NomGrid = (props) => {
             }            
             var counter = 1;
             items.map(item => {
-                item.number = <div>{item.personally}{counter++}</div>;
+                item.number = <div>{item.outOfContest ? item.outOfContest : item.personally}{counter++}</div>;
             });
             if((division.id === "subjuniors" || division.id === "juniors") && JSON.parse(props.game.isJun) && gridColumns[4].field != "ageCat"){
                 gridColumns.splice(4, 0, {

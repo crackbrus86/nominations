@@ -25,11 +25,12 @@
         $competition = stripslashes($_POST["competition"]);
         $coaches = stripslashes($_POST["coaches"]);
         $status = stripslashes($_POST["status"]);  
+        $outOfContest = stripslashes($_POST["outOfContest"]);
             
         $sql = $wpdb->prepare("INSERT INTO $tb_nominations (type, surname, first_name, birth_date, gender, team, division, weight_class,
-            squat, benchpress, deadlift, total, personally, competition, status, city, fst, club, school, level, coaches, middle_name) VALUES 
-            (%s, %s, %s, %s, %s, %d, %s, %d, %f, %f, %f, %f, %d, %d, %s, %s, %s, %s, %s, %d, %s, %s)", $type, $surname, $firstName,
+            squat, benchpress, deadlift, total, personally, competition, status, city, fst, club, school, level, coaches, middle_name, outOfContest) VALUES 
+            (%s, %s, %s, %s, %s, %d, %s, %d, %f, %f, %f, %f, %d, %d, %s, %s, %s, %s, %s, %d, %s, %s, %d)", $type, $surname, $firstName,
             $birthDate, $gender, $team, $division, $weightClass, $squat, $benchpress, $deadlift, $total, $personally, $competition, $status,
-            $city, $fst, $club, $school, $level, $coaches, $mName);
+            $city, $fst, $club, $school, $level, $coaches, $mName, $outOfContest);
         if($wpdb->query($sql)) print_r("Nomination was saved");
     endif;

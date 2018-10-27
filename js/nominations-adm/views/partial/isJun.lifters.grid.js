@@ -182,6 +182,7 @@ const IsJunLiftersGrid = (props) => {
                             var items = wItems.map(i => {
                                 var rowItem = {};
                                 rowItem.personally = (i.personally && JSON.parse(i.personally))? <sup title="Особисто">О</sup> : null;
+                                rowItem.outOfContest = (i.outOfContest && JSON.parse(i.outOfContest)) ? <sup title="Поза конкурсом">ПК</sup> : null;
                                 rowItem.id = i.id;
                                 rowItem.number = "";
                                 rowItem.status = (<input type="checkbox" checked={JSON.parse(i.status)} data-rel={i.id} 
@@ -213,7 +214,7 @@ const IsJunLiftersGrid = (props) => {
                             }
                             var counter = 1;
                             items.map(item => {
-                                item.number = <div>{item.personally}{counter++}</div>;;
+                                item.number = <div>{item.outOfContest? item.outOfContest : item.personally}{counter++}</div>;;
                             });                                          
                             return (<div key={w.id}>
                                 <div key={w.id} className="w-class-name">{w.name}</div>

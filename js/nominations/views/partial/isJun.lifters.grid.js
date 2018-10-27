@@ -161,6 +161,7 @@ const IsJunLiftersGrid = (props) => {
                             var items = wItems.map(i => {
                                 var rowItem = {};
                                 rowItem.personally = (i.personally && JSON.parse(i.personally))? <sup title="Особисто">О</sup> : null;
+                                rowItem.outOfContest = (i.outOfContest && JSON.parse(i.outOfContest)) ? <sup title="Поза конкурсом">ПЗ</sup> : null;
                                 rowItem.number = "";
                                 var statusTitle = (JSON.parse(i.status))? "Підтверджено" : "Очікує підтвердження";
                                 var statusClass = (JSON.parse(i.status))? "fa fa-check status-mark status-ok" : "fa fa-question status-mark status-pending";
@@ -192,7 +193,7 @@ const IsJunLiftersGrid = (props) => {
                             }
                             var counter = 1;
                             items.map(item => {
-                                item.number = <div>{item.personally}{counter++}</div>;;
+                                item.number = <div>{item.outOfContest ? item.outOfContest : item.personally}{counter++}</div>;;
                             });                                          
                             return (<div key={w.id}>
                                 <div key={w.id} className="w-class-name">{w.name}</div>

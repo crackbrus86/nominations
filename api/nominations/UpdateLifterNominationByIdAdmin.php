@@ -25,11 +25,12 @@
         $level = stripslashes($_POST["level"]); 
         $coaches = stripslashes($_POST["coaches"]); 
         $mName = stripslashes($_POST["mName"]);
+        $outOfContest = stripslashes($_POST["outOfContest"]);
         
         $sql = $wpdb->prepare("UPDATE $tb_nominations SET type = %s, surname = %s, first_name = %s, birth_date = %s, gender = %s, team = %d, 
         division = %s, weight_class = %d, squat = %f, benchpress = %f, deadlift = %f, total = %f, personally = %d, competition = %d, city = %s,
-        fst = %s, club = %s, school = %s, level = %d, coaches = %s, middle_name = %s WHERE id=%d", 
+        fst = %s, club = %s, school = %s, level = %d, coaches = %s, middle_name = %s, outOfContest = %d WHERE id=%d", 
         $type, $surname, $firstName, $birthDate, $gender, $team, $division, $weightClass, $squat, $benchpress, $deadlift, $total, $personally, 
-        $competition, $city, $fst, $club, $school, $level, $coaches, $mName, $id);
+        $competition, $city, $fst, $club, $school, $level, $coaches, $mName, $outOfContest, $id);
         if($wpdb->query($sql)) print_r("Nomination was saved");        
     }
