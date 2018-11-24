@@ -31,7 +31,7 @@ class Grid extends React.Component{
     render(){
         let cols = this.props.data.columns.map((column, counter = 0) => {
             counter++;
-            return <th key={counter} width={column.width} title={column.title}>{column.title}</th>;
+            return <th key={counter} width={column.width} className={column.class} title={column.title}>{column.title}</th>;
         });
         let rows = this.props.data.rows.map((row, counter = 0) => {
             counter++;

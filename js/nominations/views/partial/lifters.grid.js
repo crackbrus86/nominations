@@ -54,52 +54,61 @@ const LiftersGrid = (props) => {
             title: "#",
             field: "number",
             width: "28px",
-            class: "al-right"
+            class: "al-right lgr-no"
         },
         {
             title: "Статус",
             field: "status",
-            width: "45px"
+            width: "45px",
+            class: "lgr-status"
         },         
         {
             title: "Ім'я",
             field: "fullName",
-            width: "150px"
+            width: "150px",
+            class: "lgr-name"
         },
         {
             title: "Дата народження",
             field: "born",
-            width: "75px"
+            width: "75px",
+            class: "lgr-born"
         },
         {
             title: "Розряд",
             field: "level",
-            width: "*"
+            width: "*",
+            class: "lgr-level"
         },         
         {
             title: "Область",
             field: "team",
-            width: "35px"
+            width: "35px",
+            class: "lgr-team"
         }, 
         {
             title: "Місто",
             field: "city",
-            width: "*"
+            width: "*",
+            class: "lgr-city"
         },  
         {
             title: "ФСТ",
             field: "fst",
-            width: "*"
+            width: "*",
+            class: "lgr-fst"
         },  
         {
             title: "Клуб",
             field: "club",
-            width: "*"
+            width: "*",
+            class: "lgr-club"
         },   
         {
             title: "ДЮСШ",
             field: "school",
-            width: "*"
+            width: "*",
+            class: "lgr-school"
         }                                   
                     
     ];
@@ -109,38 +118,39 @@ const LiftersGrid = (props) => {
                 title: "Присід.",
                 field: "squat",
                 width: "45px",
-                class: "al-right"
+                class: "al-right lgr-squat"
             },
             {
                 title: "Жим",
                 field: "benchpress",
                 width: "45px",
-                class: "al-right"
+                class: "al-right lgr-press"
             },
             {
                 title: "Тяга",
                 field: "deadlift",
                 width: "45px",
-                class: "al-right"
+                class: "al-right lgr-lift"
             },
             {
                 title: "Сума",
                 field: "total",
                 width: "*",
-                class: "al-right exercise-total"
+                class: "al-right exercise-total lgr-total"
             }];
     } else{
         results = [{
                 title: "Жим",
                 field: "benchpress",
                 width: "45px",
-                class: "al-right exercise-total"
+                class: "al-right exercise-total lgr-press"
             }];
     } 
     var coachesCol = [{
         title: "Тренер(и)",
         field: "coaches",
-        width: "150px"
+        width: "150px",
+        class: "lgr-coaches"
     }];
     var gridColumns = columns.concat(results);
     gridColumns = gridColumns.concat(coachesCol);

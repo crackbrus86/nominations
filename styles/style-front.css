@@ -444,53 +444,58 @@
     margin-bottom: 20px; }
 
 .nom-preview {
-  font-size: 8px !important; }
+  font-size: 6px !important; }
   .nom-preview .division-head {
     text-shadow: none;
     font-size: 12px;
     font-weight: 600;
     color: #000; }
   .nom-preview .w-class-name {
-    border: 0.2px solid #000 !important; }
+    font-size: 1.4em !important; }
   .nom-preview table {
+    border-collapse: collapse;
     border-spacing: 0;
-    width: 994px !important; }
+    width: 100% !important; }
     .nom-preview table thead th {
       border: 0.2px solid #000;
-      background-color: #ccc; }
-      .nom-preview table thead th:nth-child(1) {
-        width: 20px !important; }
-      .nom-preview table thead th:nth-child(2) {
-        width: 30px !important; }
-      .nom-preview table thead th:nth-child(3) {
-        width: 150px !important; }
-      .nom-preview table thead th:nth-child(4) {
-        width: 50px !important; }
-      .nom-preview table thead th:nth-child(5) {
-        width: 30px !important; }
-      .nom-preview table thead th:nth-child(6) {
-        width: 40px !important; }
-      .nom-preview table thead th:nth-child(7) {
-        width: 60px !important; }
-      .nom-preview table thead th:nth-child(8) {
-        width: 60px !important; }
-      .nom-preview table thead th:nth-child(9) {
-        width: 60px !important; }
-      .nom-preview table thead th:nth-child(10) {
-        width: 60px !important; }
-      .nom-preview table thead th:nth-child(11) {
-        width: 40px !important; }
-      .nom-preview table thead th:nth-child(12) {
-        width: 40px !important; }
-      .nom-preview table thead th:nth-child(13) {
-        width: 40px !important; }
-      .nom-preview table thead th:nth-child(14) {
-        width: 40px !important; }
-      .nom-preview table thead th:nth-child(15) {
-        width: 150px !important; }
+      background-color: #ccc;
+      padding: 10px 5px !important; }
+      .nom-preview table thead th.lgr-no {
+        width: 2% !important; }
+      .nom-preview table thead th.lgr-status {
+        display: none;
+        width: 0% !important; }
+      .nom-preview table thead th.lgr-name {
+        width: 11% !important; }
+      .nom-preview table thead th.lgr-born {
+        width: 5% !important; }
+      .nom-preview table thead th.lgr-level {
+        width: 4% !important; }
+      .nom-preview table thead th.lgr-team {
+        width: 4% !important; }
+      .nom-preview table thead th.lgr-city {
+        width: 5% !important; }
+      .nom-preview table thead th.lgr-fst {
+        width: 4% !important; }
+      .nom-preview table thead th.lgr-club {
+        width: 5% !important; }
+      .nom-preview table thead th.lgr-school {
+        width: 5% !important; }
+      .nom-preview table thead th.lgr-squat {
+        width: 3% !important; }
+      .nom-preview table thead th.lgr-press {
+        width: 3% !important; }
+      .nom-preview table thead th.lgr-lift {
+        width: 3% !important; }
+      .nom-preview table thead th.lgr-total {
+        width: 3% !important; }
+      .nom-preview table thead th.lgr-coaches {
+        width: 20% !important; }
     .nom-preview table tr {
       border: 0.2px solid #000; }
       .nom-preview table tr td {
         border: 0.2px solid #000;
         padding: 4px !important;
         color: #000; }
+        .nom-preview table tr td.lgr-status {
+          display: none; }

@@ -578,7 +578,7 @@
 }
 
 .nom-preview{
-    font-size: 8px!important;
+    font-size: 6px!important;
     .division-head{
         text-shadow: none;
         font-size: 12px;
@@ -586,60 +586,62 @@
         color: #000;
     }
     .w-class-name{
-        border: 0.2px solid #000!important;
+        font-size: 1.4em!important;
     }
     table{
-        // border-collapse: separate;
+        border-collapse: collapse;
         border-spacing: 0;
-        width: 994px!important;
+        width: 100%!important;
         thead{
             th{
                 border: 0.2px solid #000;
                 background-color: #ccc;
-                &:nth-child(1){
-                    width: 20px!important;
+                padding: 10px 5px!important;
+                &.lgr-no{
+                    width: 2%!important;
                 }
-                &:nth-child(2){
-                    width: 30px!important;
+                &.lgr-status{
+                    display: none;
+                    width: 0%!important;
                 }
-                &:nth-child(3){
-                    width: 150px!important;
-                }    
-                &:nth-child(4){
-                    width: 50px!important;
+                &.lgr-name{
+                    width: 11%!important;
+                }   
+                &.lgr-born{
+                    width: 5%!important;
+                }
+                &.lgr-level{
+                    width: 4%!important;
+                } 
+                &.lgr-team{
+                    width: 4%!important;
                 }  
-                &:nth-child(5){
-                    width: 30px!important;
-                }     
-                &:nth-child(6){
-                    width: 40px!important;
-                }    
-                &:nth-child(7){
-                    width: 60px!important;
+                &.lgr-city{
+                    width: 5%!important;
                 }  
-                &:nth-child(8){
-                    width: 60px!important;
-                }    
-                &:nth-child(9){
-                    width: 60px!important;
-                }    
-                &:nth-child(10){
-                    width: 60px!important;
+                &.lgr-fst{
+                    width: 4%!important;
                 }  
-                &:nth-child(11){
-                    width: 40px!important;
-                }    
-                &:nth-child(12){
-                    width: 40px!important;
-                }    
-                &:nth-child(13){
-                    width: 40px!important;
+                &.lgr-club{
+                    width: 5%!important;
                 }  
-                &:nth-child(14){
-                    width: 40px!important;
+                &.lgr-school{
+                    width: 5%!important;
+                } 
+                &.lgr-squat{
+                    width: 3%!important;
+                } 
+                &.lgr-press{
+                    width: 3%!important;
+                } 
+                &.lgr-lift{
+                    width: 3%!important;
                 }  
-                &:nth-child(15){
-                    width: 150px!important;
+                &.lgr-total{
+                    width: 3%!important;
+                } 
+                &.lgr-coaches{
+                    width: 20%!important;
                 }                                                                                                    
             }
         }
@@ -650,6 +652,10 @@
                 border: 0.2px solid #000;
                 padding: 4px!important;
                 color: #000;
+
+                &.lgr-status{
+                    display: none;
+                }
             }
         }
     }

@@ -10,17 +10,19 @@ const RefGrid = (props) => {
             title: "#",
             field: "number",
             width: "28px",
-            class: "al-right"
+            class: "al-right lgr-no"
         },  
         {
             title: "Статус",
             field: "status",
-            width: "45px"
+            width: "45px",
+            class: "lgr-status"
         },            
         {
             title: "Ім'я",
             field: "fullName",
-            width: "200px"
+            width: "200px",
+            class: "lgr-name"
         },
         {
             title: "Область",
