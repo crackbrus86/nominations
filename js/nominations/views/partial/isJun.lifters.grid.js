@@ -171,7 +171,7 @@ const IsJunLiftersGrid = (props) => {
                             var items = wItems.map(i => {
                                 var rowItem = {};
                                 rowItem.personally = (i.personally && JSON.parse(i.personally))? <sup title="Особисто">О</sup> : null;
-                                rowItem.outOfContest = (i.outOfContest && JSON.parse(i.outOfContest)) ? <sup title="Поза конкурсом">ПЗ</sup> : null;
+                                rowItem.outOfContest = (i.outOfContest && JSON.parse(i.outOfContest)) ? <sup title="Поза конкурсом">ПК</sup> : null;
                                 rowItem.number = "";
                                 var statusTitle = (JSON.parse(i.status))? "Підтверджено" : "Очікує підтвердження";
                                 var statusClass = (JSON.parse(i.status))? "fa fa-check status-mark status-ok" : "fa fa-question status-mark status-pending";

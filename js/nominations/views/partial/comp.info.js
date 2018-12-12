@@ -6,9 +6,9 @@ const CompInfo = (props) => {
     if(!props.compInfo) return null;
     var info = props.compInfo;
     var date = moment(info.startDate).locale("uk").format("DD MMM") + "-" + moment(info.endDate).locale("uk").format("DD MMM") + ", " + moment(info.endDate).format("YYYY");
-    var p = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 21);
-    var f = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 10);
-    var bm7 = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 7);
+    var p = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 30);
+    var f = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 15);
+    var bm7 = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 10);
     var mc = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate());
     var status = null;
     var statusColor = null;
@@ -40,7 +40,7 @@ const CompInfo = (props) => {
             <Countdown till={statusEnd} />
             <p>Попередня номінація: {moment(p).locale("uk").format("DD.MM.YYYY")}</p>
             <p>Остаточна номінація: {moment(f).locale("uk").format("DD.MM.YYYY")}</p>
-            <p>7 днів до мандатної комісії: {moment(bm7).locale("uk").format("DD.MM.YYYY")}</p>
+            <p>10 днів до мандатної комісії: {moment(bm7).locale("uk").format("DD.MM.YYYY")}</p>
             <p>Мандатна комісія: {moment(mc).locale("uk").format("DD.MM.YYYY")}</p>
         </div>
     </div>);

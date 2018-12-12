@@ -10,7 +10,7 @@ const OfficialForm = (props) => {
     var refCategories = [{value: "category1", text: "МК І"},{value: "category2", text: "МК ІІ"},{value: "national", text: "НК"},{value: "first", text: "I кат."},
     {value: "second", text: "ІІ кат."}];
     var refCatList = refCategories.map(cat => <option key={cat.value} value={cat.value}>{cat.text}</option>);
-    var statusFinal = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 10);
+    var statusFinal = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 15);
     var isNameDisabled = !((+ new Date()) <= statusFinal);
     return (<div>
         <div className="form-header">

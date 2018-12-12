@@ -82,7 +82,7 @@ const LifterForm = (props) => {
     <tr><td><label>Вікова група</label></td>
     <td><input value={getAgeCat(bDate)} type="text" readOnly={true} /></td>
     </tr> : null;
-    var statusPrev = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 21);
+    var statusPrev = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 30);
     var isNameDisabled = !((+ new Date()) <= statusPrev);
     var dateValidation = (!JSON.parse(info.isJun))? <tr><td></td><td style={{width: "50%"}}>{validation.isTooYoung(bDate, info.startDate).message}</td></tr> : null;
     return (<div>
