@@ -19,7 +19,7 @@ const LifterForm = (props) => {
     var age = bDate ? new Date().getFullYear() - bDate.getFullYear() : null;
     
     if((age >= 13 && age <= 18) || (JSON.parse(info.isJun) && (age >= 12 && age <= 18))){
-        divisions = divisions.filter(x => x.value == "seniors" || x.value == "subjuniors");
+        divisions = divisions.filter(x => x.value == "seniors" || x.value == "subjuniors" || x.value == "juniors");
     }else if((age >= 19 && age <= 23) || (JSON.parse(info.isJun) && (age >= 19 && age <= 23))){
         divisions = divisions.filter(x => x.value == "seniors" || x.value == "juniors");
     }else if(age >= 40 && age <= 49){
