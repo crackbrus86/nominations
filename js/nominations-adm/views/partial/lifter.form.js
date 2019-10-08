@@ -51,19 +51,34 @@ const LifterForm = (props) => {
     var levels = [{id: 1, name: "ІІІ юн"},{id: 2, name: "ІІ юн"},{id: 3, name: "І юн"},{id: 4, name: "ІІІ"},{id: 5, name: "ІІ"},
     {id: 6, name: "І"},{id: 7, name: "КМСУ"},{id: 8, name: "МСУ"},{id: 9, name: "МСУМК"},{id: 10, name: "ЗМСУ"}];
     var levelList = levels.map(level => <option key={level.id} value={level.id}>{level.name}</option>);
-    var getAgeCat = (bdate) => {
+    const ageGroup = () => {
         var year = parseInt(new Date().getFullYear());
-        var born = new Date(bdate).getFullYear();
+        var born = new Date(bDate).getFullYear();
         var diff = year - born;
-        if(diff >= 12 && diff <= 13) return "I група (" + parseInt(year-13) + " - " + parseInt(year-12) + "р.н.)";
-        if(diff >= 14 && diff <= 15) return "II група (" + parseInt(year-15) + " - " + parseInt(year-14) + "р.н.)";
-        if(diff >= 16 && diff <= 18) return "III група (" + parseInt(year-18) + " - " + parseInt(year-16) + "р.н.)";
-        if(diff >= 19 && diff <= 23) return "IV група (" + parseInt(year-23) + " - " + parseInt(year-19) + "р.н.)";
-        return null;
+        if(diff >= 12 && diff <= 13) return 1
+        if(diff >= 14 && diff <= 15) return 2
+        if(diff >= 16 && diff <= 18) return 3
+        if(diff >= 19 && diff <= 23) return 4
+        return null
+    }
+    var getAgeCat = () => {
+        var year = parseInt(new Date().getFullYear());
+        switch(ageGroup()){
+            case 1:
+                return "I група (" + parseInt(year-13) + " - " + parseInt(year-12) + "р.н.)";
+            case 2:
+                return "II група (" + parseInt(year-15) + " - " + parseInt(year-14) + "р.н.)";
+            case 3:
+                return "III група (" + parseInt(year-18) + " - " + parseInt(year-16) + "р.н.)";
+            case 4:
+                return "IV група (" + parseInt(year-23) + " - " + parseInt(year-19) + "р.н.)";
+            default:
+                return null
+        }
     }
     var ageGroups = (((nom.division === "subjuniors" || nom.division === "juniors") && !!bDate) && JSON.parse(info.isJun) )? 
     <tr><td><label>Вікова група</label></td>
-    <td><input value={getAgeCat(bDate)} type="text" readOnly={true} /></td>
+    <td><input value={getAgeCat()} type="text" readOnly={true} /></td>
     </tr> : null;
     return (<div>
         <div className="form-header">
@@ -133,7 +148,7 @@ const LifterForm = (props) => {
                                 <option id="0" value="0">[не обрано]</option>
                                 {(nom.division === "juniors" || nom.division === "subjuniors")? 
                                 
-                                    (nom.division === "subjuniors" && JSON.parse(info.isJun))? subWeightClassList : weightClassList 
+                                    (nom.division === "subjuniors" && JSON.parse(info.isJun) && ageGroup() == 1)? subWeightClassList : weightClassList 
                                 : shortWCList }
                             </select>
                         </td>
