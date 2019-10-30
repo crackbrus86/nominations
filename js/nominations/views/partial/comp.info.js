@@ -38,8 +38,8 @@ const CompInfo = (props) => {
         <div className="comp-info-status">
             <p className="status">Статус: <span style={{color: statusColor}}>{String(status).toUpperCase()}</span></p>
             <Countdown till={statusEnd} />
-            <p>Попередня номінація: {moment(p).locale("uk").format("DD.MM.YYYY")}</p>
-            <p>Остаточна номінація: {moment(f).locale("uk").format("DD.MM.YYYY")}</p>
+            <p>Останній день попередньої номінації: {moment(p).locale("uk").format("DD.MM.YYYY")}</p>
+            <p>Останній день фінальної номінації: {moment(f).locale("uk").format("DD.MM.YYYY")}</p>
             <p>10 днів до мандатної комісії: {moment(bm7).locale("uk").format("DD.MM.YYYY")}</p>
             <p>Мандатна комісія: {moment(mc).locale("uk").format("DD.MM.YYYY")}</p>
         </div>
