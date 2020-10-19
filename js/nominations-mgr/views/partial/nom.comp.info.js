@@ -28,7 +28,11 @@ const CompInfo = (props) => {
     }else{
         status = "Архів";
         statusColor = "#8E8E48";
-    }    
+    }  
+    const pLabel = moment(p).subtract(1, "day").locale("uk").format("DD.MM.YYYY")
+    const fLabel = moment(f).subtract(1, "day").locale("uk").format("DD.MM.YYYY")
+    const bm7Label = moment(bm7).locale("uk").format("DD.MM.YYYY")
+    const mcLabel = moment(mc).locale("uk").format("DD.MM.YYYY")   
     return (<div>
         <div className="comp-info-header">
             <p className="info-title">{info.name}</p>
@@ -38,10 +42,10 @@ const CompInfo = (props) => {
         <div className="comp-info-status">
             <p className="status">Статус: <span style={{color: statusColor}}>{String(status).toUpperCase()}</span></p>
             <Countdown till={statusEnd} />
-            <p>Останній день попередньої номінації: {moment(p).locale("uk").format("DD.MM.YYYY")}</p>
-            <p>Останній день фінальної номінації: {moment(f).locale("uk").format("DD.MM.YYYY")}</p>
-            <p>10 днів до мандатної комісії: {moment(bm7).locale("uk").format("DD.MM.YYYY")}</p>
-            <p>Мандатна комісія: {moment(mc).locale("uk").format("DD.MM.YYYY")}</p>
+            <p>Останній день попередньої номінації: {pLabel}</p>
+            <p>Останній день фінальної номінації: {fLabel}</p>
+            <p>10 днів до мандатної комісії: {bm7Label}</p>
+            <p>Мандатна комісія: {mcLabel}</p>
         </div>
     </div>);
 }
