@@ -18,7 +18,7 @@ const CompInfo = (props) => {
         statusColor = "#7AB800";
         var statusEnd = p;
     }else if(p < (+new Date()) && (+new Date()) <= f){
-        status = "Остаточна номінація";
+        status = "Фінальна номінація";
         statusColor = "#0582FF";
         var statusEnd = f;
     }else if(f < (+new Date()) && (+new Date()) <= mc){

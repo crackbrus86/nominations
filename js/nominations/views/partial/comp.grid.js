@@ -30,7 +30,7 @@ const CompGrid = (props) => {
             width: "*"
         },
         {
-            title: "Остаточна",
+            title: "Фінальна",
             field: "final",
             width: "*"
         }, 
@@ -49,7 +49,7 @@ const CompGrid = (props) => {
         if((+new Date()) <= p){
             status = <div className="status-code" style={{backgroundColor: "#BDF4BD"}}>{"Попередня"}</div>;
         }else if(p < (+new Date()) && (+new Date()) <= f){
-            status = <div className="status-code" style={{backgroundColor: "#FEF0C7"}}>{"Остаточна"}</div>;
+            status = <div className="status-code" style={{backgroundColor: "#FEF0C7"}}>{"Фінальна"}</div>;
         }else if(f < (+new Date()) && (+new Date()) <= mc){
             status = <div className="status-code" style={{backgroundColor: "#FFDFDF"}}>{"Мандатна комісія"}</div>;
         }else{
