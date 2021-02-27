@@ -228,7 +228,7 @@ const NomGrid = (props) => {
             });
             items.sort((a,b) => (parseInt(a.wClass.replace("-","").replace("+","")) - parseInt(b.wClass.replace("-","").replace("+",""))));
             items = items.map(item => {
-                const currentWeightClass = props.weightClasses.find(x => x.id === item.wId);
+                const currentWeightClass = props.weightClasses.find(x => x.name === item.wClass);
                 item.wClass = !!currentWeightClass && currentWeightClass.hide 
                 ? <span className='issue' title='!!!Увага!!! Дана категорія є застарілою!'>
                         <i className='fa fa-warning'></i>{item.wClass}
