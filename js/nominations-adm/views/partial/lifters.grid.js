@@ -234,7 +234,7 @@ const LiftersGrid = (props) => {
                     });                                          
                     return (<div key={w.id}>
                         <div key={w.id} className={classnames('w-class-name', {'warning': w.hide})}>
-                            {`${w.name}${!!w.hide && ' !!!Увага!!! Дана категорія є застарілою!'}`}
+                            {`${w.name}${!!w.hide ? ' !!!Увага!!! Дана категорія є застарілою!' : ''}`}
                         </div>
                         <Grid data={{columns: gridColumns, rows: items}} />
                     </div>)                                   
