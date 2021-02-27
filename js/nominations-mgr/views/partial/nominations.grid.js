@@ -194,7 +194,7 @@ const NomGrid = (props) => {
             var divName = (props.game.gender === "male")? division.titleM : division.titleF;
             var items = division.items.map(item => {
                 var rowItem = {};
-                const currentWeightClass = props.weightClasses.find(x => x.id === item.wId);
+                
                 if(item.personally && JSON.parse(item.personally)) countOfPersonally++;
                 countOfTeam = countOfLifters - countOfPersonally;
                 rowItem.personally = (item.personally && JSON.parse(item.personally))? <sup title="Особисто">О</sup> : null;
@@ -214,11 +214,7 @@ const NomGrid = (props) => {
                 rowItem.club = item.club.toUpperCase();
                 rowItem.school = item.school.toUpperCase();
                 rowItem.coaches = item.coaches.toUpperCase();
-                rowItem.wClass = !!currentWeightClass && currentWeightClass.hide 
-                    ? <span className='issue' title='!!!Увага!!! Дана категорія є застарілою!'>
-                            <i className='fa fa-warning'></i>{item.wClass}
-                        </span> 
-                    : item.wClass;
+                rowItem.wClass = item.wClass;
                 if((division.id === "subjuniors" || division.id === "juniors") && JSON.parse(props.game.isJun)) {
                     rowItem.ageCat = getAgeCat(item.born);
                 }
@@ -231,6 +227,15 @@ const NomGrid = (props) => {
                 return rowItem;
             });
             items.sort((a,b) => (parseInt(a.wClass.replace("-","").replace("+","")) - parseInt(b.wClass.replace("-","").replace("+",""))));
+            items = items.map(item => {
+                const currentWeightClass = props.weightClasses.find(x => x.id === item.wId);
+                item.wClass = !!currentWeightClass && currentWeightClass.hide 
+                ? <span className='issue' title='!!!Увага!!! Дана категорія є застарілою!'>
+                        <i className='fa fa-warning'></i>{item.wClass}
+                    </span> 
+                : item.wClass;
+                return item;
+            })
             if(props.game.typeId === "1"){
                 items.sort((a,b) => (parseFloat(b.total) - parseFloat(a.total)));  
             }else{

@@ -263,15 +263,6 @@ class Nominations extends React.Component{
         const openClasses = allCategories.filter(c => c.division === 'open').sort((a,b) => a.sortOrder - b.sortOrder);
         const subJuniorClasses = allCategories.filter(c => c.division === 'subjuniors').sort((a,b) => a.sortOrder - b.sortOrder);
         this.setState({ weightClasses: allCategories, wc: openClasses, subwc: subJuniorClasses });
-        // this.setState({isLoading: true});
-        // services.getWeightCategories({gender: gender}).then(data => {
-        //     var categories = JSON.parse(data);
-        //     var wc = categories.filter(x => x.division === "open");
-        //     var subwc = categories.filter(y => y.division === "subjuniors");
-        //     this.setState({wc: wc});
-        //     this.setState({subwc: subwc})
-        //     this.setState({isLoading: false});
-        // })
     }
 
     confirmDeleting(id){
