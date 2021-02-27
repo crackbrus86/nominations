@@ -1,6 +1,7 @@
 import React from "react";
 import moment from "moment";
 import Grid from "../../../components/grid/grid";
+import classnames from 'classnames';
 
 const LiftersGrid = (props) => {
     if(!props.game) return null;
@@ -232,7 +233,9 @@ const LiftersGrid = (props) => {
                         item.number = <div>{item.outOfContest ? item.outOfContest : item.personally}{counter++}</div>;;
                     });                                          
                     return (<div key={w.id}>
-                        <div key={w.id} className="w-class-name">{w.name}</div>
+                        <div key={w.id} className={classnames('w-class-name', {'warning': w.hide})}>
+                            {`${w.name}${w.hide && ' !!!Увага!!! Дана категорія є застарілою!'}`}
+                        </div>
                         <Grid data={{columns: gridColumns, rows: items}} />
                     </div>)                                   
                 }

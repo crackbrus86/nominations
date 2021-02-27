@@ -194,6 +194,7 @@ const NomGrid = (props) => {
             var divName = (props.game.gender === "male")? division.titleM : division.titleF;
             var items = division.items.map(item => {
                 var rowItem = {};
+                const currentWeightClass = props.weightClasses.find(x => x.id === item.wId);
                 if(item.personally && JSON.parse(item.personally)) countOfPersonally++;
                 countOfTeam = countOfLifters - countOfPersonally;
                 rowItem.personally = (item.personally && JSON.parse(item.personally))? <sup title="Особисто">О</sup> : null;
@@ -213,7 +214,11 @@ const NomGrid = (props) => {
                 rowItem.club = item.club.toUpperCase();
                 rowItem.school = item.school.toUpperCase();
                 rowItem.coaches = item.coaches.toUpperCase();
-                rowItem.wClass = item.wClass;
+                rowItem.wClass = !!currentWeightClass && currentWeightClass.hide 
+                    ? <span className='issue' title='!!!Увага!!! Дана категорія є застарілою!'>
+                            <i className='fa fa-warning'></i>{item.wClass}
+                        </span> 
+                    : item.wClass;
                 if((division.id === "subjuniors" || division.id === "juniors") && JSON.parse(props.game.isJun)) {
                     rowItem.ageCat = getAgeCat(item.born);
                 }

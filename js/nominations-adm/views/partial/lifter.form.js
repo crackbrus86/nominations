@@ -38,13 +38,14 @@ const LifterForm = (props) => {
     }
 
     var divisionsList = divisions.map(div => <option key={div.value} value={div.value}>{div.name}</option>);
-    var weightClassList = props.wc.map(w => <option key={w.id} value={w.id}>{w.name}</option>);
+    const weightClasses = props.wc.filter(w => !w.hide);
+    var weightClassList = weightClasses.map(w => <option key={w.id} value={w.id}>{w.name}</option>);
     var shortWc = [];
-    for(var i = 1; i < props.wc.length; i++){
-        shortWc.push(props.wc[i]);
+    for(var i = 1; i < weightClasses.length; i++){
+        shortWc.push(weightClasses[i]);
     }
     var shortWCList = shortWc.map(w => <option key={w.id} value={w.id}>{w.name}</option>);
-    var subWeightClassList = props.subwc.map(s => <option key={s.id} value={s.id}>{s.name}</option>);
+    var subWeightClassList = props.subwc.filter(s => !s.hide).map(s => <option key={s.id} value={s.id}>{s.name}</option>);
     var st = (info.typeId === "1" && !JSON.parse(nom.outOfContest))? {squat: nom.squat, isDisabled: false} : { squat: nom.squat, isDisabled: true};
     var dl = (info.typeId === "1" && !JSON.parse(nom.outOfContest))? {deadlift: nom.deadlift, isDisabled: false} : { deadlift: nom.deadlift, isDisabled: true};
     var bp = (!JSON.parse(nom.outOfContest)) ? {isDisabled: false} : {isDisabled: true};

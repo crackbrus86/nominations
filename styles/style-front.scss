@@ -65,6 +65,10 @@
                             border-bottom: 1px dotted #f50000 !important;
                         }
                     }
+                    span.issue {
+                        cursor: pointer;
+                        color: red;
+                    }
                     div.status-code{
                         font-weight: 600;
                         padding: 3px 0;
@@ -532,7 +536,11 @@
             background-color: #fdfaf2;
             color: #000;
             border: 1px solid #ccc;
-            padding-left: 4px;     
+            padding-left: 4px;    
+            
+            &.warning {
+                color: red;
+            }
         }
     }
     h4{
@@ -587,6 +595,10 @@
     }
     .w-class-name{
         font-size: 1.4em!important;
+
+        &.warning {
+            color: red;
+        }
     }
     table{
         border-collapse: collapse;

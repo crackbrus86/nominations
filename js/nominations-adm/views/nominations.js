@@ -11,6 +11,8 @@ import Dialog from "../../components/modal/dialog";
 import LifterForm from "./partial/lifter.form";
 import OfficialForm from "./partial/official.form";
 import Inform from "../../components/modal/inform";
+import * as wCl from '../../weightClasses.json';
+
 
 class Nominations extends React.Component{
     constructor(props){
@@ -81,14 +83,10 @@ class Nominations extends React.Component{
     }
 
     getWeightCategories(gender){
-        services.getWeightCategories({gender: gender}).then(data => {
-            var categories = JSON.parse(data);
-            this.setState({wClass: categories});
-            var wc = categories.filter(x => x.division === "open");
-            var subwc = categories.filter(y => y.division === "subjuniors");
-            this.setState({wc: wc});
-            this.setState({subwc: subwc})
-        })
+        const allCategories = wCl.weightClasses.filter(c => c.gender === gender);
+        const openClasses = allCategories.filter(c => c.division === 'open').sort((a,b) => a.sortOrder - b.sortOrder);
+        const subJuniorClasses = allCategories.filter(c => c.division === 'subjuniors').sort((a,b) => a.sortOrder - b.sortOrder);
+        this.setState({wClass: allCategories, wc: openClasses, subwc: subJuniorClasses });
     }
 
     editLifterNom(id){

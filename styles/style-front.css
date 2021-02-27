@@ -50,6 +50,9 @@
         color: #f50000;
         background-color: #ffffc5;
         border-bottom: 1px dotted #f50000 !important; }
+    #nm-front .grid tbody tr td span.issue {
+      cursor: pointer;
+      color: red; }
     #nm-front .grid tbody tr td div.status-code {
       font-weight: 600;
       padding: 3px 0;
@@ -409,6 +412,8 @@
       color: #000;
       border: 1px solid #ccc;
       padding-left: 4px; }
+      .nom-grid-wrap .division-wrap .w-class-name.warning {
+        color: red; }
   .nom-grid-wrap h4 {
     font-family: Verdana, Geneva;
     font-weight: 600;
@@ -452,6 +457,8 @@
     color: #000; }
   .nom-preview .w-class-name {
     font-size: 1.4em !important; }
+    .nom-preview .w-class-name.warning {
+      color: red; }
   .nom-preview table {
     border-collapse: collapse;
     border-spacing: 0;

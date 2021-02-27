@@ -9,6 +9,7 @@ import OfficialForm from "./partial/official.form";
 import Inform from "../../components/modal/inform";
 import NomGrid from "./partial/nominations.grid";
 import RefGrid from "./partial/referee.grid";
+import * as wCl from '../../weightClasses.json';
 
 class Nominations extends React.Component{
     constructor(props){
@@ -19,6 +20,7 @@ class Nominations extends React.Component{
             nomination: null,
             region: this.props.region,
             regions: [],
+            weightClasses: [],
             wc: [],
             subwc:[],
             inform: null,
@@ -257,15 +259,19 @@ class Nominations extends React.Component{
     }
 
     getWeightCategories(gender){
-        this.setState({isLoading: true});
-        services.getWeightCategories({gender: gender}).then(data => {
-            var categories = JSON.parse(data);
-            var wc = categories.filter(x => x.division === "open");
-            var subwc = categories.filter(y => y.division === "subjuniors");
-            this.setState({wc: wc});
-            this.setState({subwc: subwc})
-            this.setState({isLoading: false});
-        })
+        const allCategories = wCl.weightClasses.filter(c => c.gender === gender);
+        const openClasses = allCategories.filter(c => c.division === 'open').sort((a,b) => a.sortOrder - b.sortOrder);
+        const subJuniorClasses = allCategories.filter(c => c.division === 'subjuniors').sort((a,b) => a.sortOrder - b.sortOrder);
+        this.setState({ weightClasses: allCategories, wc: openClasses, subwc: subJuniorClasses });
+        // this.setState({isLoading: true});
+        // services.getWeightCategories({gender: gender}).then(data => {
+        //     var categories = JSON.parse(data);
+        //     var wc = categories.filter(x => x.division === "open");
+        //     var subwc = categories.filter(y => y.division === "subjuniors");
+        //     this.setState({wc: wc});
+        //     this.setState({subwc: subwc})
+        //     this.setState({isLoading: false});
+        // })
     }
 
     confirmDeleting(id){
@@ -314,7 +320,14 @@ class Nominations extends React.Component{
                 </div>
             </div>
             <CompInfo compInfo={this.state.compInfo} />
-            <NomGrid nominations={this.state.lNominations} game={this.state.compInfo} onChangeStatus={this.onCheckStatus} onLifterEdit={this.onLifterEdit} onDelete={this.onDelete} />
+            <NomGrid
+                nominations={this.state.lNominations}
+                game={this.state.compInfo}
+                onChangeStatus={this.onCheckStatus}
+                onLifterEdit={this.onLifterEdit}
+                onDelete={this.onDelete}
+                weightClasses={this.state.weightClasses}
+            />
             <RefGrid nominations={this.state.rNominations} game={this.state.compInfo} onOfficialEdit={this.onOfficialEdit} onDelete={this.onDelete} />
             <Modal target={this.state.nomination} onClose={this.closeNom}>
                 <LifterForm nomination={this.state.nomination} 
