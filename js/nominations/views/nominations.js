@@ -6,6 +6,7 @@ import LiftersGrid from "./partial/lifters.grid";
 import IsJunLiftersGrid from "./partial/isJun.lifters.grid";
 import RefGrid from "./partial/referees.grid";
 require("../../scripts/colResizable-1.6.js");
+import * as wCl from '../../weightClasses.json';
 
 class Nominations extends React.Component{
     constructor(props){
@@ -42,7 +43,8 @@ class Nominations extends React.Component{
             gender: this.state.compInfo.gender,
             type: "lifter"
         }).then(data => {
-            this.setState({lifters: JSON.parse(data)});
+            const nextLifters = JSON.parse(data);
+            this.setState({lifters: nextLifters });
             this.setState({isLoading: false});
         })
     }
@@ -67,11 +69,8 @@ class Nominations extends React.Component{
     }
 
     getWeightCategories(gender){
-        this.setState({isLoading: true});
-        services.getWeightCategories({gender: gender}).then(data => {
-            this.setState({weightClasses: JSON.parse(data)});
-            this.setState({isLoading: false});
-        })
+        const allCategories = wCl.weightClasses.filter(c => c.gender === gender).sort((a,b) => a.sortOrder - b.sortOrder);;
+        this.setState({weightClasses: allCategories });
     }   
     
     printGrid(){

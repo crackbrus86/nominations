@@ -64,7 +64,12 @@ class Nominations extends React.Component{
             team: this.state.region,
             type: "lifter"
         }).then(data => {
-            this.setState({lNominations: JSON.parse(data)});
+            const nextLifters = JSON.parse(data).map(x => {
+                const wClass = this.state.weightClasses.find(w => w.id === x.wId);
+                x.wClass = wClass ? wClass.name : null;
+                return x;
+            });
+            this.setState({lNominations: nextLifters});
             this.setState({isLoading: false});        
         })
     }
