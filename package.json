@@ -33,7 +33,7 @@
     "react-dom": "^15.6.1",
     "sass": "^1.0.0-beta.2",
     "style-loader": "^0.18.2",
-    "webpack-cli": "^3.1.0"
+    "webpack-cli": "^3.3.12"
   },
   "devDependencies": {
     "classnames": "^2.2.6",
