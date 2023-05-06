@@ -5,7 +5,8 @@ module.exports = {
       nominations: "./js/nominations/index.js",
       "nominations-adm": "./js/nominations-adm/index.js",
       "nominations-mgr": "./js/nominations-mgr/index.js",
-      settings: "./js/settings/index.js"
+      settings: "./js/settings/index.js",
+      "flow-editor": "./js/flow-editor/index.js"
     },
     output: {
         path: path.resolve(__dirname, 'js/dist'),
@@ -26,7 +27,7 @@ module.exports = {
             }
           },
           {
-            test: /\.css$/,
+            test: /\.(s?)css$/,
             use: [
                 {loader: "style-loader"},
                 { loader: 'css-loader' },

@@ -1,0 +1,35 @@
+.blackout{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color:rgba(0,0,0,0.8);
+    z-index: 10000;
+    overflow: auto;
+    
+    .spinner-wrap{
+        position: absolute;
+        top: 50%;
+        left: 50%;    
+        
+        .fa-spin{
+            color: #6c6fff;
+        }        
+    }
+}
+
+.event-selector {
+    &__list {
+        ul {
+            li {
+                margin-bottom: 0;
+                cursor: pointer;
+
+                i.lock {
+                    color: #81b9ff;
+                }
+            }
+        }
+    }
+}

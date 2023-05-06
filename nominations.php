@@ -81,6 +81,7 @@ class Nominations{
     function initSettings(){
         add_menu_page("Nominations", "Номінації", "manage_options", "nominations", array("Nominations", "nomEditor"));
         add_submenu_page("nominations", "Управління номінаціями", "Управління", "manage_options", "nominations-admin", array("Nominations", "nomAdmin"));
+        add_submenu_page("nominations", "Управління потоками", "Потоки", "manage_options", "flow-editor", array("Nominations", "flowEditor"));
     }
 
     function nomEditor(){
@@ -110,6 +111,19 @@ class Nominations{
             <h2>Управління номінаціями</h2>
             <div id="nom-adm"></div>
         </div>         
+        <?php
+    }
+
+    function flowEditor(){
+        wp_register_script( 'flow-editor', plugins_url( './js/dist/flow-editor-bundle.js?v='.time(), __FILE__ ) );
+        wp_enqueue_script('flow-editor');  
+        wp_register_style('bootstrap', plugins_url('/styles/css/bootstrap.min.css?v=' . time(), __FILE__));
+        wp_enqueue_style('bootstrap');
+        ?>
+        <div class="container-fluid">
+            <h2>Потоки</h2>
+            <div id="flow-editor"></div>
+        </div>
         <?php
     }
 }
