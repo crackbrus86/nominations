@@ -6,7 +6,8 @@ module.exports = {
       "nominations-adm": "./js/nominations-adm/index.js",
       "nominations-mgr": "./js/nominations-mgr/index.js",
       settings: "./js/settings/index.js",
-      "flow-editor": "./js/flow-editor/index.js"
+      "flow-editor": "./js/flow-editor/index.js",
+      "event-editor": "./js/event-editor/index.js"
     },
     output: {
         path: path.resolve(__dirname, 'js/dist'),

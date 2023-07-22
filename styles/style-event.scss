@@ -1,0 +1,21 @@
+.events-list {
+    ul {
+        li {
+            margin-bottom: 0;
+
+            h5{
+                cursor: pointer;
+            }
+
+            i.cup-marker {
+                color: #000ba5;
+            }
+
+            span.school-marker {
+                color: #9e2600;
+                font-weight: 600;
+                margin-left: 3px;
+            }
+        }
+    }
+}

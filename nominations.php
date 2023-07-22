@@ -81,6 +81,7 @@ class Nominations{
     function initSettings(){
         add_menu_page("Nominations", "Номінації", "manage_options", "nominations", array("Nominations", "nomEditor"));
         add_submenu_page("nominations", "Управління номінаціями", "Управління", "manage_options", "nominations-admin", array("Nominations", "nomAdmin"));
+        add_submenu_page("nominations", "Управління змаганнями", "Змагання", "manage_options", "event-editor", array("Nominations", "eventEditor"));
         add_submenu_page("nominations", "Управління потоками", "Потоки", "manage_options", "flow-editor", array("Nominations", "flowEditor"));
     }
 
@@ -123,6 +124,19 @@ class Nominations{
         <div class="container-fluid">
             <h2>Потоки</h2>
             <div id="flow-editor"></div>
+        </div>
+        <?php
+    }
+
+    function eventEditor() {
+        wp_register_script( 'event-editor', plugins_url( './js/dist/event-editor-bundle.js?v='.time(), __FILE__ ) );
+        wp_enqueue_script('event-editor');  
+        wp_register_style('bootstrap', plugins_url('/styles/css/bootstrap.min.css?v=' . time(), __FILE__));
+        wp_enqueue_style('bootstrap');
+        ?>
+        <div class="container-fluid">
+            <h2>Змагання</h2>
+            <div id="event-editor"></div>
         </div>
         <?php
     }
