@@ -29,6 +29,7 @@ const EventFormContextProvider = ({ children }) => {
     femaleTitle: null,
   });
 
+  const [showGenderConfig, setShowGenderConfig] = React.useState(true);
   const [genderConfig, setGenderConfig] = React.useState({...defaultGenderConfig});
 
   const onAddEvent = () => {
@@ -53,12 +54,14 @@ const EventFormContextProvider = ({ children }) => {
     const eventDetails = await getEventDetails({ event_id: event.id });
     const maleInfo = eventDetails.find(x => x.gender === 'male');
     const femaleInfo = eventDetails.find(x => x.gender === 'female');
+    const isGenderConfigVisible = maleInfo && femaleInfo;
     const eventType = eventTypes.find(type => type.eventType == event.event_type);
     if(!!eventType)
       event.event_type_id = eventType.id;
 
     setEvent(event);
     setEventSnapshot(event);
+    setShowGenderConfig(isGenderConfigVisible);
     setGenderConfig({
       male: { 
         title: maleInfo ? maleInfo.name : genderConfig.male.title,
@@ -92,10 +95,10 @@ const EventFormContextProvider = ({ children }) => {
       location: !event.location ? "Вкажіть місце проведення" : null,
       start_date: !event.start_date ? "Оберіть дату початку змагань" : null,
       end_date: !event.end_date ? "Оберіть дату завершення змагань" : null,
-      maleTitle: !genderConfig.male.title
+      maleTitle: showGenderConfig && !genderConfig.male.title
         ? "Введіть назву для змагань чоловіків"
         : null,
-      femaleTitle: !genderConfig.female.title
+      femaleTitle: showGenderConfig && !genderConfig.female.title
         ? "Введіть назву для змагань жінок"
         : null,
     };
@@ -162,8 +165,10 @@ const EventFormContextProvider = ({ children }) => {
   const onCreateEvent = async () => {
     const isValid = isFormValid();
     if (!isValid) return;
+
+    const nextGenderConfig = showGenderConfig ? genderConfig : defaultGenderConfig;
     
-    await createEvent({ event, genderConfig });
+    await createEvent({ event, genderConfig: nextGenderConfig });
     handleCloseEvent();
   };
 
@@ -195,6 +200,7 @@ const EventFormContextProvider = ({ children }) => {
     errors,
     showExitWithoutSaving,
     showConfirmDelete,
+    showGenderConfig,
     onAddEvent,
     setEvent,
     setMale,
@@ -211,6 +217,7 @@ const EventFormContextProvider = ({ children }) => {
     onDeleteEvent,
     handleClickOnDelete,
     handleCancelDelete,
+    setShowGenderConfig
   };
   return (
     <EventFormContext.Provider value={value}>

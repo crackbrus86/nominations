@@ -13,7 +13,8 @@ class Competitions extends React.Component{
             competitions: [],
             isLoading: false,
             competition: null,
-            dialog: null
+            dialog: null,
+            events: []
         }
         this.onEdit = this.chooseComp.bind(this);
         this.onClose = this.closeComp.bind(this);
@@ -97,6 +98,11 @@ class Competitions extends React.Component{
         services.getAllCompetitions().then(data => {
             this.setState({competitions: JSON.parse(data)});
             this.setState({isLoading: false});
+        }).then(() => {
+            services.getAllEvents().then(data => {
+                const response = JSON.parse(data);
+                this.setState({ events: !!response.data ? response.data : [] });
+            });
         })
     }
 
@@ -110,7 +116,12 @@ class Competitions extends React.Component{
             <CompGrid data={this.state.competitions} onEdit={this.onEdit} onDelete={this.onDelete} />
             <div className="control-panel"><button type="button" onClick={this.onAdd}>Додати</button></div>
             <Modal target={this.state.competition} onClose={this.onClose}>
-                <CompForm competition={this.state.competition} onChange={this.onChange} onSave={this.onSave}/>
+                <CompForm
+                    events={this.state.events}
+                    competition={this.state.competition}
+                    onChange={this.onChange}
+                    onSave={this.onSave}
+                />
             </Modal>
             <Dialog dialog={this.state.dialog} onConfirm={this.onConfirm} onClose={this.onCancel} />
             <Preloader loading={this.state.isLoading} />

@@ -10,7 +10,7 @@ import TextBox from "./controls/text.box";
 import SelectBox from "./controls/select.box";
 import GenderConfig from "./gender.config";
 import LoadingIndicator from "../../components/loading.indicator";
-import ConfirmDeleteEventModal from "./confirm.delete.event.modal";
+import ConfirmDeleteEventModal from "../confirm.delete.event.modal";
 
 const EventForm = () => {
   const { eventTypes } = useEvents();
@@ -31,6 +31,8 @@ const EventForm = () => {
     onDeleteEvent,
     handleClickOnDelete,
     handleCancelDelete,
+    showGenderConfig,
+    setShowGenderConfig
   } = useEventForm();
 
   const { isLoading } = useEventsServices();
@@ -103,7 +105,14 @@ const EventForm = () => {
             label="Це змагання типу “Кубок”"
             onChange={(v) => setEvent({ ...event, is_cup: v })}
           />
-          <GenderConfig />
+          {!event.id && (
+            <CheckBox
+              value={showGenderConfig}
+              label="Створити чоловічі/жіночі змагання?"
+              onChange={(v) => setShowGenderConfig(v)}
+            />
+          )}
+          {showGenderConfig && <GenderConfig />}
           <button
             type="button"
             className="btn btn-light me-4"

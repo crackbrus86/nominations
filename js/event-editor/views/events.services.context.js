@@ -86,8 +86,8 @@ const EventsServicesContextProvider = ({ children }) => {
     const request = {
       title: event.title,
       location: event.location,
-      start_date: event.start_date,
-      end_date: event.end_date,
+      start_date: moment(event.start_date).format('YYYY-MM-DD'),
+      end_date: moment(event.end_date).format('YYYY-MM-DD'),
       event_type: event.event_type,
       event_type_id: event.event_type_id,
       is_school: event.is_school,

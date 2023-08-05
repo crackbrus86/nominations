@@ -11,8 +11,22 @@ if(current_user_can('edit_others_pages')):
     $typeId = stripslashes($_POST["typeId"]);
     $isJun = stripslashes($_POST["isJun"]);
     $isCup = stripslashes($_POST["isCup"]);
+    $eventId = stripslashes($_POST["eventId"]);
 
-    $sql = $wpdb->prepare("INSERT INTO $tb_competitions (name, location, gender, start_date, end_date, type, is_jun, is_cup) VALUES (%s, %s, %s, %s, %s, %d, %s, %s)", 
-    $name, $location, $gender, $startDate, $endDate, $typeId, $isJun, $isCup);
-    if($wpdb->query($sql)) print_r("Competition was created");
+    $result = $wpdb->insert(
+        $tb_competitions,
+        array(
+            'name' => $name,
+            'location' => $location,
+            'gender' => $gender,
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+            'type' => $typeId,
+            'is_jun' => $isJun,
+            'is_cup' => $isCup,
+            'event_id' => !$eventId ? NULL : $eventId
+        )
+    );
+
+    if($result !== false) print_r("Competition was created");
 endif;

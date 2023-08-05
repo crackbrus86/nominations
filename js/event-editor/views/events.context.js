@@ -4,18 +4,11 @@ import { useEventsServices } from './events.services.context';
 
 const EventsContext = React.createContext();
 
-//temporary data
-const eventTypeList = [
-  { id: 1, eventType: "POWERLIFTING", name: "пауерліфтинг" },
-  { id: 2, eventType: "BENCH_PRESS", name: "жим лежачи" },
-  { id: 3, eventType: "POWERLIFTING_CLASSIC", name: "класичний пауерліфтинг" },
-  { id: 4, eventType: "BENCH_PRESS_CLASSIC", name: "класичний жим лежачи" },
-];
-
 const EventsContextProvider = ({ children }) => {
-  const { getAllEvents, getEventTypes } = useEventsServices();
+  const { getAllEvents, getEventTypes, deleteEvent } = useEventsServices();
   const [events, setEvents] = React.useState([]);
   const [eventTypes, setEventTypes] = React.useState([]);
+  const [eventIdToDelete, setEventIdToDelete] = React.useState(null);
 
   const loadEvents = async () => {
     const data = await getAllEvents();
@@ -28,12 +21,30 @@ const EventsContextProvider = ({ children }) => {
     setEventTypes(data);
   }
 
+  const onClickDelete = (id) => {
+    setEventIdToDelete(id);
+  }
+
+  const handleCancelDelete = () => {
+    setEventIdToDelete(null);
+  }
+
+  const onDeleteEvent = async () => {
+    await deleteEvent({ id: eventIdToDelete });
+    setEventIdToDelete(null);
+    await loadEvents();
+  }
+
   const value = {
     events,
     eventTypes,
+    eventIdToDelete,
     setEvents,
     loadEvents,
-    loadEventTypes
+    loadEventTypes,
+    onClickDelete,
+    handleCancelDelete,
+    onDeleteEvent
   };
   return (
     <EventsContext.Provider value={value}>{children}</EventsContext.Provider>

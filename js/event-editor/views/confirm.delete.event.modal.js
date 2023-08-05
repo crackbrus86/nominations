@@ -1,5 +1,5 @@
 import React from "react";
-import ModalPortal from "./components/modal.portal";
+import ModalPortal from "./event.form/components/modal.portal";
 
 const ConfirmDeleteEventModal = ({ isOpen, onClose, onConfirm }) => {
   if (!isOpen) return null;

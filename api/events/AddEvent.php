@@ -15,17 +15,20 @@ if(current_user_can('edit_others_pages'))
     $wpdb->query($sql);
 
     $event_id = $wpdb->insert_id;
-
+    
     //insert gender competitions
-    $sql = $wpdb->prepare("INSERT INTO $tb_competitions (name, location, gender, start_date, end_date, type, is_jun, is_cup, event_id) VALUES (%s, %s, %s, %s, %s, %d, %s, %s, %d)", 
-    $event->title_male, $event->location, 'male', $event->start_date, $event->end_date, $event->event_type_id, $event->is_school == 1 ? 'true' : 'false', $event->is_cup == 1 ? 'true' : 'false', $event_id);
-
-    $wpdb->query($sql);
-
-    $sql = $wpdb->prepare("INSERT INTO $tb_competitions (name, location, gender, start_date, end_date, type, is_jun, is_cup, event_id) VALUES (%s, %s, %s, %s, %s, %d, %s, %s, %d)", 
-    $event->title_female, $event->location, 'female', $event->start_date, $event->end_date, $event->event_type_id, $event->is_school == 1 ? 'true' : 'false', $event->is_cup == 1 ? 'true' : 'false', $event_id);
-
-    $wpdb->query($sql);
+    if(!!$event->title_male && !!$event->title_female)
+    {
+        $sql = $wpdb->prepare("INSERT INTO $tb_competitions (name, location, gender, start_date, end_date, type, is_jun, is_cup, event_id) VALUES (%s, %s, %s, %s, %s, %d, %s, %s, %d)", 
+        $event->title_male, $event->location, 'male', $event->start_date, $event->end_date, $event->event_type_id, $event->is_school == 1 ? 'true' : 'false', $event->is_cup == 1 ? 'true' : 'false', $event_id);
+    
+        $wpdb->query($sql);
+    
+        $sql = $wpdb->prepare("INSERT INTO $tb_competitions (name, location, gender, start_date, end_date, type, is_jun, is_cup, event_id) VALUES (%s, %s, %s, %s, %s, %d, %s, %s, %d)", 
+        $event->title_female, $event->location, 'female', $event->start_date, $event->end_date, $event->event_type_id, $event->is_school == 1 ? 'true' : 'false', $event->is_cup == 1 ? 'true' : 'false', $event_id);
+    
+        $wpdb->query($sql);
+    }
 
     $response = new StdClass();
     $response->status = "Success";

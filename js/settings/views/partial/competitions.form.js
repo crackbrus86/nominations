@@ -6,7 +6,7 @@ import * as validation from "../../../components/validation/validation";
 
 const CompForm = (props) => {
     var required = ["name"];
-    var types = [{id: 1, title: "пауерліфтинг"}, {id: 2, title: "жим лежачи"}];
+    var types = [{id: 1, title: "пауерліфтинг"}, {id: 2, title: "жим лежачи"}, {id: 3, title: "класичний пауерліфтинг"}, {id: 4, title: "класичний жим лежачи"}];
     var typesList = types.map(type => <option key={type.id} value={type.id}>{type.title}</option>);
     var genders = [{type: "male", title: "чоловіки"}, {type: "female", title: "жінки"}];
     var gendersList = genders.map(gender => <option key={gender.type} value={gender.type}>{gender.title}</option>);
@@ -15,6 +15,9 @@ const CompForm = (props) => {
     var endDate = (props.competition.endDate)? new Date(props.competition.endDate) : null;
     var isJun = (props.competition.isJun)? JSON.parse(props.competition.isJun) : false;
     var isCup = (props.competition.isCup)? JSON.parse(props.competition.isCup) : false;
+    const events = [{ id: null, title: "" }].concat(props.events);
+    const eventsList = events.map(x => (<option key={x.id} value={x.id}>{x.title}</option>));
+
     return (<div>
         <h4>{word + " змагання"}</h4>
         <form>
@@ -49,6 +52,10 @@ const CompForm = (props) => {
             <div>
                 <label>Кубок</label>
                 <input checked={isCup} type="checkbox" onChange={e => props.onChange("isCup", e.target.checked)} />
+            </div>
+            <div>
+                <label>Приєднане змагання</label>
+                <select value={props.competition.eventId} onChange={e => props.onChange("eventId", e.target.value)}>{eventsList}</select>
             </div>
             <div>
                 <button type="button" disabled={validation.isFormValid(props.competition, required)} onClick={() => props.onSave()}>Зберегти</button>    
