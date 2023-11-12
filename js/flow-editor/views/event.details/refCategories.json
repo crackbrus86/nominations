@@ -1,0 +1,29 @@
+{
+    "refCategories": [
+        {
+            "value": "category1",
+            "text": "МК І",
+            "id": 1
+        },
+        {
+            "value": "category2",
+            "text": "МК ІІ",
+            "id": 2
+        },
+        {
+            "value": "national",
+            "text": "НК",
+            "id": 3
+        },
+        {
+            "value": "first",
+            "text": "I кат.",
+            "id": 4
+        }, 
+        {
+            "value": "second",
+            "text": "ІІ кат.",
+            "id": 5
+        }
+    ]
+}

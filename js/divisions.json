@@ -1,0 +1,144 @@
+{
+    "divisions": [
+        {
+            "id": 1,
+            "division": "open",
+            "divisionKey": "seniors",
+            "gender": "male",
+            "title": "Чоловіки",
+            "flowTitle": "чоловіки",
+            "flowShortTitle": "Чол",
+            "weightClassDivision": "open"
+        },
+        {
+            "id": 2,
+            "division": "juniors",
+            "divisionKey": "juniors",
+            "gender": "male",
+            "title": "Юніори",
+            "flowTitle": "юніори",
+            "flowShortTitle": "Юнр",
+            "weightClassDivision": "open"
+        },
+        {
+            "id": 3,
+            "division": "subjuniors",
+            "divisionKey": "subjuniors",
+            "gender": "male",
+            "title": "Юнаки",
+            "flowTitle": "юнаки",
+            "flowShortTitle": "Юн",
+            "weightClassDivision": "subjuniors"
+        },
+        {
+            "id": 4,
+            "division": "masters1",
+            "divisionKey": "masters1",
+            "gender": "male",
+            "title": "Ветерани 1",
+            "flowTitle": "чоловіки М1",
+            "flowShortTitle": "Чол М1",
+            "weightClassDivision": "open"
+        },
+        {
+            "id": 5,
+            "division": "masters2",
+            "divisionKey": "masters2",
+            "gender": "male",
+            "title": "Ветерани 2",
+            "flowTitle": "чоловіки М2",
+            "flowShortTitle": "Чол М2",
+            "weightClassDivision": "open"
+        },
+        {
+            "id": 6,
+            "division": "masters3",
+            "divisionKey": "masters3",
+            "gender": "male",
+            "title": "Ветерани 3",
+            "flowTitle": "чоловіки М3",
+            "flowShortTitle": "Чол М3",
+            "weightClassDivision": "open"
+        },
+        {
+            "id": 7,
+            "division": "masters4",
+            "divisionKey": "masters4",
+            "gender": "male",
+            "title": "Ветерани 4",
+            "flowTitle": "чоловіки М4",
+            "flowShortTitle": "Чол М4",
+            "weightClassDivision": "open"
+        },
+        {
+            "id": 8,
+            "division": "open",
+            "divisionKey": "seniors",
+            "gender": "female",
+            "title": "Жінки",
+            "flowTitle": "жінки",
+            "flowShortTitle": "Жін",
+            "weightClassDivision": "open"
+        },
+        {
+            "id": 9,
+            "division": "juniors",
+            "divisionKey": "juniors",
+            "gender": "female",
+            "title": "Юніорки",
+            "flowTitle": "юніорки",
+            "flowShortTitle": "Юнк",
+            "weightClassDivision": "open"
+        },
+        {
+            "id": 10,
+            "division": "subjuniors",
+            "divisionKey": "subjuniors",
+            "gender": "female",
+            "title": "Дівчата",
+            "flowTitle": "дівчата",
+            "flowShortTitle": "Дів",
+            "weightClassDivision": "subjuniors"
+        },
+        {
+            "id": 11,
+            "division": "masters1",
+            "divisionKey": "masters1",
+            "gender": "female",
+            "title": "Ветерани 1",
+            "flowTitle": "жінки М1",
+            "flowShortTitle": "Жін М1",
+            "weightClassDivision": "open"
+        },
+        {
+            "id": 12,
+            "division": "masters2",
+            "divisionKey": "masters2",
+            "gender": "female",
+            "title": "Ветерани 2",
+            "flowTitle": "жінки М2",
+            "flowShortTitle": "Жін М2",
+            "weightClassDivision": "open"
+        },
+        {
+            "id": 13,
+            "division": "masters3",
+            "divisionKey": "masters3",
+            "gender": "female",
+            "title": "Ветерани 3",
+            "flowTitle": "жінки М3",
+            "flowShortTitle": "Жін М3",
+            "weightClassDivision": "open"
+        },
+        {
+            "id": 14,
+            "division": "masters4",
+            "divisionKey": "masters4",
+            "gender": "female",
+            "title": "Ветерани 4",
+            "flowTitle": "жінки М4",
+            "flowShortTitle": "Жін М4",
+            "weightClassDivision": "open"
+        }
+    ]
+}
