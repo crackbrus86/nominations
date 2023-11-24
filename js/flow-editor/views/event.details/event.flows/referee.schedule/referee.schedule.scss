@@ -1,0 +1,144 @@
+#flow-editor {
+    .referee-schedule-wrap {
+        max-width: 100%;
+        overflow: auto;
+        max-height: 500px;
+        position: relative;
+
+        .referee-schedule {
+            width: 100%;
+            border: 1px solid #72777c;
+            border-spacing: 0;
+            border-collapse: separate;
+
+            thead {
+                position: sticky;
+                background-color: #f1f1f1;
+                top: 0;
+                z-index: 1;
+            }
+
+            td,
+            th {
+                border: 1px solid #72777c;
+            }
+
+            th.flow-cell {
+                vertical-align: top;
+                padding: 4px;
+
+                .flow-panel {
+                    float: left;
+                    width: 100%;
+                }
+
+                .delete-flow {
+                    float: right;
+                    margin: 4px;
+                    cursor: pointer;
+                    color: red;
+                    font-size: 11px;
+                }
+
+                .edit-flow {
+                    float: right;
+                    margin: 4px;
+                    cursor: pointer;
+                    color: green;
+                    font-size: 12px;
+                }
+
+                ul {
+                    margin: 0;
+                    padding: 0;
+
+                    li {
+                        font-weight: 600;
+                        font-size: 10px;
+                        margin-bottom: 0px;
+                    }
+                }
+            }
+
+            th {
+                .day-title {
+                    text-transform: capitalize;
+                    font-size: 10px;
+                }
+
+                .add-flow {
+                    float: right;
+                    margin: 4px;
+                    cursor: pointer;
+                    color: #0d6efd;
+                }
+            }
+
+            .referee-schedule-item {
+                font-size: 10px;
+                font-weight: 600;
+                position: sticky;
+                left: 0;
+                background-color: #a6d2ff;
+                min-width: 200px;
+                padding: 4px;
+            }
+
+            .referee-schedule-category {
+                font-size: 10px;
+                font-weight: 600;
+                left: 0;
+                background-color: #a6d2ff;
+                padding: 4px;
+                min-width: 40px;
+            }
+
+            .referee-cell {
+                background-color: #f7d18b;
+
+                &.busy {
+                    background-color: #fd5454;
+                }
+
+                &.engaged {
+                    background-color: #7373fd;
+                }
+
+                &.reserved {
+                    background-color: #2ca02c;
+                }
+
+                .info-panel {
+                    min-height: 10px;
+
+                    .info {
+                        float: right;
+                        font-size: 8px;
+                        margin: 2px;
+                        color: #868686;
+                        cursor: pointer;
+
+                        &:hover {
+                            color: #7b7b7b;
+                        }
+                    }
+                }
+
+
+                .referee-status {
+                    cursor: pointer;
+                    font-size: 10px;
+                    text-align: center;
+                    margin: 2px;
+                    min-width: 60px;
+                    color: #868686;
+
+                    .referee-status-selector {
+                        background-color: rgba(255, 255, 255, 0.6);
+                    }
+                }
+            }
+        }
+
+    }
+}

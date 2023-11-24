@@ -1,0 +1,59 @@
+{
+    "statuses": [
+        {
+            "value": 0,
+            "name": "Недоступний",
+            "shortname": "Недоступний"
+        },
+        {
+            "value": 1,
+            "name": "Старший суддя",
+            "shortname": "СТ"
+        },
+        {
+            "value": 2,
+            "name": "Боковий суддя",
+            "shortname": "БС"
+        },
+        {
+            "value": 3,
+            "name": "Суддя при учасниках",
+            "shortname": "СУ"
+        },
+        {
+            "value": 4,
+            "name": "Секретар",
+            "shortname": "СЕКР"
+        },
+        {
+            "value": 5,
+            "name": "Помічник секретаря",
+            "shortname": "ПС"
+        },
+        {
+            "value": 6,
+            "name": "Комп'ютерний секретар",
+            "shortname": "КС"
+        },
+        {
+            "value": 7,
+            "name": "Голова журі",
+            "shortname": "ГЖ"
+        },
+        {
+            "value": 8,
+            "name": "Член журі",
+            "shortname": "Ж"
+        },
+        {
+            "value": 9,
+            "name": "Резервний старший суддя",
+            "shortname": "РС"
+        },
+        {
+            "value": 10,
+            "name": "Резервний боковий суддя",
+            "shortname": "РБ"
+        }
+    ]
+}

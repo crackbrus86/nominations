@@ -1,6 +1,7 @@
 import * as $ from "jquery";
 var path = "../wp-content/plugins/nominations/api/regions/";
 var compPath = "../wp-content/plugins/nominations/api/competitions/";
+var eventPath = "../wp-content/plugins/nominations/api/events/";
 
 export const getAllRegions = () => {
     return $.ajax({
@@ -79,5 +80,12 @@ export const deleteCompetition = (contract) => {
         url: compPath + "DeleteCompetition.php",
         type: "POST",
         data: contract
+    })
+}
+
+export const getAllEvents = () => {
+    return $.ajax({
+        url: eventPath + "GetAll.php",
+        type: "GET"
     })
 }
