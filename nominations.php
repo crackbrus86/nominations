@@ -38,6 +38,9 @@ function nomMngButton(){
     if(file_exists(RM__PLUGIN_DIR."/php/nom.mng.button.php")){
         require_once(RM__PLUGIN_DIR."/php/nom.mng.button.php");
     }
+    if(file_exists(RM__PLUGIN_DIR."/php/nom.membership.button.php")){
+        require_once(RM__PLUGIN_DIR."/php/nom.membership.button.php");
+    }
 }
 add_shortcode('NomMngBtn', 'nomMngButton');
 
