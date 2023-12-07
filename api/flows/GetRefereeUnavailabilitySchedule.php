@@ -4,12 +4,7 @@ include_once("../connect.php");
 if(current_user_can("edit_others_pages"))
 {
     $event_id =     $_GET['eventId'];
-    $first_name =   $_GET['firstName'];
-    $surname =      $_GET['surname'];
-    $middle_name =  $_GET['middleName'];
-    $team_id =      $_GET['team'];
-
-    $referee_id = strtolower($surname) . '/' . strtolower($first_name) . '/' . strtolower($middle_name) . '/' . $team_id;
+    $referee = $_GET['referee'];
 
     $tb_flows = $wpdb->get_blog_prefix() . 'nom_flows';
     $sql = $wpdb->prepare("SELECT flow_id, day_of_flow, sort_order 
@@ -24,7 +19,7 @@ if(current_user_can("edit_others_pages"))
     {
         $sql = $wpdb->prepare("SELECT flow_referee_record_id, referee_id, referee_status 
             FROM $tb_flow_referee_records
-        WHERE flow_id = %d AND referee_status = 0 AND referee_id = %s", $flow->flow_id, $referee_id);
+        WHERE flow_id = %d AND referee_status = 0 AND referee_id = %s", $flow->flow_id, $referee);
         $referee_records = $wpdb->get_results($sql);
         $flow->busy = count($referee_records) > 0 ? TRUE : FALSE;
     }
