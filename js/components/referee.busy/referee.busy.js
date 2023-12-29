@@ -22,7 +22,7 @@ const RefereeBusy = ({ eventId, team, firstName, surname, middleName }) => {
 
 	const loadRefereeBusy = async () => {
 		const response = await fetch(
-			`${flowsApiUrl}/GetRefereeUnavailabilitySchedule?` +
+			`${flowsApiUrl}/GetRefereeUnavailabilitySchedule.php?` +
 				new URLSearchParams(
 					{
 						eventId,
