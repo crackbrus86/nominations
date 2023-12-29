@@ -25,7 +25,6 @@ if(current_user_can("edit_others_pages"))
     }
 
     $result = new StdClass();
-    $result->flows = $flows;
 
     $tb_events = $wpdb->get_blog_prefix() ."nom_events";
     $sql = $wpdb->prepare("SELECT start_date, end_date FROM $tb_events WHERE id = %d", $event_id);
@@ -43,6 +42,14 @@ if(current_user_can("edit_others_pages"))
 
     $result->days = $days;
 
+    $actual_flows = array_filter($flows, "is_flow_in_range");
+    $output_actual_flows = array();
+    foreach($actual_flows as $actual_flow)
+    {
+        array_push($output_actual_flows, $actual_flow);
+    }
+    $result->flows = $output_actual_flows;
+
     $response = new StdClass();
     $response->status = "Success";
     $response->message = NULL;
@@ -51,4 +58,11 @@ if(current_user_can("edit_others_pages"))
     echo json_encode($response);
 } else {
     header("HTTP/1.1 401 Unauthorized");
+}
+
+function is_flow_in_range($flow)
+{
+    global $event;
+    return (strtotime($event->start_date) <= strtotime($flow->day_of_flow)) 
+        && (strtotime($flow->day_of_flow) <= strtotime($event->end_date));
 }
