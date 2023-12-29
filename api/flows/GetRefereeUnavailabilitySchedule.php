@@ -4,12 +4,7 @@ include_once("../connect.php");
 if(current_user_can("edit_others_pages"))
 {
     $event_id =     $_GET['eventId'];
-    $first_name =   $_GET['firstName'];
-    $surname =      $_GET['surname'];
-    $middle_name =  $_GET['middleName'];
-    $team_id =      $_GET['team'];
-
-    $referee_id = strtolower($surname) . '/' . strtolower($first_name) . '/' . strtolower($middle_name) . '/' . $team_id;
+    $referee = $_GET['referee'];
 
     $tb_flows = $wpdb->get_blog_prefix() . 'nom_flows';
     $sql = $wpdb->prepare("SELECT flow_id, day_of_flow, sort_order 
@@ -24,13 +19,12 @@ if(current_user_can("edit_others_pages"))
     {
         $sql = $wpdb->prepare("SELECT flow_referee_record_id, referee_id, referee_status 
             FROM $tb_flow_referee_records
-        WHERE flow_id = %d AND referee_status = 0 AND referee_id = %s", $flow->flow_id, $referee_id);
+        WHERE flow_id = %d AND referee_status = 0 AND referee_id = %s", $flow->flow_id, $referee);
         $referee_records = $wpdb->get_results($sql);
         $flow->busy = count($referee_records) > 0 ? TRUE : FALSE;
     }
 
     $result = new StdClass();
-    $result->flows = $flows;
 
     $tb_events = $wpdb->get_blog_prefix() ."nom_events";
     $sql = $wpdb->prepare("SELECT start_date, end_date FROM $tb_events WHERE id = %d", $event_id);
@@ -48,6 +42,14 @@ if(current_user_can("edit_others_pages"))
 
     $result->days = $days;
 
+    $actual_flows = array_filter($flows, "is_flow_in_range");
+    $output_actual_flows = array();
+    foreach($actual_flows as $actual_flow)
+    {
+        array_push($output_actual_flows, $actual_flow);
+    }
+    $result->flows = $output_actual_flows;
+
     $response = new StdClass();
     $response->status = "Success";
     $response->message = NULL;
@@ -56,4 +58,11 @@ if(current_user_can("edit_others_pages"))
     echo json_encode($response);
 } else {
     header("HTTP/1.1 401 Unauthorized");
+}
+
+function is_flow_in_range($flow)
+{
+    global $event;
+    return (strtotime($event->start_date) <= strtotime($flow->day_of_flow)) 
+        && (strtotime($flow->day_of_flow) <= strtotime($event->end_date));
 }

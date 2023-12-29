@@ -1,6 +1,8 @@
 import React from "react";
 import moment from "moment";
 
+import RefereeBusy from "../../../components/referee.busy/referee.busy";
+
 const OfficialForm = (props) => {
     if(props.nomination.type !== "official") return null;
     var info = props.compInfo;
@@ -18,7 +20,7 @@ const OfficialForm = (props) => {
             <p className="comp-date">{date}</p>
         </div>
         <form>
-            <div className="formBody">
+            <div className="formBody" style={{ width: 'auto !important' }}>
                 <table>
                     <tbody>
                     <tr>
@@ -47,6 +49,15 @@ const OfficialForm = (props) => {
                     </tr>                                                                                                                                                          
                     </tbody>
                 </table>
+                <div>
+                    <RefereeBusy
+                        eventId={info.eventId}
+                        team={nom.team}
+                        firstName={nom.firstName}
+                        surname={nom.surname}
+                        middleName={nom.middleName}
+                    />
+                </div>
             </div>
             <div className="formFooter">
                 <div className="form-footer-tab left">
