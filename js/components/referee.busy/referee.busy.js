@@ -51,7 +51,7 @@ const RefereeBusy = ({ eventId, team, firstName, surname, middleName }) => {
 			refereeId,
 			refereeStatus: value,
 		};
-		await fetch(`${flowsApiUrl}/SaveRefereeRecord`, {
+		await fetch(`${flowsApiUrl}/SaveRefereeRecord.php`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
