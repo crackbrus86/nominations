@@ -101,6 +101,16 @@ const LifterForm = (props) => {
     var statusPrev = (new Date(info.startDate)).setDate((new Date(info.startDate)).getDate() - 30);
     var isNameDisabled = !((+ new Date()) <= statusPrev);
     var dateValidation = (!JSON.parse(info.isJun))? <tr><td></td><td style={{width: "50%"}}>{validation.isTooYoung(bDate, info.startDate).message}</td></tr> : null;
+
+    const handleDateOfBirthChange = (val) => {
+		const nextValue =
+			!!val && moment.isMoment(val) && moment(val).isValid()
+				? moment(new Date(val)).format('YYYY-MM-DD')
+				: null;
+
+		props.onChange('birthDate', nextValue);
+	};
+
     return (<div>
         <div className="form-header">
             <h3>Додати спортсмена до номінації</h3>
@@ -127,7 +137,7 @@ const LifterForm = (props) => {
                     {dateValidation}                   
                     <tr>
                         <td><label>Дата народження</label></td>
-                        <td><Datetime value={bDate} dateFormat="DD-MM-YYYY" timeFormat={false} onChange={(v) => props.onChange("birthDate", v.format("YYYY-MM-DD"))} closeOnSelect={true} /></td>
+                        <td><Datetime value={bDate} dateFormat="DD-MM-YYYY" timeFormat={false} onChange={(v) => handleDateOfBirthChange(v)} closeOnSelect={true} /></td>
                     </tr>
                     <tr>
                         <td><label>Стать</label></td>

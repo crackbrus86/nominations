@@ -18,6 +18,24 @@ const CompForm = (props) => {
     const events = [{ id: null, title: "" }].concat(props.events);
     const eventsList = events.map(x => (<option key={x.id} value={x.id}>{x.title}</option>));
 
+    const handleStartDateChange = (val) => {
+		const nextValue =
+			!!val && moment.isMoment(val) && moment(val).isValid()
+				? moment(new Date(val)).format('YYYY-MM-DD')
+				: null;
+
+		props.onChange('startDate', nextValue);
+	};
+
+	const handleEndDateChange = (val) => {
+		const nextValue =
+			!!val && moment.isMoment(val) && moment(val).isValid()
+				? moment(new Date(val)).format('YYYY-MM-DD')
+				: null;
+
+		props.onChange('endDate', nextValue);
+	};
+
     return (<div>
         <h4>{word + " змагання"}</h4>
         <form>
@@ -39,11 +57,11 @@ const CompForm = (props) => {
             </div>  
             <div>
                 <label>Дата початку</label>
-                <Datetime value={startDate} dateFormat="DD-MM-YYYY" timeFormat={false} onChange={(v) => props.onChange("startDate", v.format("YYYY-MM-DD"))} closeOnSelect={true} />
+                <Datetime value={startDate} dateFormat="DD-MM-YYYY" timeFormat={false} onChange={(v) => handleStartDateChange(v)} closeOnSelect={true} />
             </div>   
             <div>
                 <label>Дата закінчення</label>
-                <Datetime value={endDate} dateFormat="DD-MM-YYYY" timeFormat={false} onChange={(v) => props.onChange("endDate", v.format("YYYY-MM-DD"))} closeOnSelect={true} />
+                <Datetime value={endDate} dateFormat="DD-MM-YYYY" timeFormat={false} onChange={(v) => handleEndDateChange(v)} closeOnSelect={true} />
             </div>
             <div>
                 <label>Є змаганням для учнів ДЮСШ</label>

@@ -81,6 +81,16 @@ const LifterForm = (props) => {
     <tr><td><label>Вікова група</label></td>
     <td><input value={getAgeCat()} type="text" readOnly={true} /></td>
     </tr> : null;
+
+    const handleDateOfBirthChange = (val) => {
+		const nextValue =
+			!!val && moment.isMoment(val) && moment(val).isValid()
+				? moment(new Date(val)).format('YYYY-MM-DD')
+				: null;
+
+		props.onChange('birthDate', nextValue);
+	};
+
     return (<div>
         <div className="form-header">
             <h3>Додати спортсмена до номінації</h3>
@@ -106,7 +116,7 @@ const LifterForm = (props) => {
                     </tr>                    
                     <tr>
                         <td><label>Дата народження</label></td>
-                        <td><Datetime value={bDate} dateFormat="DD-MM-YYYY" timeFormat={false} onChange={(v) => props.onChange("birthDate", v.format("YYYY-MM-DD"))} closeOnSelect={true} /></td>
+                        <td><Datetime value={bDate} dateFormat="DD-MM-YYYY" timeFormat={false} onChange={(v) => handleDateOfBirthChange(v)} closeOnSelect={true} /></td>
                     </tr>
                     <tr>
                         <td><label>Стать</label></td>
