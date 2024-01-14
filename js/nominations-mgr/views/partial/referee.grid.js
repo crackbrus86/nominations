@@ -1,5 +1,6 @@
 import React from "react";
 import Grid from "../../../components/grid/grid";
+import classnames from 'classnames';
 
 const RefGrid = (props) => {
     if(!props.game) return null;
@@ -37,6 +38,7 @@ const RefGrid = (props) => {
         title: "",
         field: "id",
         button: "edit",
+        tooltip: "Редагувати",
         width: "30px",
         action: (e) => {
             props.onOfficialEdit(e.target.dataset["rel"]);
@@ -46,6 +48,7 @@ const RefGrid = (props) => {
         title: "",
         field: "id",
         button: "delete",
+        tooltip: "Видалити",
         width: "30px",
         action: (e) => {
             props.onDelete(e.target.dataset["rel"]);
@@ -57,9 +60,12 @@ const RefGrid = (props) => {
     var referees = props.nominations.map(x => {
         var referee = {};
         referee.id = x.id;
-        var statusTitle = (JSON.parse(x.status))? "Підтверджено" : "Очікує підтвердження";
-        var statusClass = (JSON.parse(x.status))? "fa fa-check status-mark status-ok" : "fa fa-question status-mark status-pending";        
-        referee.status = (<span className={statusClass} title={statusTitle}></span>);
+        const status = JSON.parse(x.status);
+        var statusTitle = status ? "Підтверджено" : "Очікує підтвердження";
+        var statusClass = status ? "fa fa-check status-mark status-ok" : "fa fa-question status-mark status-pending";        
+        referee.status = (<span className={classnames(statusClass, { 'with-warning': !status && !!x.comment })} title={statusTitle}>
+            { !status && !!x.comment && <i className="fa fa-exclamation-triangle warning" title={x.comment} /> }
+        </span>);
         referee.number = "";
         referee.fullName = x.surname + " " + x.firstName + " " + x.middleName;
         referee.fullName = referee.fullName.toUpperCase();

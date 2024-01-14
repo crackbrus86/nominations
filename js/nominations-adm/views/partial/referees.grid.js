@@ -1,5 +1,6 @@
 import React from "react";
 import Grid from "../../../components/grid/grid";
+import classnames from 'classnames';
 
 const RefGrid = (props) => {
     if(!props.game) return null;
@@ -41,6 +42,7 @@ const RefGrid = (props) => {
             title: "",
             field: "id",
             button: "edit",
+            tooltip: "Редагувати",
             width: "30px",
             action: (e) => {
                 props.onEdit(e.target.dataset["rel"]);
@@ -50,18 +52,38 @@ const RefGrid = (props) => {
             title: "",
             field: "id",
             button: "delete",
+            tooltip: "Видалити",
             width: "30px",
             action: (e) => {
                 props.onDelete(e.target.dataset["rel"]);
             }
-        }               
+        },
+        {
+            title: "",
+            field: "id",
+            button: "comment",
+            width: "30px",
+            tooltip: "Залишити коментар",
+            action: (e) => {
+                const currentNom = props.nominations.find(x => x.id === e.target.dataset["rel"]);
+                props.onComment(e.target.dataset["rel"], !currentNom ? '' : currentNom.comment);
+            }
+        }            
     ];
     var referees = props.nominations.map(x => {
         var referee = {};
         referee.id = x.id;
         referee.number = "";
-        referee.status = (<input type="checkbox" checked={JSON.parse(x.status)} data-rel={x.id} 
-        onChange={e => {props.onChangeStatus(e.target.dataset["rel"], !JSON.parse(x.status))}} />);   
+        referee.status = (<React.Fragment>
+                <input 
+                    type="checkbox" 
+                    checked={JSON.parse(x.status)} 
+                    data-rel={x.id} 
+                    onChange={e => {props.onChangeStatus(e.target.dataset["rel"], !JSON.parse(x.status))}}
+                    className={classnames({'with-warning': !!x.comment})}
+                />
+                { !!x.comment && <i className="fa fa-exclamation-triangle warning" title={x.comment}></i> }
+            </React.Fragment>);   
         referee.fullName = x.surname + " " + x.firstName + " " + x.middleName;
         referee.fullName = referee.fullName.toUpperCase();
         var region = props.regions.filter(reg => reg.id === x.team)[0];

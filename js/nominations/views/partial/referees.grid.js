@@ -1,5 +1,6 @@
 import React from "react";
 import Grid from "../../../components/grid/grid";
+import classnames from 'classnames';
 
 const RefGrid = (props) => {
     if(!props.game) return null;
@@ -44,9 +45,12 @@ const RefGrid = (props) => {
         var referee = {};
         referee.id = x.id;
         referee.number = "";
-        var statusTitle = (JSON.parse(x.status))? "Підтверджено" : "Очікує підтвердження";
-        var statusClass = (JSON.parse(x.status))? "fa fa-check status-mark status-ok" : "fa fa-question status-mark status-pending";
-        referee.status = (<span className={statusClass} title={statusTitle}></span>);        
+        const status = JSON.parse(x.status);
+        var statusTitle = status ? "Підтверджено" : "Очікує підтвердження";
+        var statusClass = status ? "fa fa-check status-mark status-ok" : "fa fa-question status-mark status-pending";
+        referee.status = (<span className={classnames(statusClass, {'with-warning': !status && !!x.comment})} title={statusTitle}>
+            { !status && !!x.comment && <i className="fa fa-exclamation-triangle warning" title={x.comment} /> }
+        </span>);        
         referee.fullName = x.surname + " " + x.firstName + " " + x.middleName;
         referee.fullName = referee.fullName.toUpperCase();
         var region = props.regions.filter(reg => reg.id === x.team)[0];

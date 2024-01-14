@@ -6,43 +6,48 @@ require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
 $prefix = $wpdb->get_blog_prefix() . "nom_";
 
+$competitionsTableName = $wpdb->get_blog_prefix() . "nominations";
+
+$sql = "ALTER TABLE $competitionsTableName ADD comment VARCHAR(350) DEFAULT NULL";
+$wpdb->query($sql);
+
 // 09/23/2023 created flows entities
 
-$flowsTableName = $prefix . "flows";
+// $flowsTableName = $prefix . "flows";
 
-$sql = "CREATE TABLE IF NOT EXISTS $flowsTableName (
-    flow_id     INT NOT NULL AUTO_INCREMENT,
-    event_id    INT NOT NULL,
-    day_of_flow DATETIME NOT NULL,
-    sort_order  INT NOT NULL,
-    PRIMARY KEY(flow_id)
-) $charset_collate";
+// $sql = "CREATE TABLE IF NOT EXISTS $flowsTableName (
+//     flow_id     INT NOT NULL AUTO_INCREMENT,
+//     event_id    INT NOT NULL,
+//     day_of_flow DATETIME NOT NULL,
+//     sort_order  INT NOT NULL,
+//     PRIMARY KEY(flow_id)
+// ) $charset_collate";
 
-dbDelta($sql);
+// dbDelta($sql);
 
-$flowWeightClassesTableName = $prefix . "flow_weight_classes";
+// $flowWeightClassesTableName = $prefix . "flow_weight_classes";
 
-$sql = "CREATE TABLE IF NOT EXISTS $flowWeightClassesTableName (
-    flow_weight_class_id    INT NOT NULL AUTO_INCREMENT,
-    flow_id                 INT NOT NULL,
-    division_id             INT NOT NULL,
-    weight_class_id         INT NOT NULL,
-    PRIMARY KEY(flow_weight_class_id)
-) $charset_collate";
+// $sql = "CREATE TABLE IF NOT EXISTS $flowWeightClassesTableName (
+//     flow_weight_class_id    INT NOT NULL AUTO_INCREMENT,
+//     flow_id                 INT NOT NULL,
+//     division_id             INT NOT NULL,
+//     weight_class_id         INT NOT NULL,
+//     PRIMARY KEY(flow_weight_class_id)
+// ) $charset_collate";
 
-dbDelta($sql);
+// dbDelta($sql);
 
-$flowRefereeRecordsTableName = $prefix . "flow_referee_records";
+// $flowRefereeRecordsTableName = $prefix . "flow_referee_records";
 
-$sql = "CREATE TABLE IF NOT EXISTS $flowRefereeRecordsTableName (
-    flow_referee_record_id  INT NOT NULL AUTO_INCREMENT,
-    flow_id                 INT NOT NULL,
-    referee_id              VARCHAR(350) NOT NULL,
-    referee_status          INT NULL,
-    PRIMARY KEY(flow_referee_record_id)
-) $charset_collate";
+// $sql = "CREATE TABLE IF NOT EXISTS $flowRefereeRecordsTableName (
+//     flow_referee_record_id  INT NOT NULL AUTO_INCREMENT,
+//     flow_id                 INT NOT NULL,
+//     referee_id              VARCHAR(350) NOT NULL,
+//     referee_status          INT NULL,
+//     PRIMARY KEY(flow_referee_record_id)
+// ) $charset_collate";
 
-dbDelta($sql);
+// dbDelta($sql);
 
 // 6/11/2023 created event entity
 // $eventsTableName = $prefix . "events";

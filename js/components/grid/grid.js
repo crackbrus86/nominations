@@ -16,9 +16,13 @@ class Grid extends React.Component{
                     case "delete":
                     icon = "fa-times";
                     break;
+                    case "comment":
+                    icon = "fa-comment";
+                    break;
                 }
+                let tooltip = !!column.tooltip ? column.tooltip : '';
                 cells.push(<td key={counter} width={column.width}>
-                    <i className={classNames("fa", icon, column.button)}  data-rel={row[column.field]} onClick={(v) => column.action(v)}></i>
+                    <i className={classNames("fa", icon, column.button)} title={tooltip} data-rel={row[column.field]} onClick={(v) => column.action(v)}></i>
                 </td>)
             }else{
                 var content = (column.rel)? <span className="grid-rel" data-rel={row[column.rel]} onClick={v => column.action(v)}>{row[column.field]}</span> : row[column.field];

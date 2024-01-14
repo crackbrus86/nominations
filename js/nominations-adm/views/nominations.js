@@ -12,6 +12,7 @@ import LifterForm from "./partial/lifter.form";
 import OfficialForm from "./partial/official.form";
 import Inform from "../../components/modal/inform";
 import * as wCl from '../../weightClasses.json';
+import CommentForm from "./partial/comment.form.js";
 
 
 class Nominations extends React.Component{
@@ -28,7 +29,9 @@ class Nominations extends React.Component{
             referees: [],
             nomination: null,
             inform: null,
-            dialog: null
+            dialog: null,
+            commentForRecordId: null,
+            currentComment: ''
         }
         this.onClose = this.closeNomination.bind(this);
         this.onChange = this.changeNom.bind(this);
@@ -41,6 +44,9 @@ class Nominations extends React.Component{
         this.onEditReferee = this.editRefereeNom.bind(this);
         this.onChangeStatus = this.changeStatus.bind(this);
         this.onChangeOutOfContest = this.changeOutOfContest.bind(this);
+        this.onComment = this.openComment.bind(this);
+        this.onCloseComment = this.closeComment.bind(this);
+        this.onSaveComment = this.saveNominationComment.bind(this);
     }
 
     getCompInfo(compId){
@@ -239,6 +245,24 @@ class Nominations extends React.Component{
         })
     }
 
+    openComment(id, comment){
+        this.setState({ commentForRecordId: id, currentComment: comment });
+    };
+    
+    closeComment(){
+        this.setState({ commentForRecordId: null });
+    };
+
+    saveNominationComment(contract){
+        this.setState({ isLoading: true });
+        services.changeComment(contract).then(() => {
+            this.setState({ isLoading: false });
+            this.onCloseComment();
+            this.getAllLifters();
+            this.getAllReferees();
+        });
+    };
+
     changeStatus(id, value){
         this.setState({isLoading: true});
         services.changeStatus({
@@ -283,9 +307,9 @@ class Nominations extends React.Component{
             </div>  
             <CompInfo compInfo={this.state.compInfo} />  
             <div className="adm-grids-wrap">
-                <IsJunLiftersGrid nominations={this.state.lifters} game={this.state.compInfo} weightClasses={this.state.wClass} regions={this.state.regions} onEdit={this.onEditLifter} onDelete={this.onDelete} onChangeStatus={this.onChangeStatus} />
-                <LiftersGrid nominations={this.state.lifters} game={this.state.compInfo} weightClasses={this.state.wClass} regions={this.state.regions} onEdit={this.onEditLifter} onDelete={this.onDelete} onChangeStatus={this.onChangeStatus} />
-                <RefGrid nominations={this.state.referees} game={this.state.compInfo} regions={this.state.regions} onEdit={this.onEditReferee} onDelete={this.onDelete} onChangeStatus={this.onChangeStatus} />
+                <IsJunLiftersGrid nominations={this.state.lifters} game={this.state.compInfo} weightClasses={this.state.wClass} regions={this.state.regions} onEdit={this.onEditLifter} onDelete={this.onDelete} onChangeStatus={this.onChangeStatus} onComment={this.onComment} />
+                <LiftersGrid nominations={this.state.lifters} game={this.state.compInfo} weightClasses={this.state.wClass} regions={this.state.regions} onEdit={this.onEditLifter} onDelete={this.onDelete} onChangeStatus={this.onChangeStatus} onComment={this.onComment} />
+                <RefGrid nominations={this.state.referees} game={this.state.compInfo} regions={this.state.regions} onEdit={this.onEditReferee} onDelete={this.onDelete} onChangeStatus={this.onChangeStatus} onComment={this.onComment} />
             </div>
             <Modal target={this.state.nomination} onClose={this.onClose}>
                 <LifterForm 
@@ -300,6 +324,13 @@ class Nominations extends React.Component{
                 onChangeOutOfContest={this.onChangeOutOfContest} />
                 <OfficialForm nomination={this.state.nomination} compInfo={this.state.compInfo} onChange={this.onChange} regions={this.state.regions} onSave={this.onSave} onClose={this.onClose}  />
             </Modal>   
+            <Modal target={this.state.commentForRecordId} onClose={this.onCloseComment}>
+                <CommentForm 
+                    recordId={this.state.commentForRecordId} 
+                    onSave={this.onSaveComment} 
+                    defaultComment={this.state.currentComment} 
+                />
+            </Modal>
             <Dialog dialog={this.state.dialog} onConfirm={this.onConfirm} onClose={this.onCancel} />
             <Inform inform={this.state.inform} onClose={this.onCloseInform} />               
             <Preloader loading={this.state.isLoading} />
