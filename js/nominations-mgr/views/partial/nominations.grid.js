@@ -1,6 +1,7 @@
 import React from "react";
 import moment from "moment";
 import Grid from "../../../components/grid/grid";
+import classnames from "classnames";
 
 const NomGrid = (props) => {
     if(!props.game) return null;
@@ -152,6 +153,7 @@ const NomGrid = (props) => {
             title: "",
             field: "id",
             button: "edit",
+            tooltip: "Редагувати",
             width: "30px",
             action: (e) => {
                 props.onLifterEdit(e.target.dataset["rel"]);
@@ -163,6 +165,7 @@ const NomGrid = (props) => {
             title: "",
             field: "id",
             button: "delete",
+            tooltip: "Видалити",
             width: "30px",
             action: (e) => {
                 props.onDelete(e.target.dataset["rel"]);
@@ -200,9 +203,12 @@ const NomGrid = (props) => {
                 rowItem.personally = (item.personally && JSON.parse(item.personally))? <sup title="Особисто">О</sup> : null;
                 rowItem.outOfContest = (item.outOfContest && JSON.parse(item.outOfContest)) ? <sup title="Поза конкурсом">ПК</sup> : null;
                 rowItem.id = item.id;
-                var statusTitle = (JSON.parse(item.status))? "Підтверджено" : "Очікує підтвердження";
-                var statusClass = (JSON.parse(item.status))? "fa fa-check status-mark status-ok" : "fa fa-question status-mark status-pending";
-                rowItem.status = (<span className={statusClass} title={statusTitle}></span>);
+                const status = JSON.parse(item.status);
+                var statusTitle = status ? "Підтверджено" : "Очікує підтвердження";
+                var statusClass = status ? "fa fa-check status-mark status-ok" : "fa fa-question status-mark status-pending";
+                rowItem.status = (<span className={classnames(statusClass, { 'with-warning': !status && !!item.comment })} title={statusTitle}>
+                    { !status && !!item.comment && <i className="fa fa-exclamation-triangle warning" title={item.comment} /> }
+                </span>);
                 rowItem.number = "";
                 rowItem.fullName = item.surname + " " + item.name;
                 rowItem.fullName = (item.mName)? rowItem.fullName + " " + item.mName : rowItem.fullName;

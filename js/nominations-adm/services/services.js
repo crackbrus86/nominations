@@ -114,3 +114,11 @@ export const changeStatus = (contact) => {
         data: contact
     })
 }
+
+export const changeComment = (contract) => {
+    return $.ajax({
+        url: nomPath + "SetNominationComment.php",
+        type: "POST",
+        data: contract
+    });
+}

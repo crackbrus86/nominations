@@ -148,6 +148,7 @@ const LiftersGrid = (props) => {
             title: "",
             field: "id",
             button: "edit",
+            tooltip: "Редагувати",
             width: "30px",
             action: (e) => {
                 props.onEdit(e.target.dataset["rel"]);
@@ -157,11 +158,23 @@ const LiftersGrid = (props) => {
             title: "",
             field: "id",
             button: "delete",
+            tooltip: "Видалити",
             width: "30px",
             action: (e) => {
                 props.onDelete(e.target.dataset["rel"]);
             }                     
-        }
+        },
+        {
+            title: "",
+            field: "id",
+            button: "comment",
+            width: "30px",
+            tooltip: "Залишити коментар",
+            action: (e) => {
+                const currentNom = props.nominations.find(x => x.id === e.target.dataset["rel"]);
+                props.onComment(e.target.dataset["rel"], !currentNom ? '' : currentNom.comment);
+            }
+        } 
     ];
     var gridColumns = columns.concat(results);
     gridColumns = gridColumns.concat(coachesCol);
@@ -201,8 +214,16 @@ const LiftersGrid = (props) => {
                         rowItem.personally = (i.personally && JSON.parse(i.personally))? <sup title="Особисто">О</sup> : null;
                         rowItem.outOfContest = (i.outOfContest && JSON.parse(i.outOfContest)) ? <sup title="Поза конкурсом">ПК</sup> : null;
                         rowItem.number = "";
-                        rowItem.status = (<input type="checkbox" checked={JSON.parse(i.status)} data-rel={i.id} 
-                        onChange={e => {props.onChangeStatus(e.target.dataset["rel"], !JSON.parse(i.status))}} />);
+                        rowItem.status = (<React.Fragment>
+                                <input 
+                                    type="checkbox" 
+                                    checked={JSON.parse(i.status)} 
+                                    data-rel={i.id} 
+                                    onChange={e => {props.onChangeStatus(e.target.dataset["rel"], !JSON.parse(i.status))}}
+                                    className={classnames({'with-warning': !!i.comment})}
+                                />
+                                { !!i.comment && <i className="fa fa-exclamation-triangle warning" title={i.comment}></i> }
+                            </React.Fragment>);
                         rowItem.fullName = i.surname + " " + i.name;
                         rowItem.fullName = (i.mName)? rowItem.fullName + " " + i.mName : rowItem.fullName;
                         rowItem.fullName = rowItem.fullName.toUpperCase();

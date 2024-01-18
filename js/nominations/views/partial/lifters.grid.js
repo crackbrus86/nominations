@@ -1,6 +1,7 @@
 import React from "react";
 import moment from "moment";
 import Grid from "../../../components/grid/grid";
+import classnames from 'classnames';
 
 const LiftersGrid = (props) => {
     if(!props.game) return null;
@@ -188,9 +189,12 @@ const LiftersGrid = (props) => {
                         rowItem.personally = (i.personally && JSON.parse(i.personally))? <sup title="Особисто">О</sup> : null;
                         rowItem.outOfContest = (i.outOfContest && JSON.parse(i.outOfContest)) ? <sup title="Поза конкурсом">ПК</sup> : null;
                         rowItem.number = "";
-                        var statusTitle = (JSON.parse(i.status))? "Підтверджено" : "Очікує підтвердження";
-                        var statusClass = (JSON.parse(i.status))? "fa fa-check status-mark status-ok" : "fa fa-question status-mark status-pending";
-                        rowItem.status = (<span className={statusClass} title={statusTitle}></span>);                        
+                        const status = JSON.parse(i.status);
+                        var statusTitle = status ? "Підтверджено" : "Очікує підтвердження";
+                        var statusClass = status ? "fa fa-check status-mark status-ok" : "fa fa-question status-mark status-pending";
+                        rowItem.status = (<span className={classnames(statusClass, {'with-warning': !status && !!i.comment})} title={statusTitle}>
+                            { !status && !!i.comment && <i className="fa fa-exclamation-triangle warning" title={i.comment} /> }
+                        </span>);                        
                         rowItem.fullName = i.surname + " " + i.name;
                         rowItem.fullName = (i.mName)? rowItem.fullName + " " + i.mName : rowItem.fullName;
                         rowItem.fullName = rowItem.fullName.toUpperCase();

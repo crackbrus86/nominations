@@ -10,7 +10,8 @@
     $sql = $wpdb->prepare("SELECT $tb_nominations.id, $tb_nominations.status, $tb_nominations.surname, $tb_nominations.first_name AS name, $tb_nominations.birth_date AS born, $tb_nominations.team as team, 
         $tb_nominations.division, NULL AS wClass, $tb_nominations.weight_class AS wId, $tb_nominations.squat, $tb_nominations.benchpress,
         $tb_nominations.deadlift, $tb_nominations.total, $tb_nominations.personally, $tb_nominations.city, $tb_nominations.fst, $tb_nominations.school,
-        $tb_nominations.club, $tb_levels.name AS level, $tb_nominations.coaches, $tb_nominations.middle_name AS mName, $tb_nominations.outOfContest
+        $tb_nominations.club, $tb_levels.name AS level, $tb_nominations.coaches, $tb_nominations.middle_name AS mName, $tb_nominations.outOfContest,
+        $tb_nominations.comment
          FROM $tb_nominations
          JOIN $tb_levels
          ON $tb_nominations.level = $tb_levels.id         
