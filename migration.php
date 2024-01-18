@@ -6,10 +6,12 @@ require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
 $prefix = $wpdb->get_blog_prefix() . "nom_";
 
-$competitionsTableName = $wpdb->get_blog_prefix() . "nominations";
+// 01/18/2024 added column comment to nominations
 
-$sql = "ALTER TABLE $competitionsTableName ADD comment VARCHAR(350) DEFAULT NULL";
-$wpdb->query($sql);
+// $competitionsTableName = $wpdb->get_blog_prefix() . "nominations";
+
+// $sql = "ALTER TABLE $competitionsTableName ADD comment VARCHAR(350) DEFAULT NULL";
+// $wpdb->query($sql);
 
 // 09/23/2023 created flows entities
 
