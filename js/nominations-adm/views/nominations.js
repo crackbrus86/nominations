@@ -13,6 +13,7 @@ import OfficialForm from "./partial/official.form";
 import Inform from "../../components/modal/inform";
 import * as wCl from '../../weightClasses.json';
 import CommentForm from "./partial/comment.form.js";
+import Tooltip from "../../components/tooltip/tooltip.js";
 
 
 class Nominations extends React.Component{
@@ -31,7 +32,9 @@ class Nominations extends React.Component{
             inform: null,
             dialog: null,
             commentForRecordId: null,
-            currentComment: ''
+            currentComment: '',
+            tooltip: null,
+            tooltipPosition: { pageX: 0, pageY: 0 }
         }
         this.onClose = this.closeNomination.bind(this);
         this.onChange = this.changeNom.bind(this);
@@ -47,6 +50,8 @@ class Nominations extends React.Component{
         this.onComment = this.openComment.bind(this);
         this.onCloseComment = this.closeComment.bind(this);
         this.onSaveComment = this.saveNominationComment.bind(this);
+        this.onShowTooltip = this.showTooltip.bind(this);
+        this.onHideTooltip = this.hideTooltip.bind(this);
     }
 
     getCompInfo(compId){
@@ -274,6 +279,17 @@ class Nominations extends React.Component{
         })
     }
 
+    showTooltip(value, e) {
+        this.setState({
+			tooltip: value,
+			tooltipPosition: { pageX: e.pageX - 190, pageY: e.pageY - 90 },
+		});
+    }
+
+    hideTooltip() {
+        this.setState({ tooltip: null });
+    }
+
     componentWillReceiveProps(props){
         if(props.competition){
             this.getCompInfo(props.competition);
@@ -293,48 +309,125 @@ class Nominations extends React.Component{
         
 
         if(!this.props.competition) return null;
-        return <div>
-            <div className="nom-header">
-                <div className="nom-header-cell">
-                    <button type="button" className="back-to-nom-list" onClick={() => this.props.back()}><i className="fa fa-chevron-left"></i>Назад до списку номінацій</button>
-                </div>
-                <div className="nom-header-cell">
-                    <div className="add-panel">
-                        <span><img src="../wp-content/plugins/nominations/images/nom_add.png" alt="" title="Додати спортсмена" onClick={this.createNomination.bind(this, "lifter")} /></span>
-                        <span><img src="../wp-content/plugins/nominations/images/nom_add_ref.png" alt="" title="Додати офіційну особу" onClick={this.createNomination.bind(this, "official")} /></span>
-                    </div>          
-                </div>                
-            </div>  
-            <CompInfo compInfo={this.state.compInfo} />  
-            <div className="adm-grids-wrap">
-                <IsJunLiftersGrid nominations={this.state.lifters} game={this.state.compInfo} weightClasses={this.state.wClass} regions={this.state.regions} onEdit={this.onEditLifter} onDelete={this.onDelete} onChangeStatus={this.onChangeStatus} onComment={this.onComment} />
-                <LiftersGrid nominations={this.state.lifters} game={this.state.compInfo} weightClasses={this.state.wClass} regions={this.state.regions} onEdit={this.onEditLifter} onDelete={this.onDelete} onChangeStatus={this.onChangeStatus} onComment={this.onComment} />
-                <RefGrid nominations={this.state.referees} game={this.state.compInfo} regions={this.state.regions} onEdit={this.onEditReferee} onDelete={this.onDelete} onChangeStatus={this.onChangeStatus} onComment={this.onComment} />
-            </div>
-            <Modal target={this.state.nomination} onClose={this.onClose}>
-                <LifterForm 
-                nomination={this.state.nomination} 
-                compInfo={this.state.compInfo} 
-                onChange={this.onChange} 
-                regions={this.state.regions} 
-                wc={this.state.wc} 
-                subwc = {this.state.subwc} 
-                onSave={this.onSave}  
-                onClose={this.onClose}
-                onChangeOutOfContest={this.onChangeOutOfContest} />
-                <OfficialForm nomination={this.state.nomination} compInfo={this.state.compInfo} onChange={this.onChange} regions={this.state.regions} onSave={this.onSave} onClose={this.onClose}  />
-            </Modal>   
-            <Modal target={this.state.commentForRecordId} onClose={this.onCloseComment}>
-                <CommentForm 
-                    recordId={this.state.commentForRecordId} 
-                    onSave={this.onSaveComment} 
-                    defaultComment={this.state.currentComment} 
-                />
-            </Modal>
-            <Dialog dialog={this.state.dialog} onConfirm={this.onConfirm} onClose={this.onCancel} />
-            <Inform inform={this.state.inform} onClose={this.onCloseInform} />               
-            <Preloader loading={this.state.isLoading} />
-        </div>
+        return (
+			<div>
+				<div className="nom-header">
+					<div className="nom-header-cell">
+						<button
+							type="button"
+							className="back-to-nom-list"
+							onClick={() => this.props.back()}
+						>
+							<i className="fa fa-chevron-left"></i>Назад до
+							списку номінацій
+						</button>
+					</div>
+					<div className="nom-header-cell">
+						<div className="add-panel">
+							<span>
+								<img
+									src="../wp-content/plugins/nominations/images/nom_add.png"
+									alt=""
+									title="Додати спортсмена"
+									onClick={this.createNomination.bind(
+										this,
+										'lifter'
+									)}
+								/>
+							</span>
+							<span>
+								<img
+									src="../wp-content/plugins/nominations/images/nom_add_ref.png"
+									alt=""
+									title="Додати офіційну особу"
+									onClick={this.createNomination.bind(
+										this,
+										'official'
+									)}
+								/>
+							</span>
+						</div>
+					</div>
+				</div>
+				<CompInfo compInfo={this.state.compInfo} />
+				<div className="adm-grids-wrap">
+					<IsJunLiftersGrid
+						nominations={this.state.lifters}
+						game={this.state.compInfo}
+						weightClasses={this.state.wClass}
+						regions={this.state.regions}
+						onEdit={this.onEditLifter}
+						onDelete={this.onDelete}
+						onChangeStatus={this.onChangeStatus}
+						onComment={this.onComment}                        
+                        onShowTooltip={this.onShowTooltip}
+					/>
+					<LiftersGrid
+						nominations={this.state.lifters}
+						game={this.state.compInfo}
+						weightClasses={this.state.wClass}
+						regions={this.state.regions}
+						onEdit={this.onEditLifter}
+						onDelete={this.onDelete}
+						onChangeStatus={this.onChangeStatus}
+						onComment={this.onComment}
+                        onShowTooltip={this.onShowTooltip}
+					/>
+					<RefGrid
+						nominations={this.state.referees}
+						game={this.state.compInfo}
+						regions={this.state.regions}
+						onEdit={this.onEditReferee}
+						onDelete={this.onDelete}
+						onChangeStatus={this.onChangeStatus}
+						onComment={this.onComment}
+                        onShowTooltip={this.onShowTooltip}
+					/>
+				</div>
+				<Modal target={this.state.nomination} onClose={this.onClose}>
+					<LifterForm
+						nomination={this.state.nomination}
+						compInfo={this.state.compInfo}
+						onChange={this.onChange}
+						regions={this.state.regions}
+						wc={this.state.wc}
+						subwc={this.state.subwc}
+						onSave={this.onSave}
+						onClose={this.onClose}
+						onChangeOutOfContest={this.onChangeOutOfContest}
+					/>
+					<OfficialForm
+						nomination={this.state.nomination}
+						compInfo={this.state.compInfo}
+						onChange={this.onChange}
+						regions={this.state.regions}
+						onSave={this.onSave}
+						onClose={this.onClose}
+					/>
+				</Modal>
+				<Modal
+					target={this.state.commentForRecordId}
+					onClose={this.onCloseComment}
+				>
+					<CommentForm
+						recordId={this.state.commentForRecordId}
+						onSave={this.onSaveComment}
+						defaultComment={this.state.currentComment}
+					/>
+				</Modal>
+				<Dialog
+					dialog={this.state.dialog}
+					onConfirm={this.onConfirm}
+					onClose={this.onCancel}
+				/>
+				<Inform
+					inform={this.state.inform}
+					onClose={this.onCloseInform}
+				/>
+				<Preloader loading={this.state.isLoading} />
+				<Tooltip tooltip={this.state.tooltip} position={this.state.tooltipPosition} onClose={this.onHideTooltip} />
+			</div>
+		);
     }
 }
 export default Nominations;

@@ -199,16 +199,36 @@ const IsJunLiftersGrid = (props) => {
                                 rowItem.outOfContest = (i.outOfContest && JSON.parse(i.outOfContest)) ? <sup title="Поза конкурсом">ПК</sup> : null;
                                 rowItem.id = i.id;
                                 rowItem.number = "";
-                                rowItem.status = (<React.Fragment>
-                                        <input 
-                                            type="checkbox" 
-                                            checked={JSON.parse(i.status)} 
-                                            data-rel={i.id} 
-                                            onChange={e => {props.onChangeStatus(e.target.dataset["rel"], !JSON.parse(i.status))}} 
-                                            className={classnames({'with-warning': !!i.comment})}
-                                        />
-                                        { !!i.comment && <i className="fa fa-exclamation-triangle warning" title={i.comment}></i> }
-                                    </React.Fragment>);                                
+                                rowItem.status = (
+									<React.Fragment>
+										<input
+											type="checkbox"
+											checked={JSON.parse(i.status)}
+											data-rel={i.id}
+											onChange={(e) => {
+												props.onChangeStatus(
+													e.target.dataset['rel'],
+													!JSON.parse(i.status)
+												);
+											}}
+											className={classnames({
+												'with-warning': !!i.comment,
+											})}
+										/>
+										{!!i.comment && (
+											<i
+												className="fa fa-exclamation-triangle warning"
+												title={i.comment}
+												onClick={(e) =>
+													props.onShowTooltip(
+														i.comment,
+														e
+													)
+												}
+											></i>
+										)}
+									</React.Fragment>
+								);                                
                                 rowItem.fullName = i.surname + " " + i.name;
                                 rowItem.fullName = (i.mName)? rowItem.fullName + " " + i.mName : rowItem.fullName;
                                 rowItem.fullName = rowItem.fullName.toUpperCase();

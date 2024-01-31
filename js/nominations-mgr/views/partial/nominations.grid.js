@@ -207,7 +207,13 @@ const NomGrid = (props) => {
                 var statusTitle = status ? "Підтверджено" : "Очікує підтвердження";
                 var statusClass = status ? "fa fa-check status-mark status-ok" : "fa fa-question status-mark status-pending";
                 rowItem.status = (<span className={classnames(statusClass, { 'with-warning': !status && !!item.comment })} title={statusTitle}>
-                    { !status && !!item.comment && <i className="fa fa-exclamation-triangle warning" title={item.comment} /> }
+                    { !status && !!item.comment && (
+                        <i 
+                            className="fa fa-exclamation-triangle warning"
+                            title={item.comment}
+                            onClick={(e) => props.onShowTooltip(item.comment, e)}
+                        />
+                    )}
                 </span>);
                 rowItem.number = "";
                 rowItem.fullName = item.surname + " " + item.name;

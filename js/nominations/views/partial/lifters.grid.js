@@ -192,9 +192,24 @@ const LiftersGrid = (props) => {
                         const status = JSON.parse(i.status);
                         var statusTitle = status ? "Підтверджено" : "Очікує підтвердження";
                         var statusClass = status ? "fa fa-check status-mark status-ok" : "fa fa-question status-mark status-pending";
-                        rowItem.status = (<span className={classnames(statusClass, {'with-warning': !status && !!i.comment})} title={statusTitle}>
-                            { !status && !!i.comment && <i className="fa fa-exclamation-triangle warning" title={i.comment} /> }
-                        </span>);                        
+                        rowItem.status = (
+							<span
+								className={classnames(statusClass, {
+									'with-warning': !status && !!i.comment,
+								})}
+								title={statusTitle}
+							>
+								{!status && !!i.comment && (
+									<i
+										className="fa fa-exclamation-triangle warning"
+										title={i.comment}
+										onClick={(e) =>
+											props.onShowTooltip(i.comment, e)
+										}
+									/>
+								)}
+							</span>
+						);                        
                         rowItem.fullName = i.surname + " " + i.name;
                         rowItem.fullName = (i.mName)? rowItem.fullName + " " + i.mName : rowItem.fullName;
                         rowItem.fullName = rowItem.fullName.toUpperCase();

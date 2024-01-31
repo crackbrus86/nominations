@@ -48,9 +48,22 @@ const RefGrid = (props) => {
         const status = JSON.parse(x.status);
         var statusTitle = status ? "Підтверджено" : "Очікує підтвердження";
         var statusClass = status ? "fa fa-check status-mark status-ok" : "fa fa-question status-mark status-pending";
-        referee.status = (<span className={classnames(statusClass, {'with-warning': !status && !!x.comment})} title={statusTitle}>
-            { !status && !!x.comment && <i className="fa fa-exclamation-triangle warning" title={x.comment} /> }
-        </span>);        
+        referee.status = (
+			<span
+				className={classnames(statusClass, {
+					'with-warning': !status && !!x.comment,
+				})}
+				title={statusTitle}
+			>
+				{!status && !!x.comment && (
+					<i
+						className="fa fa-exclamation-triangle warning"
+						title={x.comment}
+						onClick={(e) => props.onShowTooltip(x.comment, e)}
+					/>
+				)}
+			</span>
+		);        
         referee.fullName = x.surname + " " + x.firstName + " " + x.middleName;
         referee.fullName = referee.fullName.toUpperCase();
         var region = props.regions.filter(reg => reg.id === x.team)[0];

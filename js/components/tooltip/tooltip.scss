@@ -1,0 +1,29 @@
+.nom-tooltip {
+    background-color: #4d90fe;
+    padding: 6px;
+    position: absolute;
+    border: 1px solid #ccc;
+    color: #fff;
+    text-shadow: 0 0 1px #000;
+    border-radius: 4px;
+
+    &__header {
+        float: right;
+        padding: 4px;
+        font-size: 10px;
+        margin: 0;
+        line-height: 10px;
+
+        i {
+            cursor: pointer;
+        }
+    }
+
+    &__arrow {
+        width: 0;
+        border-top: 14px solid #4d90fe;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        position: absolute;
+    }
+}

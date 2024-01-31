@@ -7,6 +7,7 @@ import IsJunLiftersGrid from "./partial/isJun.lifters.grid";
 import RefGrid from "./partial/referees.grid";
 require("../../scripts/colResizable-1.6.js");
 import * as wCl from '../../weightClasses.json';
+import Tooltip from "../../components/tooltip/tooltip.js";
 
 class Nominations extends React.Component{
     constructor(props){
@@ -17,10 +18,14 @@ class Nominations extends React.Component{
             regions: [],
             weightClasses: [],
             lifters: [],
-            referees: []
+            referees: [],
+            tooltip: null,
+            tooltipPosition: { pageX: 0, pageY: 0 }
         }
         this.onPrint = this.printGrid.bind(this);
         this.onExport = this.exportGrid.bind(this);
+        this.onShowTooltip = this.showTooltip.bind(this);
+        this.onHideTooltip = this.hideTooltip.bind(this);
     }
 
     getCompInfo(compId){
@@ -93,6 +98,17 @@ class Nominations extends React.Component{
         jQuery(".nom-preview").remove();
     }
 
+    showTooltip(value, e) {
+        this.setState({
+			tooltip: value,
+			tooltipPosition: { pageX: e.pageX - 10, pageY: e.pageY - 60 },
+		});
+    }
+
+    hideTooltip() {
+        this.setState({ tooltip: null });
+    }
+
     componentWillReceiveProps(props){
         if(props.competition){
             this.getCompInfo(props.competition);
@@ -121,11 +137,12 @@ class Nominations extends React.Component{
             </div>
             <CompInfo compInfo={this.state.compInfo} />
             <div className="print-wrap">
-                <IsJunLiftersGrid nominations={this.state.lifters} game={this.state.compInfo} weightClasses={this.state.weightClasses} regions={this.state.regions} />
-                <LiftersGrid nominations={this.state.lifters} game={this.state.compInfo} weightClasses={this.state.weightClasses} regions={this.state.regions} />
-                <RefGrid nominations={this.state.referees} game={this.state.compInfo} regions={this.state.regions} />
+                <IsJunLiftersGrid nominations={this.state.lifters} game={this.state.compInfo} weightClasses={this.state.weightClasses} regions={this.state.regions} onShowTooltip={this.onShowTooltip} />
+                <LiftersGrid nominations={this.state.lifters} game={this.state.compInfo} weightClasses={this.state.weightClasses} regions={this.state.regions} onShowTooltip={this.onShowTooltip} />
+                <RefGrid nominations={this.state.referees} game={this.state.compInfo} regions={this.state.regions} onShowTooltip={this.onShowTooltip} />
             </div>
-            <Preloader loading={this.state.isLoading} />            
+            <Preloader loading={this.state.isLoading} />
+            <Tooltip tooltip={this.state.tooltip} position={this.state.tooltipPosition} onClose={this.onHideTooltip} />
         </div>
     }
 }

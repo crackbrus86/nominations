@@ -10,6 +10,7 @@ import Inform from "../../components/modal/inform";
 import NomGrid from "./partial/nominations.grid";
 import RefGrid from "./partial/referee.grid";
 import * as wCl from '../../weightClasses.json';
+import Tooltip from "../../components/tooltip/tooltip.js";
 
 class Nominations extends React.Component{
     constructor(props){
@@ -27,7 +28,9 @@ class Nominations extends React.Component{
             compStatus: "p",
             lNominations: [],
             rNominations: [],
-            dialog: null
+            dialog: null,
+            tooltip: null,
+            tooltipPosition: { pageX: 0, pageY: 0 }
         }
         this.closeNom = this.closeNomination.bind(this);
         this.onChange = this.changeNom.bind(this);
@@ -40,6 +43,8 @@ class Nominations extends React.Component{
         this.onCancel = this.cancelDeleting.bind(this);
         this.onConfirm = this.deleting.bind(this);
         this.onChangeOutOfContest = this.changeOutOfContest.bind(this);
+        this.onShowTooltip = this.showTooltip.bind(this);
+        this.onHideTooltip = this.hideTooltip.bind(this);
     }
 
     getCompInfo(id){
@@ -288,7 +293,18 @@ class Nominations extends React.Component{
             this.getLifterNominations();
             this.getRefereeNominations();
         })
-    }    
+    }  
+    
+    showTooltip(value, e) {
+        this.setState({
+			tooltip: value,
+			tooltipPosition: { pageX: e.pageX - 10, pageY: e.pageY - 65},
+		});
+    }
+
+    hideTooltip() {
+        this.setState({ tooltip: null });
+    }
 
     componentDidMount(){
         this.getAllRegions();
@@ -323,8 +339,9 @@ class Nominations extends React.Component{
                 onLifterEdit={this.onLifterEdit}
                 onDelete={this.onDelete}
                 weightClasses={this.state.weightClasses}
+                onShowTooltip={this.onShowTooltip}
             />
-            <RefGrid nominations={this.state.rNominations} game={this.state.compInfo} onOfficialEdit={this.onOfficialEdit} onDelete={this.onDelete} />
+            <RefGrid nominations={this.state.rNominations} game={this.state.compInfo} onOfficialEdit={this.onOfficialEdit} onDelete={this.onDelete} onShowTooltip={this.onShowTooltip} />
             <Modal target={this.state.nomination} onClose={this.closeNom}>
                 <LifterForm nomination={this.state.nomination} 
                 compInfo={this.state.compInfo} 
@@ -340,6 +357,7 @@ class Nominations extends React.Component{
             <Dialog dialog={this.state.dialog} onConfirm={this.onConfirm} onClose={this.onCancel} />
             <Inform inform={this.state.inform} onClose={this.onCloseInform} />
             <Preloader loading={this.state.isLoading} />
+            <Tooltip tooltip={this.state.tooltip} position={this.state.tooltipPosition} onClose={this.onHideTooltip} />
         </div>
     }
 }

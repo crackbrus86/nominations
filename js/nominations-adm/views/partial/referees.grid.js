@@ -74,16 +74,31 @@ const RefGrid = (props) => {
         var referee = {};
         referee.id = x.id;
         referee.number = "";
-        referee.status = (<React.Fragment>
-                <input 
-                    type="checkbox" 
-                    checked={JSON.parse(x.status)} 
-                    data-rel={x.id} 
-                    onChange={e => {props.onChangeStatus(e.target.dataset["rel"], !JSON.parse(x.status))}}
-                    className={classnames({'with-warning': !!x.comment})}
-                />
-                { !!x.comment && <i className="fa fa-exclamation-triangle warning" title={x.comment}></i> }
-            </React.Fragment>);   
+        referee.status = (
+			<React.Fragment>
+				<input
+					type="checkbox"
+					checked={JSON.parse(x.status)}
+					data-rel={x.id}
+					onChange={(e) => {
+						props.onChangeStatus(
+							e.target.dataset['rel'],
+							!JSON.parse(x.status)
+						);
+					}}
+					className={classnames({ 'with-warning': !!x.comment })}
+				/>
+				{!!x.comment && (
+					<i
+						className="fa fa-exclamation-triangle warning"
+						title={x.comment}
+                        onClick={(e) =>
+                            props.onShowTooltip(x.comment, e)
+                        }
+					></i>
+				)}
+			</React.Fragment>
+		);   
         referee.fullName = x.surname + " " + x.firstName + " " + x.middleName;
         referee.fullName = referee.fullName.toUpperCase();
         var region = props.regions.filter(reg => reg.id === x.team)[0];
