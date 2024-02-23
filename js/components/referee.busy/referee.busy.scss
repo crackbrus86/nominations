@@ -24,13 +24,20 @@
 #referee-busy {
     table {
         border: 1px solid #ccc!important;
-        margin-left: auto;
-        margin-right: auto;
         border-collapse: collapse;
         border-spacing: 0;
+        margin-bottom: 10px!important;
 
         &.loading {
             animation: Pulsate 2s linear infinite;
+        }
+
+        &.disabled {
+            opacity: 0.5;
+
+            input[type=checkbox] {
+                cursor: not-allowed;
+            }
         }
 
         thead {
@@ -39,7 +46,11 @@
 
             td, th {
                 color: #fff;
-                text-align: center;
+                width: 120px;
+
+                .flow-title {
+                    font-size: 10px;
+                }
             }
         }
 

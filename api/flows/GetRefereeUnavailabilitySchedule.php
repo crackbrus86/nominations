@@ -13,6 +13,16 @@ if(current_user_can("edit_others_pages"))
         ORDER BY sort_order", $event_id);
     $flows = $wpdb->get_results($sql);
 
+    $tb_flow_weight_classes = $wpdb->get_blog_prefix() . "nom_flow_weight_classes";
+    foreach($flows as $flow) 
+    {
+        $sql = $wpdb->prepare("SELECT division_id, weight_class_id 
+            FROM $tb_flow_weight_classes 
+            WHERE flow_id = %d ORDER BY division_id, weight_class_id", $flow->flow_id);
+        $weight_classes = $wpdb->get_results($sql);
+        $flow->weight_classes = $weight_classes;
+    }
+
     $tb_flow_referee_records = $wpdb->get_blog_prefix() ."nom_flow_referee_records";
 
     foreach($flows as $flow)
