@@ -58,7 +58,7 @@ const FlowFormContextProvider = ({ children }) => {
 					.filter(
 						(wcl) =>
 							wcl.gender == currentDivision.gender &&
-							(currentEvent.isForJuniors || wcl.division == 'open') &&
+							((currentEvent.isForJuniors && wcl.division == 'subjuniors') || (!currentEvent.isForJuniors && wcl.division == 'open')) &&
 							!wcl.hide &&
 							!flowWeightClasses.find(
 								(flowWC) =>

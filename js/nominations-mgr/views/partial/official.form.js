@@ -53,11 +53,9 @@ const OfficialForm = (props) => {
                 </table>
                 <div>
                     <RefereeBusy
-                        eventId={info.eventId}
-                        team={nom.team}
-                        firstName={nom.firstName}
-                        surname={nom.surname}
-                        middleName={nom.middleName}
+                        competitionInfo={info}
+                        selectedWCBusy={props.selectedWCBusy}
+                        onSelectWCBusy={props.onSelectWCBusy}
                     />
                 </div>
             </div>

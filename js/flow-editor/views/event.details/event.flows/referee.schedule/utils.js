@@ -86,20 +86,27 @@ export const getFlowsOfDay = (flows, day) => {
 	);
 };
 
-export const getRefereeStatus = (flow, referee) => {
+export const getRefereeStatus = (flow, referee, refereeBusy) => {
 	if (!flow) return null;
+	let defaultStatus = REF_STATUS_NA;
 	const refereeRecord = flow.referees.find((r) => r.refereeId == referee.id);
-	return !!refereeRecord ? refereeRecord.refereeStatus : REF_STATUS_NA;
+	if(!refereeRecord && refereeBusy.length)
+	{
+		const busy = refereeBusy.find(x => x.id === referee.id && flow.weightClasses.find(w => w.weightClassId == x.weight_class_id && w.divisionId == x.division_id));
+		defaultStatus = !!busy ? REF_STATUS_BUSY : REF_STATUS_NA;
+	}
+	return !!refereeRecord ? { status: refereeRecord.refereeStatus, source: 'admin' } : { status: defaultStatus, source: 'referee' };
 };
 
 export const REF_STATUS_NA = 1000;
 export const REF_STATUS_BUSY = 0;
 export const REF_STATUS_RESERVED = ['9', '10'];
 
-export const mapReferee = (refereeResult) => {
+export const mapReferee = (refereeResult, regions) => {
 	const category = refCategoriesJson.refCategories.find(
 		(refCat) => refCat.value == refereeResult.ref_category
 	);
+	const region = regions.find(x => x.id == refereeResult.team);
 	return {
 		id: refereeResult.id,
 		surname: refereeResult.surname,
@@ -112,6 +119,7 @@ export const mapReferee = (refereeResult) => {
 			? category.text
 			: refereeResult.ref_category,
 		refRemark: refereeResult.ref_remark,
+		regionShortName: region ? region.shortName : refereeResult.team
 	};
 };
 

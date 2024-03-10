@@ -11,11 +11,12 @@ import PrintPreviewModal from './print.preview.modal/print.preview.modal';
 import './referee.schedule.scss';
 
 const RefereeScheduleContainer = () => {
-	const { onLoadFlows, onLoadReferees } = useRefereeSchedule();
+	const { onLoadFlows, onLoadReferees, onLoadRefereeBusy } = useRefereeSchedule();
 
 	useEffect(() => {
 		onLoadFlows();
 		onLoadReferees();
+		onLoadRefereeBusy();
 	}, []);
 
 	return (

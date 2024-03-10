@@ -4,7 +4,7 @@ const RefereeTitle = ({ referee }) => {
 	return (
 		<React.Fragment>
 			<td className="referee-schedule-item">
-				{`${referee.surname} ${referee.firstName} ${referee.middleName}`}
+				{`${referee.surname} ${referee.firstName} ${referee.middleName} (${referee.regionShortName})`}
 				{referee.refRemark && (
 					<i
 						className="fa fa-info-circle ms-2"
