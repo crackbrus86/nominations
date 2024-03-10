@@ -6,18 +6,19 @@ require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
 $prefix = $wpdb->get_blog_prefix() . "nom_";
 
-$referee_busy_table = $prefix . "referee_busy";
+// 03/10/2024 Updated referee schedule flow
+// $referee_busy_table = $prefix . "referee_busy";
 
-$sql = "CREATE TABLE IF NOT EXISTS $referee_busy_table (
-    id INT NOT NULL AUTO_INCREMENT,
-    event_id INT NOT NULL,
-    division_id INT NOT NULL,
-    weight_class_id INT NOT NULL,
-    nomination_id INT NOT NULL,
-    PRIMARY KEY(id)
-) $charset_collate";
+// $sql = "CREATE TABLE IF NOT EXISTS $referee_busy_table (
+//     id INT NOT NULL AUTO_INCREMENT,
+//     event_id INT NOT NULL,
+//     division_id INT NOT NULL,
+//     weight_class_id INT NOT NULL,
+//     nomination_id INT NOT NULL,
+//     PRIMARY KEY(id)
+// ) $charset_collate";
 
-dbDelta($sql);
+// dbDelta($sql);
 
 // 01/18/2024 added column comment to nominations
 
