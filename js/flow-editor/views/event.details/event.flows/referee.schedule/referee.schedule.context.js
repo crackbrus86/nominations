@@ -3,19 +3,22 @@ import moment from 'moment';
 import * as refStatusesJson from '../../refStatuses.json';
 
 import { useFlows } from '../../../flows.context';
-import { getFlowsOfDay, REF_STATUS_NA, mapReferee, mapFlow } from './utils';
+import { getFlowsOfDay, REF_STATUS_NA, mapReferee, mapFlow, REF_STATUS_BUSY } from './utils';
 import { useFlowServices } from '../../../../services/flow.services.context';
+import { useEventSelector } from '../../../event.selector/event.selector.context';
 
 const RefereeScheduleContext = createContext();
 
 const RefereeScheduleContextProvider = ({ children }) => {
 	const { currentEvent } = useFlows();
-	const { getEventReferees, getEventFlows, deleteFlow, saveRefereeRecord } =
+	const { getEventReferees, getEventFlows, deleteFlow, saveRefereeRecord, getRefereeWeightClassesBusy } =
 		useFlowServices();
 	const [flows, setFlows] = useState([]);
 	const [referees, setReferees] = useState([]);
 	const [flowToRemoveId, setFlowToRemoveId] = useState(null);
 	const [showPreview, setShowPreview] = useState(false);
+	const [refereeBusy, setRefereeBusy] = useState([]);
+	const { regionNames } = useEventSelector();
 
 	const getCurrentEventDays = () => {
 		const daysCount = moment(currentEvent.endsAt).diff(
@@ -46,9 +49,14 @@ const RefereeScheduleContextProvider = ({ children }) => {
 	const onLoadReferees = async () => {
 		const data = await getEventReferees({ eventId: currentEvent.id });
 		const nextReferees = data
-			.map((refereeResult) => mapReferee(refereeResult))
+			.map((refereeResult) => mapReferee(refereeResult, regionNames))
 			.sort((a, b) => a.refCategoryId - b.refCategoryId);
 		setReferees(nextReferees);
+	};
+
+	const onLoadRefereeBusy = async () => {
+		const data = await getRefereeWeightClassesBusy({ eventId: currentEvent.id });
+		setRefereeBusy(data);
 	};
 
 	const onChangeRefereeStatus = async (flowId, refereeId, status) => {
@@ -57,6 +65,29 @@ const RefereeScheduleContextProvider = ({ children }) => {
 			refereeId,
 			refereeStatus: status,
 		});
+		const flowIndex = flowsByDay.findIndex((x) => x.flowId == flowId);
+		const nextFlow = flowsByDay[flowIndex + 1];
+		const nextFlowIsBusy = refereeBusy.filter(
+			(r) =>
+				r.id == refereeId &&
+				nextFlow.weightClasses.find(
+					(w) =>
+						w.weightClassId == r.weight_class_id &&
+						w.divisionId == r.division_id
+				)
+		);
+		if (
+			![REF_STATUS_BUSY, REF_STATUS_NA].includes(+status) &&
+			nextFlow &&
+			!nextFlow.referees.filter(r => r.refereeId == refereeId).length &&
+			!nextFlowIsBusy.length
+		) {
+			await saveRefereeRecord({
+				flowId: nextFlow.flowId,
+				refereeId,
+				refereeStatus: REF_STATUS_BUSY,
+			});
+		}
 		await onLoadFlows();
 	};
 
@@ -111,6 +142,7 @@ const RefereeScheduleContextProvider = ({ children }) => {
 		refereeStatuses,
 		flowToRemoveId,
 		showPreview,
+		refereeBusy,
 		onLoadFlows,
 		onLoadReferees,
 		onChangeRefereeStatus,
@@ -118,6 +150,7 @@ const RefereeScheduleContextProvider = ({ children }) => {
 		onCancelDeleteFlow,
 		onDeleteFlow,
 		onShowPreview,
+		onLoadRefereeBusy,
 		onHidePreview,
 	};
 

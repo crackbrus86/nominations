@@ -110,6 +110,11 @@ const FlowServicesContextProvider = ({ children }) => {
 		return await sendRequest({ url, method: 'GET', request: { eventId } });
 	};
 
+	const getRefereeWeightClassesBusy = async ({ eventId }) => {
+		const url = flowAPIBaseUrl + 'GetRefereeWeightClassesBusy.php';
+		return await sendRequest({ url, method: 'GET', request: { eventId } });
+	};
+
 	const updateFlow = async ({ flow }) => {
 		const url = flowAPIBaseUrl + 'UpdateFlow.php';
 		const request = {
@@ -148,6 +153,7 @@ const FlowServicesContextProvider = ({ children }) => {
 		updateFlow,
 		deleteFlow,
 		saveRefereeRecord,
+		getRefereeWeightClassesBusy,
 	};
 	return (
 		<FlowServicesContext.Provider value={value}>

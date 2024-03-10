@@ -4,7 +4,7 @@ import RefereeStatus from './referee.status';
 import { getRefereeStatus } from './utils';
 
 const Body = () => {
-	const { referees, flowsByDay, onChangeRefereeStatus } =
+	const { referees, flowsByDay, onChangeRefereeStatus, refereeBusy } =
 		useRefereeSchedule();
 
 	return (
@@ -13,7 +13,7 @@ const Body = () => {
 				<tr key={referee.id}>
 					<RefereeTitle referee={referee} />
 					{flowsByDay.map((flow, index) => {
-						const status = getRefereeStatus(flow, referee);
+						const status = getRefereeStatus(flow, referee, refereeBusy);
 						return (
 							<RefereeStatus
 								key={index}

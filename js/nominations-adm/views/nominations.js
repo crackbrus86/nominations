@@ -34,7 +34,8 @@ class Nominations extends React.Component{
             commentForRecordId: null,
             currentComment: '',
             tooltip: null,
-            tooltipPosition: { pageX: 0, pageY: 0 }
+            tooltipPosition: { pageX: 0, pageY: 0 },
+            selectedWClasses: []
         }
         this.onClose = this.closeNomination.bind(this);
         this.onChange = this.changeNom.bind(this);
@@ -52,6 +53,7 @@ class Nominations extends React.Component{
         this.onSaveComment = this.saveNominationComment.bind(this);
         this.onShowTooltip = this.showTooltip.bind(this);
         this.onHideTooltip = this.hideTooltip.bind(this);
+        this.onSetSelectedWClasses = this.setSelectedWClasses.bind(this);
     }
 
     getCompInfo(compId){
@@ -113,7 +115,13 @@ class Nominations extends React.Component{
         this.setState({isLoading: true});
         services.getOfficialNominationById({id: id}).then(data => {
             var nom = JSON.parse(data)[0];            
-            this.setState({nomination: nom});
+            this.setState({
+				nomination: nom,
+				selectedWClasses: nom.wcBusy.map((x) => ({
+					weightClassId: x.weight_class_id,
+					divisionId: x.division_id,
+				})),
+			});
             this.setState({isLoading: false});
         })
     }
@@ -160,7 +168,7 @@ class Nominations extends React.Component{
     }
 
     closeNomination(){
-        this.setState({nomination: null});
+        this.setState({nomination: null, selectedWClasses: [] });
     }
 
     changeNom(field, value){
@@ -203,14 +211,14 @@ class Nominations extends React.Component{
             }
         }else{
             if(this.state.nomination.id){
-                services.updateOfficialNominationById(this.state.nomination).then(() => {
+                services.updateOfficialNominationById({...this.state.nomination, wcBusy: this.state.selectedWClasses }).then(() => {
                     this.closeNomination();
                     this.showInform("Номінацію судді було успішно оновлено");
                     this.getAllLifters();
                     this.getAllReferees();
                 })
             }else{
-                services.insertOfficialNomination(this.state.nomination).then(() => {
+                services.insertOfficialNomination({...this.state.nomination, wcBusy: this.state.selectedWClasses }).then(() => {
                     this.closeNomination();                    
                     this.showInform("Суддю було успішно додано до номінації");
                     this.getAllLifters();
@@ -288,6 +296,10 @@ class Nominations extends React.Component{
 
     hideTooltip() {
         this.setState({ tooltip: null });
+    }
+
+    setSelectedWClasses(value){
+        this.setState({ selectedWClasses: value });
     }
 
     componentWillReceiveProps(props){
@@ -403,6 +415,8 @@ class Nominations extends React.Component{
 						regions={this.state.regions}
 						onSave={this.onSave}
 						onClose={this.onClose}
+                        selectedWCBusy={this.state.selectedWClasses}
+                        onSelectWCBusy={this.onSetSelectedWClasses}
 					/>
 				</Modal>
 				<Modal

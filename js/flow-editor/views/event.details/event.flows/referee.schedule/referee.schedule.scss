@@ -97,6 +97,10 @@
                 background-color: #f7d18b;
 
                 &.busy {
+                    background-color: #fff000;
+                }
+
+                &.busy.refereeBusy {
                     background-color: #fd5454;
                 }
 

@@ -1,75 +1,30 @@
-#show-busy-switch {
-    display: flex;
-    input[type=checkbox] {
-        margin-right: 4px;
-        cursor: pointer;
+.referee-busy {
+    &__warning{
+        font-size: 1.1em;
+        margin-bottom: 10px;
     }
+    .wc-selected {
+        max-width: 400px;
 
-    &.disabled {
-        input[type=checkbox] {
-            cursor: not-allowed;
-        }
-        label {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-    }
-}
+        .wc-badge {
+            border: 1px solid #d2d2d2;
+            display: block;
+            float: left;
+            border-radius: 10px;
+            padding: 2px;
+            margin: 0 10px 5px 0;
+            box-shadow: 0 0 3px 0px #ccc;
+            background-color: #f1f1f1;
 
-#referee-busy-preloader {
-    font-size: 1.5em;
-    text-align: center;
-}
-
-#referee-busy {
-    table {
-        border: 1px solid #ccc!important;
-        border-collapse: collapse;
-        border-spacing: 0;
-        margin-bottom: 10px!important;
-
-        &.loading {
-            animation: Pulsate 2s linear infinite;
-        }
-
-        &.disabled {
-            opacity: 0.5;
-
-            input[type=checkbox] {
-                cursor: not-allowed;
-            }
-        }
-
-        thead {
-            background-color: #038ece;
-            color: #fff;
-
-            td, th {
-                color: #fff;
-                width: 120px;
-
-                .flow-title {
-                    font-size: 10px;
-                }
-            }
-        }
-
-        tr {
-            th, td {
-                padding: 2px 10px!important;
-                border: 1px solid #ccc!important;
-                font-weight: normal;
-
-                input[type=checkbox]{
-                    cursor: pointer;
+            i {
+                margin: 4px;
+                cursor: pointer;
+                color: #8f8f8f;
+                
+                &:hover {
+                    color: #161616;
                 }
             }
         }
     }
-}
-
-@keyframes Pulsate {
-    from { opacity: 0.8; }
-    50% { opacity: 0.2; }
-    to { opacity: 0.8; }
 }

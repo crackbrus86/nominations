@@ -1,190 +1,128 @@
-import { useState, Fragment, useEffect } from 'react';
-import moment from 'moment';
-import classNames from 'classnames';
+import { useState, useMemo } from 'react';
 
 import './referee.busy.scss';
 
-import { getFlowInfo } from '../../flow-editor/views/event.details/event.flows/referee.schedule/utils';
+import * as divisionsJson from '../../divisions.json';
+import * as weightClassesJson from '../../weightClasses.json';
 
-const RefereeBusy = ({ eventId, team, firstName, surname, middleName }) => {
-	const refereeNameIsNotFull = !firstName || !surname || !middleName;
-	const [loading, setLoading] = useState(false);
-	const [pending, setPending] = useState(false);
-	const [days, setDays] = useState([]);
-	const [flows, setFlows] = useState([]);
-	const flowsApiUrl = '../wp-content/plugins/nominations/api/flows';
+const RefereeBusy = ({ competitionInfo, selectedWCBusy, onSelectWCBusy }) => {
+	const [divisionId, setDivisionId] = useState(0);
+	const divisions = [{ value: 0, text: '' }].concat(
+		divisionsJson.divisions.map((d) => ({ value: d.id, text: d.flowTitle }))
+	);
 
-	const refereeId = `${surname.toLowerCase()}/${firstName.toLowerCase()}/${middleName.toLowerCase()}/${team}`;
+	const currentDivision = useMemo(() => {
+		return divisionsJson.divisions.find((d) => d.id == divisionId);
+	}, [divisionId]);
 
-	const onInitRefereeBusy = async () => {
-		setLoading(true);
-		await loadRefereeBusy();
-		setLoading(false);
-	};
-
-	const loadRefereeBusy = async () => {
-		const response = await fetch(
-			`${flowsApiUrl}/GetRefereeUnavailabilitySchedule.php?` +
-				new URLSearchParams(
-					{
-						eventId,
-						referee: refereeId,
-					},
-					{
-						headers: {
-							'Content-Type': 'application/json',
-						},
-					}
-				)
+	const allWeightClasses = useMemo(() => {
+		const isJuniorsCompetition = JSON.parse(competitionInfo.isJun);
+		return weightClassesJson.weightClasses.filter((x) =>
+			isJuniorsCompetition
+				? x.division == 'subjuniors'
+				: x.division == 'open'
 		);
-		const result = await response.json();
-		const availableDays = result.data.days.filter(
-			(x) => !!result.data.flows.find((f) => f.day_of_flow === x)
-		);
-		setDays(availableDays);
-		const mappedFlows = result.data.flows
-			.map((f) => ({
-				...f,
-				weightClasses: f.weight_classes.map((wc) => ({
-					divisionId: wc.division_id,
-					weightClassId: wc.weight_class_id,
-				})),
-			}))
-			.map((f) => ({ ...f, info: getFlowInfo(f.weightClasses) }));
-		console.log(mappedFlows);
-		const nextFlows = mappedFlows.sort(
-			(a, b) =>
-				new Date(a.day_of_flow).getTime() -
-				new Date(b.day_of_flow).getTime()
-		);
-		setFlows(nextFlows);
-	};
+	}, [competitionInfo, weightClassesJson]);
 
-	const updateRefereeStatus = async (flowId, value) => {
-		if (pending) return;
-		setPending(true);
-		const request = {
-			flowId,
-			refereeId,
-			refereeStatus: value,
-		};
-		await fetch(`${flowsApiUrl}/SaveRefereeRecord.php`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(request),
+	const weightClassOptions = useMemo(() => {
+		return currentDivision
+			? allWeightClasses.filter(
+					(x) =>
+						x.gender == currentDivision.gender &&
+						!x.hide &&
+						!selectedWCBusy.find(
+							(w) =>
+								w.weightClassId == x.id &&
+								w.divisionId == currentDivision.id
+						)
+			  )
+			: [];
+	}, [currentDivision, allWeightClasses, selectedWCBusy]);
+
+	const onSelectWeightClass = (v) => {
+		const nextSelectedWClasses = selectedWCBusy.concat({
+			weightClassId: v,
+			divisionId: currentDivision.id,
 		});
-		setPending(false);
+		onSelectWCBusy(nextSelectedWClasses);
 	};
 
-	useEffect(() => {
-		if (!refereeNameIsNotFull) onInitRefereeBusy();
-	}, [firstName, surname, middleName]);
+    const onUnSelectWeightClass = ({ weightClassId, divisionId }) => {
+        const nextSelectedWClasses = selectedWCBusy.filter(x => x.divisionId != divisionId || x.weightClassId != weightClassId);
+        onSelectWCBusy(nextSelectedWClasses);
+    }
 
-	const handleStatusCheckbox = async (flowId, value) => {
-		await updateRefereeStatus(flowId, value);
-		await loadRefereeBusy();
-	};
-
-	const getFlowsOfDay = (day) => {
-		return flows.filter((flow) => flow.day_of_flow === day);
-	};
-
-	const getColSpan = (day) => {
-		const dayFlows = getFlowsOfDay(day);
-		return !!dayFlows ? dayFlows.length : 1;
-	};
-
-	const getFlowTitle = (flow) => {
-		const dayFlows = getFlowsOfDay(flow.day_of_flow).sort(
-			(a, b) => a.sort_order - b.sort_order
+	const mappedSelectedWeightClasses = selectedWCBusy.map((x) => {
+		const division = divisions.find((d) => d.value == x.divisionId);
+		const weightClass = allWeightClasses.find(
+			(w) => w.id == x.weightClassId
 		);
-		const flowIndex =
-			dayFlows.findIndex((f) => f.flow_id === flow.flow_id) + 1;
-		return (
-			<Fragment>
-				<div className="flow-title">
-					<div><b>{flowIndex} потік</b></div>
-					<div>{flow.info.join(', ')}</div>
-				</div>
-			</Fragment>
-		);
-	};
-
-	const showBusyTable = !!days.length && !!flows.length;
-	const noFlows = !loading && (!days.length || !flows.length) && !refereeNameIsNotFull;
+		return {
+			...x,
+			wcName: weightClass ? weightClass.name : null,
+			dName: division.text,
+			sortOrder: weightClass.sortOrder
+		};
+	}).sort((a, b) => a.sortOrder - b.sortOrder);
 
 	return (
-		<Fragment>
-			<div>
-				<p>
-					<b>Вкажіть потоки які Ви НЕ ЗМОЖЕТЕ судити</b>
-				</p>
-			</div>
-			{noFlows && (
-				<div>На даний момент ці змагання не розбиті на потоки</div>
-			)}
-			{refereeNameIsNotFull && (
-				<div>
-					<p style={{ color: 'red' }}>
-						<i>Спочатку вкажіть Прізвище, Ім'я та По-батькові</i>
-					</p>
-				</div>
-			)}
-			{showBusyTable && (
-				<div id="referee-busy">
-					{days.map((day, index) => {
-						const flowsOfDay = getFlowsOfDay(day);
-						return (
-							<table
-								className={classNames({
-									loading: pending || loading,
-									disabled: refereeNameIsNotFull,
-								})}
+		<div className="referee-busy">
+			<div className='referee-busy__warning'>Вкажіть вагові категорії які Ви <strong>НЕ ЗМОЖЕТЕ</strong> судити</div>
+			<table>
+				<tbody>
+					<tr>
+						<td width={100}>
+							<label>Дивізіон</label>
+						</td>
+						<td>
+							<select
+								value={divisionId}
+								onChange={(v) => setDivisionId(v.target.value)}
 							>
-								<thead>
-									<tr>
-										<th colSpan={getColSpan(day)}>
-											{moment(day).format('DD/MM/YY')}
-										</th>
-									</tr>
-									<tr>
-										{flowsOfDay.map((flow) => (
-											<td key={flow.flow_id}>
-												{getFlowTitle(flow)}
-											</td>
-										))}
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										{flowsOfDay.map((flow) => (
-											<td key={flow.flow_id}>
-												<input
-													type="checkbox"
-													checked={flow.busy}
-													onClick={() => {
-														if (
-															refereeNameIsNotFull
-														)
-															return;
-														handleStatusCheckbox(
-															flow.flow_id,
-															flow.busy ? 1000 : 0
-														);
-													}}
-												/>
-											</td>
-										))}
-									</tr>
-								</tbody>
-							</table>
-						);
-					})}
-				</div>
-			)}
-		</Fragment>
+								{divisions.map((division) => (
+									<option
+										key={division.value}
+										value={division.value}
+									>
+										{division.text}
+									</option>
+								))}
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label>Вагова категорія</label>
+						</td>
+						<td>
+							<select
+								multiple
+                                style={{ minWidth: 115 }}
+								onChange={(v) =>
+									onSelectWeightClass(v.target.value)
+								}
+							>
+								{weightClassOptions.map((x) => (
+									<option key={x.id} value={x.id}>
+										{x.name}
+									</option>
+								))}
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td colSpan={2} className='wc-selected'>
+							{mappedSelectedWeightClasses.map((x) => (
+								<span key={x.weightClassId + x.divisionId} className='wc-badge'>
+									{x.dName}/{x.wcName}
+                                    <i className='fa fa-times' onClick={() => onUnSelectWeightClass(x)}></i>
+								</span>
+							))}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	);
 };
 
